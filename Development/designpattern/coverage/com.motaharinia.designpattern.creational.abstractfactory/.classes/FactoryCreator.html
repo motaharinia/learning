@@ -1,0 +1,132 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: FactoryCreator</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">com.motaharinia.designpattern.creational.abstractfactory</a> ]
+</div>
+
+<h1>Coverage Summary for Class: FactoryCreator (com.motaharinia.designpattern.creational.abstractfactory)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">FactoryCreator</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (2/ 2)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    71.4%
+  </span>
+  <span class="absValue">
+    (5/ 7)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">FactoryCreator$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/ 3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (6/ 8)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package com.motaharinia.designpattern.creational.abstractfactory;
+<i>2</i>&nbsp;
+<b class="fc"><i>3</i>&nbsp;public class FactoryCreator {</b>
+<i>4</i>&nbsp;    /**
+<i>5</i>&nbsp;     * «?‰ „ œ ›ò Ê—? Åœ— «”  òÂ ÿ»ﬁ «‰ Œ«» ò«—»— ?ò? «“ ›ò Ê—? Â«? “?— „Ã„Ê⁄Â ŒÊœ —« ›—«ŒÊ«‰? „?ò‰œ
+<i>6</i>&nbsp;     * @param choiceEnum «‰ Œ«» ò«—»—
+<i>7</i>&nbsp;     * @return Œ—ÊÃ?: ›ò Ê—? “?—„Ã„Ê⁄Â ŒÊœ —« Œ—ÊÃ? „?œÂœ
+<i>8</i>&nbsp;     */
+<i>9</i>&nbsp;    public static AbstractFactory getFactory(ChoiceEnum choiceEnum) {
+<b class="fc"><i>10</i>&nbsp;        if (choiceEnum == null) {</b>
+<b class="nc"><i>11</i>&nbsp;            return null;</b>
+<i>12</i>&nbsp;        } else {
+<b class="fc"><i>13</i>&nbsp;            switch (choiceEnum) {</b>
+<i>14</i>&nbsp;                case BANK:
+<b class="fc"><i>15</i>&nbsp;                    return new BankFactory();</b>
+<i>16</i>&nbsp;                case LOAN:
+<b class="fc"><i>17</i>&nbsp;                    return new LoanFactory();</b>
+<i>18</i>&nbsp;                default:
+<b class="nc"><i>19</i>&nbsp;                    return null;</b>
+<i>20</i>&nbsp;            }
+<i>21</i>&nbsp;        }
+<i>22</i>&nbsp;    }
+<i>23</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2020-03-06 00:14</div>
+</div>
+</body>
+</html>
