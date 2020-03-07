@@ -1,4 +1,4 @@
-package com.motaharinia.designpattern.structural.adapter.ex2;
+package com.motaharinia.designpattern.structural.adapter;
 
 public interface MemberCompany {
     /**

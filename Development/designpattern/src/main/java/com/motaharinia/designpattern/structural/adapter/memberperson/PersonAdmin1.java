@@ -1,8 +1,8 @@
-package com.motaharinia.designpattern.structural.adapter.ex2.memberperson;
+package com.motaharinia.designpattern.structural.adapter.memberperson;
 
-import com.motaharinia.designpattern.structural.adapter.ex2.MemberPerson;
+import com.motaharinia.designpattern.structural.adapter.MemberPerson;
 
-public class PersonAdmin2 implements MemberPerson {
+public class PersonAdmin1 implements MemberPerson {
     /**
      * نام کاربر حقیقی را خروجی میدهد
      *
@@ -10,7 +10,7 @@ public class PersonAdmin2 implements MemberPerson {
      */
     @Override
     public String getName() {
-        return "Mostafa";
+        return "Bill";
     }
 
     /**
@@ -20,6 +20,6 @@ public class PersonAdmin2 implements MemberPerson {
      */
     @Override
     public String getFamily() {
-        return "Motaharinia";
+        return "Gates";
     }
 }

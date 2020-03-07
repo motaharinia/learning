@@ -1,4 +1,4 @@
-package com.motaharinia.designpattern.structural.adapter.ex2;
+package com.motaharinia.designpattern.structural.adapter;
 
 public class MemberAdapter  implements  MemberCompany {
     private MemberPerson memberPerson;

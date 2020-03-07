@@ -1,6 +1,6 @@
-package com.motaharinia.designpattern.structural.adapter.ex2.membercompany;
+package com.motaharinia.designpattern.structural.adapter.membercompany;
 
-import com.motaharinia.designpattern.structural.adapter.ex2.MemberCompany;
+import com.motaharinia.designpattern.structural.adapter.MemberCompany;
 
 public class CompanyAudi implements MemberCompany {
 

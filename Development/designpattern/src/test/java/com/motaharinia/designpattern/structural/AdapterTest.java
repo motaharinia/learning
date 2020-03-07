@@ -1,27 +1,21 @@
-package com.motaharinia.designpattern.structural.adapter;
+package com.motaharinia.designpattern.structural;
 
-import com.motaharinia.designpattern.structural.adapter.ex1.BankCustomer;
-import com.motaharinia.designpattern.structural.adapter.ex1.CreditCard;
-import com.motaharinia.designpattern.structural.adapter.ex2.MemberAdapter;
-import com.motaharinia.designpattern.structural.adapter.ex2.MemberCompany;
-import com.motaharinia.designpattern.structural.adapter.ex2.MemberPerson;
-import com.motaharinia.designpattern.structural.adapter.ex2.membercompany.CompanyAudi;
-import com.motaharinia.designpattern.structural.adapter.ex2.membercompany.CompanyBmw;
-import com.motaharinia.designpattern.structural.adapter.ex2.memberperson.PersonAdmin1;
-import com.motaharinia.designpattern.structural.adapter.ex2.memberperson.PersonAdmin2;
+import com.motaharinia.designpattern.structural.adapter.MemberAdapter;
+import com.motaharinia.designpattern.structural.adapter.MemberCompany;
+import com.motaharinia.designpattern.structural.adapter.MemberPerson;
+import com.motaharinia.designpattern.structural.adapter.membercompany.CompanyAudi;
+import com.motaharinia.designpattern.structural.adapter.membercompany.CompanyBmw;
+import com.motaharinia.designpattern.structural.adapter.memberperson.PersonAdmin1;
+import com.motaharinia.designpattern.structural.adapter.memberperson.PersonAdmin2;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 //https://medium.com/@ssaurel/implement-the-adapter-design-pattern-in-java-f9adb6a8828f
-//https://www.javatpoint.com/adapter-pattern
 //An Adapter Pattern says that just "converts the interface of a class into another interface that a client wants".
 //In other words, to provide the interface according to client requirement while using the services of a class with a different interface.
 //The Adapter Pattern is also known as Wrapper.
 public class AdapterTest {
-
-    //کارت اعتباری
-    CreditCard targetInterface;
 
     MemberPerson memberPerson;
     MemberCompany memberCompany;
@@ -31,19 +25,8 @@ public class AdapterTest {
      */
     @BeforeEach
     void initUseCase() {
-        targetInterface = new BankCustomer();
         memberCompany = null;
         memberPerson = null;
-    }
-
-
-    /**
-     * این متد مثال اول Adapter Design Pattern را تست میکند
-     */
-    @Test
-    void adapter1Test() {
-        targetInterface.giveBankDetails("Mostafa Motahari Nia", 123456L, "Test");
-        Assertions.assertEquals("The Account number 123456 of Mostafa Motahari Nia in Test bank is valid", targetInterface.getCreditCard());
     }
 
 
