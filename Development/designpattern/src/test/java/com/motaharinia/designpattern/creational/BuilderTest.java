@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 //https://howtodoinjava.com/design-patterns/creational/builder-pattern-in-java/
 //Builder Pattern says that "construct a complex object from simple objects using step-by-step approach"
 //It is mostly used when object can't be created in single step like in the de-serialization of a complex object.
+//دیزاین پترن Builder Pattern می گوید که "با استفاده از رویکرد گام به گام یک شیء پیچیده را از اشیاء ساده بسازید "
+//بیشتر وقتی مورد استفاده قرار می گیرد که اشیاء را نمی توان در یک مرحله مانند سریال کردن یک شیء پیچیده ایجاد کرد.
 public class BuilderTest {
 
 

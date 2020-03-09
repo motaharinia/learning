@@ -15,6 +15,9 @@ import org.junit.jupiter.api.Test;
 //Abstract Factory Pattern says that just define an interface or abstract class for creating families of related (or dependent) objects
 //but without specifying their concrete sub-classes.That means Abstract Factory lets a class returns a factory of classes.
 //So, this is the reason that Abstract Factory Pattern is one level higher than the Factory Pattern.
+//دیزاین پترن Abstract Factory Pattern می گوید که فقط برای ایجاد خانواده های اشیاء مرتبط (یا وابسته) فقط یک رابط یا کلاس انتزاعی تعریف کنید
+//اما بدون مشخص کردن زیر کلاس های شفاف آنها. این بدان معنی است که کارخانه می تواند به یک کلاس اجازه دهد کارخانه ای از کلاس ها را برگرداند.
+//بنابراین ، به همین دلیل است که الگوی کارخانه Abstract یک سطح بالاتر از الگوی کارخانه است.
 public class AbstractFactoryTest {
     //فیلد فکتوری اصلی
     FactoryCreator factoryCreator = new FactoryCreator();

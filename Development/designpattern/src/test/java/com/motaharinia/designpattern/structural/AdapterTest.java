@@ -15,6 +15,9 @@ import org.junit.jupiter.api.Test;
 //An Adapter Pattern says that just "converts the interface of a class into another interface that a client wants".
 //In other words, to provide the interface according to client requirement while using the services of a class with a different interface.
 //The Adapter Pattern is also known as Wrapper.
+//یک الگوی آداپتور می گوید "رابط یک کلاس را به یک رابط دیگر که مشتری می خواهد تبدیل کنیم".
+//به عبارت دیگر ، تأمین رابط با توجه به نیاز مشتری در حین استفاده از خدمات یک کلاس با رابط متفاوت.
+//الگوی آداپتور همچنین به عنوان Wrapper معروف است.
 public class AdapterTest {
 
     MemberPerson memberPerson;

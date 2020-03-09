@@ -13,6 +13,17 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
+//https://www.javatpoint.com/object-pool-pattern
+//Mostly, performance is the key issue during the software development and the object creation, which may be a costly step.
+//Object Pool Pattern says that " to reuse the object that are expensive to create".
+//Basically, an Object pool is a container which contains a specified amount of objects.
+//When an object is taken from the pool, it is not available in the pool until it is put back.
+//Objects in the pool have a lifecycle: creation, validation and destroy.
+//بیشتر عملکرد ، مسئله اصلی در حین توسعه نرم افزار و ایجاد شی است که ممکن است اقدامی پرهزینه باشد.
+//دیزاین پترن Object Pool Pattern می گوید که "از اشیایی که گران قیمت هستند استفاده مجدد کنیم".
+//در اصل ، استخر Object یک ظرف است که شامل مقدار مشخصی از اشیاء است.
+//هنگامی که یک شی از استخر گرفته می شود ، تا زمان عقب گذاشتن در استخر در دسترس نیست.
+//اشیاء موجود در استخر دارای چرخه زندگی هستند: ایجاد ، اعتبارسنجی و از بین بردن.
 public class ObjectPoolTest {
     //استخر اشیا
     private ObjectPool<ExportingProcess> pool;

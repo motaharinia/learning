@@ -6,6 +6,13 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+//https://www.javatpoint.com/singleton-design-pattern-in-java
+//Singleton Pattern says that just"define a class that has only one instance and provides a global point of access to it".
+//In other words, a class must ensure that only single instance should be created and single object can be used by all other classes.
+//There are two forms of singleton design pattern Early Instantiation: creation of instance at load time. Lazy Instantiation: creation of instance when required.
+//دیزاین پترن Singleton Pattern می گوید "كلاسی را تعریف كنید كه فقط یك نمونه از آن وجود داشته باشد و یك نقطه دسترسی جهانی به آن را فراهم كنید".
+//به عبارت دیگر ، یک کلاس باید اطمینان حاصل کند که از آن فقط یک نمونه یونیک باید ایجاد شود و همه کلاسها می توانند از یک شی واحد استفاده کنند.
+//دو الگوی طراحی Singleton وجود دارد شروع سریع که ایجاد نمونه در زمان اجرا انجام میشود و نمونه گیری تنبل که در صورت لزوم نمونه ایجاد میکند.
 public class SingletonTest {
 
 

@@ -10,8 +10,9 @@ import org.junit.jupiter.api.Test;
 
 //https://www.javatpoint.com/factory-method-design-pattern
 //A Factory Pattern or Factory Method Pattern says that just define an interface or abstract class for creating an object
-//but let the subclasses decide which class to instantiate.
-//In other words, subclasses are responsible to create the instance of the class.
+//but let the subclasses decide which class to instantiate. in other words, subclasses are responsible to create the instance of the class.
+//یک الگوی کارخانه یا الگوی متد کارخانه می گوید که فقط یک رابط یا یک کلاس انتزاعی را برای ایجاد یک شی تعریف کنید
+//اما اجازه دهید زیر کلاس ها تصمیم بگیرند که کدام کلاس نمونه گیری شود . به عبارت دیگر ، زیر کلاس ها مسئول ایجاد نمونه کلاس هستند.
 public class FactoryMethodTest {
 
     //فکتوری طرح مصرف برق
