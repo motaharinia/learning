@@ -19,10 +19,10 @@ import java.util.concurrent.atomic.AtomicLong;
 //Basically, an Object pool is a container which contains a specified amount of objects.
 //When an object is taken from the pool, it is not available in the pool until it is put back.
 //Objects in the pool have a lifecycle: creation, validation and destroy.
-//بیشتر عملکرد ، مسئله اصلی در حین توسعه نرم افزار و ایجاد شی است که ممکن است اقدامی پرهزینه باشد.
+//بیشتر عملکرد ، مسئله اصلی در حین توسعه نرم افزار ایجاد شی است که ممکن است اقدامی پرهزینه باشد.
 //دیزاین پترن Object Pool Pattern می گوید که "از اشیایی که گران قیمت هستند استفاده مجدد کنیم".
 //در اصل ، استخر Object یک ظرف است که شامل مقدار مشخصی از اشیاء است.
-//هنگامی که یک شی از استخر گرفته می شود ، تا زمان عقب گذاشتن در استخر در دسترس نیست.
+//هنگامی که یک شی از استخر گرفته می شود ، تا زمان برگرداندن در استخر در دسترس نیست.
 //اشیاء موجود در استخر دارای چرخه زندگی هستند: ایجاد ، اعتبارسنجی و از بین بردن.
 public class ObjectPoolTest {
     //استخر اشیا
@@ -56,7 +56,7 @@ public class ObjectPoolTest {
         ExecutorService executor = Executors.newFixedThreadPool(8);
         // اجرای 8 تسک ExportingTask در نخ های جداگانه
         //هر ExportingTask یک آبجکت ExportingProcess را از استخر اشیا قرض میگیرد ، استفاده میکند و دوباره به استخر بر میگرداند
-        //و کار استخر اشیا این است که در زمان بندی مشخص اگر تعداد اشیا داخل خودش را بین تعداد حداقل و حداکثر داده شده آماده داشته باشد
+        //و کار استخر اشیا این است که در زمان بندی مشخص تعداد اشیا داخل خودش را بین تعداد حداقل و حداکثر داده شده آماده داشته باشد
         executor.execute(new ExportingTask(pool, 1));
         executor.execute(new ExportingTask(pool, 2));
         executor.execute(new ExportingTask(pool, 3));

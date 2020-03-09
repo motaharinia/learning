@@ -19,7 +19,7 @@ public class ExportingTask implements Runnable {
     }
 
     public void run() {
-        // یک شیی را اط ایتخر اشیا قرض میگیرد
+        // یک شیی را از استخر اشیا قرض میگیرد
         ExportingProcess exportingProcess = pool.borrowObject();
         System.out.println("Thread " + threadNo + ": Object with process no. " + exportingProcess.getProcessNo() + " was borrowed");
 

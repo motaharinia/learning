@@ -12,7 +12,7 @@ public class TextFilterMaxLength implements TextFilter {
         if(text==null){
             text="";
         }
-        if(text.length()>10){
+        if(text.length()>25){
             return text.substring(0,25) + "...";
         }else{
             return text;
