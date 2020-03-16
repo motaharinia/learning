@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 //https://www.geeksforgeeks.org/bridge-design-pattern/
 //The Bridge design pattern allows you to separate the abstraction from the implementation.
 //الگوی طراحی Bridge به شما امکان می دهد تا انتزاع را از پیاده سازی جدا کنید.
-public class BridgeTest {
+public class StructuralBridgeTest {
     TextContentHeader textContentHeader;
     TextContentComment textContentComment;
 

@@ -10,7 +10,7 @@ import org.unitils.reflectionassert.ReflectionAssert;
 //This pattern should be followed, if the cost of creating a new object is expensive and resource intensive.
 //دیزاین پترن Prototype Pattern می گوید که به جای ایجاد یک شیی جدید مشابه آن را از شیی موجود کلون کرد  و همچنین می تواند طبق نیاز مورد نظر شخصی سازی شود.
 //در صورتی که هزینه ایجاد یک شیء جدید گران و منابع فشرده باشد ، این الگو باید دنبال شود.
-public class PrototypeTest {
+public class CreationalPrototypeTest {
 
     // ریکورد کارمند اول
     private EmployeeRecord employeeRecord1;

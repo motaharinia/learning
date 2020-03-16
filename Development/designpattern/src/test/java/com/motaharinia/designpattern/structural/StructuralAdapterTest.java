@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 //یک الگوی آداپتور می گوید "رابط یک کلاس را به یک رابط دیگر که مشتری می خواهد تبدیل کنیم".
 //به عبارت دیگر ، تأمین رابط با توجه به نیاز مشتری در حین استفاده از خدمات یک کلاس با رابط متفاوت.
 //الگوی آداپتور همچنین به عنوان Wrapper معروف است.
-public class AdapterTest {
+public class StructuralAdapterTest {
 
     MemberPerson memberPerson;
     MemberCompany memberCompany;

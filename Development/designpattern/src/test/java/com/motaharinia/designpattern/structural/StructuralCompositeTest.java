@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 //https://www.javatpoint.com/composite-pattern
 //A Composite Pattern says that just "allow clients to operate in generic manner on objects that may or may not represent a hierarchy of objects".
 //الگوی کامپوزیت می گوید که فقط "به مشتریها این امکان را می دهد که به شیوه ای عمومی روی اشیاء کار کنند که ممکن است نمایانگر سلسله مراتب اشیاء باشد"
-public class CompositeTest {
+public class StructuralCompositeTest {
     Employee cashier1;
     Employee cashier2;
     Employee accountant;

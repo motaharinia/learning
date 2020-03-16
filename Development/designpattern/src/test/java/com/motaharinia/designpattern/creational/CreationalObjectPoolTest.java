@@ -24,7 +24,7 @@ import java.util.concurrent.atomic.AtomicLong;
 //در اصل ، استخر Object یک ظرف است که شامل مقدار مشخصی از اشیاء است.
 //هنگامی که یک شی از استخر گرفته می شود ، تا زمان برگرداندن در استخر در دسترس نیست.
 //اشیاء موجود در استخر دارای چرخه زندگی هستند: ایجاد ، اعتبارسنجی و از بین بردن.
-public class ObjectPoolTest {
+public class CreationalObjectPoolTest {
     //استخر اشیا
     private ObjectPool<ExportingProcess> pool;
     //شماره پردازش

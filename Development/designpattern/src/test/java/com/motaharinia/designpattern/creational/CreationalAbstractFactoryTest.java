@@ -18,7 +18,7 @@ import org.junit.jupiter.api.Test;
 //دیزاین پترن Abstract Factory Pattern می گوید که فقط برای ایجاد خانواده های اشیاء مرتبط (یا وابسته) فقط یک رابط یا کلاس انتزاعی تعریف کنید
 //اما بدون مشخص کردن زیر کلاس های شفاف آنها. این بدان معنی است که کارخانه می تواند به یک کلاس اجازه دهد کارخانه ای از کلاس ها را برگرداند.
 //بنابراین ، به همین دلیل است که الگوی کارخانه Abstract یک سطح بالاتر از الگوی کارخانه است.
-public class AbstractFactoryTest {
+public class CreationalAbstractFactoryTest {
     //فیلد فکتوری اصلی
     FactoryCreator factoryCreator = new FactoryCreator();
     //فکتوری زیرمجموعه که بانک میسازد

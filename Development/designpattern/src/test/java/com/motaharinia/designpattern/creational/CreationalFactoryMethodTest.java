@@ -13,9 +13,9 @@ import org.junit.jupiter.api.Test;
 //but let the subclasses decide which class to instantiate. in other words, subclasses are responsible to create the instance of the class.
 //یک الگوی کارخانه یا الگوی متد کارخانه می گوید که فقط یک رابط یا یک کلاس انتزاعی را برای ایجاد یک شی تعریف کنید
 //اما اجازه دهید زیر کلاس ها تصمیم بگیرند که کدام کلاس نمونه گیری شود . به عبارت دیگر ، زیر کلاس ها مسئول ایجاد نمونه کلاس هستند.
-public class FactoryMethodTest {
+public class CreationalFactoryMethodTest {
 
-    //فکتوری طرح مصرف برق
+    //فکتوریرنگ
     private PlanFactory planFactory = new PlanFactory();
 
     //طرح مصرف برق
