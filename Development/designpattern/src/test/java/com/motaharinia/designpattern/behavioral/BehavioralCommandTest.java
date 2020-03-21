@@ -11,12 +11,10 @@ import org.junit.jupiter.api.Test;
 //الگوی Command Pattern می گوید: "یک درخواست را در زیر یک موضوع به عنوان دستور محصور کنید و آن را به شیء invoker منتقل کنید.
 // فاکتور Invoker به دنبال شی مناسب می شود که بتواند این دستور را انجام دهد و فرمان را به شیء مربوطه منتقل کند و آن شی دستور را اجرا کند".
 public class BehavioralCommandTest {
-    Document doc = new Document();
-
-    ActionListenerCommand clickOpen = new ActionOpen(doc);
-    ActionListenerCommand clickSave = new ActionSave(doc);
-
-    MenuOptions menu = new MenuOptions(clickOpen, clickSave);
+    Document doc;
+    ActionListenerCommand clickOpen;
+    ActionListenerCommand clickSave;
+    MenuOptions menu;
 
 
     /**

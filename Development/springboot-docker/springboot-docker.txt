@@ -1,0 +1,61 @@
+https://www.youtube.com/watch?v=FlSup_eelYE
+
+1.install docker desktop for windows from "https://hub.docker.com/editions/community/docker-ce-desktop-windows"
+-login with docker id and password
+-click on docker tray icon and goto "setting/resources/advanced/disc image location" you can change image location
+
+2.create spring boot:
+-Java: 8
+-Artifact: dockertest
+-Packaging: jar
+-Dependencies: "Spring web"
+
+3.add in application.properties with these lines:
+server.port=8085
+
+4.add this tag to pom.xml inside <build> tag and in Intellij in maven box select lifecycle/clean and lifecycle/install and run in maven box to create jar file in target:
+<finalName>dockertest</finalName>
+
+5.add "Dockerfile" file beside "pom.xml" with these lines:
+FROM openjdk:8
+ADD target/dockertest.jar dockertest.jar
+EXPOSE 8085
+ENTRYPOINT ["java", "-jar", "dockertest.jar"]
+
+6.in Intellij terminal in project folder 
+
+**check current terminal path:
+pwd
+
+**check docker version:
+docker -v
+
+**build docker image file from "Dockerfile" properties in project beside pom.xml with tag "dockertest" (it will download openjdk image file for the fisrt time):
+docker build -f Dockerfile -t dockertest .
+
+**check docker images after build:
+docker images
+
+**push and run docker image for test spring application with same port 8085 in spring(we can change docker port as we wish):
+docker run -p 8085:8085 test
+
+**check terminal commands history:
+history
+
+**clear terminal
+clear
+
+7.test spring boot application on browser:
+http://localhost:8085
+
+
+other links:
+------------
+https://virgool.io/Software/%D8%A2%D9%85%D9%88%D8%B2%D8%B4-%D9%86%D8%B5%D8%A8-%D8%AF%D8%A7%DA%A9%D8%B1-%D8%A8%D8%B1-%D8%B1%D9%88%DB%8C-%D9%88%DB%8C%D9%86%D8%AF%D9%88%D8%B2-%D8%A8%D8%AF%D9%88%D9%86-%D8%AF%D8%B1%D8%AF%D8%B3%D8%B1-bpfdxbknabpc
+https://dockerme.ir/
+از این به بعد ایمیج های داکر را از روی سرور های پارس پک دانلود کنید
+http://docker.ir/
+
+docker images:
+--------------
+https://hub.docker.com/search?q=&type=image

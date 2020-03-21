@@ -1,6 +1,0 @@
-19 Starting a Eureka server - Spring Boot Microservices Level 1:
-https://www.youtube.com/watch?v=GTM2J0nYmbs
-you can view spring eureka server page on eureka default port: http://localhost:8761/ after run the project
-
-20
-https://www.youtube.com/watch?v=jhvJg4tDrpw
