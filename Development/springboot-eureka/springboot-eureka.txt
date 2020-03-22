@@ -7,3 +7,15 @@ https://www.youtube.com/watch?v=jhvJg4tDrpw
 
 21 Discovering services through Eureka - Spring Boot Microservices Level 1:
 https://www.youtube.com/watch?v=GxLjcOE35oA
+
+
+
+--------------------------------------------------------------
+1.start discovery and watch eureka service monitor:
+http://localhost:8761/
+
+2.start movie-info and movie-catalog
+
+3.watch eureka service monitor again
+
+4.run http://localhost:8084/catalog to test eureka rest call
