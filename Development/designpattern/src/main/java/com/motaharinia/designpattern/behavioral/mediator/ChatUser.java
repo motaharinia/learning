@@ -23,7 +23,6 @@ public class ChatUser extends User  {
      */
     @Override
     public void send(String msg, String userId) {
-        System.out.println(this.getName() + " :: Sending Message : " + msg);
         getMediator().sendMessage(msg, userId);
     }
 

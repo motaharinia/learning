@@ -47,7 +47,7 @@ public class BehavioralMediatorTest {
     }
 
     /**
-     * این متد Iterator Design Pattern را تست میکند
+     * این متد Mediator Design Pattern را تست میکند
      */
     @Test
     void iteratorTest() {
@@ -55,9 +55,7 @@ public class BehavioralMediatorTest {
         chatroom.addUser(user2);
         chatroom.addUser(user3);
         chatroom.addUser(user4);
-
         user1.send("Hello brian", "2");
-
         Assertions.assertEquals("Hello brian", user2.getLastRecievedMessage());
     }
 }

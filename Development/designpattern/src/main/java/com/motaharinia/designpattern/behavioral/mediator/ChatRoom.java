@@ -16,8 +16,8 @@ public class ChatRoom implements IChatRoom {
      */
     @Override
     public void sendMessage(String msg, String userId) {
-        User u = usersMap.get(userId);
-        u.receive(msg);
+        User user = usersMap.get(userId);
+        user.receive(msg);
     }
 
     /**
