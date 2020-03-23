@@ -16,4 +16,6 @@ https://www.logicbig.com/tutorials/spring-framework/spring-boot/profile-specific
 https://stackoverflow.com/questions/41244585/how-to-set-spring-active-profile-environment-variable-in-intellij/46345476
 https://stackoverflow.com/questions/39738901/how-do-i-activate-a-spring-boot-profile-when-running-from-intellij
 
-3.run project and view jpa url in "http://localhost:8085/"
+3.run project and view 
+-url in "http://localhost:8085/" 
+-random integer in "http://localhost:8085/randomInt" 

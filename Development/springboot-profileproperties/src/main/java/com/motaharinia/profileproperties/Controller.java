@@ -13,8 +13,18 @@ public class Controller {
     @Value("${spring.datasource.url}")
     private String springDatasourceUrl;
 
+    @Value("${app.randomInt}")
+    private Integer appRandomInt;
+
     @RequestMapping("/")
-    public String getPropertiesData(){
+    public String getUrl() {
         return springDatasourceUrl;
     }
+
+    @RequestMapping("/randomInt")
+    public Integer getRandomInt() {
+        return appRandomInt;
+    }
+
+
 }
