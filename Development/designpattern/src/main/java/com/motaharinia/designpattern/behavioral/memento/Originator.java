@@ -1,4 +1,4 @@
-package com.motaharinia.designpattern.behavioral.momento;
+package com.motaharinia.designpattern.behavioral.memento;
 
 // Originator class that will use Memento object to restore its previous state.
 //کلاسی که از کلاس یادآور برای برگرداندن وضعیت قبلی اش استفاده میکند

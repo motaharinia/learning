@@ -1,4 +1,4 @@
-package com.motaharinia.designpattern.behavioral.momento;
+package com.motaharinia.designpattern.behavioral.memento;
 
 import java.util.ArrayList;
 import java.util.List;

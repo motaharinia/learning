@@ -1,4 +1,4 @@
-package com.motaharinia.designpattern.behavioral.momento;
+package com.motaharinia.designpattern.behavioral.memento;
 
 //class that will Store internal state of the Originator object.
 //کلاسی که وضعیت داخلی Originator را ذخیره میکند

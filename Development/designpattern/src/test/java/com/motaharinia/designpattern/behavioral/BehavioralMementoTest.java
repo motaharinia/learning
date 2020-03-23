@@ -1,7 +1,7 @@
 package com.motaharinia.designpattern.behavioral;
 
-import com.motaharinia.designpattern.behavioral.momento.Caretaker;
-import com.motaharinia.designpattern.behavioral.momento.Originator;
+import com.motaharinia.designpattern.behavioral.memento.Caretaker;
+import com.motaharinia.designpattern.behavioral.memento.Originator;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Test;
 //واگرد یا backspace یا ctrl + z یکی از پرکاربردترین عملکردها در یک ویرایشگر است.
 // الگوی طراحی یادمان برای اجرای عملیات خنثی سازی استفاده می شود.
 // این با صرفه جویی در وضعیت فعلی جسم با تغییر حالت انجام می شود.
-public class BehavioralMomentoTest {
+public class BehavioralMementoTest {
     Originator originator = new Originator();
     Caretaker careTaker = new Caretaker();
 
