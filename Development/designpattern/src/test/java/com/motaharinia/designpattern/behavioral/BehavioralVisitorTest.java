@@ -16,7 +16,7 @@ public class BehavioralVisitorTest {
     ItemElement[] items;
 
     //بازدید کننده و محاسبه کننده آیتمهای سبد خرید
-    ShoppingCartVisitor visitor = new ShoppingCartVisitorImpl();
+    ShoppingCartVisitor visitor;
 
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند

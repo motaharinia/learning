@@ -17,6 +17,7 @@ public class ShoppingCartVisitorImpl implements ShoppingCartVisitor {
             cost = book.getPrice();
         }
         return cost;
+
     }
 
     /**
