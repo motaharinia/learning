@@ -14,7 +14,8 @@ import java.util.concurrent.ThreadLocalRandom;
 @Service
 public class AsyncService {
 
-    @Async("workExecutor")
+//    @Async("workExecutor")
+    @Async
     public CompletableFuture<String> defaultExecutor(Integer poolMaxSize, String inputName) {
         DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         String threadCaption = "defaultExecutor: threadName:" + Thread.currentThread().getName() + " poolMaxSize:" + poolMaxSize + " inputName:" + inputName ;

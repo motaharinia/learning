@@ -17,10 +17,10 @@
 <div class="content">
 <div class="breadCrumbs">
     [ <a href="../../index.html">all classes</a> ]
-    [ <a href="../index.html">com.motaharinia.designpattern.creational.abstractfactory</a> ]
+    [ <a href="../index.html">com.motaharinia.designpattern.javacore.creational.abstractfactory</a> ]
 </div>
 
-<h1>Coverage Summary for Class: LoanFactory (com.motaharinia.designpattern.creational.abstractfactory)</h1>
+<h1>Coverage Summary for Class: LoanFactory (com.motaharinia.designpattern.javacore.creational.abstractfactory)</h1>
 
 <table class="coverageStats">
 
@@ -98,18 +98,18 @@
 <br/>
 
 
-<div class="sourceCode"><i>1</i>&nbsp;package com.motaharinia.designpattern.creational.abstractfactory;
+<div class="sourceCode"><i>1</i>&nbsp;package com.motaharinia.designpattern.javacore.creational.abstractfactory;
 <i>2</i>&nbsp;
-<i>3</i>&nbsp;import com.motaharinia.designpattern.creational.abstractfactory.bank.Bank;
-<i>4</i>&nbsp;import com.motaharinia.designpattern.creational.abstractfactory.bank.BankEnum;
-<i>5</i>&nbsp;import com.motaharinia.designpattern.creational.abstractfactory.loan.*;
+<i>3</i>&nbsp;import com.motaharinia.designpattern.javacore.creational.abstractfactory.bank.Bank;
+<i>4</i>&nbsp;import com.motaharinia.designpattern.javacore.creational.abstractfactory.bank.BankEnum;
+<i>5</i>&nbsp;import com.motaharinia.designpattern.javacore.creational.abstractfactory.loan.*;
 <i>6</i>&nbsp;
 <b class="fc"><i>7</i>&nbsp;public class LoanFactory extends AbstractFactory {</b>
 <i>8</i>&nbsp;
 <i>9</i>&nbsp;    /**
-<i>10</i>&nbsp;     * Ç?ä ãÊÏ ÎÑæÌ? null È?Ñæä ã?ÏåÏ æä İ˜ÊæÑ? æÇã ÇÓÊ
+<i>10</i>&nbsp;     * ï¿½?ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½? null ï¿½?ï¿½ï¿½ï¿½ ï¿½?ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ İ˜ï¿½ï¿½ï¿½? ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 <i>11</i>&nbsp;     *
-<i>12</i>&nbsp;     * @param bankEnum ËÇÈÊ ÈÇä˜ ãæÑÏ äÙÑ
+<i>12</i>&nbsp;     * @param bankEnum ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 <i>13</i>&nbsp;     * @return null
 <i>14</i>&nbsp;     */
 <i>15</i>&nbsp;    public Bank getBank(BankEnum bankEnum) {
@@ -117,10 +117,10 @@
 <i>17</i>&nbsp;    }
 <i>18</i>&nbsp;
 <i>19</i>&nbsp;    /**
-<i>20</i>&nbsp;     * Ç?ä ãÊÏ İ˜ÊæÑ? æÇã ã?ÈÇÔÏ ÇÒ ØÑ?Ş ËÇÈÊ æÇã ãæÑÏ äÙÑ ÂÈÌ˜Ê æÇã ãæÑÏ äÙÑ ÑÇ ÎÑæÌ? ã?ÏåÏ
+<i>20</i>&nbsp;     * ï¿½?ï¿½ ï¿½ï¿½ï¿½ İ˜ï¿½ï¿½ï¿½? ï¿½ï¿½ï¿½ ï¿½?ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½?ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Ì˜ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½? ï¿½?ï¿½ï¿½ï¿½
 <i>21</i>&nbsp;     *
-<i>22</i>&nbsp;     * @param loanEnum ËÇÈÊ æÇã ãæÑÏ äÙÑ
-<i>23</i>&nbsp;     * @return ÎÑæÌ?: ÂÈÌ˜Ê æÇã
+<i>22</i>&nbsp;     * @param loanEnum ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+<i>23</i>&nbsp;     * @return ï¿½ï¿½ï¿½ï¿½?: ï¿½ï¿½Ì˜ï¿½ ï¿½ï¿½ï¿½
 <i>24</i>&nbsp;     */
 <i>25</i>&nbsp;    public Loan getLoan(LoanEnum loanEnum) {
 <b class="fc"><i>26</i>&nbsp;        if (loanEnum == null) {</b>

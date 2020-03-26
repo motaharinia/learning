@@ -17,10 +17,10 @@
 <div class="content">
 <div class="breadCrumbs">
     [ <a href="../../index.html">all classes</a> ]
-    [ <a href="../index.html">com.motaharinia.designpattern.creational.abstractfactory</a> ]
+    [ <a href="../index.html">com.motaharinia.designpattern.javacore.creational.abstractfactory</a> ]
 </div>
 
-<h1>Coverage Summary for Class: AbstractFactory (com.motaharinia.designpattern.creational.abstractfactory)</h1>
+<h1>Coverage Summary for Class: AbstractFactory (com.motaharinia.designpattern.javacore.creational.abstractfactory)</h1>
 
 <table class="coverageStats">
 <tr>
@@ -72,26 +72,26 @@
 <br/>
 
 
-<div class="sourceCode"><i>1</i>&nbsp;package com.motaharinia.designpattern.creational.abstractfactory;
+<div class="sourceCode"><i>1</i>&nbsp;package com.motaharinia.designpattern.javacore.creational.abstractfactory;
 <i>2</i>&nbsp;
-<i>3</i>&nbsp;import com.motaharinia.designpattern.creational.abstractfactory.bank.Bank;
-<i>4</i>&nbsp;import com.motaharinia.designpattern.creational.abstractfactory.bank.BankEnum;
-<i>5</i>&nbsp;import com.motaharinia.designpattern.creational.abstractfactory.loan.Loan;
-<i>6</i>&nbsp;import com.motaharinia.designpattern.creational.abstractfactory.loan.LoanEnum;
+<i>3</i>&nbsp;import com.motaharinia.designpattern.javacore.creational.abstractfactory.bank.Bank;
+<i>4</i>&nbsp;import com.motaharinia.designpattern.javacore.creational.abstractfactory.bank.BankEnum;
+<i>5</i>&nbsp;import com.motaharinia.designpattern.javacore.creational.abstractfactory.loan.Loan;
+<i>6</i>&nbsp;import com.motaharinia.designpattern.javacore.creational.abstractfactory.loan.LoanEnum;
 <i>7</i>&nbsp;
 <b class="fc"><i>8</i>&nbsp;public abstract class AbstractFactory {</b>
 <i>9</i>&nbsp;
 <i>10</i>&nbsp;    /**
-<i>11</i>&nbsp;     * Ç?ä ãÊÏ Ý˜ÊæÑ? ÈÇä˜ ã?ÈÇÔÏ ÇÒ ØÑ?Þ ËÇÈÊ ÈÇä˜ ãæÑÏ äÙÑ ÂÈÌ˜Ê ÈÇä˜ ãæÑÏ äÙÑ ÑÇ ÎÑæÌ? ã?ÏåÏ
-<i>12</i>&nbsp;     * @param bankEnum ËÇÈÊ ÈÇä˜ ãæÑÏ äÙÑ
-<i>13</i>&nbsp;     * @return ÎÑæÌ?: ÂÈÌ˜Ê ÈÇä˜
+<i>11</i>&nbsp;     * ï¿½?ï¿½ ï¿½ï¿½ï¿½ Ý˜ï¿½ï¿½ï¿½? ï¿½ï¿½ï¿½ ï¿½?ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½?ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Ì˜ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½? ï¿½?ï¿½ï¿½ï¿½
+<i>12</i>&nbsp;     * @param bankEnum ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+<i>13</i>&nbsp;     * @return ï¿½ï¿½ï¿½ï¿½?: ï¿½ï¿½Ì˜ï¿½ ï¿½ï¿½ï¿½
 <i>14</i>&nbsp;     */
 <i>15</i>&nbsp;    public abstract Bank getBank(BankEnum bankEnum);
 <i>16</i>&nbsp;
 <i>17</i>&nbsp;    /**
-<i>18</i>&nbsp;     * Ç?ä ãÊÏ Ý˜ÊæÑ? æÇã ã?ÈÇÔÏ ÇÒ ØÑ?Þ ËÇÈÊ æÇã ãæÑÏ äÙÑ ÂÈÌ˜Ê æÇã ãæÑÏ äÙÑ ÑÇ ÎÑæÌ? ã?ÏåÏ
-<i>19</i>&nbsp;     * @param loanEnum ËÇÈÊ æÇã ãæÑÏ äÙÑ
-<i>20</i>&nbsp;     * @return ÎÑæÌ?: ÂÈÌ˜Ê æÇã
+<i>18</i>&nbsp;     * ï¿½?ï¿½ ï¿½ï¿½ï¿½ Ý˜ï¿½ï¿½ï¿½? ï¿½ï¿½ï¿½ ï¿½?ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½?ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½Ì˜ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½? ï¿½?ï¿½ï¿½ï¿½
+<i>19</i>&nbsp;     * @param loanEnum ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+<i>20</i>&nbsp;     * @return ï¿½ï¿½ï¿½ï¿½?: ï¿½ï¿½Ì˜ï¿½ ï¿½ï¿½ï¿½
 <i>21</i>&nbsp;     */
 <i>22</i>&nbsp;    public abstract Loan getLoan(LoanEnum loanEnum);
 <i>23</i>&nbsp;}

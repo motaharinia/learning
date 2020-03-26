@@ -17,10 +17,10 @@
 <div class="content">
 <div class="breadCrumbs">
     [ <a href="../../index.html">all classes</a> ]
-    [ <a href="../index.html">com.motaharinia.designpattern.creational.builder</a> ]
+    [ <a href="../index.html">com.motaharinia.designpattern.javacore.creational.builder</a> ]
 </div>
 
-<h1>Coverage Summary for Class: User (com.motaharinia.designpattern.creational.builder)</h1>
+<h1>Coverage Summary for Class: User (com.motaharinia.designpattern.javacore.creational.builder)</h1>
 
 <table class="coverageStats">
 
@@ -101,22 +101,22 @@
 <br/>
 
 
-<div class="sourceCode"><i>1</i>&nbsp;package com.motaharinia.designpattern.creational.builder;
+<div class="sourceCode"><i>1</i>&nbsp;package com.motaharinia.designpattern.javacore.creational.builder;
 <i>2</i>&nbsp;
 <b class="fc"><i>3</i>&nbsp;public class User {</b>
-<i>4</i>&nbsp;    //ÊãÇã İ?áÏåÇ ÑÇ ÈÑÇ? Ç?ä˜å immutable ÈÇÔäÏ æ ÈÚÏ ÇÒ ãŞÏÇÑ Ïå? Çæá?å ÏÑ ÊÇÈÚ ÓÇÒäÏå ŞÇÈá ÊÛ??Ñ äÈÇÔäÏ final ÊäÙ?ã ã? ˜ä?ã
-<i>5</i>&nbsp;    //äÇã
+<i>4</i>&nbsp;    //ï¿½ï¿½ï¿½ï¿½ ï¿½?ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½? ï¿½?ï¿½ï¿½ immutable ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½? ï¿½ï¿½ï¿½?ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½??ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ final ï¿½ï¿½ï¿½?ï¿½ ï¿½? ï¿½ï¿½?ï¿½
+<i>5</i>&nbsp;    //ï¿½ï¿½ï¿½
 <i>6</i>&nbsp;    private final String firstName; // required
-<i>7</i>&nbsp;    //äÇã ÎÇäæÇÏ?
+<i>7</i>&nbsp;    //ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï?
 <i>8</i>&nbsp;    private final String lastName; // required
-<i>9</i>&nbsp;    //Óä
+<i>9</i>&nbsp;    //ï¿½ï¿½
 <i>10</i>&nbsp;    private final Integer age; // optional
-<i>11</i>&nbsp;    //ÔãÇÑå Êáİä
+<i>11</i>&nbsp;    //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 <i>12</i>&nbsp;    private final String phone; // optional
-<i>13</i>&nbsp;    //äÔÇä?
+<i>13</i>&nbsp;    //ï¿½ï¿½ï¿½ï¿½?
 <i>14</i>&nbsp;    private final String address; // optional
 <i>15</i>&nbsp;
-<i>16</i>&nbsp;    //ãÊÏ ÓÇÒäÏå ˜áÇÓ User ˜å ÇÒ ØÑ?Ş ˜áÇÓ UserBuilder Âä ÓÇÎÊå ã?ÔæÏ
+<i>16</i>&nbsp;    //ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ User ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½?ï¿½ ï¿½ï¿½ï¿½ï¿½ UserBuilder ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½?ï¿½ï¿½ï¿½
 <b class="fc"><i>17</i>&nbsp;    private User(UserBuilder builder) {</b>
 <b class="fc"><i>18</i>&nbsp;        this.firstName = builder.firstName;</b>
 <b class="fc"><i>19</i>&nbsp;        this.lastName = builder.lastName;</b>
@@ -126,7 +126,7 @@
 <b class="fc"><i>23</i>&nbsp;    }</b>
 <i>24</i>&nbsp;
 <i>25</i>&nbsp;
-<i>26</i>&nbsp;    //ÏÑ ˜áÇÓ ÊäåÇ ãÊÏåÇ? getter ÑÇ ŞÑÇÑ ã?Ïå?ã ÊÇ ˜áÇÓ immutable ÈÇÔÏ. ÇÑ setter ÏÇÔÊå ÈÇÔÏ Èå ÌÒ Builder ÇÒ ÑæÔ Ï?Ñ ä?Ò ãŞÇÏ?Ñ Âä ÊÛ??Ñ ÎæÇåÏ ˜ÑÏ
+<i>26</i>&nbsp;    //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½? getter ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½?ï¿½ï¿½?ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ immutable ï¿½ï¿½ï¿½ï¿½. Çï¿½ setter ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ Builder ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½?ï¿½ï¿½ ï¿½?ï¿½ ï¿½ï¿½ï¿½ï¿½?ï¿½ ï¿½ï¿½ ï¿½ï¿½??ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 <i>27</i>&nbsp;    public String getFirstName() {
 <b class="nc"><i>28</i>&nbsp;        return firstName;</b>
 <i>29</i>&nbsp;    }
@@ -147,26 +147,26 @@
 <b class="nc"><i>44</i>&nbsp;        return address;</b>
 <i>45</i>&nbsp;    }
 <i>46</i>&nbsp;
-<i>47</i>&nbsp;    //˜áÇÓ ÇÓÊÇÊ?˜ ÏÇÎá? UserBuilder ˜å ÇÒ È?Ñæä ˜áÇÓ User ä?Ò Èå Ïá?á ÇÓÊÇÊ?˜ ÈæÏä ÏÑ ÏÓÊÑÓ ÇÓÊ
+<i>47</i>&nbsp;    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½ ï¿½ï¿½ï¿½ï¿½? UserBuilder ï¿½ï¿½ ï¿½ï¿½ ï¿½?ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ User ï¿½?ï¿½ ï¿½ï¿½ ï¿½ï¿½?ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½?ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 <b class="fc"><i>48</i>&nbsp;    public static class UserBuilder {</b>
-<i>49</i>&nbsp;        //äÇã
+<i>49</i>&nbsp;        //ï¿½ï¿½ï¿½
 <i>50</i>&nbsp;        private final String firstName;
-<i>51</i>&nbsp;        //äÇã ÎÇäæÇÏ?
+<i>51</i>&nbsp;        //ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï?
 <i>52</i>&nbsp;        private final String lastName;
-<i>53</i>&nbsp;        //Óä
+<i>53</i>&nbsp;        //ï¿½ï¿½
 <i>54</i>&nbsp;        private Integer age;
-<i>55</i>&nbsp;        //ÔãÇå ÊãÇÓ
+<i>55</i>&nbsp;        //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 <i>56</i>&nbsp;        private String phone;
-<i>57</i>&nbsp;        //äÔÇä?
+<i>57</i>&nbsp;        //ï¿½ï¿½ï¿½ï¿½?
 <i>58</i>&nbsp;        private String address;
 <i>59</i>&nbsp;
 <i>60</i>&nbsp;        /**
-<i>61</i>&nbsp;         * ãÊÏ ÓÇÒäÏå Builder Design Pattern
-<i>62</i>&nbsp;         * æä ã?ÎæÇå?ã åÑ Ïæ  İ?áÏåÇ? ÇÌÈÇÑ? äÇã æ äÇã ÎÇäæÇÏ? Èå ÕæÑÊ ÇÌÈÇÑ? Ñ ÔæäÏ ÂäåÇ ÑÇ ÏÑ ÊÇÈÚ ÓÇÒäÏå ˜áÇÓ UserBuilder ã? ÂæÑ?ã
-<i>63</i>&nbsp;         * ?Úä? ÈÏæä Ç?ä Ïæ İ?áÏ ÊÇÈÚ ÓÇÒäÏå Èå Ïä?Ç äã? Â?Ï
+<i>61</i>&nbsp;         * ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Builder Design Pattern
+<i>62</i>&nbsp;         * ï¿½ï¿½ï¿½ ï¿½?ï¿½ï¿½ï¿½ï¿½?ï¿½ ï¿½ï¿½ ï¿½ï¿½  ï¿½?ï¿½ï¿½ï¿½ï¿½? ï¿½ï¿½ï¿½ï¿½ï¿½? ï¿½ï¿½ï¿½ ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï? ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½? ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ UserBuilder ï¿½? ï¿½ï¿½ï¿½?ï¿½
+<i>63</i>&nbsp;         * ?ï¿½ï¿½? ï¿½ï¿½ï¿½ï¿½ ï¿½?ï¿½ ï¿½ï¿½ ï¿½?ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½?ï¿½ ï¿½ï¿½? ï¿½?ï¿½
 <i>64</i>&nbsp;         *
-<i>65</i>&nbsp;         * @param firstName äÇã
-<i>66</i>&nbsp;         * @param lastName  äÇã ÎÇäæÇÏ?
+<i>65</i>&nbsp;         * @param firstName ï¿½ï¿½ï¿½
+<i>66</i>&nbsp;         * @param lastName  ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï?
 <i>67</i>&nbsp;         */
 <b class="fc"><i>68</i>&nbsp;        public UserBuilder(String firstName, String lastName) {</b>
 <b class="fc"><i>69</i>&nbsp;            this.firstName = firstName;</b>
@@ -174,10 +174,10 @@
 <b class="fc"><i>71</i>&nbsp;        }</b>
 <i>72</i>&nbsp;
 <i>73</i>&nbsp;        /**
-<i>74</i>&nbsp;         * ãÊÏ Ê˜ã?á ˜ääÏå Builder Design Pattern ÈÑÇ? İ?áÏ Óä
+<i>74</i>&nbsp;         * ï¿½ï¿½ï¿½ Ê˜ï¿½?ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Builder Design Pattern ï¿½ï¿½ï¿½? ï¿½?ï¿½ï¿½ ï¿½ï¿½
 <i>75</i>&nbsp;         *
-<i>76</i>&nbsp;         * @param age Óä
-<i>77</i>&nbsp;         * @return ÎÑæÌ?: ÂÈÌ˜Ê ÓÇÒäÏå Ê˜ã?á ÔÏå ˜ÇÑÈÑ
+<i>76</i>&nbsp;         * @param age ï¿½ï¿½
+<i>77</i>&nbsp;         * @return ï¿½ï¿½ï¿½ï¿½?: ï¿½ï¿½Ì˜ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ê˜ï¿½?ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 <i>78</i>&nbsp;         */
 <i>79</i>&nbsp;        public UserBuilder age(Integer age) {
 <b class="fc"><i>80</i>&nbsp;            this.age = age;</b>
@@ -185,10 +185,10 @@
 <i>82</i>&nbsp;        }
 <i>83</i>&nbsp;
 <i>84</i>&nbsp;        /**
-<i>85</i>&nbsp;         * ãÊÏ Ê˜ã?á ˜ääÏå Builder Design Pattern ÈÑÇ? İ?áÏ Êáİä
+<i>85</i>&nbsp;         * ï¿½ï¿½ï¿½ Ê˜ï¿½?ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Builder Design Pattern ï¿½ï¿½ï¿½? ï¿½?ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 <i>86</i>&nbsp;         *
-<i>87</i>&nbsp;         * @param phone Êáİä
-<i>88</i>&nbsp;         * @return ÎÑæÌ?: ÂÈÌ˜Ê ÓÇÒäÏå Ê˜ã?á ÔÏå ˜ÇÑÈÑ
+<i>87</i>&nbsp;         * @param phone ï¿½ï¿½ï¿½ï¿½
+<i>88</i>&nbsp;         * @return ï¿½ï¿½ï¿½ï¿½?: ï¿½ï¿½Ì˜ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ê˜ï¿½?ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 <i>89</i>&nbsp;         */
 <i>90</i>&nbsp;        public UserBuilder phone(String phone) {
 <b class="fc"><i>91</i>&nbsp;            this.phone = phone;</b>
@@ -196,10 +196,10 @@
 <i>93</i>&nbsp;        }
 <i>94</i>&nbsp;
 <i>95</i>&nbsp;        /**
-<i>96</i>&nbsp;         * ãÊÏ Ê˜ã?á ˜ääÏå Builder Design Pattern ÈÑÇ? İ?áÏ äÔÇä?
+<i>96</i>&nbsp;         * ï¿½ï¿½ï¿½ Ê˜ï¿½?ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ Builder Design Pattern ï¿½ï¿½ï¿½? ï¿½?ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½?
 <i>97</i>&nbsp;         *
-<i>98</i>&nbsp;         * @param address Êáİä
-<i>99</i>&nbsp;         * @return ÎÑæÌ?: ÂÈÌ˜Ê ÓÇÒäÏå Ê˜ã?á ÔÏå ˜ÇÑÈÑ
+<i>98</i>&nbsp;         * @param address ï¿½ï¿½ï¿½ï¿½
+<i>99</i>&nbsp;         * @return ï¿½ï¿½ï¿½ï¿½?: ï¿½ï¿½Ì˜ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ê˜ï¿½?ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 <i>100</i>&nbsp;         */
 <i>101</i>&nbsp;        public UserBuilder address(String address) {
 <b class="fc"><i>102</i>&nbsp;            this.address = address;</b>
@@ -207,9 +207,9 @@
 <i>104</i>&nbsp;        }
 <i>105</i>&nbsp;
 <i>106</i>&nbsp;        /**
-<i>107</i>&nbsp;         * Ç?ä ãÊÏ ÇÒ ÓÇÒäÏå ˜áÇÓ ˜ÇÑÈÑ ÇÓÊİÇÏå ã?˜äÏ æ ØÈŞ Builder æÑæÏ? ?˜ ÂÈÌ˜Ê ˜ÇÑÈÑ Êæá?Ï æ ÎÑæÌ? ã?ÏåÏ
+<i>107</i>&nbsp;         * ï¿½?ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½?ï¿½ï¿½ï¿½ ï¿½ ï¿½ï¿½ï¿½ Builder ï¿½ï¿½ï¿½ï¿½? ?ï¿½ ï¿½ï¿½Ì˜ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½?ï¿½ ï¿½ ï¿½ï¿½ï¿½ï¿½? ï¿½?ï¿½ï¿½ï¿½
 <i>108</i>&nbsp;         *
-<i>109</i>&nbsp;         * @return ÎÑæÌ?: ÂÈÌ˜Ê ˜ÇÑÈÑ
+<i>109</i>&nbsp;         * @return ï¿½ï¿½ï¿½ï¿½?: ï¿½ï¿½Ì˜ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
 <i>110</i>&nbsp;         */
 <i>111</i>&nbsp;        public User build() {
 <b class="fc"><i>112</i>&nbsp;            User user = new User(this);</b>

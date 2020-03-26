@@ -37,9 +37,12 @@ public class AsyncControllerTest {
            String result=  this.restTemplate.getForObject("http://localhost:" + port + "/defaultExecutor/" +i.toString() , String.class);
             System.out.println("defaultExecutorTest: loop result:" + result);
         }
+        System.out.println("defaultExecutorTest: threadPoolTaskExecutor.getThreadPoolExecutor().getCorePoolSize():" + threadPoolTaskExecutor.getThreadPoolExecutor().getCorePoolSize()+ " " + sdf.format(new Date()));
+        System.out.println("defaultExecutorTest: threadPoolTaskExecutor.getThreadPoolExecutor().getMaximumPoolSize():" + threadPoolTaskExecutor.getThreadPoolExecutor().getMaximumPoolSize()+ " " + sdf.format(new Date()));
+        System.out.println("defaultExecutorTest: threadPoolTaskExecutor.getThreadNamePrefix():" + threadPoolTaskExecutor.getThreadNamePrefix()+ " " + sdf.format(new Date()));
+        System.out.println("defaultExecutorTest: [before-shutdown] threadPoolTaskExecutor.getThreadPoolExecutor():" + threadPoolTaskExecutor.getThreadPoolExecutor()+ " " + sdf.format(new Date()));
         threadPoolTaskExecutor.shutdown();
-        System.out.println("defaultExecutorTest: threadPoolTaskExecutor:" + threadPoolTaskExecutor + " " + sdf.format(new Date()));
-        System.out.println("defaultExecutorTest: threadPoolTaskExecutor.getThreadPoolExecutor():" + threadPoolTaskExecutor.getThreadPoolExecutor()+ " " + sdf.format(new Date()));
+        System.out.println("defaultExecutorTest: [after-shutdown] threadPoolTaskExecutor.getThreadPoolExecutor():" + threadPoolTaskExecutor.getThreadPoolExecutor()+ " " + sdf.format(new Date()));
         threadPoolTaskExecutor.getThreadPoolExecutor().awaitTermination(1000, TimeUnit.SECONDS);
         System.out.println("defaultExecutorTest: Test Finished " + sdf.format(new Date()));
         assertThat(true).isTrue();
