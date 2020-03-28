@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+//https://www.geeksforgeeks.org/flyweight-design-pattern/
 //https://www.javatpoint.com/flyweight-pattern
 //A Flyweight Pattern says that just "to reuse already existing similar kind of objects by storing them and create new object when no matching object is found".
 //یک الگوی Flyweight می گوید فقط "برای استفاده مجدد از اشیاء مشابه موجود از قبل با ذخیره کردن آنها و ایجاد جسم جدید در هنگام یافتن هیچ جسم مطابقت".
