@@ -8,8 +8,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-//https://www.javatpoint.com/mediator-pattern
 //https://howtodoinjava.com/design-patterns/behavioral/mediator-pattern/
+//https://www.javatpoint.com/mediator-pattern
 //A Mediator Pattern says that "to define an object that encapsulates how a set of objects interact".
 //I will explain the Mediator pattern by considering a problem.
 //When we begin with development, we have a few classes and these classes interact with each other producing results.
