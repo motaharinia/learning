@@ -13,6 +13,6 @@ public class InterceptorConfiguration extends WebMvcConfigurationSupport {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(interceptorCustom).addPathPatterns("/login");
+        registry.addInterceptor(interceptorCustom).addPathPatterns("/interceptingFilter/login");
     }
 }

@@ -15,25 +15,25 @@ public class InterceptorCustom implements HandlerInterceptor {
     private final String dbPassword = "admin@1234";
 
     @Override
-    public boolean preHandle(HttpServletRequest servletRequest, HttpServletResponse servletResponse, Object handler) throws Exception {
+    public boolean preHandle(HttpServletRequest httpRequest, HttpServletResponse httpResponse, Object handler) throws Exception {
         // پارامترهای فرم وب برای لاگین را از درخواست وب میخوانیم
-        String requestUsername = servletRequest.getParameter("username");
-        String requestPassword = servletRequest.getParameter("password");
+        String requestUsername = httpRequest.getParameter("username");
+        String requestPassword = httpRequest.getParameter("password");
         if (dbUsername.equals(requestUsername) && dbPassword.equals(requestPassword)) {
-            HttpSession session = servletRequest.getSession();
+            HttpSession session = httpRequest.getSession();
             session.setAttribute("user", "ashwani");
             //ست کردن تاریخ انقضای فرد لاگین شده برای یک ساعت
             session.setMaxInactiveInterval(60 * 60);
             Cookie userName = new Cookie("user", dbUsername);
             userName.setMaxAge(60 * 60);
-            servletResponse.addCookie(userName);
+            httpResponse.addCookie(userName);
             //خروجی تایید به اطلاعات لاگین در پاسخ وب
-            servletResponse.addHeader("response","Login success");
+            httpResponse.addHeader("response","Login success");
         } else {
             //خروجی رد اطلاعات لاگین در پاسخ وب
-            servletResponse.addHeader("response","Either user name or password is wrong.");
+            httpResponse.addHeader("response","Either username or password is wrong.");
         }
-        System.out.println("InterceptorCustom.preHandle servletRequest.getParameter('username'):" + servletRequest.getParameter("username") + " servletResponse.getHeader('response'):" + servletResponse.getHeader("response") );
+        System.out.println("InterceptorCustom.preHandle servletRequest.getParameter('username'):" + httpRequest.getParameter("username") + " servletResponse.getHeader('response'):" + httpResponse.getHeader("response") );
         return true;
     }
 
