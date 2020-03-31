@@ -10,6 +10,8 @@ public class InheritanceTest {
 
     //سگ
     Dog dog;
+    //سگبچه
+    BabyDog babyDog;
 
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
@@ -17,17 +19,28 @@ public class InheritanceTest {
     @BeforeEach
     void initUseCase() {
         dog = new Dog();
+        babyDog = new BabyDog();
     }
 
     /**
-     * این متد وراثت را تست میکند
+     * این متد وراثت Single را تست میکند
      */
     @Test
-    void inheritanceTest() {
+    void inheritanceSingleTest() {
         dog.eat();
         dog.bark();
         Assertions.assertEquals(5, dog.getEnergy());
     }
 
+    /**
+     * این متد وراثت Multilevel را تست میکند
+     */
+    @Test
+    void inheritanceMultilevelTest() {
+        babyDog.eat();
+        babyDog.bark();
+        babyDog.weep();
+        Assertions.assertEquals(3, dog.getEnergy());
+    }
 
 }
