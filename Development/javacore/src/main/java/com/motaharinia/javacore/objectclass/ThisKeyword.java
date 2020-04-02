@@ -14,14 +14,14 @@ package com.motaharinia.javacore.objectclass;
 // می تواند به عنوان یک آرگومان در فراخوانی متد منتقل شود.
 // می تواند به عنوان آرگومان در فراخوانی سازنده منتقل شود.
 //این می تواند برای بازگشت نمونه کلاس فعلی از طریق متد استفاده شود.
-public class This {
+public class ThisKeyword {
     Integer id;
 
-    public This() {
+    public ThisKeyword() {
         id = 1;
     }
 
-    public This(Integer id) {
+    public ThisKeyword(Integer id) {
 
         //invoke current class constructor
         // استناد به سازنده کلاس فعلی
@@ -44,26 +44,28 @@ public class This {
         this.id = this.id * 2;
     }
 
-    public void testPassArgument(This thisVar){
-        thisVar.id+=4;
+    public void testPassArgument(ThisKeyword thisVar) {
+        thisVar.id += 4;
     }
 }
 
 
-class This2{
-    This thisVar;
+class ThisKeyword2 {
+    ThisKeyword thisKeyword;
+
     /**
      * pass as argument in the constructor call.
      * به عنوان آرگومان در فراخوانی سازنده
-     * @param thisVar
+     *
+     * @param thisKeyword شی ورودی
      */
-    This2(This thisVar){
-        this.thisVar=thisVar;
+    ThisKeyword2(ThisKeyword thisKeyword) {
+        this.thisKeyword = thisKeyword;
     }
 
     //return the current class instance from the method
     //بازگشت نمونه کلاس فعلی از طریق متد
-    public This2 getMe(){
+    public ThisKeyword2 getMe() {
         return this;
     }
 }

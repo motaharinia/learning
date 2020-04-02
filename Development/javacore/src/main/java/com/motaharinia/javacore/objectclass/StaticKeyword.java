@@ -26,7 +26,7 @@ package com.motaharinia.javacore.objectclass;
 //No, one of the ways was the static block, but it was possible till JDK 1.6. Since JDK 1.7, it is not possible to execute a Java class without the main method.
 //آیا می توانیم یک برنامه را بدون متد main اجرا کنیم؟
 //نه ، یکی از راه ها بلوک استاتیک بود ، اما تا JDK 1.6 امکان پذیر بود. از JDK 1.7 ، اجرای یک کلاس جاوا بدون متد main امکان پذیر نیست.
-public class Static {
+public class StaticKeyword {
     //متغیر استاتیک
     public static Integer count = 0;
 
