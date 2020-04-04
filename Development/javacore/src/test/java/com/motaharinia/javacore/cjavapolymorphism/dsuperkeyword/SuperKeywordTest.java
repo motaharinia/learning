@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 //https://www.javatpoint.com/super-keyword
 public class SuperKeywordTest {
 
-    //شیی کلاس فرزند
+    //متغیر فرزند
     SuperKeywordChild superKeywordChild;
 
 
@@ -51,7 +51,7 @@ public class SuperKeywordTest {
     @Test
     void superKeywordParentConstructorTest() {
         superKeywordChild = new SuperKeywordChild(8);
-        Assertions.assertEquals(10, superKeywordChild.getSuperId());
+        Assertions.assertEquals(32, superKeywordChild.getSuperId());
     }
 
 }

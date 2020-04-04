@@ -20,20 +20,19 @@ package com.motaharinia.javacore.cjavapolymorphism.ffinalkeyword;
 // نه ، زیرا سازنده هرگز به ارث نمی رسد.
 public class FinalKeyword {
     //متغیر final
-    final Integer speedlimit = 10;
+    final Integer speedLimit = 10;
 
     //متد final
     //If you make any method as final, you cannot override it.
-    //اگر هر متدی را به final کنید ، نمی توانید آن را override کنید.
+    //اگر هر متدی را final کنید ، نمی توانید آن را override کنید.
     final public Integer makeDouble() {
-        return speedlimit * 2;
+        return speedLimit * 2;
     }
 
 
     //blank or uninitialized final variable
     //متغیر final خالی یا مقداردهی نشده که فقط در سازنده میتوان به آن مقداردهی اولیه کرد
     final Integer speedMinimum;
-
     FinalKeyword() {
         speedMinimum = 5;
     }
@@ -41,7 +40,6 @@ public class FinalKeyword {
     //blank or uninitialized static final variable
     //متغیر static final خالی یا مقداردهی نشده که قفط میتوان در بلاک سازنده استاتیک آن را مقداردهی اولیه کرد
     static final Integer staticData;
-
     static {
         staticData = 50;
     }
@@ -62,6 +60,8 @@ public class FinalKeyword {
 final class FinalClass {
 }
 
+
+
 class FinalKeywordChild extends FinalKeyword {
 
     //final method is inherited but you cannot override it
@@ -69,4 +69,5 @@ class FinalKeywordChild extends FinalKeyword {
     public Integer calculate() {
         return this.makeDouble() + 5;
     }
+
 }

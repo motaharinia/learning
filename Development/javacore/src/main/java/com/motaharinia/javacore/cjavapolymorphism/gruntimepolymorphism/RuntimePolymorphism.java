@@ -7,7 +7,7 @@ package com.motaharinia.javacore.cjavapolymorphism.gruntimepolymorphism;
 //If you overload a static method in Java, it is the example of compile time polymorphism. Here, we will focus on runtime polymorphism in java.
 //پلی مورفیسم در جاوا:
 //پلی مورفیسم در جاوا مفهومی است که توسط آن می توانیم یک عمل واحد را به روش های مختلف انجام دهیم.
-// پلی مورفیسم از 2 کلمه یونانی گرفته شده است: pol و morphs. کلمه "پلی" به معنی بسیاری است و "morphs" به معنای اشکال است. بنابراین چند شکل به معنای اشکال مختلف است.
+// پلی مورفیسم از 2 کلمه یونانی گرفته شده است: pol و morphs. کلمه "پلی" به معنی بسیاری است و "morphs" به معنای اشکال است. بنابراین polymorphism به معنای اشکال مختلف است.
 //در جاوا دو نوع پلی مورفیسم وجود دارد: پلی مورفیسم زمان کامپایل  و  پلی مورفیسم زمان اجرا. ما می توانیم با استفاده از روش overloading متد و overriding متد پلی مورفیسم در جاوا را انجام دهیم.
 //اگر یک متد استاتیک را در جاوا overload کنید ، نمونه ای از پلی مورفیسم زمان کامپایل است. در اینجا ، ما به پلی مورفیسم زمان اجرا در جاوا خواهیم پرداخت.
 //
@@ -30,7 +30,8 @@ package com.motaharinia.javacore.cjavapolymorphism.gruntimepolymorphism;
 
 public class RuntimePolymorphism {
     public Upcasting getUpcastingObject() {
-        Upcasting upcasting = new UpcastingChild();
+        UpcastingChild upcastingChild = new UpcastingChild();
+        Upcasting upcasting = upcastingChild;
         return upcasting;
     }
 }

@@ -33,7 +33,19 @@ public class SuperKeyword {
     public void makeDouble() {
         this.id = this.id * 2;
     }
+
+    /**
+     * سازنده
+     * @param id
+     */
+    public SuperKeyword(Integer id) {
+        this.id =id*4;
+    }
 }
+
+
+
+
 
 
 class SuperKeywordChild extends SuperKeyword {
@@ -83,6 +95,6 @@ class SuperKeywordChild extends SuperKeyword {
      * @param input ورودی
      */
     SuperKeywordChild(Integer input) {
-        super.id += input;
+        super(input);
     }
 }
