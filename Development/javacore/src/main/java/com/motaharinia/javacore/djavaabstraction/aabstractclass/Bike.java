@@ -5,7 +5,7 @@ package com.motaharinia.javacore.djavaabstraction.aabstractclass;
 //It can have abstract and non-abstract methods (method with the body).
 //It needs to be extended and its method implemented. It cannot be instantiated.
 //کلاس چکیده در جاوا:
-//کلاس که با کلمه کلیدی انتزاعی اعلام شده است ، به عنوان یک کلاس انتزاعی در جاوا شناخته می شود.
+//کلاس که با کلمه کلیدی abstract اعلام شده است ، به عنوان یک کلاس انتزاعی در جاوا شناخته می شود.
 //می تواند دارای متدهای انتزاعی و غیر انتزاعی باشد (متد با بدنه).
 //باید extend شود و متد آن پیاده سازی شود. نمی توان آنرا نمونه گیری کرد.
 //
@@ -80,7 +80,7 @@ public abstract class Bike implements MovementDevice {
      * Abstract Method in Java:
      * A method which is declared as abstract and does not have implementation is known as an abstract method.
      * متد چکیده در جاوا:
-     * متدی که به عنوان انتزاعی اعلام شده و پیاده سازی شده نیست ، به عنوان یک متد انتزاعی شناخته می شود.
+     * متدی که به عنوان abstract اعلام شده و پیاده سازی شده نیست ، به عنوان یک متد انتزاعی شناخته می شود.
      * @return خروجی: نتیجه
      */
     public abstract String run();

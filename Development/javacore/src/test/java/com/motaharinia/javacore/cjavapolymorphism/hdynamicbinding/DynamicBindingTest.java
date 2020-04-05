@@ -22,7 +22,8 @@ public class DynamicBindingTest {
      */
     @Test
     void dynamicBindingTest() {
-        Assertions.assertEquals("ChildOverriddenWalk(DynamicBinding)", dynamicBindingChild.walk());
+//        Assertions.assertEquals(DynamicBindingChild, dynamicBindingChild.walk());
+        Assertions.assertTrue(dynamicBindingChild.walk() instanceof DynamicBindingChild);
     }
 
 }

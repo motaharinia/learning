@@ -34,15 +34,16 @@ package com.motaharinia.javacore.cjavapolymorphism.hdynamicbinding;
 //اتصال پویا:
 // وقتی نوع شی در زمان اجرا مشخص می شود ، به عنوان اتصال پویا شناخته می شود.
 public class DynamicBinding {
+    private String id;
     //static binding:
     private String eat(){return("ParentPrivateEat(StaticBinding)");}
 
-    public String walk(){return("ParentProtectedWalk");}
+    public DynamicBinding walk(){return new DynamicBinding();}
 }
 
 
 class DynamicBindingChild extends  DynamicBinding{
-
+     private Integer id;
     //Dynamic binding:
-    public String walk(){return("ChildOverriddenWalk(DynamicBinding)");}
+    public DynamicBindingChild walk(){return new DynamicBindingChild();}
 }

@@ -7,9 +7,9 @@ package com.motaharinia.javacore.djavaabstraction.binterface;
 //توجه: یک رابط می تواند یک رابط دیگر داشته باشد که به عنوان یک رابط تودرتو شناخته می شود.
 //ما آن را با جزئیات در فصل کلاس های تو در تو می آموزیم.
 public interface Nested {
-    void message();
+    String messageNested();
 
     interface NestedChild {
-        void messageChild();
+        String messageNestedChild();
     }
 }

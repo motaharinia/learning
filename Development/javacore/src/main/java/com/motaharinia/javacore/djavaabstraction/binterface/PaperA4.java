@@ -1,6 +1,6 @@
 package com.motaharinia.javacore.djavaabstraction.binterface;
 
-public class PaperA4 implements PrintableA4,Previewable,Showable,Drawable {
+public class PaperA4 implements PrintableA4, Previewable, Showable, Drawable, Nested.NestedChild {
     /**
      * پیش نمایش
      *
@@ -18,7 +18,7 @@ public class PaperA4 implements PrintableA4,Previewable,Showable,Drawable {
      */
     @Override
     public String setPrinterSize() {
-        return null;
+        return "InheritanceInterfaceSetPrinterSize";
     }
 
     /**
@@ -29,5 +29,10 @@ public class PaperA4 implements PrintableA4,Previewable,Showable,Drawable {
     @Override
     public String print() {
         return null;
+    }
+
+    @Override
+    public String messageNestedChild() {
+        return "messageNestedChild";
     }
 }
