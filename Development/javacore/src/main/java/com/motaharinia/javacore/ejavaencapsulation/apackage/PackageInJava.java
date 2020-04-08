@@ -31,7 +31,7 @@ package com.motaharinia.javacore.ejavaencapsulation.apackage;
 //Now there is no need to import. But you need to use fully qualified name every time when you are accessing the class or interface.
 //It is generally used when two packages have same class name e.g. java.util and java.sql packages contain Date class.
 //چگونه از پکیج دیگری دسترسی داشته باشیم؟
-//سه روش برای دسترسی به پکیج بندی از خارج از بسته وجود دارد.
+//سه روش برای دسترسی به پکیج بندی از خارج از پکیج وجود دارد.
 //1)import package.*:
 // اگر از package.*  استفاده می کنید. در این صورت تمام کلاس ها و رابط های این پکیج در دسترس خواهند بود اما به صورت زیر پکیج نیستند.
 // کلید واژه import برای ایجاد کلاس ها و رابط پکیج دیگری که در دسترس پکیج فعلی است استفاده می شود.

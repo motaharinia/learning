@@ -16,6 +16,8 @@
 
     <properties>
         <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <dependencies>
@@ -27,13 +29,28 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
+<!--            <scope>test</scope>-->
             <exclusions>
                 <exclusion>
                     <groupId>org.junit.vintage</groupId>
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+
+        <!-- use of unitils for assertReflectionEquals two object by their properties-->
+        <dependency>
+            <groupId>org.unitils</groupId>
+            <artifactId>unitils-core</artifactId>
+            <version>3.4.2</version>
+<!--            <scope>test</scope>-->
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.reporting</groupId>
+            <artifactId>maven-reporting-api</artifactId>
+            <version>3.0</version>
         </dependency>
     </dependencies>
 
@@ -42,6 +59,27 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <show>private</show>  <!--javadoc shows all classes and members-->
+                    <!--                    <quiet>true</quiet>-->
+                    <failOnWarnings>false</failOnWarnings>
+                    <failOnError>true</failOnError>
+                    <encoding>UTF-8</encoding>
+                    <sourcepath>src</sourcepath>
+                    <reportOutputDirectory>${project.build.directory}/myoutput</reportOutputDirectory>
+                    <destDir>docs</destDir>
+                    <includeDependencySources>true</includeDependencySources>
+                    <dependencySourceExcludes>
+                        <!-- exclude ONLY commons-cli artifacts -->
+                        <dependencySourceExclude>commons-cli:*</dependencySourceExclude>
+                    </dependencySourceExcludes>
+                </configuration>
             </plugin>
         </plugins>
     </build>

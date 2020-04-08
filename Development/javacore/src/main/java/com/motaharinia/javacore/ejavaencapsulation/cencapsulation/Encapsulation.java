@@ -5,7 +5,7 @@ package com.motaharinia.javacore.ejavaencapsulation.cencapsulation;
 //We can create a fully encapsulated class in Java by making all the data members of the class private.
 //Now we can use setter and getter methods to set and get the data in it.
 //The Java Bean class is the example of a fully encapsulated class.
-//كپسوله كردن در جاوا فرايند بسته كردن كد و داده ها در يك واحد واحد است ، براي مثال ، يك كپسول كه از چند دارو مخلوط مي شود.
+//كپسوله كردن در جاوا فرايند بسته كردن كد و داده ها در يك واحد است ، براي مثال ، يك كپسول كه از چند دارو مخلوط مي شود.
 //با خصوصی سازی تمام اعضای داده کلاس می توانیم یک کلاس کاملاً محصور در جاوا ایجاد کنیم.
 //اکنون می توانیم از متد های setter و getter برای تنظیم و دریافت داده ها در آن استفاده کنیم.
 //کلاس Java Bean نمونه ای از کلاس کاملاً محصور شده است.
