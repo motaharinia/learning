@@ -21,7 +21,7 @@ public class NestedTryBlockTest {
     }
 
     /**
-     * این متد MultipleCatch در مدیریت Exception ها را تست میکند
+     * این متد NestedTryBlock در مدیریت Exception ها را تست میکند
      */
     @Test
     void nestedTryBlockTest() {

@@ -20,7 +20,7 @@ public class FinallyBlockTest {
     }
 
     /**
-     * این متد finallyBlockTest در مدیریت Exception ها را تست میکند
+     * این متد FinallyBlock در مدیریت Exception ها را تست میکند
      */
     @Test
     void finallyBlockTest() {

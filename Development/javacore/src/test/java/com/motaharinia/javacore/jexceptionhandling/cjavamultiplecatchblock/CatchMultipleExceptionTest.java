@@ -18,7 +18,7 @@ public class CatchMultipleExceptionTest {
     }
 
     /**
-     * این متد MultipleCatch را در مدیریت Exception ها را تست میکند
+     * این متد CatchMultiple در مدیریت Exception ها را تست میکند
      */
     @Test
     void catchMultipleExceptionTest() {
