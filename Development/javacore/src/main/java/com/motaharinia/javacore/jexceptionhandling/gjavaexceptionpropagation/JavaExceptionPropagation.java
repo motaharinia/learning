@@ -30,9 +30,9 @@ public class JavaExceptionPropagation {
     }
 
 
-    //این قسمت خطای کامپایل خواهد داشت چون خود جاوا خطاهای checked Exception را propagate نمیکند
-    //مگر اینکه ما در انتهای متدها آن را به صورت زیر تعریف کنیم
-    //throws Exception
+//    //این قسمت خطای کامپایل خواهد داشت چون خود جاوا خطاهای checked Exception را propagate نمیکند
+//    //مگر اینکه ما در انتهای متدها آن را به صورت زیر تعریف کنیم
+//    //throws Exception
 //    private Integer checkedIoMethod3() {
 //        throw new java.io.IOException("device error");//checked exception (compile time error)
 //    }

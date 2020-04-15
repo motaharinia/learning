@@ -11,7 +11,7 @@ package com.motaharinia.javacore.jexceptionhandling.jfinalvsfinallyvsfinalize;
  * 2)	Final is a keyword.	Finally is a block.	Finalize is a method.
  * تفاوت های زیادی بین final ، finally و finalize وجود دارد.
  * لیست تفاوت های final ، finally و finalize در زیر آورده شده است:
- * 1) کلمه Final برای اعمال محدودیت در کلاس ، متد و متغیر استفاده می شود.
+ * 1) از کلمه Final برای اعمال محدودیت در کلاس ، متد و متغیر استفاده می شود.
  * کلاس Final قابل ارث بری نیست ، متد Final قابل حذف نیست و مقدار متغیر Final قابل تغییر نیست.
  * بلوک Finally برای قرار دادن کد مهم استفاده می شود ، اجرا خواهد شد که آیا استثناء تحت کنترل است یا نه.
  * متد Finalize برای انجام عملیات تمیز کردن درست قبل از جمع آوری زباله مورد استفاده قرار می گیرد.

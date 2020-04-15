@@ -18,12 +18,12 @@ import java.io.IOException;
  * مدیریت استثناء عمدتاً برای رسیدگی به استثنائات بررسی شده استفاده می شود.
  * در صورت بروز هر گونه استثناء بدون بررسی مانند NullPointerException ،
  * این تقصیر برنامه نویسان است که وی قبل از استفاده از کد ، چک را انجام نمی دهد.
- * <p>
+ *
  * Syntax of java throws:
  * return_type method_name() throws exception_class_name{
  * //method code
  * }
- * <p>
+ *
  * Which exception should be declared
  * checked exception only, because:
  * unchecked Exception: under your control so correct your code.
@@ -32,14 +32,14 @@ import java.io.IOException;
  * استثناء بررسی شده ، زیرا:
  * استثنا کنترل نشده: تحت کنترل کد خودتان است کد را اصلاح کنید.
  * خطا: فراتر از کنترل شما است به عنوان مثال در صورت بروز VirtualMachineError یا StackOverflowError قادر به انجام کاری نیستید.
- * <p>
+ *
  * Advantage of Java throws keyword
  * Now Checked Exception can be propagated (forwarded in call stack).
  * It provides information to the caller of the method about the exception.
  * مزیت کلمه کلیدی throws جاوا:
  * اکنون استثنای Checked می تواند propagate شود (در call stack  ارسال می شود).
  * اطلاعات مربوط به استثناء را به فراخوانی کننده متد ارائه می دهد.
- * <p>
+ *
  * There are two cases:
  * Case1: You caught the exception i.e. handle the exception using try/catch:
  * In case you handle the exception, the code will be executed fine whether exception occurs during the program or not.
@@ -52,7 +52,7 @@ import java.io.IOException;
  * حالت2: شما استثنا را اعلام می کنید ، یعنی مشخص کردن پرتاب ها با متد:
  * الف) در صورت اعلام استثنا ، اگر استثنائی رخ ندهد ، کد به خوبی اجرا می شود.
  * ب) در صورت اعلام استثناء در صورت وقوع استثنا ، استثناء در زمان اجرا پرتاب می شود زیرا throws استثناء را مدیریت نمی کند.
- * <p>
+ *
  * Can we rethrow an exception?
  * Yes, by throwing same exception in catch block.
  * آیا می توانیم یک استثنا را دوباره پرتاب مجدد کنیم؟

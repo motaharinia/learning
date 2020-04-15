@@ -7,7 +7,7 @@ package com.motaharinia.javacore.jexceptionhandling.fjavathrowkeyword;
  * The throw keyword is mainly used to throw custom exception. We will see custom exceptions later.
  * Let's see the example of throw IOException:
  * throw new IOException("sorry device error");
- * کلمه کلیدی throw جاوا برای صراحت استثناء استفاده می شود.
+ * کلمه کلیدی throw جاوا برای پرتاب صریح استثناء استفاده می شود.
  * ما می توانیم با استفاده از کلیدواژه throw، استثناء بررسی شده یا بدون بررسی را در جاوا پرتاب کنیم.
  * کلمه کلیدی throw عمدتاً برای پرتاب استثناء سفارشی استفاده می شود. بعدا استثنائات سفارشی را خواهیم دید.
  * بیایید نمونه پرتاب IOException را ببینید:

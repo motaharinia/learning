@@ -10,7 +10,7 @@ package com.motaharinia.javacore.jexceptionhandling.ijavathrowvsthrows;
  * 5)	You cannot throw multiple exceptions.	You can declare multiple exceptions e.g.
  * public void method()throws IOException,SQLException.
  * 1) کلمه کلیدی throw جاوا برای پرتاب استثناء به صورت شفاف استفاده می شود. کلیدواژه throws جاوا برای تعریف استثناء استفاده می شود.
- * 2) استثناء بررسی شده فقط با throw نمیتواند propagated شود. استثناء بررسی شده با throws میتواند propagated شود.
+ * 2) استثناء بررسی شده با throw نمیتواند propagated شود. استثناء بررسی شده با throws میتواند propagated شود.
  * 3) یک Throw توسط یک نمونه شیی دنبال می شود. Throws توسط کلاس دنبال می شوند.
  * 4) یک Throw در داخل متد استفاده می شود. Throws با امضای متد استفاده می شود.
  * 5) شما نمی توانید استثنائات متعدد را پرتاب کنید. شما می توانید استثنائات متعدد را اعلام کنید مثال:.
