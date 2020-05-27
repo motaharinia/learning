@@ -12,12 +12,12 @@
     <artifactId>javacore</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>javacore</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Motaharinia-Sample JavaCore</description>
 
     <properties>
-        <java.version>1.9</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>13</java.version>
     </properties>
 
     <dependencies>

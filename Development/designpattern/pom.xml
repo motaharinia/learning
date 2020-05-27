@@ -12,7 +12,7 @@
     <artifactId>designpattern</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>designpattern</name>
-    <description>design pattern</description>
+    <description>Motaharinia-Sample DesignPattern</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
