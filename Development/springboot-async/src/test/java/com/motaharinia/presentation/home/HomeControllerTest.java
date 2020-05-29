@@ -1,5 +1,7 @@
 package com.motaharinia.presentation.home;
 
+import com.motaharinia.presentation.model.UserModel;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,7 +22,7 @@ class HomeControllerTest {
 
     @Test
     public void home() throws Exception {
-        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/", String.class))
+        assertThat(this.restTemplate.getForObject("http://localhost:" + port + "/users", String.class))
                 .contains("Home");
     }
 
