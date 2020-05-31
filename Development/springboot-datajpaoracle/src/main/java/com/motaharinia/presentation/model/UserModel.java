@@ -54,4 +54,16 @@ public class UserModel {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+
+    @Override
+    public String toString() {
+        return "UserModel{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
+    }
 }

@@ -25,10 +25,10 @@ package com.motaharinia.springandboot.kspringbootstarterweb;
  * The single spring-boot-starter-web dependency transitively pulls in all dependencies related to web development.
  * It also reduces the build dependency count.
  * The spring-boot-starter-web transitively depends on the following:
- * شروع کننده وب  Spring Spring از Spring MVC ، REST و Tomcat به عنوان سرور جاسازی شده پیش فرض استفاده می کند.
+ * شروع کننده وب  Spring  از Spring MVC ، REST و Tomcat به عنوان سرور جاسازی شده پیش فرض استفاده می کند.
  * وابستگیspring-boot-starter-web به تنهایی وابستگی های وابسته به توسعه وب را به خود جلب می کند.
  * همچنین تعداد وابستگی ساخت را کاهش می دهد.
- * یک spring-boot-starter-web به طور گذرا به موارد زیر بستگی دارد:
+ * یک spring-boot-starter-web به طور گذرا به موارد زیر وابستگی دارد:
  * 1. org.springframework.boot:spring-boot-starter
  * 2. org.springframework.boot:spring-boot-starter-tomcat
  * 3. org.springframework.boot:spring-boot-starter-validation
@@ -71,7 +71,7 @@ package com.motaharinia.springandboot.kspringbootstarterweb;
  * سرور جاسازی شده به عنوان بخشی از برنامه قابل استقرار تعبیه شده است.
  * مزیت سرور تعبیه شده این است که ما نیازی به سرور از پیش نصب شده در محیط نداریم.
  * با Spring Boot ، سرور تعبیه شده پیش فرض Tomcat است.
- * Boot Spring همچنین از دو سرور تعبیه شده دیگر پشتیبانی می کند:
+ * اسپریمگ بوت همچنین از دو سرور تعبیه شده دیگر پشتیبانی می کند:
  * 1. سرور Jetty
  * 2. سرور Undertow
  *
@@ -79,7 +79,7 @@ package com.motaharinia.springandboot.kspringbootstarterweb;
  * Using another embedded web server:
  * For servlet stack applications, the spring-boot-starter-web includes Tomcat by including spring-boot-starter-tomcat, but we can use spring-boot-starter-jetty or spring-boot-starter-undertow instead.
  * For reactive stack applications, the spring-boot-starter-webflux includes Reactor Netty by including spring-boot-starter-reactor-netty, but we can use spring-boot-starter-tomcat, spring-boot-starter-jetty, or spring-boot-starter-undertow instead.
- *با استفاده از یک سرور وب جاسازی شده دیگر:
+ * استفاده از یک سرور وب جاسازی شده دیگر:
  * برای برنامه های کاربردی پشته servlet ،spring-boot-starter-web شامل Tomcat توسط spring-boot-starter-tomcat است ، اما به جای آن می توانیم ازspring-boot-starter-jetty  یاspring-boot-starter-undertow استفاده کنیم.
  * برای برنامه های کاربردی پشته واکنشی ، spring-boot-starter-webflux  شامل Reactor Netty با شامل spring-boot-starter-reactor-netty است ، اما می توانیم از spring-boot-starter-jetty، spring-boot-starter-tomcat یا به جای آن ، از spring-boot-starter-undertow استفاده کنیم.
  *
