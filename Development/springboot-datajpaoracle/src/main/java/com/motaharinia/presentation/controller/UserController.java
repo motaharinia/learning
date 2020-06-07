@@ -1,5 +1,6 @@
 package com.motaharinia.presentation.controller;
 
+import com.motaharinia.base.presentation.model.GridDataModel;
 import com.motaharinia.base.presentation.model.GridFilterModel;
 import com.motaharinia.business.service.UserGrid1View;
 import com.motaharinia.business.service.UserService;
@@ -14,8 +15,12 @@ import java.util.List;
 @RestController
 public class UserController {
 
+    private final UserService userService;
+
     @Autowired
-    UserService userService;
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     //method that posts a new user detail
     @PostMapping("/user")
@@ -25,7 +30,7 @@ public class UserController {
 
     //retrieves a specific user detail
     @GetMapping("/user/{id}")
-    public UserModel findOne(@PathVariable Long id) {
+    public UserModel findOne(@PathVariable Integer id) {
         return userService.findOne(id);
     }
 
@@ -34,15 +39,14 @@ public class UserController {
         return userService.findAll(gridFilterModel);
     }
 
-
-    @DeleteMapping("/students/{id}")
-    public UserModel deleteStudent(@PathVariable Long id) {
+    @DeleteMapping("/user/{id}")
+    public UserModel delete(@PathVariable Integer id) {
         return userService.delete(id);
     }
 
 
     @GetMapping("/user/firstName/{firstName}")
-    public List<Object[]> findUserByFirstName(@PathVariable String firstName) {
-        return userService.findUserByFirstName(firstName);
+    public GridDataModel listGrid(@PathVariable String firstName) {
+        return userService.listGrid(firstName);
     }
 }

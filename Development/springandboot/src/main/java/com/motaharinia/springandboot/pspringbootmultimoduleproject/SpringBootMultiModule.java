@@ -90,7 +90,7 @@ package com.motaharinia.springandboot.pspringbootmultimoduleproject;
  * این دو ماژول حاوی پرونده های pom مخصوص به خود هستند.
  *
  * When we create multi-module project, we need to configure packaging pom in the parent pom file instead of jar.
- * وقتی پروژه چند ماژولایی را ایجاد می کنیم ، لازم است بسته های pom را در پرونده والدین pom به جای jar پیکربندی کنیم.
+ * وقتی پروژه چند ماژولی را ایجاد می کنیم ، لازم است بسته های pom را در پرونده والدین pom به جای jar پیکربندی کنیم.
  * <packaging>pom</packaging>
  *
  * When we create Maven Modules in the project, Spring Boot automatically configures the modules in the parent pom inside the module tag, as shown below.

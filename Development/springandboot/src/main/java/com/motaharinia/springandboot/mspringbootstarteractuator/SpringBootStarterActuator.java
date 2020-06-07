@@ -10,7 +10,7 @@ package com.motaharinia.springandboot.mspringbootstarteractuator;
  * We can use HTTP and JMX endpoints to manage and monitor the Spring Boot application.
  * If we want to get production-ready features in an application, we should use the Spring Boot actuator.
  * محرک اسپرینگ بوت:
- * یک Spring Boot Actuator یک پروژه فرعی از چارچوب بهار چکمه است.
+ * یک Spring Boot Actuator یک پروژه فرعی از چارچوب اسپرینگ بوت است.
  * این شامل تعدادی از ویژگی های اضافی است که به ما در نظارت و مدیریت برنامه Spring Boot کمک می کند.
  * این شامل نقاط انتهایی محرک (مکانی است که منابع در آن زندگی می کنند).
  * ما می توانیم از نقاط پایانی HTTP و JMX برای مدیریت و نظارت بر برنامه Spring Boot استفاده کنیم.

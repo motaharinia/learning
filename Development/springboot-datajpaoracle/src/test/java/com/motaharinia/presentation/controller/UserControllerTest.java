@@ -1,6 +1,7 @@
 package com.motaharinia.presentation.controller;
 
 
+import com.motaharinia.base.presentation.model.GridDataModel;
 import com.motaharinia.business.service.UserGrid1View;
 import com.motaharinia.presentation.model.UserModel;
 import org.junit.jupiter.api.*;
@@ -12,7 +13,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -35,7 +38,7 @@ public class UserControllerTest {
     /**
      * شیی crud
      */
-    private UserModel userModel=new UserModel();
+    private static Integer crudId;
 
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
@@ -51,24 +54,24 @@ public class UserControllerTest {
         String uri="http://localhost:" + port + "/user";
         Map<String, String> variableHashMap = new HashMap<String, String>();
 
-        this.userModel = new UserModel();
-        this.userModel.setFirstName("Mostafa");
-        this.userModel.setLastName("Motaharinia");
-        this.userModel.setPassword("123456789");
-        this.userModel.setUsername("eng.motahari@gmail.com");
+        UserModel userModel = new UserModel();
+        userModel.setFirstName("Mostafa");
+        userModel.setLastName("Motaharinia");
+        userModel.setPassword("123456789");
+        userModel.setUsername("eng.motahari@gmail.com");
 
-        this.userModel = restTemplate.postForObject(uri, this.userModel, UserModel.class, variableHashMap);
-        System.out.println("create this.userModel.toString():"+ this.userModel.toString());
-        assertThat(this.userModel.getId()).isNotEqualTo(null);
+        userModel = restTemplate.postForObject(uri, userModel, UserModel.class, variableHashMap);
+        System.out.println("create userModel.toString():"+ userModel.toString());
+        crudId=userModel.getId();
+        assertThat(userModel.getId()).isNotEqualTo(null);
     }
 
     @Test
     @Order(2)
     public void findOne() throws Exception {
-        System.out.println("findOne this.userModel.toString():"+ this.userModel.toString());
-        String uri="http://localhost:" + port + "/user/"+this.userModel.getId();
+        String uri="http://localhost:" + port + "/user/"+crudId;
         UserModel resultModel = restTemplate.getForObject(uri, UserModel.class);
-        assertThat(resultModel.getId()).isEqualTo(this.userModel.getId());
+        assertThat(resultModel.getId()).isEqualTo(crudId);
     }
 
 //    @Test
@@ -76,15 +79,17 @@ public class UserControllerTest {
 //    public void findAll() throws Exception {
 //        String uri="http://localhost:" + port + "/user";
 //        Page<UserModel> userModelPage = restTemplate.getForObject(uri, Page.class);
-//        assertThat(userModelPage.getContent()).contains(this.userModel);
+//        assertThat(userModelPage.getContent()).contains(userModel);
 //    }
 
     @Test
     @Order(4)
-    public void findUserByFirstName() throws Exception {
-        System.out.println("findUserByFirstName this.userModel.toString():"+ this.userModel.toString());
-        String uri="http://localhost:" + port + "/user/firstName/" + this.userModel.getFirstName();
-        UserGrid1View userGrid1View = restTemplate.getForObject(uri, UserGrid1View.class);
-        assertThat(userGrid1View.getFirstName()).contains(this.userModel.getFirstName());
+    public void listGrid() throws Exception {
+        String uri="http://localhost:" + port + "/user/firstName/Mostafa";
+        GridDataModel gridDataModel = restTemplate.getForObject(uri, GridDataModel.class);
+        List<Object[]> listArray =gridDataModel.getModelList();
+        listArray.stream().forEach(array-> System.out.println(array[0].getClass().getName()));
+        List<Integer> idList = listArray.stream().map(array->(Integer)array[0]).collect(Collectors.toList());
+        assertThat(idList).contains(crudId);
     }
 }

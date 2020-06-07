@@ -1,5 +1,6 @@
 package com.motaharinia.business.service;
 
+import com.motaharinia.base.presentation.model.GridDataModel;
 import com.motaharinia.base.presentation.model.GridFilterModel;
 import com.motaharinia.persistence.orm.user.User;
 import com.motaharinia.persistence.orm.user.UserRepository;
@@ -58,9 +59,15 @@ public class UserServiceImpl implements  UserService {
     }
     
     @Override
-    public UserModel findOne(Long  id) {
+    public UserModel findOne(Integer  id) {
     User user= userRepository.findById(id).get();
-    UserModel  userModel= (UserModel) SerializationUtils.clone(user);
+        UserModel  userModel= new UserModel();
+        userModel.setId(user.getId());
+        userModel.setUsername(user.getUsername());
+        userModel.setFirstName(user.getFirstName());
+        userModel.setLastName(user.getLastName());
+        userModel.setPassword(user.getPassword());
+//    UserModel  userModel= (UserModel) SerializationUtils.clone(user);
         return userModel;
     }
 
@@ -76,18 +83,25 @@ public class UserServiceImpl implements  UserService {
     }
 
     @Override
-    public UserModel delete(Long id) {
+    public UserModel delete(Integer id) {
         UserModel  userModel=this.findOne(id);
         userRepository.deleteById(id);
         return userModel;
     }
 
     @Override
-    public List<Object[]> findUserByFirstName(String firstName) {
+    public List<UserGrid1View> view1(String firstName) {
+        List<UserGrid1View> viewList= userRepository.findAllUserByFirstName(firstName);
+        viewList.stream().forEach(item-> System.out.println(item.getFirstName()));
+        return viewList;
+    }
+
+    @Override
+    public GridDataModel listGrid(String firstName) {
         System.out.println("findUserByFirstName firstName:" + firstName);
-        List<Object[]> result = userRepository.findUserListByFirstName(firstName);
+        List<Object[]> result = userRepository.listGrid(firstName);
         System.out.println("findUserByFirstName result:" + result);
-        return result;
+        return new GridDataModel(result);
     }
 
 

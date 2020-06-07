@@ -28,15 +28,8 @@ public class GridDataModel {
         });
     }
 
-    public GridDataModel(Page page) {
-        List<Object> userModelList = new ArrayList<>();
-        Page<UserModel> userModelPage = page.map(new Function<User, UserModel>() {
-            @Override
-            public UserModel apply(User entity) {
-                UserModel model = (UserModel) SerializationUtils.clone(entity);
-                return model;
-            }
-        });
+    public GridDataModel(List<Object[]> modelList) {
+        this.setModelList(modelList);
     }
 
     //getter-setter:

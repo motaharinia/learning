@@ -11,10 +11,9 @@ import java.util.List;
 
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Integer> {
 
-//    @Query("select u from User u where u.firstName = ?1")
-//    List<UserGrid1View> findUserByFirstName(String firstName);
+    List<UserGrid1View> findAllUserByFirstName(String firstName);
 
 //    User findUserByUsername(String username);
 //    User findUserById(Integer id);
@@ -25,8 +24,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //    public List<Object[]> getLastMonthLoans(@Param("fsp")Fsp fsp,@Param("fromDate")LocalDate fromDate,@Param("toDate") LocalDate toDate);
 
 
-    @Query("select obj.firstName,obj.lastName from User obj where obj.firstName= :firstName")
-    public List<Object[]> f1(@Param("firstName")String firstName);
+    @Query("select obj.id,obj.firstName,obj.lastName from User obj where obj.firstName= :firstName")
+    public List<Object[]> listGrid(@Param("firstName")String firstName);
 
     public User findByLastNameLikeAndFirstNameStartingWith(String lastName,String firstName);
 

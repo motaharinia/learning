@@ -22,7 +22,7 @@ package com.motaharinia.springandboot.ospringbootdevtools;
  *
  * Spring Boot DevTools Features
  * Spring Boot DevTools provides the following features:
- * ویژگی های بوت بهار DevTools
+ * ویژگی های  Spring Boot DevTools
  * Spring Boot DevTools ویژگی های زیر را ارائه می دهد:
  * 1. Property Defaults:
  * Spring Boot provides templating technology Thymeleaf that contains the property spring.thymeleaf.cache.
@@ -31,13 +31,13 @@ package com.motaharinia.springandboot.ospringbootdevtools;
  * When we use the spring-boot-devtools module, we are not required to set properties.
  * During the development caching for Thymeleaf, Freemarker, Groovy Templates are automatically disabled.
  * Note: If we do not want to apply property defaults on an application, we can set configprop:spring.devtools.add-properties[] to false in the application.properties file.
- * 1. پیش فرض دارایی:
+ * 1. پیش فرض Property:
  * اسپرینگ بوت Thymeleaf را ارائه می دهد که حاوی خاصیت Spring.thymeleaf.cache است.
  * این حافظه پنهان را غیرفعال می کند و به ما امکان می دهد صفحات را بدون نیاز به راه اندازی مجدد برنامه به روز کنیم.
  * اما تنظیم این خصوصیات در حین توسعه همیشه برخی از مشکلات را به وجود می آورد.
  * وقتی از ماژول spring-boot-devtools استفاده می کنیم ، نیازی به تنظیم ویژگی ها نداریم.
  * در حین ذخیره سازی توسعه برای Thymeleaf ، Freemarker ، Groovy Templates بطور خودکار غیرفعال می شود.
- * توجه: اگر نمی خواهیم پیش فرض دارایی را در یک برنامه اعمال کنیم ، می توانیم پیکربندی: Spring.devtools.add-Properties [] را در پرونده Application.properties غلط تنظیم کنیم.
+ * توجه: اگر نمی خواهیم پیش فرض Property را در یک برنامه اعمال کنیم ، می توانیم پیکربندی: Spring.devtools.add-Properties [] را در پرونده Application.properties غلط تنظیم کنیم.
  *
  * 2. Automatic Restart:
  * Auto-restart means reloading of Java classes and configure it at the server-side.
@@ -61,18 +61,18 @@ package com.motaharinia.springandboot.ospringbootdevtools;
  * پس از تغییر سمت سرور ، به صورت پویا مستقر می شود ، راه اندازی مجدد سرور اتفاق می افتد و کد اصلاح شده را بارگیری می کنید.
  * بیشتر در برنامه های مبتنی بر میکروسرویس استفاده می شود.
  * اسپرینگ بوت از دو نوع ClassLoaders استفاده می کند:
- * کلاس هایی که تغییر نمی کنند (جارس سوم) در کلاس ClassLoader بارگیری می شوند.
+ * کلاس هایی که تغییر نمی کنند (third-Jars) در کلاس ClassLoader بارگیری می شوند.
  * کلاس هایی که ما به طور فعال در حال توسعه هستیم در ClassLoader مجدداً بارگیری می شود.
- * با شروع مجدد برنامه ، راه اندازی مجدد ClassLoader دور ریخته می شود ، و یک مورد جدید پرجمعیت می شود.
- * بنابراین ، پایه ClassLoader همیشه در دسترس و پر جمعیت است.
+ * با شروع مجدد برنامه ، راه اندازی مجدد ClassLoader دور ریخته می شود ، و یک مورد جدیدگشترش می یابد.
+ * بنابراین ، پایه ClassLoader همیشه در دسترس و گسترش یافته است.
  * می توانیم با استفاده از خاصیت Spring.devtools.restart.enabled به راه اندازی مجدد خودکار یک سرور غیرفعال کنیم.
  * یاد آوردن:
  * یک DevTools همیشه منابع کلاس را کنترل می کند.
  * تنها راهی برای شروع مجدد وجود دارد ، به روزرسانی مسیر کلاس.
  * یک DevTools برای کار صحیح به یک کلاس لودر برنامه جداگانه نیاز داشت.
  * بطور پیش فرض ، فرایند درخواست را Maven fork کنید.
- * راه اندازی مجدد خودکار با LiveRelload به خوبی کار می کند.
- * یک DevTools بستگی به قلاب خاموش کردن بستر برنامه برای بستن آن در هنگام راه اندازی مجدد دارد.
+ * راه اندازی مجدد خودکار با LiveReload به خوبی کار می کند.
+ * یک DevTools بستگی به هوک خاموش کردن بستر برنامه برای بستن آن در هنگام راه اندازی مجدد دارد.
  *
  * 3. LiveReload:
  * The Spring Boot DevTools module includes an embedded server called LiveReload.
@@ -101,7 +101,7 @@ package com.motaharinia.springandboot.ospringbootdevtools;
  *3. LiveReload:
  * ماژول Spring Boot DevTools شامل یک سرور تعبیه شده به نام LiveReload است.
  * این برنامه به برنامه اجازه می دهد تا هر زمان که در منابع تغییراتی ایجاد کند ، یک مرورگر را به صورت خودکار تحریک کند.
- * همچنین به عنوان تجدید خودکار شناخته می شود.
+ * همچنین به عنوان auto-refresh شناخته می شود.
  * توجه: می توانیم LiveReload را با تنظیم ویژگی Spring.devtools.livereload.enabled غیرفعال کنیم.
  * افزونه های مرورگر برای Chrome ، Firefox و Safari را در اختیار شما قرار می دهد.
  * به طور پیش فرض ، LiveReload فعال است. LiveReload در مسیر زیر کار می کند:
@@ -147,8 +147,8 @@ package com.motaharinia.springandboot.ospringbootdevtools;
  * The file can be internal or external. For example:
  * با استفاده از یک پرونده Trigger:
  * راه اندازی مجدد خودکار گاهی اوقات به دلیل شروع مجدد مکرر می تواند زمان توسعه را کند کند.
- * برای رفع این مشکل ، می توانیم از یک پرونده ماشه استفاده کنیم.
- * اسپرینگ بوت مانیتور پرونده را آغاز می کند و تغییرات موجود در آن پرونده را تشخیص می دهد. مجدداً سرور را مجدداً بارگذاری می کند و همه تغییرات قبلی را بارگیری می کند.
+ * برای رفع این مشکل ، می توانیم از یک پرونده Trigger استفاده کنیم.
+ * اسپرینگ بوت مانیتور پرونده را آغاز می کند و تغییرات موجود در آن پرونده را تشخیص می دهد. مجدداً سرور را بارگذاری می کند و همه تغییرات قبلی را بارگیری می کند.
  * ما می توانیم با اضافه کردن خاصیت spring.devtools.restart.trigger-file ، ماشه را در برنامه خود پیاده سازی کنیم.
  * پرونده می تواند داخلی یا خارجی باشد. مثلا:
  * spring.devtools.restart.trigger-file=c:/workspace-sts-3.9.9.RELEASE/restart-trigger.txt
