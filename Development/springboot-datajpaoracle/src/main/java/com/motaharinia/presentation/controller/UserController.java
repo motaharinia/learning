@@ -2,15 +2,12 @@ package com.motaharinia.presentation.controller;
 
 import com.motaharinia.base.presentation.model.GridDataModel;
 import com.motaharinia.base.presentation.model.GridFilterModel;
-import com.motaharinia.business.service.UserGrid1View;
 import com.motaharinia.business.service.UserService;
 import com.motaharinia.presentation.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 public class UserController {
@@ -30,13 +27,13 @@ public class UserController {
 
     //retrieves a specific user detail
     @GetMapping("/user/{id}")
-    public UserModel findOne(@PathVariable Integer id) {
-        return userService.findOne(id);
+    public UserModel readOne(@PathVariable Integer id) {
+        return userService.readOne(id);
     }
 
     @GetMapping("/user")
-    public Page<UserModel> findAll(@RequestBody @Validated GridFilterModel gridFilterModel) {
-        return userService.findAll(gridFilterModel);
+    public Page<UserModel> readGrid(@RequestBody @Validated GridFilterModel gridFilterModel) {
+        return userService.readGrid(gridFilterModel);
     }
 
     @DeleteMapping("/user/{id}")

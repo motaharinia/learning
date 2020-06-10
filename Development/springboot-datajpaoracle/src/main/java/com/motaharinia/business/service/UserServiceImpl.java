@@ -5,15 +5,14 @@ import com.motaharinia.base.presentation.model.GridFilterModel;
 import com.motaharinia.persistence.orm.user.User;
 import com.motaharinia.persistence.orm.user.UserRepository;
 import com.motaharinia.presentation.model.UserModel;
-import org.apache.commons.lang.SerializationUtils;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
+import java.util.stream.Collectors;
 
 //https://www.baeldung.com/spring-data-jpa-projections
 
@@ -22,14 +21,18 @@ import java.util.function.Function;
 public class UserServiceImpl implements  UserService {
 
 
+    private ModelMapper modelMapper;
     private UserRepository userRepository;
 
+    /**
+     * Constructors
+     */
     public UserServiceImpl() {
     }
-
     @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository,ModelMapper modelMapper) {
         this.userRepository=userRepository;
+        this.modelMapper=modelMapper;
     }
 
     @Override
@@ -45,22 +48,8 @@ public class UserServiceImpl implements  UserService {
     }
 
     @Override
-    public Page<UserModel> findAll(GridFilterModel gridFilterModel) {
-       Page<User> userPage= userRepository.findAll(gridFilterModel.getPageable());
-       List<UserModel> userModelList = new ArrayList<>();
-        Page<UserModel> userModelPage = userPage.map(new Function<User, UserModel>() {
-            @Override
-            public UserModel apply(User entity) {
-                UserModel model = (UserModel) SerializationUtils.clone(entity);
-                return model;
-            }
-        });
-        return userModelPage;
-    }
-    
-    @Override
-    public UserModel findOne(Integer  id) {
-    User user= userRepository.findById(id).get();
+    public UserModel readOne(Integer  id) {
+        User user= userRepository.findById(id).get();
         UserModel  userModel= new UserModel();
         userModel.setId(user.getId());
         userModel.setUsername(user.getUsername());
@@ -70,6 +59,26 @@ public class UserServiceImpl implements  UserService {
 //    UserModel  userModel= (UserModel) SerializationUtils.clone(user);
         return userModel;
     }
+
+    @Override
+    public Page<UserModel> readGrid(GridFilterModel gridFilterModel) {
+       Page<User> userPage= userRepository.findAll(gridFilterModel.getPageable());
+//       List<UserModel> userModelList = new ArrayList<>();
+
+        List<UserModel> userModelList = userPage.getContent().stream().map(this::convertToDto).collect(Collectors.toList());
+
+//        Page<UserModel> userModelPage = userPage.map(new Function<User, UserModel>() {
+//            @Override
+//            public UserModel apply(User entity) {
+//                UserModel model = (UserModel) SerializationUtils.clone(entity);
+//                return model;
+//            }
+//        });
+//        return userModelPage;
+        return null;
+    }
+    
+
 
     @Override
     public UserModel update(UserModel userModel) {
@@ -84,14 +93,14 @@ public class UserServiceImpl implements  UserService {
 
     @Override
     public UserModel delete(Integer id) {
-        UserModel  userModel=this.findOne(id);
+        UserModel  userModel=this.readOne(id);
         userRepository.deleteById(id);
         return userModel;
     }
 
     @Override
-    public List<UserGrid1View> view1(String firstName) {
-        List<UserGrid1View> viewList= userRepository.findAllUserByFirstName(firstName);
+    public List<GridViewUser1> readView1(String firstName) {
+        List<GridViewUser1> viewList= userRepository.findAllUserByFirstName(firstName);
         viewList.stream().forEach(item-> System.out.println(item.getFirstName()));
         return viewList;
     }
@@ -105,4 +114,9 @@ public class UserServiceImpl implements  UserService {
     }
 
 
+    private UserModel convertToDto(User user) {
+        UserModel userModel = modelMapper.map(user, UserModel.class);
+//        userModel.setSubmissionDate(user.getSubmissionDate(), userService.getCurrentUser().getPreference().getTimezone());
+        return userModel;
+    }
 }

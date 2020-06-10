@@ -22,12 +22,10 @@ import javax.servlet.http.HttpServletResponse;
 public class HomeController {
     @RequestMapping(value="/", method=RequestMethod.GET)
     public String index() {
-
         return "index";
     }
     @RequestMapping(value="/admin", method=RequestMethod.GET)
     public String admin() {
-
         return "admin";
     }
 }

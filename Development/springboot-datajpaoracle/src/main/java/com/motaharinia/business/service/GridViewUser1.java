@@ -1,6 +1,6 @@
 package com.motaharinia.business.service;
 
-public interface UserGrid1View {
+public interface GridViewUser1 {
      String getFirstName();
      String getLastName();
 }

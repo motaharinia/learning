@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Aspect
-public class LoggingAspect {
+public class AopAspectSample {
 
 
     @Pointcut("@annotation(org.springframework.web.bind.annotation.PostMapping)")

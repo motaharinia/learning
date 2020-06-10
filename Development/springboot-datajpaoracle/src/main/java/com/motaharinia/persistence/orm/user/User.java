@@ -1,11 +1,13 @@
 package com.motaharinia.persistence.orm.user;
 
+import com.motaharinia.base.persistence.genericentity.GenericEntity;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "uzer")
-public class User implements Serializable {
+public class User extends GenericEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

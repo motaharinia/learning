@@ -2,7 +2,7 @@ package com.motaharinia.base.presentation.model;
 
 import com.motaharinia.persistence.orm.user.User;
 import com.motaharinia.presentation.model.UserModel;
-import org.apache.commons.lang.SerializationUtils;
+import org.apache.commons.lang3.SerializationUtils;
 import org.springframework.data.domain.Page;
 
 import java.util.ArrayList;
@@ -22,8 +22,9 @@ public class GridDataModel {
         Page<UserModel> userModelPage = page.map(new Function<User, UserModel>() {
             @Override
             public UserModel apply(User entity) {
-                UserModel model = (UserModel) SerializationUtils.clone(entity);
-                return model;
+//                UserModel model = (UserModel) SerializationUtils.clone(entity);
+//                return model;
+                return null;
             }
         });
     }

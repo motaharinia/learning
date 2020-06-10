@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class Controller {
 
-    @Value("${spring.datasource.url}")
-    private String springDatasourceUrl;
+    @Value("${spring.application.name}")
+    private String springApplicationName;
 
     @Value("${app.randomInt}")
     private Integer appRandomInt;
 
     @RequestMapping("/")
     public String getUrl() {
-        return springDatasourceUrl;
+        return springApplicationName;
     }
 
     @RequestMapping(value = "/randomInt",method = RequestMethod.POST)
