@@ -128,12 +128,12 @@
             <artifactId>modelmapper</artifactId>
             <version>2.3.8</version>
         </dependency>
-        <!--MsUtility-->
-        <dependency>
-            <groupId>com.motaharinia</groupId>
-            <artifactId>MsUtility</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
+<!--        &lt;!&ndash;MsUtility&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.motaharinia</groupId>-->
+<!--            <artifactId>MsUtility</artifactId>-->
+<!--            <version>0.0.1-SNAPSHOT</version>-->
+<!--        </dependency>-->
     </dependencies>
 
     <build>
