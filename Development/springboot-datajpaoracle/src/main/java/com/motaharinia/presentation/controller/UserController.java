@@ -1,7 +1,6 @@
 package com.motaharinia.presentation.controller;
 
-import com.motaharinia.base.presentation.model.GridDataModel;
-import com.motaharinia.base.presentation.model.GridFilterModel;
+
 import com.motaharinia.business.service.UserService;
 import com.motaharinia.presentation.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +30,10 @@ public class UserController {
         return userService.readOne(id);
     }
 
-    @GetMapping("/user")
-    public Page<UserModel> readGrid(@RequestBody @Validated GridFilterModel gridFilterModel) {
-        return userService.readGrid(gridFilterModel);
-    }
+//    @GetMapping("/user")
+//    public Page<UserModel> readGrid(@RequestBody @Validated GridFilterModel gridFilterModel) {
+//        return userService.readGrid(gridFilterModel);
+//    }
 
     @DeleteMapping("/user/{id}")
     public UserModel delete(@PathVariable Integer id) {
@@ -42,8 +41,8 @@ public class UserController {
     }
 
 
-    @GetMapping("/user/firstName/{firstName}")
-    public GridDataModel listGrid(@PathVariable String firstName) {
-        return userService.listGrid(firstName);
-    }
+//    @GetMapping("/user/firstName/{firstName}")
+//    public GridDataModel listGrid(@PathVariable String firstName) {
+//        return userService.listGrid(firstName);
+//    }
 }

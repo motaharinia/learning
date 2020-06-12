@@ -1,7 +1,5 @@
 package com.motaharinia.business.service;
 
-import com.motaharinia.base.presentation.model.GridDataModel;
-import com.motaharinia.base.presentation.model.GridFilterModel;
 import com.motaharinia.persistence.orm.user.User;
 import com.motaharinia.persistence.orm.user.UserRepository;
 import com.motaharinia.presentation.model.UserModel;
@@ -59,24 +57,24 @@ public class UserServiceImpl implements  UserService {
 //    UserModel  userModel= (UserModel) SerializationUtils.clone(user);
         return userModel;
     }
-
-    @Override
-    public Page<UserModel> readGrid(GridFilterModel gridFilterModel) {
-       Page<User> userPage= userRepository.findAll(gridFilterModel.getPageable());
-//       List<UserModel> userModelList = new ArrayList<>();
-
-        List<UserModel> userModelList = userPage.getContent().stream().map(this::convertToDto).collect(Collectors.toList());
-
-//        Page<UserModel> userModelPage = userPage.map(new Function<User, UserModel>() {
-//            @Override
-//            public UserModel apply(User entity) {
-//                UserModel model = (UserModel) SerializationUtils.clone(entity);
-//                return model;
-//            }
-//        });
-//        return userModelPage;
-        return null;
-    }
+//
+//    @Override
+//    public Page<UserModel> readGrid(GridFilterModel gridFilterModel) {
+//       Page<User> userPage= userRepository.findAll(gridFilterModel.getPageable());
+////       List<UserModel> userModelList = new ArrayList<>();
+//
+//        List<UserModel> userModelList = userPage.getContent().stream().map(this::convertToDto).collect(Collectors.toList());
+//
+////        Page<UserModel> userModelPage = userPage.map(new Function<User, UserModel>() {
+////            @Override
+////            public UserModel apply(User entity) {
+////                UserModel model = (UserModel) SerializationUtils.clone(entity);
+////                return model;
+////            }
+////        });
+////        return userModelPage;
+//        return null;
+//    }
     
 
 
@@ -105,13 +103,13 @@ public class UserServiceImpl implements  UserService {
         return viewList;
     }
 
-    @Override
-    public GridDataModel listGrid(String firstName) {
-        System.out.println("findUserByFirstName firstName:" + firstName);
-        List<Object[]> result = userRepository.listGrid(firstName);
-        System.out.println("findUserByFirstName result:" + result);
-        return new GridDataModel(result);
-    }
+//    @Override
+//    public GridDataModel listGrid(String firstName) {
+//        System.out.println("findUserByFirstName firstName:" + firstName);
+//        List<Object[]> result = userRepository.listGrid(firstName);
+//        System.out.println("findUserByFirstName result:" + result);
+//        return new GridDataModel(result);
+//    }
 
 
     private UserModel convertToDto(User user) {
