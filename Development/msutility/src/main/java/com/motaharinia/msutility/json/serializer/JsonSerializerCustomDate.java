@@ -1,16 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.motaharinia.msutility.json.serializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import ir.mbazar.utility.presentation.caldatetime.CalDateTime;
-import ir.mbazar.utility.presentation.customdatetime.CustomDate;
+import com.motaharinia.msutility.calendar.CalDateTime;
+import com.motaharinia.msutility.calendar.CustomDate;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.io.IOException;

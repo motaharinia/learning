@@ -123,6 +123,18 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.10</version>
         </dependency>
+       <!-- Remove HTML tag from java String in StringTools.java-->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.10.2</version>
+        </dependency>
+       <!--        used in gridFiltermodel-->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20200518</version>
+        </dependency>
     </dependencies>
 
     <build>

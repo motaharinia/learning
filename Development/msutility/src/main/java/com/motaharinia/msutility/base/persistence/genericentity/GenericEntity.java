@@ -8,7 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 
-import com.motaharinia.base.persistence.OracleUtility;
+
+import com.motaharinia.msutility.base.persistence.OracleUtility;
 import org.hibernate.search.annotations.Field;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
