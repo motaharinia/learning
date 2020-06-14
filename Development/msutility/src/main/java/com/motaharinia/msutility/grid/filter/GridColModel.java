@@ -1,5 +1,4 @@
-
-package com.motaharinia.msutility.grid;
+package com.motaharinia.msutility.grid.filter;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -21,7 +20,7 @@ public class GridColModel implements Serializable {
     //جهت متن ستون
     private String align = "center";
     //عرض ستون
-    private int width;
+    private Integer width;
     //نوع مرتب سازی ستون که عددی یا متنی است
     private String sortType;
     //نوع جستجوی ستون
@@ -46,7 +45,7 @@ public class GridColModel implements Serializable {
 
     private String classes;
 
-    public GridColModel(String name, String index, int width, String sortType, String searchType, boolean hidden, boolean hiddenlg, GridSearchOptionsModel pageGridSearchOptions) {
+    public GridColModel(String name, String index, Integer width, String sortType, String searchType, boolean hidden, boolean hiddenlg, GridSearchOptionsModel pageGridSearchOptions) {
         this.sortable = true;
         this.name = name;
         this.index = index;
@@ -59,7 +58,7 @@ public class GridColModel implements Serializable {
     }
 
     //This constructor used when you need to Formatter
-    public GridColModel(String name, String index, int width, String sortType, String searchType, boolean hidden, boolean hiddenlg, GridSearchOptionsModel pageGridSearchOptions, String formatter) {
+    public GridColModel(String name, String index, Integer width, String sortType, String searchType, boolean hidden, boolean hiddenlg, GridSearchOptionsModel pageGridSearchOptions, String formatter) {
         this.sortable = true;
         this.name = name;
         this.index = index;
@@ -112,11 +111,11 @@ public class GridColModel implements Serializable {
         this.index = index;
     }
 
-    public int getWidth() {
+    public Integer getWidth() {
         return width;
     }
 
-    public void setWidth(int width) {
+    public void setWidth(Integer width) {
         this.width = width;
     }
 

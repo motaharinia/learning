@@ -1,13 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.motaharinia.msutility.json;
 
 /**
- *
- * @author Administrator
+ * Created by IntelliJ IDEA.
+ * User: https://github.com/motaharinia
+ * Date: 2020-06-12
+ * Time: 01:05:58
+ * Description: این کلاس برای تبدیل به رشته جیسون شدن نوع داده هایی در خروجی متد کنترلر به سمت کلاینت است که تک مقدار هستند و فیلد ندارند مانند نوع داده بولین
  */
 public class PrimitiveResponse {
 

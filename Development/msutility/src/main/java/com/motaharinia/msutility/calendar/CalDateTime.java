@@ -40,7 +40,7 @@ public interface CalDateTime {
         if (StringUtils.isEmpty(inputDigit)) {
             throw new UtilityException(CalDateTime.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
         }
-        if (inputDigit.length() == 2) {
+        if (inputDigit.length() >1) {
             return inputDigit;
         } else {
             return "0" + inputDigit;
@@ -306,7 +306,7 @@ public interface CalDateTime {
 
     //--------------------------------------------------متدهای اصلاح کننده متناسب با زبان لوکال و تفاوت زمانی بین دو تاریخ--------------------------------------------------
     /**
-     * این متد رشته تاریخ و رشته جدا کننده تاریخ خروجی و زبان لوکال (زبان انتخابی کاربر در کلاینت) را از ورودی دریافت میکند و رشته تاریخ ورودی را متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی ، به صورت رشته تاریخ میدهد
+     * این متد رشته تاریخ و رشته جدا کننده تاریخ خروجی و زبان لوکال (زبان انتخابی کاربر در کلاینت) را از ورودی دریافت میکند و رشته تاریخ ورودی را متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی ، به صورت رشته تاریخ خروجی میدهد
      *
      * @param sourceDate               رشته تاریخ ورودی
      * @param destinationDateDelimiter رشته جدا کننده تاریخ خروجی
@@ -347,7 +347,7 @@ public interface CalDateTime {
     }
 
     /**
-     * این متد Date تاریخ و رشته جدا کننده تاریخ خروجی و زبان لوکال (زبان انتخابی کاربر در کلاینت) را از ورودی دریافت میکند و Date تاریخ ورودی را متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی ، به صورت رشته تاریخ میدهد
+     * این متد Date تاریخ و رشته جدا کننده تاریخ خروجی و زبان لوکال (زبان انتخابی کاربر در کلاینت) را از ورودی دریافت میکند و Date تاریخ ورودی را متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی ، به صورت رشته تاریخ خروجی میدهد
      *
      * @param source              Date تاریخ ورودی
      * @param destinationDateDelimiter رشته جدا کننده تاریخ خروجی
@@ -364,9 +364,25 @@ public interface CalDateTime {
         return fixToLocaleDate(simpleDateFormat.format(source),destinationDateDelimiter,locale) ;
     }
 
+    /**
+     * این متد CustomDate تاریخ و رشته جدا کننده تاریخ خروجی و زبان لوکال (زبان انتخابی کاربر در کلاینت) را از ورودی دریافت میکند و CustomDate تاریخ ورودی را متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی ، به صورت رشته تاریخ خروجی میدهد
+     *
+     * @param customDate              CustomDate تاریخ ورودی
+     * @param destinationDateDelimiter رشته جدا کننده تاریخ خروجی
+     * @param locale                   زبان لوکال کلاینت
+     * @return خروجی: رشته تاریخ متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی
+     * @throws ParseException
+     */
+    @NotNull
+    static String fixToLocaleDate(@NotNull CustomDate customDate, @NotNull String destinationDateDelimiter, Locale locale) throws ParseException {
+        if (ObjectUtils.isEmpty(customDate) || StringUtils.isEmpty(destinationDateDelimiter)) {
+            throw new UtilityException(CalDateTime.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+        }
+        return fixToLocaleDate(customDate.getFormattedString("-"),destinationDateDelimiter,locale) ;
+    }
 
     /**
-     * این متد رشته تاریخ-زمان و رشته جدا کننده تاریخ خروجی و زبان لوکال (زبان انتخابی کاربر در کلاینت) را از ورودی دریافت میکند و رشته تاریخ-زمان ورودی را متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی ، به صورت رشته تاریخ-زمان میدهد
+     * این متد رشته تاریخ-زمان و رشته جدا کننده تاریخ خروجی و زبان لوکال (زبان انتخابی کاربر در کلاینت) را از ورودی دریافت میکند و رشته تاریخ-زمان ورودی را متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی ، به صورت رشته تاریخ-زمان خروجی میدهد
      *
      * @param sourceDateTime           رشته تاریخ-زمان ورودی
      * @param destinationDateDelimiter رشته جدا کننده تاریخ خروجی
@@ -407,7 +423,7 @@ public interface CalDateTime {
     }
 
     /**
-     * این متد Date تاریخ-زمان و رشته جدا کننده تاریخ خروجی و زبان لوکال (زبان انتخابی کاربر در کلاینت) را از ورودی دریافت میکند و Date تاریخ-زمان ورودی را متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی ، به صورت رشته تاریخ-زمان میدهد
+     * این متد Date تاریخ-زمان و رشته جدا کننده تاریخ خروجی و زبان لوکال (زبان انتخابی کاربر در کلاینت) را از ورودی دریافت میکند و Date تاریخ-زمان ورودی را متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی ، به صورت رشته تاریخ-زمان خروجی میدهد
      *
      * @param source           Date تاریخ-زمان ورودی
      * @param destinationDateDelimiter رشته جدا کننده تاریخ خروجی
@@ -423,7 +439,22 @@ public interface CalDateTime {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
         return fixToLocaleDateTime(simpleDateFormat.format(source),destinationDateDelimiter,locale) ;
     }
-
+    /**
+     * این متد CustomDateTime تاریخ-زمان و رشته جدا کننده تاریخ خروجی و زبان لوکال (زبان انتخابی کاربر در کلاینت) را از ورودی دریافت میکند و CustomDate تاریخ-زمان ورودی را متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی ، به صورت رشته تاریخ-زمان خروجی میدهد
+     *
+     * @param customDateTime              CustomDateTime تاریخ-زمان ورودی
+     * @param destinationDateDelimiter رشته جدا کننده تاریخ خروجی
+     * @param locale                   زبان لوکال کلاینت
+     * @return خروجی: رشته تاریخ متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی
+     * @throws ParseException
+     */
+    @NotNull
+    static String fixToLocaleDateTime(@NotNull CustomDateTime customDateTime, @NotNull String destinationDateDelimiter, Locale locale) throws ParseException {
+        if (ObjectUtils.isEmpty(customDateTime) || StringUtils.isEmpty(destinationDateDelimiter)) {
+            throw new UtilityException(CalDateTime.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+        }
+        return fixToLocaleDateTime(customDateTime.getFormattedString("-"),destinationDateDelimiter,locale) ;
+    }
 
     /**
      * این متد دو Date میلادی را از ورودی دریافت میکند و میزان اختلاف آن دو تاریخ را براساس واحد زمانی دلخواه خروجی میدهد

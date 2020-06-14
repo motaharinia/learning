@@ -4,28 +4,31 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.motaharinia.msutility.grid.GridRowModel;
+import com.motaharinia.msutility.grid.data.GridRowModel;
 import com.motaharinia.msutility.json.CustomObjectMapper;
+import org.springframework.util.ObjectUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Administrator
+ * Created by IntelliJ IDEA.
+ * User: https://github.com/motaharinia
+ * Date: 2020-06-12
+ * Time: 01:05:58
+ * Description: این کلاس برای تبدیل رشته جیسون کلاینت به مدل سطر گرید میباشد
  */
 public class JsonDeserializerGridDataRows extends JsonDeserializer<List<Object[]>> {
 
     @Override
-    public List<Object[]> deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
+    public List<Object[]> deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
         String gridRowModelArrayJson = jp.getText();
-
         List<Object[]> rows = new ArrayList<>();
         CustomObjectMapper customObjectMapper = new CustomObjectMapper(null);
-        GridRowModel[] gridRowsArray = customObjectMapper.readValue(gridRowModelArrayJson, GridRowModel[].class);
-        if (gridRowsArray != null) {
-            for (GridRowModel gridRowModel : gridRowsArray) {
+        GridRowModel[] gridRowModelArray = customObjectMapper.readValue(gridRowModelArrayJson, GridRowModel[].class);
+        if (!ObjectUtils.isEmpty(gridRowModelArray)) {
+            for (GridRowModel gridRowModel : gridRowModelArray) {
                 rows.add(gridRowModel.getCell());
             }
         }

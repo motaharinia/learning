@@ -103,13 +103,18 @@ public class CustomDate implements Comparable, Serializable {
         return false;
     }
 
+    @NotNull
+    public String getFormattedString(@NotNull  String dateDelimiter){
+        if (!CustomDate.isEmpty(this)) {
+            return year + dateDelimiter+ CalDateTime.fixOneDigit(month.toString()) + dateDelimiter + CalDateTime.fixOneDigit(day.toString()) ;
+        } else {
+            return "Empty";
+        }
+    }
+
     @Override
     public String toString() {
-        if (!CustomDate.isEmpty(this)) {
-            return "CustomDate{" + year + "-" + CalDateTime.fixOneDigit(month.toString()) + "-" + CalDateTime.fixOneDigit(day.toString()) + '}';
-        } else {
-            return "CustomDate{Empty}";
-        }
+        return "CustomDate{" +this.getFormattedString("-")+ '}';
     }
 
     @Override

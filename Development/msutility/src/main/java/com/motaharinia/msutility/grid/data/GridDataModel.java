@@ -1,10 +1,12 @@
-package com.motaharinia.msutility.grid;
+package com.motaharinia.msutility.grid.data;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.motaharinia.msutility.calendar.CalDateTime;
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.customexception.UtilityExceptionKeyEnum;
+import com.motaharinia.msutility.grid.filter.GridColModel;
 import com.motaharinia.msutility.json.deserializer.JsonDeserializerGridDataRows;
 import com.motaharinia.msutility.json.serializer.JsonSerializerGridDataRows;
 import org.apache.commons.lang3.StringUtils;
@@ -50,18 +52,19 @@ public class GridDataModel implements Serializable {
     /**
      * برای ارسال اطلاعات اضافی از سمت سرور به کلاینت مورد استفاده قرار میگیرد
      */
+    @JsonProperty(value = "userdata")
     public Object userData;
 
     /**
      * متد سازنده
      *
-     * @param page  شماره صفحه فعلی در حال استفاده در گرید
+     * @param page     شماره صفحه فعلی در حال استفاده در گرید
      * @param records  تعداد کل سطرهای قابل نمایش در گرید که صفحه بندی شده اند و به صفحات کوچکتر تبدیل شده اند
-     * @param total  تعداد صفحات صفحه بندی اطلاعات که در زیر گرید نمایش داده میشود
-     * @param rows  لیست سطرهای داده گرید
-     * @param userData  برای ارسال اطلاعات اضافی از سمت سرور به کلاینت مورد استفاده قرار میگیرد
+     * @param total    تعداد صفحات صفحه بندی اطلاعات که در زیر گرید نمایش داده میشود
+     * @param rows     لیست سطرهای داده گرید
+     * @param userData برای ارسال اطلاعات اضافی از سمت سرور به کلاینت مورد استفاده قرار میگیرد
      */
-    public GridDataModel(int page, Long records, Long total, List<Object[]> rows, Object userData) {
+    public GridDataModel(Integer page, Long records, Long total, List<Object[]> rows, Object userData) {
         this.userData = userData;
         this.page = page;
         this.total = total;
@@ -76,33 +79,32 @@ public class GridDataModel implements Serializable {
         if (ObjectUtils.isEmpty(gridData) || ObjectUtils.isEmpty(pageGridColModelList)) {
             throw new UtilityException(CalDateTime.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
         }
-
-
-        List<Object[]> objList = gridData.getRows();
-        Object[] obj;
-        String tmp = "";
-
-        if (objList != null) {
-            for (int i = 0; i < objList.size(); i++) {
-                obj = objList.get(i);
+        List<Object[]> objectArrayList = gridData.getRows();
+        Object[] objectArray;
+        String colModelName = "";
+        if (objectArrayList != null) {
+            for (int i = 0; i < objectArrayList.size(); i++) {
+                objectArray = objectArrayList.get(i);
                 for (int j = 0; j < pageGridColModelList.size(); j++) {
-
-                    if (formatters != null && formatters.containsKey(pageGridColModelList.get(j).getName())) {
-                        List<Object[]> formatterList = formatters.get(pageGridColModelList.get(j).getName());
-                       obj[j] = fixFormatter(formatterList, obj[j]);
+                    colModelName = pageGridColModelList.get(j).getName();
+                    if (formatters != null && formatters.containsKey(colModelName)) {
+                        List<Object[]> formatterArrayList = formatters.get(colModelName);
+                        objectArray[j] = fixFormatter(formatterArrayList, objectArray[j]);
                     } else {
-                       if ("date".equals(pageGridColModelList.get(j).getSortType())) {
-                           obj[j] =  CalDateTime.fixToLocaleDate((Date) obj[j],"/",LocaleContextHolder.getLocale());
-                        } else if ("dateTime".equals(pageGridColModelList.get(j).getSortType())) {
-                           obj[j] =  CalDateTime.fixToLocaleDateTime((Date) obj[j],"/",LocaleContextHolder.getLocale());
-                        }
-                        tmp = pageGridColModelList.get(j).getName();
-                        if (".langKey".equals(tmp.substring(Math.max(tmp.length() - 8, 0)))) {
-                            obj[j] = fixLangKey((String) obj[j], messageSource);
+                        if (".langKey".equals(colModelName.substring(Math.max(colModelName.length() - 8, 0)))) {
+                            objectArray[j] = fixLangKey((String) objectArray[j], messageSource);
+                        } else {
+                            switch (pageGridColModelList.get(j).getSortType()) {
+                                case "date":
+                                    objectArray[j] = CalDateTime.fixToLocaleDate((Date) objectArray[j], "/", LocaleContextHolder.getLocale());
+                                    break;
+                                case "dateTime":
+                                    objectArray[j] = CalDateTime.fixToLocaleDateTime((Date) objectArray[j], "/", LocaleContextHolder.getLocale());
+                                    break;
+                            }
                         }
                     }
-
-                    objList.set(i, obj);
+                    objectArrayList.set(i, objectArray);
                 }
             }
         }
@@ -110,12 +112,11 @@ public class GridDataModel implements Serializable {
     }
 
 
-
-    //لیستی از فرمترهای گرید و یک داده را دریافت میکند و اگر آن داده ورودی با یکی از داده های لیست فرمترها بخواند مقدار فرمت شده فرمتر را بجای داده خروجی میدهد 
-    public String fixFormatter(List<Object[]> formatterList, Object data) {
-        for (int i = 0; i < formatterList.size(); i++) {
-             if (formatterList.get(i)[0].toString().equals(data + "")) {
-                return formatterList.get(i)[1].toString();
+    //لیستی از فرمترهای گرید و یک داده را دریافت میکند و اگر آن داده ورودی با یکی از داده های لیست فرمترها بخواند مقدار فرمت شده فرمتر را بجای داده خروجی میدهد
+    public String fixFormatter(List<Object[]> formatterArrayList, Object object) {
+        for (int i = 0; i < formatterArrayList.size(); i++) {
+            if (formatterArrayList.get(i)[0].toString().equals(object + "")) {
+                return formatterArrayList.get(i)[1].toString();
             }
         }
         return "";
@@ -123,9 +124,9 @@ public class GridDataModel implements Serializable {
 
     //مطابق با زبان سیستم در صورت نیاز کلید لاتین را به متن فارسی معادل آن ترجمه میکند و خروجی میدهد
     public String fixLangKey(String langKey, MessageSource messageSource) {
-        if(!StringUtils.isEmpty(langKey)){
+        if (!StringUtils.isEmpty(langKey)) {
             return messageSource.getMessage(langKey, new Object[]{}, LocaleContextHolder.getLocale());
-        }else{
+        } else {
             return "";
         }
     }
@@ -134,8 +135,6 @@ public class GridDataModel implements Serializable {
 //    public String toString() {
 //        return "GridDataModel{\n\t" + "page=" + page + ", \n\trecords=" + records + ", \n\trows=\n\t{\n\t" + ToStringHelper.listOfObjectArray(rows) + "}, \n\ttotal=" + total + ", \n\tuserdata=" + userData + "\n}";
 //    }
-
-
 
 
     //getter-setter

@@ -26,7 +26,7 @@ public class CustomDateTimeTests {
      */
     @BeforeEach
     void initUseCase() {
-
+        Locale.setDefault(Locale.ENGLISH);
     }
 
 

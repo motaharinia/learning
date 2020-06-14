@@ -130,13 +130,18 @@ public class CustomDateTime implements Comparable, Serializable {
         return false;
     }
 
+    @NotNull
+    public String getFormattedString(@NotNull  String dateDelimiter){
+        if (!CustomDateTime.isEmpty(this)) {
+            return year + dateDelimiter+ CalDateTime.fixOneDigit(month.toString()) + dateDelimiter + CalDateTime.fixOneDigit(day.toString()) + " " + CalDateTime.fixOneDigit(hour.toString()) + ":" + CalDateTime.fixOneDigit(minute.toString()) + ":" + CalDateTime.fixOneDigit(second.toString())  ;
+        } else {
+            return "Empty";
+        }
+    }
+
     @Override
     public String toString() {
-        if (!CustomDateTime.isEmpty(this)) {
-            return "CustomDateTime{" + year + "-" + CalDateTime.fixOneDigit(month.toString()) + "-" + CalDateTime.fixOneDigit(day.toString()) + " " + CalDateTime.fixOneDigit(hour.toString()) + ":" + CalDateTime.fixOneDigit(minute.toString()) + ":" + CalDateTime.fixOneDigit(second.toString()) + '}';
-        } else {
-            return "CustomDateTime{Empty}";
-        }
+        return "CustomDateTime{" +this.getFormattedString("-")+ '}';
     }
 
     @Override

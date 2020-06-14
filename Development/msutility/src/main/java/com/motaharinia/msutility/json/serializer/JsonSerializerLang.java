@@ -21,28 +21,22 @@ import java.io.IOException;
 import java.util.Locale;
 
 /**
- *
- * @author Administrator
+ * Created by IntelliJ IDEA.
+ * User: https://github.com/motaharinia
+ * Date: 2020-06-12
+ * Time: 01:05:58
+ * Description: این کلاس برای تبدیل رشته حاوی کلید ترجمه به رشته جیسون ترجمه شده برای ارسال به سمت کلاینت میباشد
  */
 @Component
 public class JsonSerializerLang extends JsonSerializer<String> {
 
-    private static final Logger logger = LoggerFactory.getLogger(JsonSerializerLang.class);
-    
-
     @Override
-    public void serialize(String langKey, JsonGenerator gen, SerializerProvider provider)
-            throws IOException, JsonProcessingException {
+    public void serialize(String langKey, JsonGenerator gen, SerializerProvider provider) throws IOException, JsonProcessingException {
         String langKeyTranslated = "";
-        logger.info("\nSSSSSSSSSS Method Start: " + langKey);
-        logger.info("----------------------------------------------");
-        logger.info(langKey);
-        logger.info("----------------------------------------------");
         WebApplicationContext webAppContext = ContextLoader.getCurrentWebApplicationContext();
         MessageSource messageSource = (MessageSource)webAppContext.getBean("messageSource");
         Locale locale = LocaleContextHolder.getLocale();
         langKeyTranslated = messageSource.getMessage(langKey, new Object[]{}, locale);
-        logger.info("---res: " + langKeyTranslated);
         gen.writeString(langKeyTranslated);
 
     }

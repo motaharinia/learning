@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.motaharinia.msutility.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,8 +13,11 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 /**
- *
- * @author Administrator
+ * Created by IntelliJ IDEA.
+ * User: https://github.com/motaharinia
+ * Date: 2020-06-12
+ * Time: 01:05:58
+ * Description: این کلاس مپر برای تبدیل کلاسهای مدل به رشته جیسون و برعکس استفاده میشود. تفاوت آن نسبت به مپر پیش فرض داشتن مسیج سورس برای ترجمه است
  */
 @Component
 public class CustomObjectMapper extends ObjectMapper {

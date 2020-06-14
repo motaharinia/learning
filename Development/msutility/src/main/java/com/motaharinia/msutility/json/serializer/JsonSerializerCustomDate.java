@@ -1,79 +1,43 @@
-
 package com.motaharinia.msutility.json.serializer;
 
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.motaharinia.msutility.calendar.CalDateTime;
 import com.motaharinia.msutility.calendar.CustomDate;
 import org.springframework.context.i18n.LocaleContextHolder;
 
-import java.io.IOException;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author administrator
+ * Created by IntelliJ IDEA.
+ * User: https://github.com/motaharinia
+ * Date: 2020-06-12
+ * Time: 01:05:58
+ * Description: این کلاس برای تبدیل کلاس تاریخ میلادی به رشته جیسون تاریخ جلالی برای ارسال به سمت کلاینت میباشد
  */
-//@Component
 public class JsonSerializerCustomDate extends JsonSerializer<CustomDate> {
 
-    public JsonSerializerCustomDate() {
-//        System.out.println("::::::::::::");
-    }
-
     @Override
-    public void serialize(CustomDate customDate, JsonGenerator jg, SerializerProvider sp) throws IOException, JsonProcessingException {
+    public void serialize(CustomDate customDate, JsonGenerator jg, SerializerProvider sp) {
         try {
             Locale currentLocale = LocaleContextHolder.getLocale();
-
-            CustomDate resultCustomDate = new CustomDate();
-            resultCustomDate.setYear(customDate.getYear());
-            resultCustomDate.setMonth(customDate.getMonth());
-            resultCustomDate.setDay(customDate.getDay());
             if (currentLocale.getLanguage().equals("fa")) {
-                String srcDateString = resultCustomDate.getYear() + "/" + resultCustomDate.getMonth() + "/" + resultCustomDate.getDay();
-                String jalaliDateString;
-                try {
-                    jalaliDateString = CalDateTime.gregorianToJalaliDate(srcDateString, "/", "/");
-                    String[] jalaliParts = jalaliDateString.split("/");
-                    resultCustomDate.setYear(Integer.parseInt(jalaliParts[0]));
-                    resultCustomDate.setMonth(Integer.parseInt(jalaliParts[1]));
-                    resultCustomDate.setDay(Integer.parseInt(jalaliParts[2]));
-                } catch (Exception ex) {
-                    resultCustomDate.setYear(null);
-                    resultCustomDate.setMonth(null);
-                    resultCustomDate.setDay(null);
-                }
-
-            } else {
-
+                Date date= CalDateTime.getDateFromCustomDate(customDate);
+                customDate = CalDateTime.gregorianToJalaliDate(date);
             }
-
-            //To preserve insertion ORDER, use `LinkedHashMap` instead of normal `HashMap`
+            //برای حفظ ترتیب درج بجای هشمپ از لینکدهشمپ استفاده میکنیم
             LinkedHashMap<String, String> output = new LinkedHashMap<>();
-            output.put("year", getReservedTwoCharacterFromNumber(resultCustomDate.getYear()));
-            output.put("month", getReservedTwoCharacterFromNumber(resultCustomDate.getMonth()));
-            output.put("day", getReservedTwoCharacterFromNumber(resultCustomDate.getDay()));
+            output.put("year", customDate.getYear().toString());
+            output.put("month",CalDateTime.fixOneDigit(customDate.getMonth().toString()));
+            output.put("day", CalDateTime.fixOneDigit(customDate.getDay().toString()));
             jg.writeObject(output);
         } catch (Exception ex) {
             Logger.getLogger(JsonSerializerCustomDate.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
-    private String getReservedTwoCharacterFromNumber(Integer input) {
-        if (input != null) {
-            if (input.toString().length() < 2) {
-                return "0" + input.toString();
-            } else {
-                return input.toString();
-            }
-        } else {
-            return null;
         }
     }
 }
