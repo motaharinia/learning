@@ -1,0 +1,61 @@
+package com.motaharinia.msutility.customexception;
+
+
+/**
+ * Created by IntelliJ IDEA.
+ * User: https://github.com/motaharinia
+ * Date: 2020-06-11
+ * Time: 01:22:13
+ * Description: مقادیر ثابت کلید اکسپشنهای یوتیلیتی که در کلاینت ساید پروژه ترجمه آنها طبق زبان انتخاب شده کاربر نمایش داده خواهد شد
+ */
+public enum UtilityExceptionKeyEnum implements  CustomExceptionKey{
+
+    /**
+     * یکی از ورودی های متد مقدار null و یا خالی دارد
+     */
+    METHOD_PARAMETER_IS_NULL_OR_EMPTY("METHOD_PARAMETER_IS_NULL_OR_EMPTY"),
+    /**
+     * فرمت تاریخ رشته ورودی صحیح نمیباشد
+     */
+    INCORRECT_STRING_DATE_FORMAT("INCORRECT_STRING_DATE_FORMAT"),
+    /**
+     *  تاریخ معتبر نمیباشد
+     */
+    DATE_VALIDATION_FAILED("DATE_VALIDATION_FAILED"),
+    /**
+     *  تاریخ-زمان معتبر نمیباشد
+     */
+    DATE_TIME_VALIDATION_FAILED("DATE_TIME_VALIDATION_FAILED"),
+
+
+
+
+    TOKEN_IS_INVALID("TOKEN_IS_INVALID"),
+    SMS_SEND_BATCH_FAILED("SMS_SEND_BATCH_FAILED"),
+    SMS_SEND_CONNECTION_REFUSED("SMS_SEND_CONNECTION_REFUSED"),
+    FSO_PATH_IS_NOT_EXISTED("FSO_PATH_IS_NOT_EXISTED"),
+    FSO_PATH_IS_NOT_DIRECTORY("FSO_PATH_IS_NOT_DIRECTORY"),
+    DATETIME_VALIDATION_FAILED("DATETIME_VALIDATION_FAILED"),
+    ORIGINAL_IMAGE_FILEBYTE_IS_NULL_OR_EMPTY("ORIGINAL_IMAGE_FILEBYTE_IS_NULL_OR_EMPTY"),
+    DIRECTORY_REAL_PATH_IS_NULL_OR_EMPTY("DIRECTORY_REAL_PATH_IS_NULL_OR_EMPTY"),
+    FILE_FULLNAME_IS_NULL_OR_EMPTY("FILE_FULLNAME_IS_NULL_OR_EMPTY"),
+    FILE_EXTENSION_IS_NULL_OR_EMPTY("FILE_EXTENSION_IS_NULL_OR_EMPTY"),
+    IMAGE_HEIGHT_IS_NULL_OR_POSITIVE_NUMBER("IMAGE_HEIGHT_IS_NULL_OR_POSITIVE_NUMBER"),
+    IMAGE_WIDTH_IS_NULL_OR_POSITIVE_NUMBER("IMAGE_WIDTH_IS_NULL_OR_POSITIVE_NUMBER"),
+    ORIGINAL_IMAGE_IS_NULL_OR_INCORRECT("ORIGINAL_IMAGE_IS_NULL_OR_INCORRECT");
+
+    private final String value;
+    private final String moduleName = "test";
+
+    private UtilityExceptionKeyEnum(String value) {
+        this.value = value;
+    }
+
+    public String getValue() {
+        return moduleName + "." + value;
+    }
+
+    public String toString() {
+        return super.toString();
+    }
+}
