@@ -26,8 +26,17 @@ public class CustomDateTests {
      */
     @BeforeEach
     void initUseCase() {
-        Locale.setDefault(Locale.ENGLISH);
+        Locale.setDefault(Locale.US);
     }
+
+    /**
+     * این متد بعد از هر تست این کلاس اجرا میشود
+     */
+    @AfterEach
+    void finalizeEach() {
+        Locale.setDefault(Locale.US);
+    }
+
 
 
     @Order(1)

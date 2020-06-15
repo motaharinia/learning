@@ -1,5 +1,6 @@
 package com.motaharinia.msutility.grid.data;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import java.io.Serializable;
@@ -53,10 +54,12 @@ import java.util.Arrays;
  * Description: این کلاس اطلاعاتی از هر یک از سطرهای گرید ارائه میکند
  */
 @JsonSerialize
+//@JsonDeserialize
 public class GridRowModel implements Serializable {
 
     private Integer id;
     private Object[] cell;
+//    private GridDataRow cell2;
 
     public GridRowModel(Integer id, Object[] cell) {
         this.id = id;
@@ -86,4 +89,12 @@ public class GridRowModel implements Serializable {
     public void setCell(Object[] cell) {
         this.cell = cell;
     }
+
+//    public GridDataRow getCell2() {
+//        return cell2;
+//    }
+//
+//    public void setCell2(GridDataRow cell2) {
+//        this.cell2 = cell2;
+//    }
 }

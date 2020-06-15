@@ -1,0 +1,3 @@
+1.output utf8:
+edit file (C:\Users\USER_NAME\.IntelliJIdeaxxxx\config\idea64.exe.vmoptions) and add:
+-Dfile.encoding=UTF-8

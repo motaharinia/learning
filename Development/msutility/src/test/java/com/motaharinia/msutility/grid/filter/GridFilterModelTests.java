@@ -19,13 +19,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class GridFilterModelTests {
 
     private final ObjectMapper mapper = new ObjectMapper();
-    
+
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
      */
     @BeforeEach
     void initUseCase() {
+        Locale.setDefault(Locale.US);
+    }
 
+    /**
+     * این متد بعد از هر تست این کلاس اجرا میشود
+     */
+    @AfterEach
+    void finalizeEach() {
+        Locale.setDefault(Locale.US);
     }
 
     @Order(1)

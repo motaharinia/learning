@@ -24,7 +24,15 @@ public class CalDateTimeTests {
      */
     @BeforeEach
     void initUseCase() {
+        Locale.setDefault(Locale.US);
+    }
 
+    /**
+     * این متد بعد از هر تست این کلاس اجرا میشود
+     */
+    @AfterEach
+    void finalizeEach() {
+        Locale.setDefault(Locale.US);
     }
 
     //--------------------------------------------------متدهای کمکی--------------------------------------------------

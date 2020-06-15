@@ -10,6 +10,7 @@ import com.motaharinia.msutility.grid.filter.GridColModel;
 import com.motaharinia.msutility.json.deserializer.JsonDeserializerGridDataRows;
 import com.motaharinia.msutility.json.serializer.JsonSerializerGridDataRows;
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.ObjectUtils;
@@ -25,6 +26,7 @@ import java.util.*;
  * Time: 01:05:58
  * Description: این کلاس مدل برای ارسال اطلاعات گرید از سرور به کلاینت طراحی شده است
  */
+
 public class GridDataModel implements Serializable {
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
     private static final SimpleDateFormat dateTimeFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
@@ -45,6 +47,12 @@ public class GridDataModel implements Serializable {
     private List<Object[]> rows;
 
     /**
+     * لیست سطرهای داده گرید
+     */
+    @JsonProperty(value = "rows2")
+    private List<GridRowModel> gridRowModelList;
+
+    /**
      * تعداد صفحات صفحه بندی اطلاعات که در زیر گرید نمایش داده میشود
      */
     public Long total;
@@ -61,9 +69,16 @@ public class GridDataModel implements Serializable {
      * @param page     شماره صفحه فعلی در حال استفاده در گرید
      * @param records  تعداد کل سطرهای قابل نمایش در گرید که صفحه بندی شده اند و به صفحات کوچکتر تبدیل شده اند
      * @param total    تعداد صفحات صفحه بندی اطلاعات که در زیر گرید نمایش داده میشود
-     * @param rows     لیست سطرهای داده گرید
+     * @param gridRowModelList     لیست سطرهای داده گرید
      * @param userData برای ارسال اطلاعات اضافی از سمت سرور به کلاینت مورد استفاده قرار میگیرد
      */
+//    public GridDataModel(Integer page, Long records, Long total, List<GridRowModel> gridRowModelList, Object userData) {
+//        this.userData = userData;
+//        this.page = page;
+//        this.total = total;
+//        this.records = records;
+//        this.gridRowModelList = (ObjectUtils.isEmpty(gridRowModelList)) ? new ArrayList<>() : gridRowModelList;
+//    }
     public GridDataModel(Integer page, Long records, Long total, List<Object[]> rows, Object userData) {
         this.userData = userData;
         this.page = page;
@@ -75,7 +90,7 @@ public class GridDataModel implements Serializable {
     public GridDataModel() {
     }
 
-    public GridDataModel GridDataFixForExcel(GridDataModel gridData, List<GridColModel> pageGridColModelList, MessageSource messageSource, HashMap<String, List<Object[]>> formatters) throws Exception {
+    public GridDataModel GridDataFixForExcel(@NotNull  GridDataModel gridData, @NotNull List<GridColModel> pageGridColModelList, @NotNull MessageSource messageSource,@NotNull  HashMap<String, List<Object[]>> formatters) throws Exception {
         if (ObjectUtils.isEmpty(gridData) || ObjectUtils.isEmpty(pageGridColModelList)) {
             throw new UtilityException(CalDateTime.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
         }
@@ -162,6 +177,15 @@ public class GridDataModel implements Serializable {
     @JsonDeserialize(using = JsonDeserializerGridDataRows.class)
     public void setRows(List<Object[]> rows) {
         this.rows = rows;
+    }
+
+
+    public List<GridRowModel> getGridRowModelList() {
+        return gridRowModelList;
+    }
+
+    public void setGridRowModelList(List<GridRowModel> gridRowModelList) {
+        this.gridRowModelList = gridRowModelList;
     }
 
     public Long getTotal() {

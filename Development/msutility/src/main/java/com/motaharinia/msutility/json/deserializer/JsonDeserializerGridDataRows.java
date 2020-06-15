@@ -1,7 +1,6 @@
 package com.motaharinia.msutility.json.deserializer;
 
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.motaharinia.msutility.grid.data.GridRowModel;
@@ -24,6 +23,8 @@ public class JsonDeserializerGridDataRows extends JsonDeserializer<List<Object[]
     @Override
     public List<Object[]> deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
         String gridRowModelArrayJson = jp.getText();
+        System.out.println("gridRowModelArrayJson:");
+        System.out.println(gridRowModelArrayJson);
         List<Object[]> rows = new ArrayList<>();
         CustomObjectMapper customObjectMapper = new CustomObjectMapper(null);
         GridRowModel[] gridRowModelArray = customObjectMapper.readValue(gridRowModelArrayJson, GridRowModel[].class);
