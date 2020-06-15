@@ -1,3 +1,11 @@
-1.output utf8:
-edit file (C:\Users\USER_NAME\.IntelliJIdeaxxxx\config\idea64.exe.vmoptions) and add:
+1.IntelijIDEA: Help -> Edit Custom Vm Options -> add these two line:
 -Dfile.encoding=UTF-8
+-Dconsole.encoding=UTF-8
+
+2.IntelijIDEA: File -> Settings -> Editor -> File Encodings form "System default" to UTF-8. May be it affected somehow.
+
+3.IntelijIDEA: File -> Settings -> Editor -> General -> Code Completion -> check "show the documentation popup in 500 ms"
+
+4.IntelijIDEA: File -> Settings -> Editor -> Color Scheme -> Color Scheme Font -> Scheme: Default & set font to "Tahoma"
+
+5.IntelijIDEA: Run -> Edit Configuration -> Spring Boot -> XXXApplication -> Environment -> VM Options: -Dspring.profiles.active=dev

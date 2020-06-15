@@ -103,6 +103,11 @@
                     <groupId>org.junit.vintage</groupId>
                     <artifactId>junit-vintage-engine</artifactId>
                 </exclusion>
+                <!--                برای کم کردن خطهای کنسول غیرضروری وجود دو jar مربوط به json در Spring-boot-starter-test تگ زیر را وارد کردم که برای استفاده از خدمات json از وابستگی jackson استفاده کند و در کنسول پیام ندهد-->
+                <exclusion>
+                    <groupId>com.vaadin.external.google</groupId>
+                    <artifactId>android-json</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
 
