@@ -1,6 +1,10 @@
 package com.motaharinia.presentation.controller;
 
 
+import com.motaharinia.business.service.SearchRowViewUserBrief;
+import com.motaharinia.msutility.json.CustomObjectMapper;
+import com.motaharinia.msutility.search.data.SearchDataModel;
+import com.motaharinia.msutility.search.filter.*;
 import com.motaharinia.presentation.model.UserModel;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +13,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,19 +70,41 @@ public class UserControllerTest {
 
     @Test
     @Order(2)
-    public void findOne() throws Exception {
+    public void readOne() throws Exception {
         String uri="http://localhost:" + port + "/user/"+crudId;
         UserModel resultModel = restTemplate.getForObject(uri, UserModel.class);
         assertThat(resultModel.getId()).isEqualTo(crudId);
     }
 
-//    @Test
-//    @Order(3)
-//    public void findAll() throws Exception {
-//        String uri="http://localhost:" + port + "/user";
-//        Page<UserModel> userModelPage = restTemplate.getForObject(uri, Page.class);
-//        assertThat(userModelPage.getContent()).contains(userModel);
-//    }
+    @Test
+    @Order(3)
+    public void readGrid() throws Exception {
+        String uri="http://localhost:" + port + "/user";
+
+        List<SearchFilterRestrictionModel> searchFilterRestrictionModelList=new ArrayList<>();
+        searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH,"mostafa"));
+        List<SearchFilterSortModel> searchFilterSortModelList=new ArrayList<>();
+        searchFilterSortModelList.add(new SearchFilterSortModel("lastName", SearchFilterSortTypeEnum.ASC));
+        SearchFilterModel searchFilterModel=new SearchFilterModel();
+        searchFilterModel.setSearchRowView(SearchRowViewUserBrief.class);
+        searchFilterModel.setPage(1);
+        searchFilterModel.setRows(10);
+        searchFilterModel.setRestrictionList(searchFilterRestrictionModelList);
+        searchFilterModel.setSortList(searchFilterSortModelList);
+
+        CustomObjectMapper customObjectMapper = new CustomObjectMapper();
+        uri += "?searchFilterModel={searchFilterModel}";
+
+        System.out.println(customObjectMapper.writeValueAsString(searchFilterModel));
+//        HashMap<String,String> urlVariablemap = new HashMap<>();
+//        urlVariablemap.put("searchFilterModel",customObjectMapper.writeValueAsString(searchFilterModel));
+
+        SearchDataModel searchDataModel = restTemplate.getForObject(uri , SearchDataModel.class,customObjectMapper.writeValueAsString(searchFilterModel));
+
+        System.out.println("searchDataModel:" + searchDataModel.toString());
+
+        assertThat(searchDataModel.getPage()).isEqualTo(searchFilterModel.getPage());
+    }
 //
 //    @Test
 //    @Order(4)

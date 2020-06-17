@@ -1,12 +1,17 @@
 package com.motaharinia.presentation.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.motaharinia.business.service.UserService;
+import com.motaharinia.msutility.json.CustomObjectMapper;
+import com.motaharinia.msutility.search.data.SearchDataModel;
+import com.motaharinia.msutility.search.filter.SearchFilterModel;
 import com.motaharinia.presentation.model.UserModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 public class UserController {
@@ -30,10 +35,16 @@ public class UserController {
         return userService.readOne(id);
     }
 
-//    @GetMapping("/user")
-//    public Page<UserModel> readGrid(@RequestBody @Validated GridFilterModel gridFilterModel) {
-//        return userService.readGrid(gridFilterModel);
-//    }
+    @GetMapping("/user")
+    public SearchDataModel readGrid (@RequestParam(name = "searchFilterModel") Optional<String> searchFilterModelJson) throws JsonProcessingException {
+        System.out.println("UserController.readGrid searchFilterModelJson.get():"+searchFilterModelJson.get());
+        CustomObjectMapper customObjectMapper=new CustomObjectMapper();
+        SearchFilterModel searchFilterModel = customObjectMapper.readValue(searchFilterModelJson.get(),SearchFilterModel.class);
+        System.out.println("UserController.readGrid searchFilterModel:"+searchFilterModel.toString());
+        SearchDataModel searchDataModel= userService.readGrid(searchFilterModel);
+        System.out.println("UserController.readGrid searchDataModel:"+searchDataModel.toString());
+        return searchDataModel;
+    }
 
     @DeleteMapping("/user/{id}")
     public UserModel delete(@PathVariable Integer id) {

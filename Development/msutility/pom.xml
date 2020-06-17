@@ -128,17 +128,23 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.10</version>
         </dependency>
-       <!-- Remove HTML tag from java String in StringTools.java-->
+        <!-- Remove HTML tag from java String in StringTools.java-->
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
             <version>1.10.2</version>
         </dependency>
-       <!--        used in gridFiltermodel-->
+        <!--        used in gridFiltermodel-->
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20200518</version>
+        </dependency>
+        <!--        reflection utility-->
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.12</version>
         </dependency>
     </dependencies>
 
@@ -147,28 +153,28 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-               <!--
-               https://www.baeldung.com/spring-boot-dependency
-               https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
-               Using a Spring Boot Application as a Dependency :
-               to have new build:
-               1.increase pom version tag.
-               2.in IntelliJ in maven window select below lifecycle and "Run maven build" button:
-               -clean
-               -validate (validate the project is correct and all necessary information is available)
-               -compile (compile the source code of the project)
-               -test (test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed)
-               -package (take the compiled code and package it in its distributable format, such as a JAR.)
-               -verify (run any checks on results of integration tests to ensure quality criteria are met)
-               -install (install the package into the local repository, for use as a dependency in other projects locally)
-               3.the dependancy is available in c:\\users\\{myuser}\\.m2\\repository\\com\\motaharinia
-               4.add dependency to another project as:
-                  <dependency>
-                     <groupId>com.motaharinia</groupId>
-                     <artifactId>MsUtility</artifactId>
-                     <version>0.0.1-SNAPSHOT</version>
-                 </dependency>
-               -->
+                <!--
+                https://www.baeldung.com/spring-boot-dependency
+                https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
+                Using a Spring Boot Application as a Dependency :
+                to have new build:
+                1.increase pom version tag (if you want to update current version delete folder c:\\users\\{myuser}\\.m2\\repository\\com\\motaharinia\\MsUtility)
+                2.in IntelliJ in maven window select below lifecycle and "Run maven build" button:
+                -clean
+                -validate (validate the project is correct and all necessary information is available)
+                -compile (compile the source code of the project)
+                -test (test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed)
+                -package (take the compiled code and package it in its distributable format, such as a JAR.)
+                -verify (run any checks on results of integration tests to ensure quality criteria are met)
+                -install (install the package into the local repository, for use as a dependency in other projects locally)
+                3.the dependancy is available in c:\\users\\{myuser}\\.m2\\repository\\com\\motaharinia
+                4.add dependency to another project as:
+                   <dependency>
+                      <groupId>com.motaharinia</groupId>
+                      <artifactId>MsUtility</artifactId>
+                      <version>0.0.1-SNAPSHOT</version>
+                  </dependency>
+                -->
                 <configuration>
                     <classifier>exec</classifier>
                 </configuration>

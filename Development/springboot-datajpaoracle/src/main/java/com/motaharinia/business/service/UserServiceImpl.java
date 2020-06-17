@@ -1,18 +1,30 @@
 package com.motaharinia.business.service;
 
+
+import com.motaharinia.msutility.search.data.SearchDataModel;
+import com.motaharinia.msutility.search.data.SearchDataRowModel;
+import com.motaharinia.msutility.search.filter.SearchFilterModel;
+import com.motaharinia.msutility.search.filter.SearchFilterOperationEnum;
+import com.motaharinia.msutility.search.filter.SearchFilterRestrictionModel;
 import com.motaharinia.persistence.orm.user.User;
 import com.motaharinia.persistence.orm.user.UserRepository;
+import com.motaharinia.persistence.orm.user.UserRepository2;
+import com.motaharinia.persistence.orm.user.UserSpecification;
 import com.motaharinia.presentation.model.UserModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 //https://www.baeldung.com/spring-data-jpa-projections
+//https://walczak.it/blog/spring-data-jpa-projection-dynamic-queries
 
 @Service
 @Transactional
@@ -21,6 +33,8 @@ public class UserServiceImpl implements  UserService {
 
     private ModelMapper modelMapper;
     private UserRepository userRepository;
+    private UserRepository2 userRepository2;
+    private UserSpecification userSpecification;
 
     /**
      * Constructors
@@ -28,9 +42,11 @@ public class UserServiceImpl implements  UserService {
     public UserServiceImpl() {
     }
     @Autowired
-    public UserServiceImpl(UserRepository userRepository,ModelMapper modelMapper) {
+    public UserServiceImpl(UserRepository userRepository,UserRepository2 userRepository2,ModelMapper modelMapper,UserSpecification userSpecification) {
         this.userRepository=userRepository;
+        this.userRepository2=userRepository2;
         this.modelMapper=modelMapper;
+        this.userSpecification=userSpecification;
     }
 
     @Override
@@ -47,6 +63,12 @@ public class UserServiceImpl implements  UserService {
 
     @Override
     public UserModel readOne(Integer  id) {
+//        UserSpecification userSpecification=new UserSpecification();
+//        userSpecification.add(new SearchFilterRestrictionModel("id", SearchFilterOperationEnum.EQUAL,id));
+//        Optional<SearchRowViewUserBrief> userModelOptional=userRepository2.findOne(userSpecification,SearchRowViewUserBrief.class);
+//        System.out.println("userModel:" + userModelOptional.get().toString());
+//
+
         User user= userRepository.findById(id).get();
         UserModel  userModel= new UserModel();
         userModel.setId(user.getId());
@@ -97,10 +119,33 @@ public class UserServiceImpl implements  UserService {
     }
 
     @Override
-    public List<GridViewUser1> readView1(String firstName) {
-        List<GridViewUser1> viewList= userRepository.findAllUserByFirstName(firstName);
-        viewList.stream().forEach(item-> System.out.println(item.getFirstName()));
-        return viewList;
+    public SearchDataModel readGrid(SearchFilterModel searchFilterModel) {
+        System.out.println("UserServiceImpl.readGrid userSpecification:"+userSpecification);
+
+        userSpecification= (UserSpecification) searchFilterModel.makeSpecification(userSpecification);
+        System.out.println("UserServiceImpl.readGrid searchFilterModel:" + searchFilterModel.toString());
+
+        Page<SearchRowViewUserBrief> viewPage = userRepository2.findAll(userSpecification, SearchRowViewUserBrief.class, PageRequest.of(searchFilterModel.getPage(), searchFilterModel.getRows()));
+        SearchDataModel searchDataModel =new SearchDataModel(viewPage,searchFilterModel,null);
+
+
+
+
+//        viewPage.stream().forEach(item-> System.out.println("item.toOut() :" + item.toOut() ));
+//        List<SearchDataRowModel> gridRowModelList = new ArrayList<>();
+//        viewPage.stream().forEach(item->gridRowModelList.add(new SearchDataRowModel(item.getId(), item)));
+//        SearchDataModel searchDataModel=new SearchDataModel(searchFilterModel.getPage(),viewPage.getTotalElements(),(long)viewPage.getTotalPages(),gridRowModelList,null);
+//
+        return searchDataModel;
+
+//        Long allRowsCount= userRepository.count(userSpecification);
+//        List<SearchRowViewUserBrief> viewList= userRepository.findAll(userSpecification);
+//        List<SearchDataRow2Model> gridRowModelList = new ArrayList<>();
+//        SearchRowView searchRowView = null;
+//        viewList.stream().forEach(item->gridRowModelList.add(new SearchDataRow2Model((int)Math.random() * 1000, item)));
+//        Double total = Math.ceil(allRowsCount / (searchFilterModel.getRows() / 1d));
+//        SearchDataModel searchDataModel=new SearchDataModel(searchFilterModel.getPage(),allRowsCount,total.longValue(),gridRowModelList,null);
+//        return searchDataModel;
     }
 
 //    @Override

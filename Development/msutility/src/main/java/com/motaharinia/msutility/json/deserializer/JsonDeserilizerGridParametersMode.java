@@ -3,7 +3,7 @@ package com.motaharinia.msutility.json.deserializer;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
-import com.motaharinia.msutility.grid.filter.GridFilterModel;
+import com.motaharinia.msutility.search.filterlast.GridFilterModel;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
