@@ -59,7 +59,7 @@ public class SearchDataModel implements Serializable {
     /**
      * لیست اطلاعات ستونها
      */
-    @JsonProperty(value = "cols")
+    @JsonProperty(value = "columns")
     private List<SearchDataColModel> searchDataColModelList = new ArrayList<>();
 
     /**
@@ -70,8 +70,7 @@ public class SearchDataModel implements Serializable {
     /**
      * اطلاعات اضافی
      */
-//    @JsonProperty(value = "userdata")
-    @JsonIgnore
+    @JsonProperty(value = "userdata")
     public Object userData;
 
 
@@ -79,8 +78,7 @@ public class SearchDataModel implements Serializable {
     }
 
 
-    public SearchDataModel(Page viewPage, SearchFilterModel searchFilterModel, Object userData) {
-//        Page<SearchRowView> viewPage= (Page<SearchRowView>) objectViewPage;
+    public SearchDataModel(Page<?> viewPage, SearchFilterModel searchFilterModel, Object userData) {
         this.userData = userData;
         this.page = searchFilterModel.getPage();
         this.total = (long) viewPage.getTotalPages();
@@ -90,7 +88,6 @@ public class SearchDataModel implements Serializable {
         //searchDataColModelList:
         HashMap<Integer, SpringDataColumn> indexAnnotationHashMap = new HashMap<>();
         List<SearchDataColModel> searchDataColModelList = new ArrayList<>();
-        System.out.println("SearchDataModel searchFilterModel.getSearchRowView():" + searchFilterModel.getSearchRowView());
         Set<Method> getterMethodSet1 = ReflectionUtils.getAllMethods(searchFilterModel.getSearchRowView(), ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
         getterMethodSet1.stream().forEach(getterMethod -> {
             if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(SpringDataColumn.class))) {
@@ -99,8 +96,6 @@ public class SearchDataModel implements Serializable {
         });
         indexAnnotationHashMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
             try {
-                System.out.println("searchDataColModelList index:" + entry.getKey()  + " fieldName:" + entry.getValue().name());
-
                 SearchDataColModel searchDataColModel = new SearchDataColModel();
                 searchDataColModel.setAlign(entry.getValue().align());
                 searchDataColModel.setFormatter(entry.getValue().formatter());
@@ -125,17 +120,13 @@ public class SearchDataModel implements Serializable {
         this.searchDataColModelList.stream().forEach(item-> System.out.println(item.toString()));
 
         //searchDataRowModelList:
-        System.out.println("LLLLLLL viewPage:"+viewPage + " viewPage.getClass():" + viewPage.getClass());
         HashMap<Integer, Method> indexMethodHashMap = new HashMap<>();
         List<SearchDataRowModel> searchDataRowModelList = new ArrayList<>();
         viewPage.stream().forEach(item -> {
-            System.out.println("LLLLLLL item:"+item);
             indexMethodHashMap.clear();
             Set<Method> getterMethodSet = ReflectionUtils.getAllMethods(searchFilterModel.getSearchRowView(), ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
-            System.out.println("LLLLLLL getterMethodSet.size():"+getterMethodSet.size());
             getterMethodSet.stream().forEach(getterMethod -> {
                 try {
-                    System.out.println("LLLLLLL getterMethod.getName():"+getterMethod.getName());
                     if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(SpringDataColumn.class))) {
                         indexMethodHashMap.put(getterMethod.getAnnotation(SpringDataColumn.class).index(), getterMethod);
                     }
@@ -146,7 +137,6 @@ public class SearchDataModel implements Serializable {
             List<Object> rowCellList = new ArrayList<>();
             indexMethodHashMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
                 try {
-                    System.out.println("searchDataColModelList index:" + entry.getKey()  + " methodName:" + entry.getValue().getName());
                     rowCellList.add(entry.getValue().invoke(item));
                 } catch (Exception e) {
                     e.printStackTrace();

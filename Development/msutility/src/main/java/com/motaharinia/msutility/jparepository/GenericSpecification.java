@@ -1,4 +1,4 @@
-package com.motaharinia.msutility.repository;
+package com.motaharinia.msutility.jparepository;
 
 import com.motaharinia.msutility.search.filter.SearchFilterRestrictionModel;
 import org.springframework.data.jpa.domain.Specification;

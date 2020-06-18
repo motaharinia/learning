@@ -2,8 +2,6 @@ package com.motaharinia.business.service;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.motaharinia.msutility.annotation.SpringDataColumn;
 import com.motaharinia.msutility.search.SearchRowView;

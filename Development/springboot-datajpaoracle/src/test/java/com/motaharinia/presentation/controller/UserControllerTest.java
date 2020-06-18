@@ -87,7 +87,7 @@ public class UserControllerTest {
         searchFilterSortModelList.add(new SearchFilterSortModel("lastName", SearchFilterSortTypeEnum.ASC));
         SearchFilterModel searchFilterModel=new SearchFilterModel();
         searchFilterModel.setSearchRowView(SearchRowViewUserBrief.class);
-        searchFilterModel.setPage(1);
+        searchFilterModel.setPage(0);
         searchFilterModel.setRows(10);
         searchFilterModel.setRestrictionList(searchFilterRestrictionModelList);
         searchFilterModel.setSortList(searchFilterSortModelList);
@@ -95,14 +95,8 @@ public class UserControllerTest {
         CustomObjectMapper customObjectMapper = new CustomObjectMapper();
         uri += "?searchFilterModel={searchFilterModel}";
 
-        System.out.println(customObjectMapper.writeValueAsString(searchFilterModel));
-//        HashMap<String,String> urlVariablemap = new HashMap<>();
-//        urlVariablemap.put("searchFilterModel",customObjectMapper.writeValueAsString(searchFilterModel));
-
         SearchDataModel searchDataModel = restTemplate.getForObject(uri , SearchDataModel.class,customObjectMapper.writeValueAsString(searchFilterModel));
-
         System.out.println("searchDataModel:" + searchDataModel.toString());
-
         assertThat(searchDataModel.getPage()).isEqualTo(searchFilterModel.getPage());
     }
 //

@@ -1,12 +1,8 @@
-package com.motaharinia.msutility.search.data;
+package com.motaharinia.msutility.search.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.motaharinia.msutility.search.SearchRowView;
-import com.motaharinia.msutility.search.filter.*;
+import com.motaharinia.msutility.search.data.SearchRowViewUserBrief;
 import org.junit.jupiter.api.*;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,13 +15,13 @@ import static org.assertj.core.api.Assertions.assertThat;
  * User: https://github.com/motaharinia
  * Date: 2020-06-14
  * Time: 20:49:58
- * Description: کلاس تست GridDataModel
+ * Description: کلاس تست GridFilterModel
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class SearchDataModelTests {
+public class SearchFilterModelTests {
 
     private final ObjectMapper mapper = new ObjectMapper();
-    
+
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
      */
@@ -44,14 +40,8 @@ public class SearchDataModelTests {
 
     @Order(1)
     @Test
-    void serializeTest() throws Exception {
+    void serializeDeserializeTest() throws Exception {
         Locale.setDefault(new Locale("fa"));
-//        List<SearchDataRowModel> gridRowModelList = new ArrayList<>();
-//        gridRowModelList.add(new SearchDataRowModel(1, new SearchRowViewTest()));
-//        gridRowModelList.add(new SearchDataRowModel(2,new SearchRowViewTest()));
-//        SearchDataModel searchDataModel =new SearchDataModel(1,10l,20l,gridRowModelList,null);
-//
-
 
         List<SearchFilterRestrictionModel> searchFilterRestrictionModelList=new ArrayList<>();
         searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH,"mostafa"));
@@ -64,21 +54,8 @@ public class SearchDataModelTests {
         searchFilterModel.setRestrictionList(searchFilterRestrictionModelList);
         searchFilterModel.setSortList(searchFilterSortModelList);
 
-//        System.out.println("SearchDataModelTests.serializeTest searchFilterModel:" + searchFilterModel.toString());
-
-        SearchRowViewUserBriefImpl searchRowViewTest = null;
-        List<SearchRowViewUserBrief> viewList = new ArrayList<>();
-        viewList.add (new SearchRowViewUserBriefImpl(1) );
-        viewList.add (new SearchRowViewUserBriefImpl(2) );
-        Page<SearchRowViewUserBrief> viewPage = new PageImpl<>(viewList);
-
-
-//        SearchDataModel searchDataModel =new SearchDataModel((long) viewPage.getTotalPages(),viewPage.getTotalElements(),viewPage.getContent(),searchFilterModel,null);
-        SearchDataModel searchDataModel =new SearchDataModel(viewPage,searchFilterModel,null);
-
-        System.out.println("searchDataModel:" + searchDataModel.toString());
-
-        String json =mapper.writeValueAsString(searchDataModel);
-        assertThat(json.contains("records")).isEqualTo(true);
+        String json=mapper.writeValueAsString(searchFilterModel);
+        SearchFilterModel searchFilterModel2=mapper.readValue(json, SearchFilterModel.class);
+        assertThat(searchFilterModel2.getRestrictionList().get(0).getFieldValue()).isEqualTo("mostafa");
     }
 }

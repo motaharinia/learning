@@ -3,7 +3,7 @@ package com.motaharinia.msutility.search.filter;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.motaharinia.msutility.json.deserializer.JsonDeserializerClass;
-import com.motaharinia.msutility.repository.GenericSpecification;
+import com.motaharinia.msutility.jparepository.GenericSpecification;
 import org.springframework.util.CollectionUtils;
 
 import java.io.Serializable;

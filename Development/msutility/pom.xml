@@ -6,7 +6,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.3.0.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <relativePath/> <!-- lookup parent from jparepository -->
     </parent>
     <groupId>com.motaharinia</groupId>
     <artifactId>MsUtility</artifactId>
@@ -134,13 +134,7 @@
             <artifactId>jsoup</artifactId>
             <version>1.10.2</version>
         </dependency>
-        <!--        used in gridFiltermodel-->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            <version>20200518</version>
-        </dependency>
-        <!--        reflection utility-->
+        <!--reflection utility-->
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
@@ -158,7 +152,7 @@
                 https://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html
                 Using a Spring Boot Application as a Dependency :
                 to have new build:
-                1.increase pom version tag (if you want to update current version delete folder c:\\users\\{myuser}\\.m2\\repository\\com\\motaharinia\\MsUtility)
+                1.increase pom version tag (if you want to update current version delete folder c:\\users\\{myuser}\\.m2\\jparepository\\com\\motaharinia\\MsUtility)
                 2.in IntelliJ in maven window select below lifecycle and "Run maven build" button:
                 -clean
                 -validate (validate the project is correct and all necessary information is available)
@@ -166,8 +160,8 @@
                 -test (test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed)
                 -package (take the compiled code and package it in its distributable format, such as a JAR.)
                 -verify (run any checks on results of integration tests to ensure quality criteria are met)
-                -install (install the package into the local repository, for use as a dependency in other projects locally)
-                3.the dependancy is available in c:\\users\\{myuser}\\.m2\\repository\\com\\motaharinia
+                -install (install the package into the local jparepository, for use as a dependency in other projects locally)
+                3.the dependancy is available in c:\\users\\{myuser}\\.m2\\jparepository\\com\\motaharinia
                 4.add dependency to another project as:
                    <dependency>
                       <groupId>com.motaharinia</groupId>

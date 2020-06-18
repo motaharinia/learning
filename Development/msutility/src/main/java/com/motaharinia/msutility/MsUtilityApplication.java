@@ -19,8 +19,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  *            -test (test the compiled source code using a suitable unit testing framework. These tests should not require the code be packaged or deployed)
  *            -package (take the compiled code and package it in its distributable format, such as a JAR.)
  *            -verify (run any checks on results of integration tests to ensure quality criteria are met)
- *            -install (install the package into the local repository, for use as a dependency in other projects locally)
- *         3.the dependancy is available in c:\\users\\{myuser}\\.m2\\repository\\com\\motaharinia
+ *            -install (install the package into the local jparepository, for use as a dependency in other projects locally)
+ *         3.the dependancy is available in c:\\users\\{myuser}\\.m2\\jparepository\\com\\motaharinia
  *         4.add dependency to another project as:
  *                 <dependency>
  *                    <groupId>com.motaharinia</groupId>
