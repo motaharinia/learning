@@ -1,11 +1,11 @@
-package com.motaharinia.presentation.controller;
+package com.motaharinia.presentation.adminuser;
 
 
-import com.motaharinia.business.service.SearchRowViewUserBrief;
+import com.motaharinia.business.service.adminuser.SearchRowViewAdminUserBrief;
 import com.motaharinia.msutility.json.CustomObjectMapper;
 import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.*;
-import com.motaharinia.presentation.model.UserModel;
+import com.motaharinia.presentation.adminuser.AdminUserModel;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,7 +28,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("dev")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class UserControllerTest {
+public class AdminUserControllerTest {
     @LocalServerPort
     private int port;
 
@@ -53,40 +52,40 @@ public class UserControllerTest {
     @Test
     @Order(1)
     public void create() throws Exception {
-        String uri="http://localhost:" + port + "/user";
+        String uri="http://localhost:" + port + "/adminUser";
         Map<String, String> variableHashMap = new HashMap<String, String>();
 
-        UserModel userModel = new UserModel();
-        userModel.setFirstName("Mostafa");
-        userModel.setLastName("Motaharinia");
-        userModel.setPassword("123456789");
-        userModel.setUsername("eng.motahari@gmail.com");
+        AdminUserModel adminUserModel = new AdminUserModel();
+        adminUserModel.setFirstName("Mostafa");
+        adminUserModel.setLastName("Motaharinia");
+        adminUserModel.setPassword("123456789");
+        adminUserModel.setUsername("eng.motahari@gmail.com");
 
-        userModel = restTemplate.postForObject(uri, userModel, UserModel.class, variableHashMap);
-        System.out.println("create userModel.toString():"+ userModel.toString());
-        crudId=userModel.getId();
-        assertThat(userModel.getId()).isNotEqualTo(null);
+        adminUserModel = restTemplate.postForObject(uri, adminUserModel, AdminUserModel.class, variableHashMap);
+        System.out.println("create userModel.toString():"+ adminUserModel.toString());
+        crudId= adminUserModel.getId();
+        assertThat(adminUserModel.getId()).isNotEqualTo(null);
     }
 
     @Test
     @Order(2)
     public void readOne() throws Exception {
-        String uri="http://localhost:" + port + "/user/"+crudId;
-        UserModel resultModel = restTemplate.getForObject(uri, UserModel.class);
+        String uri="http://localhost:" + port + "/adminUser/"+crudId;
+        AdminUserModel resultModel = restTemplate.getForObject(uri, AdminUserModel.class);
         assertThat(resultModel.getId()).isEqualTo(crudId);
     }
 
     @Test
     @Order(3)
     public void readGrid() throws Exception {
-        String uri="http://localhost:" + port + "/user";
+        String uri="http://localhost:" + port + "/adminUser";
 
         List<SearchFilterRestrictionModel> searchFilterRestrictionModelList=new ArrayList<>();
         searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH,"mostafa"));
         List<SearchFilterSortModel> searchFilterSortModelList=new ArrayList<>();
         searchFilterSortModelList.add(new SearchFilterSortModel("lastName", SearchFilterSortTypeEnum.ASC));
         SearchFilterModel searchFilterModel=new SearchFilterModel();
-        searchFilterModel.setSearchRowView(SearchRowViewUserBrief.class);
+        searchFilterModel.setSearchRowView(SearchRowViewAdminUserBrief.class);
         searchFilterModel.setPage(0);
         searchFilterModel.setRows(10);
         searchFilterModel.setRestrictionList(searchFilterRestrictionModelList);
@@ -103,7 +102,7 @@ public class UserControllerTest {
 //    @Test
 //    @Order(4)
 //    public void listGrid() throws Exception {
-//        String uri="http://localhost:" + port + "/user/firstName/Mostafa";
+//        String uri="http://localhost:" + port + "/adminUser/firstName/Mostafa";
 //        GridDataModel gridDataModel = restTemplate.getForObject(uri, GridDataModel.class);
 //        List<Object[]> listArray =gridDataModel.getModelList();
 //        listArray.stream().forEach(array-> System.out.println(array[0].getClass().getName()));

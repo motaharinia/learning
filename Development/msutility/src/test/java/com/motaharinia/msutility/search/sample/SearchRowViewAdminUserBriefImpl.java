@@ -7,16 +7,16 @@ package com.motaharinia.msutility.search.sample;
  * Description:<br>
  *     کلاس نمونه جهت تست SearchDataModelTests
  */
-public class SearchRowViewUserBriefImpl implements SearchRowViewUserBrief {
+public class SearchRowViewAdminUserBriefImpl implements SearchRowViewAdminUserBrief {
 
     private Integer id;
 
-    public SearchRowViewUserBriefImpl(Integer id) {
+    public SearchRowViewAdminUserBriefImpl(Integer id) {
         this.id=id;
     }
 
 
-    public SearchRowViewUserBriefImpl() {
+    public SearchRowViewAdminUserBriefImpl() {
     }
 
     @Override

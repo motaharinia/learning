@@ -1,4 +1,4 @@
-package com.motaharinia.presentation.controller;
+package com.motaharinia.presentation.home;
 
 
 import org.springframework.web.bind.annotation.RequestMapping;

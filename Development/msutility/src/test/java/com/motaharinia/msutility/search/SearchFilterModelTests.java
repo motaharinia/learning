@@ -2,7 +2,7 @@ package com.motaharinia.msutility.search;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.motaharinia.msutility.search.filter.*;
-import com.motaharinia.msutility.search.sample.SearchRowViewUserBrief;
+import com.motaharinia.msutility.search.sample.SearchRowViewAdminUserBrief;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
@@ -49,7 +49,7 @@ public class SearchFilterModelTests {
         List<SearchFilterSortModel> searchFilterSortModelList=new ArrayList<>();
         searchFilterSortModelList.add(new SearchFilterSortModel("lastName", SearchFilterSortTypeEnum.ASC));
         SearchFilterModel searchFilterModel=new SearchFilterModel();
-        searchFilterModel.setSearchRowView(SearchRowViewUserBrief.class);
+        searchFilterModel.setSearchRowView(SearchRowViewAdminUserBrief.class);
         searchFilterModel.setPage(1);
         searchFilterModel.setRows(10);
         searchFilterModel.setRestrictionList(searchFilterRestrictionModelList);

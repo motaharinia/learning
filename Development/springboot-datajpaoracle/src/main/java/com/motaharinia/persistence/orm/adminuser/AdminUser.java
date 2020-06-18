@@ -1,4 +1,4 @@
-package com.motaharinia.persistence.orm.user;
+package com.motaharinia.persistence.orm.adminuser;
 
 
 import com.motaharinia.msutility.entity.GenericEntity;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "user_")
-public class User extends GenericEntity implements Serializable {
+public class AdminUser extends GenericEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")

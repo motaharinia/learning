@@ -1,12 +1,11 @@
-package com.motaharinia.persistence.orm.user;
+package com.motaharinia.persistence.orm.adminuser;
 
-import com.motaharinia.business.service.SearchRowViewUserBrief;
+import com.motaharinia.business.service.adminuser.SearchRowViewAdminUserBrief;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import th.co.geniustree.springdata.jpa.repository.JpaSpecificationExecutorWithProjection;
 
 import java.util.List;
 
@@ -15,11 +14,11 @@ import java.util.List;
 //https://github.com/pramoth/specification-with-projection
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecificationExecutor<User> {
+public interface AdminUserRepository extends JpaRepository<AdminUser, Integer>, JpaSpecificationExecutor<AdminUser> {
 
 
 
-    List<SearchRowViewUserBrief> findAllUserByFirstName(String firstName);
+    List<SearchRowViewAdminUserBrief> findAllUserByFirstName(String firstName);
 //    List<GridDataRowUserBriefView> readBriefView(String firstName);
 
 //    User findUserByUsername(String username);
@@ -34,12 +33,12 @@ public interface UserRepository extends JpaRepository<User, Integer>, JpaSpecifi
 //    @Transactional(timeout = 10)
 
 
-    @Query("select obj.id,obj.firstName,obj.lastName from User obj where obj.firstName= :firstName")
+    @Query("select obj.id,obj.firstName,obj.lastName from AdminUser obj where obj.firstName= :firstName")
     public List<Object[]> listGrid(@Param("firstName")String firstName);
 
-    public User findByLastNameLikeAndFirstNameStartingWith(String lastName,String firstName);
+    public AdminUser findByLastNameLikeAndFirstNameStartingWith(String lastName, String firstName);
 
-    public List<User> findAllByLastNameLikeAndFirstNameStartingWith(String lastName,String firstName);
+    public List<AdminUser> findAllByLastNameLikeAndFirstNameStartingWith(String lastName, String firstName);
 
 
 

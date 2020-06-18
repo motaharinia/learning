@@ -1,8 +1,6 @@
-package com.motaharinia.presentation.model;
+package com.motaharinia.presentation.adminuser;
 
-import javax.persistence.Column;
-
-public class UserModel {
+public class AdminUserModel {
     private Integer  id;
 
     private String username;

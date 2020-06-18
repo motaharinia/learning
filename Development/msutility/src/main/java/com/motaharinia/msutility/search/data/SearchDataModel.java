@@ -8,7 +8,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.util.ObjectUtils;
-import com.motaharinia.msutility.search.annotation.CustomSearchDataColumn;
+import com.motaharinia.msutility.search.annotation.SearchDataColumn;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
@@ -77,12 +77,12 @@ public class SearchDataModel implements Serializable {
 
 
         //searchDataColModelList:
-        HashMap<Integer, CustomSearchDataColumn> indexAnnotationHashMap = new HashMap<>();
+        HashMap<Integer, SearchDataColumn> indexAnnotationHashMap = new HashMap<>();
         List<SearchDataColModel> searchDataColModelList = new ArrayList<>();
         Set<Method> getterMethodSet1 = ReflectionUtils.getAllMethods(searchFilterModel.getSearchRowView(), ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
         getterMethodSet1.stream().forEach(getterMethod -> {
-            if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(CustomSearchDataColumn.class))) {
-                indexAnnotationHashMap.put(getterMethod.getAnnotation(CustomSearchDataColumn.class).index(), getterMethod.getAnnotation(CustomSearchDataColumn.class));
+            if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(SearchDataColumn.class))) {
+                indexAnnotationHashMap.put(getterMethod.getAnnotation(SearchDataColumn.class).index(), getterMethod.getAnnotation(SearchDataColumn.class));
             }
         });
         indexAnnotationHashMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
@@ -118,8 +118,8 @@ public class SearchDataModel implements Serializable {
             Set<Method> getterMethodSet = ReflectionUtils.getAllMethods(searchFilterModel.getSearchRowView(), ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
             getterMethodSet.stream().forEach(getterMethod -> {
                 try {
-                    if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(CustomSearchDataColumn.class))) {
-                        indexMethodHashMap.put(getterMethod.getAnnotation(CustomSearchDataColumn.class).index(), getterMethod);
+                    if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(SearchDataColumn.class))) {
+                        indexMethodHashMap.put(getterMethod.getAnnotation(SearchDataColumn.class).index(), getterMethod);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

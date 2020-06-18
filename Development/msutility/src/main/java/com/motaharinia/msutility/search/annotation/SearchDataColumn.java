@@ -19,7 +19,7 @@ import java.lang.annotation.Target;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface CustomSearchDataColumn {
+public @interface SearchDataColumn {
     //نام فیلد ستون
     public String name();
     //اندیس و ترتیب قرارگیری ستون

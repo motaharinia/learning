@@ -1,10 +1,10 @@
 -- to execute dml like insert into table
 
--- MERGE INTO uzer u USING (SELECT username FROM uzer WHERE username ='superadmin@micser.com') e ON (u.username = e.username) WHEN NOT MATCHED THEN INSERT (u.username, u.password, u.firstname,u.lastname) VALUES ('superadmin@micser.com', '123456789', 'superFirstName','superLastName')
+-- MERGE INTO adminuser u USING (SELECT username FROM adminuser WHERE username ='superadmin@micser.com') e ON (u.username = e.username) WHEN NOT MATCHED THEN INSERT (u.username, u.password, u.firstname,u.lastname) VALUES ('superadmin@micser.com', '123456789', 'superFirstName','superLastName')
 
 
 
--- INSERT INTO uzer (username, password, firstname,lastname) VALUES ('superadmin@micser.com', '123456789', 'superFirstName','superLastName');
+-- INSERT INTO adminuser (username, password, firstname,lastname) VALUES ('superadmin@micser.com', '123456789', 'superFirstName','superLastName');
 
 -- INSERT INTO oauth_client_details
 -- 	(client_id, client_secret, scope, authorized_grant_types,

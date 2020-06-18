@@ -1,14 +1,14 @@
-package com.motaharinia.business.service;
+package com.motaharinia.business.service.adminuser;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.motaharinia.msutility.search.SearchRowView;
 import com.motaharinia.msutility.search.annotation.SearchDataColumn;
-import com.motaharinia.persistence.orm.user.User;
+import com.motaharinia.persistence.orm.adminuser.AdminUser;
 
-@JsonDeserialize(as=User.class)
-public interface SearchRowViewUserBrief extends SearchRowView {
+@JsonDeserialize(as= AdminUser.class)
+public interface SearchRowViewAdminUserBrief extends SearchRowView {
     @JsonProperty(value = "id")
     @SearchDataColumn(index = 1,name = "id")
     Integer getId();

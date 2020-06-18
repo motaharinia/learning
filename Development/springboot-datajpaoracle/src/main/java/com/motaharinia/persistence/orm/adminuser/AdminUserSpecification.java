@@ -1,4 +1,4 @@
-package com.motaharinia.persistence.orm.user;
+package com.motaharinia.persistence.orm.adminuser;
 
 
 import com.motaharinia.msutility.jparepository.GenericSpecification;
@@ -12,5 +12,5 @@ import org.springframework.stereotype.Component;
  * Description: این کلاس انجام کوئری های پیشرفته بر روی داده ها میباشد
  */
 @Component
-public class UserSpecification extends GenericSpecification<User> {
+public class AdminUserSpecification extends GenericSpecification<AdminUser> {
 }

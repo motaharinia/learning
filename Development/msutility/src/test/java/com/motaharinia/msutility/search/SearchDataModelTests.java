@@ -3,8 +3,8 @@ package com.motaharinia.msutility.search;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.*;
-import com.motaharinia.msutility.search.sample.SearchRowViewUserBrief;
-import com.motaharinia.msutility.search.sample.SearchRowViewUserBriefImpl;
+import com.motaharinia.msutility.search.sample.SearchRowViewAdminUserBrief;
+import com.motaharinia.msutility.search.sample.SearchRowViewAdminUserBriefImpl;
 import org.junit.jupiter.api.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -52,17 +52,17 @@ public class SearchDataModelTests {
         List<SearchFilterSortModel> searchFilterSortModelList = new ArrayList<>();
         searchFilterSortModelList.add(new SearchFilterSortModel("lastName", SearchFilterSortTypeEnum.ASC));
         SearchFilterModel searchFilterModel = new SearchFilterModel();
-        searchFilterModel.setSearchRowView(SearchRowViewUserBrief.class);
+        searchFilterModel.setSearchRowView(SearchRowViewAdminUserBrief.class);
         searchFilterModel.setPage(1);
         searchFilterModel.setRows(10);
         searchFilterModel.setRestrictionList(searchFilterRestrictionModelList);
         searchFilterModel.setSortList(searchFilterSortModelList);
 
-        SearchRowViewUserBriefImpl searchRowViewTest = null;
-        List<SearchRowViewUserBrief> viewList = new ArrayList<>();
-        viewList.add(new SearchRowViewUserBriefImpl(1));
-        viewList.add(new SearchRowViewUserBriefImpl(2));
-        Page<SearchRowViewUserBrief> viewPage = new PageImpl<>(viewList);
+        SearchRowViewAdminUserBriefImpl searchRowViewTest = null;
+        List<SearchRowViewAdminUserBrief> viewList = new ArrayList<>();
+        viewList.add(new SearchRowViewAdminUserBriefImpl(1));
+        viewList.add(new SearchRowViewAdminUserBriefImpl(2));
+        Page<SearchRowViewAdminUserBrief> viewPage = new PageImpl<>(viewList);
 
 
         SearchDataModel searchDataModel = new SearchDataModel(viewPage, searchFilterModel, null);
