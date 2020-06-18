@@ -1,26 +1,17 @@
 package com.motaharinia.msutility.search.data;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.motaharinia.msutility.annotation.SpringDataColumn;
-import com.motaharinia.msutility.search.SearchRowView;
-import com.motaharinia.msutility.search.SearchRowViewTest;
 import com.motaharinia.msutility.search.filter.SearchFilterModel;
 import com.motaharinia.msutility.search.filter.SearchFilterOperationEnum;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.lucene.util.CollectionUtil;
 import org.reflections.ReflectionUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
-import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.text.SimpleDateFormat;
@@ -241,7 +232,7 @@ public class SearchDataModel implements Serializable {
         return "SearchDataModel{" +
                 "page=" + page +
                 ", records=" + records +
-                ", gridRowModelList=[" + searchDataRowModelList.stream().map(item -> item.toString()).collect(Collectors.joining(",")) + "]" +
+                ", searchDataRowModelList=[" + searchDataRowModelList.stream().map(item -> item.toString()).collect(Collectors.joining(",")) + "]" +
                 ", total=" + total +
                 ", userData=" + userData +
                 '}';

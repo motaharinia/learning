@@ -1,4 +1,4 @@
-package com.motaharinia.msutility.search.filter;//package com.motaharinia.msutility.base.presentation.model.griddata;
+package com.motaharinia.msutility.search.filter;
 
 /**
  * Created by IntelliJ IDEA.
