@@ -1,7 +1,6 @@
 package com.motaharinia.msutility.entity;
 
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,18 +10,18 @@ import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-12
- * Time: 01:05:58
- * Description: این کلاس مبدلی را ایجاد میکند که میتوان با گذاشتن آن بر روی فیلدهای از جنس لیست رشته در انتیتی ها آنها را در فیلد جدول دیتابیس به صورت رشته جدا شده با کاما ذخیره نمود
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ *     این کلاس مبدلی را ایجاد میکند که میتوان با گذاشتن آن بر روی فیلدهای از جنس لیست رشته در انتیتی ها آنها را در فیلد جدول دیتابیس به صورت رشته جدا شده با کاما ذخیره نمود
  */
 @Converter
 public class CustomStringAttributeConverter implements AttributeConverter<List<String>, String> {
 
     @Override
     public String convertToDatabaseColumn(List<String> list) {
-        if (CollectionUtils.isEmpty(list)) {
+        if (ObjectUtils.isEmpty(list)) {
             return "";
         }
         return list.stream()
@@ -34,7 +33,7 @@ public class CustomStringAttributeConverter implements AttributeConverter<List<S
 
     @Override
     public List<String> convertToEntityAttribute(String joined) {
-        if (StringUtils.isEmpty(joined)) {
+        if (ObjectUtils.isEmpty(joined)) {
             return new ArrayList<>();
         }
         return Arrays.asList(joined.split(","));

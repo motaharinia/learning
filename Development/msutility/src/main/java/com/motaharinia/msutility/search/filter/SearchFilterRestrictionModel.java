@@ -3,11 +3,11 @@ package com.motaharinia.msutility.search.filter;
 import java.io.Serializable;
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-16
- * Time: 23:05:15
- * Description: این کلاس مدل شرطی است که میخواهیم در جستجو هایی مانند جستجوی گرید از آن استفاده کنیم
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-16<br>
+ * Time: 23:05:15<br>
+ * Description:<br>
+ *     این کلاس مدل شرطی است که میخواهیم در جستجو هایی مانند جستجوی گرید از آن استفاده کنیم
  */
 public class SearchFilterRestrictionModel implements Serializable {
 

@@ -13,11 +13,11 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-12
- * Time: 01:05:58
- * Description: این کلاس مپر برای تبدیل کلاسهای مدل به رشته جیسون و برعکس استفاده میشود. تفاوت آن نسبت به مپر پیش فرض داشتن مسیج سورس برای ترجمه است
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ *     این کلاس مپر برای تبدیل کلاسهای مدل به رشته جیسون و برعکس استفاده میشود. تفاوت آن نسبت به مپر پیش فرض داشتن مسیج سورس برای ترجمه است
  */
 @Component
 public class CustomObjectMapper extends ObjectMapper {

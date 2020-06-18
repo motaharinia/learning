@@ -1,14 +1,13 @@
-
 package com.motaharinia.msutility.calendar;
 
 import java.util.*;
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-12
- * Time: 01:05:58
- * Description: این کلاس برای تبدیل تاریخ میلادی و جلالی استفاده میشود
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ *     این کلاس برای تبدیل تاریخ میلادی و جلالی استفاده میشود
  */
 public class JalaliCalendar extends Calendar {
     public static int gregorianDaysInMonth[] = {31, 28, 31, 30, 31, 30, 31,

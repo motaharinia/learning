@@ -10,11 +10,11 @@ import java.util.Locale;
 import static java.lang.System.out;
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-15
- * Time: 17:13:07
- * Description: این کلاس برای بررسی تنظیمات کارکترست سیستم عامل و جی وی ام است. با اجرا کردن آن مشخصات را در کنسول میبینید.
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-15<br>
+ * Time: 17:13:07<br>
+ * Description:<br>
+ *     این کلاس برای بررسی تنظیمات کارکترست سیستم عامل و جی وی ام است. با اجرا کردن آن مشخصات را در کنسول میبینید.
  */
 public class JvmCharsetCheck {
 

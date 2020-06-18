@@ -41,11 +41,11 @@ import java.util.Arrays;
 
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-12
- * Time: 01:05:58
- * Description: این کلاس اطلاعاتی از هر یک از سطرهای گرید ارائه میکند
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ *     این کلاس اطلاعاتی از هر یک از سطرهای گرید ارائه میکند
  */
 @JsonSerialize
 //@JsonDeserialize

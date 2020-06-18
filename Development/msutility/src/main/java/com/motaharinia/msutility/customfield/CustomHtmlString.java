@@ -2,14 +2,19 @@ package com.motaharinia.msutility.customfield;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.util.ObjectUtils;
 
 import java.io.Serializable;
 
 /**
- *
- * @author administrator
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description: <br>
+ * این کلاس برای جابجا کردن داده های اپ تی ام ال استفاده میشود<br>
+ * سامانه این فیلد را از فیلدهای معمولی رشته متمایز میکند و تگهای اچ تی ام ال داخل این فیلد را فیلتر نمیکند
  */
-public class CustomHtmlString implements Serializable{
+public class CustomHtmlString implements Serializable {
 
     private String customHtmlString;
 
@@ -27,15 +32,22 @@ public class CustomHtmlString implements Serializable{
     public String toString() {
         return "CustomHtmlString{" + "customHtmlString=" + customHtmlString + '}';
     }
-    
-    public static Boolean isSet(CustomHtmlString  customHtmlString) {
-        if (customHtmlString == null) {
-            return false;
+
+
+    /**
+     * بررسی میکند آیا کاستوم ورودی نال یا خالی هست
+     *
+     * @param customHtmlString کاستوم ورودی
+     * @return خروجی: نتیجه بررسی
+     */
+    public static Boolean isEmpty(CustomHtmlString customHtmlString) {
+        if (ObjectUtils.isEmpty(customHtmlString)) {
+            return true;
         }
-        if (customHtmlString.getCustomHtmlString() == null ) {
-            return false;
+        if (ObjectUtils.isEmpty(customHtmlString.getCustomHtmlString())) {
+            return true;
         }
-        return true;
+        return false;
     }
 
     //getter-setter:

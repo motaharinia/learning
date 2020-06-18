@@ -14,11 +14,11 @@ import java.io.IOException;
 import java.util.Locale;
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-12
- * Time: 01:05:58
- * Description: این کلاس برای تبدیل رشته حاوی کلید ترجمه به رشته جیسون ترجمه شده برای ارسال به سمت کلاینت میباشد
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ *     این کلاس برای تبدیل رشته حاوی کلید ترجمه به رشته جیسون ترجمه شده برای ارسال به سمت کلاینت میباشد
  */
 @Component
 public class JsonSerializerLang extends JsonSerializer<String> {

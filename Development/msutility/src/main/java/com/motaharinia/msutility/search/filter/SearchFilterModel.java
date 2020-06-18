@@ -3,7 +3,7 @@ package com.motaharinia.msutility.search.filter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.motaharinia.msutility.json.deserializer.JsonDeserializerClass;
 import com.motaharinia.msutility.jparepository.GenericSpecification;
-import org.springframework.util.CollectionUtils;
+import org.springframework.util.ObjectUtils;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-16
- * Time: 23:07:01
- * Description: این کلاس برای جستجوی پیشرفته داده ها از کلاینت به سرور استفاده میگردد
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-16<br>
+ * Time: 23:07:01<br>
+ * Description:<br>
+ *     این کلاس برای جستجوی پیشرفته داده ها از کلاینت به سرور استفاده میگردد
  */
 public class SearchFilterModel implements Serializable {
     /**
@@ -46,7 +46,7 @@ public class SearchFilterModel implements Serializable {
     }
 
     public GenericSpecification makeSpecification(GenericSpecification genericSpecification) {
-        if (!CollectionUtils.isEmpty(this.restrictionList)) {
+        if (!ObjectUtils.isEmpty(this.restrictionList)) {
             restrictionList.stream().forEach(item -> genericSpecification.add(item));
         }
         return genericSpecification;

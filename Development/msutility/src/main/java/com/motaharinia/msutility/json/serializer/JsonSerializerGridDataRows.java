@@ -6,18 +6,17 @@
 //import com.fasterxml.jackson.databind.SerializerProvider;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.context.MessageSource;
-//import org.springframework.util.CollectionUtils;
 //import org.springframework.util.ObjectUtils;
 //
 //import java.io.IOException;
 //import java.util.List;
 //
 ///**
-// * Created by IntelliJ IDEA.
-// * User: https://github.com/motaharinia
-// * Date: 2020-06-12
-// * Time: 01:05:58
-// * Description: این کلاس برای تبدیل مدل سطر گرید به رشته جیسون برای ارسال به سمت کلاینت میباشد
+// * User: https://github.com/motaharinia<br>
+// * Date: 2020-06-12<br>
+// * Time: 01:05:58<br>
+// * Description:<br>
+// *این کلاس برای تبدیل مدل سطر گرید به رشته جیسون برای ارسال به سمت کلاینت میباشد
 // */
 //public class JsonSerializerGridDataRows extends JsonSerializer<List<Object[]>> {
 //
@@ -26,7 +25,7 @@
 //
 //    @Override
 //    public void serialize(List<Object[]> rows, JsonGenerator gen, SerializerProvider provider) throws IOException, JsonProcessingException {
-//        if (!CollectionUtils.isEmpty(rows)) {
+//        if (!ObjectUtils.isEmpty(rows)) {
 //            Integer id = 0;
 //            Object[] row = null;
 //            SearchDataRowModel searchDataRowModel = null;

@@ -3,11 +3,11 @@ package com.motaharinia.msutility.search.filter;
 import java.io.Serializable;
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-16
- * Time: 23:14:13
- * Description: این مدل یک دستور مرتب سازی را تشریح میکند که چه فیلدی چه نوع مرتب سازی داشته باشد
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-16<br>
+ * Time: 23:14:13<br>
+ * Description:<br>
+ *     این مدل یک دستور مرتب سازی را تشریح میکند که چه فیلدی چه نوع مرتب سازی داشته باشد
  */
 public class SearchFilterSortModel implements Serializable {
     /**

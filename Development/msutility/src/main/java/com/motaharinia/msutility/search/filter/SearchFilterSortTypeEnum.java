@@ -1,11 +1,11 @@
 package com.motaharinia.msutility.search.filter;
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-16
- * Time: 23:14:13
- * Description: اینام مقادیر ثابت نوع مرتب سازی مدل مرتب سازی در جستجوی پیشرفته
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-16<br>
+ * Time: 23:14:13<br>
+ * Description:<br>
+ *     اینام مقادیر ثابت نوع مرتب سازی مدل مرتب سازی در جستجوی پیشرفته
  */
 public enum SearchFilterSortTypeEnum {
     /**

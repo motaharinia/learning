@@ -1,11 +1,11 @@
 package com.motaharinia.msutility.search.filter;
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-16
- * Time: 23:09:56
- * Description: مقادیر ثابت عملیات شرط گذاری بر روی جستجوی پیشرفته
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-16<br>
+ * Time: 23:09:56<br>
+ * Description:<br>
+ *     مقادیر ثابت عملیات شرط گذاری بر روی جستجوی پیشرفته
  */
 public enum SearchFilterOperationEnum {
 

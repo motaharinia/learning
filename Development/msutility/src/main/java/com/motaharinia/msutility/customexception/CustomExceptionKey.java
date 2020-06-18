@@ -1,11 +1,11 @@
 package com.motaharinia.msutility.customexception;
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-11
- * Time: 02:33:39
- * Description: اینترفیس کلید کل اکسپشنهای پروژه
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-11<br>
+ * Time: 02:33:39<br>
+ * Description:<br>
+ *     اینترفیس کلید کل اکسپشنهای پروژه
  */
 public interface CustomExceptionKey {
     String getValue();

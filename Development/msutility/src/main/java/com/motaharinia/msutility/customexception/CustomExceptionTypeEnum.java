@@ -2,11 +2,11 @@ package com.motaharinia.msutility.customexception;
 
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-11
- * Time: 01:22:13
- * Description: مقادیر ثابت نوع اکسپشن
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-11<br>
+ * Time: 01:22:13<br>
+ * Description:<br>
+ *     مقادیر ثابت نوع اکسپشن
  */
 public enum CustomExceptionTypeEnum {
 

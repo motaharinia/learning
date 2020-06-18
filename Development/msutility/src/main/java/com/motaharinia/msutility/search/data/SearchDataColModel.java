@@ -7,11 +7,11 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-17
- * Time: 15:51:26
- * Description:
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-17<br>
+ * Time: 15:51:26<br>
+ * Description:<br>
+ * از این کلاس مدل برای تنظیم کردن مشخصات نمایشی ستونهای خروجی داده استفاده میشود
  */
 public class SearchDataColModel implements Serializable {
     //نام فیلد ستون

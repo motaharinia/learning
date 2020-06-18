@@ -1,15 +1,14 @@
-
 package com.motaharinia.msutility.customexception;
 
 import org.jetbrains.annotations.NotNull;
 
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-11
- * Time: 02:31:29
- * Description: کلاس اکسپشن پدر پروژه که در دیتابیس لاگ میشود و انواع دیگر اکسپشنها از آن گسترش میابند
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-11<br>
+ * Time: 02:31:29<br>
+ * Description:<br>
+ * کلاس اکسپشن پدر پروژه که در دیتابیس لاگ میشود و انواع دیگر اکسپشنها از آن گسترش میابند
  */
 public class CustomException extends RuntimeException {
 
@@ -34,11 +33,11 @@ public class CustomException extends RuntimeException {
     private String exceptionDescription;
 
 
-    public CustomException(@NotNull CustomExceptionTypeEnum exceptionType,@NotNull Class exceptionOccurredClass,@NotNull CustomExceptionKey customExceptionKey,String exceptionDescription) {
-        this.exceptionType=exceptionType;
-        this.exceptionOccurredClass=exceptionOccurredClass;
-        this.exceptionMessage=exceptionType.getValue() + "." + exceptionOccurredClass.getSimpleName() + "." + customExceptionKey.getValue();
-        this.exceptionDescription=exceptionDescription;
+    public CustomException(@NotNull CustomExceptionTypeEnum exceptionType, @NotNull Class exceptionOccurredClass, @NotNull CustomExceptionKey customExceptionKey, String exceptionDescription) {
+        this.exceptionType = exceptionType;
+        this.exceptionOccurredClass = exceptionOccurredClass;
+        this.exceptionMessage = exceptionType.getValue() + "." + exceptionOccurredClass.getSimpleName() + "." + customExceptionKey.getValue();
+        this.exceptionDescription = exceptionDescription;
     }
 
 

@@ -11,11 +11,11 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-12
- * Time: 01:05:58
- * Description: این کلاس به عنوان کلاس پدر تمام کلاسهای انتیتی آماده شده است و به تمام انتیتی ها فیلدهای استانداردی را اضافه میکتد
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ *     این کلاس به عنوان کلاس پدر تمام کلاسهای انتیتی آماده شده است و به تمام انتیتی ها فیلدهای استانداردی را اضافه میکتد
  */
 @MappedSuperclass
 public class GenericEntity implements Serializable {

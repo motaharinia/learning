@@ -1,11 +1,11 @@
 package com.motaharinia.msutility.search.data;
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-16
- * Time: 23:14:13
- * Description: اینام مقادیر ثابت نوع جستجو مطالب
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-16<br>
+ * Time: 23:14:13<br>
+ * Description:<br>
+ *     اینام مقادیر ثابت نوع جستجو مطالب
  */
 public enum SearchDataColSearchTypeEnum {
     /**

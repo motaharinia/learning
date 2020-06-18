@@ -8,11 +8,11 @@ import org.springframework.util.ObjectUtils;
 import java.io.IOException;
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-17
- * Time: 12:09:17
- * Description:
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-17<br>
+ * Time: 12:09:17<br>
+ * Description:<br>
+ * این کلاس برای تبدیل کلاس جاوا به رشته جیسون مسیر کلاس جاوا در کلاینت میباشد
  */
 public class JsonSerializerClass  extends JsonSerializer<Object> {
 

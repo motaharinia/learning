@@ -2,10 +2,9 @@ package com.motaharinia.msutility.string;
 
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.customexception.UtilityExceptionKeyEnum;
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
+import org.springframework.util.ObjectUtils;
 
 
 import java.math.BigInteger;
@@ -50,7 +49,7 @@ public interface StringTools {
      */
     @NotNull
     static String removeHtml(@NotNull String htmlString) {
-        if (StringUtils.isEmpty(htmlString)) {
+        if (ObjectUtils.isEmpty(htmlString)) {
             throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
         }
         return Jsoup.parse(htmlString).text();
@@ -67,7 +66,7 @@ public interface StringTools {
      */
     @NotNull
     static String summarizeString(@NotNull String input, @NotNull Integer charNumber) {
-        if (StringUtils.isEmpty(input) || ObjectUtils.isEmpty(charNumber)) {
+        if (ObjectUtils.isEmpty(input) || ObjectUtils.isEmpty(charNumber)) {
             throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
         }
         String result;
@@ -92,7 +91,7 @@ public interface StringTools {
      */
     @NotNull
     static String highlight(@NotNull String inputText, @NotNull String search) {
-        if (StringUtils.isEmpty(inputText) || StringUtils.isEmpty(search)) {
+        if (ObjectUtils.isEmpty(inputText) || ObjectUtils.isEmpty(search)) {
             throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
         }
         return inputText.replaceAll(search, "<span class='highlight'>" + search + "</span>");

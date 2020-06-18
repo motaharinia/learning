@@ -1,11 +1,11 @@
 package com.motaharinia.msutility.search.data;
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-17
- * Time: 18:09:23
- * Description:کلاس جهت تست
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-14<br>
+ * Time: 20:49:58<br>
+ * Description:<br>
+ *     کلاس نمونه جهت تست SearchDataModelTests
  */
 public class SearchRowViewUserBriefImpl implements SearchRowViewUserBrief {
 

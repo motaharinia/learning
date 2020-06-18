@@ -11,11 +11,11 @@ import java.util.Locale;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-14
- * Time: 20:49:58
- * Description: کلاس تست GridFilterModel
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-14<br>
+ * Time: 20:49:58<br>
+ * Description:<br>
+ *     کلاس تست SearchFilterModel
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SearchFilterModelTests {

@@ -1,6 +1,5 @@
 package com.motaharinia.msutility.entity;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.util.ObjectUtils;
 
@@ -11,11 +10,11 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-12
- * Time: 01:05:58
- * Description: این کلاس برای مدیریت یکپارچه متغیرهای مورد نیاز برای دیتابیس اوراکل در سطح انتیتی ها آماده شده است
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ *     این کلاس برای مدیریت یکپارچه متغیرهای مورد نیاز برای دیتابیس اوراکل در سطح انتیتی ها آماده شده است
  */
 public class OracleUtility {
 
@@ -51,7 +50,7 @@ public class OracleUtility {
      */
     @NotNull
     public static String toDate(@NotNull String dateString) {
-        if (StringUtils.isEmpty(dateString)) {
+        if (ObjectUtils.isEmpty(dateString)) {
             dateString = "null";
         }
         return "TO_DATE('" + dateString + "','YYYY-MM-DD HH24:MI:SS')";

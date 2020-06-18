@@ -1,15 +1,14 @@
 package com.motaharinia.msutility.search.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.motaharinia.msutility.search.annotation.SearchDataColumn;
 import com.motaharinia.msutility.search.filter.SearchFilterModel;
 import com.motaharinia.msutility.search.filter.SearchFilterOperationEnum;
-import org.apache.commons.lang3.StringUtils;
 import org.reflections.ReflectionUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.util.ObjectUtils;
+import com.motaharinia.msutility.search.annotation.CustomSearchDataColumn;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
@@ -19,11 +18,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Created by IntelliJ IDEA.
- * User: https://github.com/motaharinia
- * Date: 2020-06-12
- * Time: 01:05:58
- * Description: این کلاس مدل حاوی نتیجه جستجوی اطلاعات میباشد
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ *     این کلاس مدل حاوی نتیجه جستجوی اطلاعات میباشد
  */
 
 public class SearchDataModel implements Serializable {
@@ -76,13 +75,14 @@ public class SearchDataModel implements Serializable {
         this.records = viewPage.getTotalElements();
 
 
+
         //searchDataColModelList:
-        HashMap<Integer, SearchDataColumn> indexAnnotationHashMap = new HashMap<>();
+        HashMap<Integer, CustomSearchDataColumn> indexAnnotationHashMap = new HashMap<>();
         List<SearchDataColModel> searchDataColModelList = new ArrayList<>();
         Set<Method> getterMethodSet1 = ReflectionUtils.getAllMethods(searchFilterModel.getSearchRowView(), ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
         getterMethodSet1.stream().forEach(getterMethod -> {
-            if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(SearchDataColumn.class))) {
-                indexAnnotationHashMap.put(getterMethod.getAnnotation(SearchDataColumn.class).index(), getterMethod.getAnnotation(SearchDataColumn.class));
+            if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(CustomSearchDataColumn.class))) {
+                indexAnnotationHashMap.put(getterMethod.getAnnotation(CustomSearchDataColumn.class).index(), getterMethod.getAnnotation(CustomSearchDataColumn.class));
             }
         });
         indexAnnotationHashMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
@@ -118,8 +118,8 @@ public class SearchDataModel implements Serializable {
             Set<Method> getterMethodSet = ReflectionUtils.getAllMethods(searchFilterModel.getSearchRowView(), ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
             getterMethodSet.stream().forEach(getterMethod -> {
                 try {
-                    if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(SearchDataColumn.class))) {
-                        indexMethodHashMap.put(getterMethod.getAnnotation(SearchDataColumn.class).index(), getterMethod);
+                    if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(CustomSearchDataColumn.class))) {
+                        indexMethodHashMap.put(getterMethod.getAnnotation(CustomSearchDataColumn.class).index(), getterMethod);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -135,7 +135,7 @@ public class SearchDataModel implements Serializable {
             });
 
             try {
-                searchDataRowModelList.add(new SearchDataRowModel((Integer) item.getClass().getDeclaredMethod("getId",null).invoke(item), rowCellList.toArray()));
+                searchDataRowModelList.add(new SearchDataRowModel((Integer) item.getClass().getDeclaredMethod("getId").invoke(item), rowCellList.toArray()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -219,7 +219,7 @@ public class SearchDataModel implements Serializable {
 
     //مطابق با زبان سیستم در صورت نیاز کلید لاتین را به متن فارسی معادل آن ترجمه میکند و خروجی میدهد
     public String fixLangKey(String langKey, MessageSource messageSource) {
-        if (!StringUtils.isEmpty(langKey)) {
+        if (!ObjectUtils.isEmpty(langKey)) {
             return messageSource.getMessage(langKey, new Object[]{}, LocaleContextHolder.getLocale());
         } else {
             return "";
