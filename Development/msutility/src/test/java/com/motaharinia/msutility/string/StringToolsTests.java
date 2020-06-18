@@ -42,8 +42,42 @@ public class StringToolsTests {
     @Order(1)
     @Test
     void generateMD5HashTest() throws Exception {
-        assertThat(StringTools.generateMD5Hash("Mostafa",20)).isNotBlank();
+        assertThat(StringTools.generateMD5Hash("Mostafa Motaharinia",20)).isNotBlank();
     }
 
+    @Order(2)
+    @Test
+    void removeHtmlTest() throws Exception {
+        assertThat(StringTools.removeHtml("Mostafa<br>Motaharinia").contains("<br>")).isNotEqualTo(true);
+    }
 
+    @Order(3)
+    @Test
+    void summarizeStringTest() throws Exception {
+        assertThat(StringTools.summarizeString("Hello Mostafa Motaharinia",20)).isEqualTo("Hello Mostafa Mot...");
+    }
+
+    @Order(4)
+    @Test
+    void highlightTest() throws Exception {
+        assertThat(StringTools.highlight("Hello Mostafa Motaharinia","Hello")).isEqualTo("<span class='highlight'>Hello</span> Mostafa Motaharinia");
+    }
+
+    @Order(5)
+    @Test
+    void generateRandomStringCharacterAllTest() throws Exception {
+        assertThat(StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL,5,false).matches("^[a-zA-Z]*$")).isEqualTo(true);
+    }
+
+    @Order(6)
+    @Test
+    void generateRandomStringNumberTest() throws Exception {
+        assertThat(StringTools.generateRandomString(RandomGenerationTypeEnum.NUMBER,5,false).matches("^[0-9]*$")).isEqualTo(true);
+    }
+
+    @Order(7)
+    @Test
+    void generateRandomStringCharacterNumberTest() throws Exception {
+        assertThat(StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_NUMBER,5,false).matches("^[a-zA-Z0-9]*$")).isEqualTo(true);
+    }
 }

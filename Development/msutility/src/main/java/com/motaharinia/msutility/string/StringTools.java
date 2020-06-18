@@ -74,7 +74,11 @@ public interface StringTools {
         if (input.length() < charNumber) {
             result = input;
         } else {
-            result = input.substring(0, charNumber) + "...";
+            if (charNumber > 3) {
+                result = input.substring(0, charNumber - 3) + "...";
+            } else {
+                result = input.substring(0, charNumber) + "...";
+            }
         }
         return result;
     }
