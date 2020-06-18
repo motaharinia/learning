@@ -15,7 +15,7 @@ import java.util.List;
  * User: https://github.com/motaharinia
  * Date: 2020-06-16
  * Time: 23:27:46
- * Description: این کلاس جنریک برای تمام کلاسهای مربوط به انجام کوئری های پیشرفته میباشد
+ * Description: این کلاس جنریک بیلدر لازم برای تمام کلاسهای مربوط به انجام کوئری های پیشرفته دیتابیس را دارا میباشد
  */
 public class GenericSpecification<T> implements Specification<T> {
     private List<SearchFilterRestrictionModel> searchFilterRestrictionModelList;

@@ -1,9 +1,6 @@
 package com.motaharinia.msutility.search.data;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.motaharinia.msutility.json.serializer.JsonSerializerClass;
-import com.motaharinia.msutility.search.SearchRowView;
-import org.springframework.util.ObjectUtils;
 
 import java.io.Serializable;
 import java.util.Arrays;

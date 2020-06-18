@@ -18,7 +18,7 @@
 // * Time: 01:05:58
 // * Description: این کلاس برای تبدیل رشته جیسون رمزنگاری شده پارامتر مد به رشته معمولی پارامتر مد میباشد
 // */
-//public class JsonDeserilizerGridParametersMode extends JsonDeserializer<String> {
+//public class JsonDeserializerGridParametersMode extends JsonDeserializer<String> {
 //    @Override
 //    public String deserialize(JsonParser jp, DeserializationContext dc) throws IOException {
 //        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();

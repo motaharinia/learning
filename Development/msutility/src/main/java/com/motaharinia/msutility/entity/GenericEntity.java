@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import javax.persistence.Transient;
 
 import org.hibernate.search.annotations.Field;
 import org.springframework.data.annotation.CreatedBy;

@@ -14,7 +14,7 @@ import static java.lang.System.out;
  * User: https://github.com/motaharinia
  * Date: 2020-06-15
  * Time: 17:13:07
- * Description:
+ * Description: این کلاس برای بررسی تنظیمات کارکترست سیستم عامل و جی وی ام است. با اجرا کردن آن مشخصات را در کنسول میبینید.
  */
 public class JvmCharsetCheck {
 

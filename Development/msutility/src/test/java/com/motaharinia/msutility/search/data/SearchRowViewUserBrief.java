@@ -6,6 +6,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.motaharinia.msutility.annotation.SpringDataColumn;
 import com.motaharinia.msutility.search.SearchRowView;
 
+/**
+ * اینترفیس جهت تست
+ */
 @JsonDeserialize
 public interface SearchRowViewUserBrief extends SearchRowView {
     @JsonProperty(value = "id")

@@ -1,4 +1,3 @@
-
 package com.motaharinia.msutility.json.deserializer;
 
 import com.fasterxml.jackson.core.JsonParser;

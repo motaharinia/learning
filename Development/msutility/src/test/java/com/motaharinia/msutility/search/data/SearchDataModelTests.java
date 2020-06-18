@@ -25,7 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class SearchDataModelTests {
 
     private final ObjectMapper mapper = new ObjectMapper();
-    
+
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
      */
@@ -46,39 +46,29 @@ public class SearchDataModelTests {
     @Test
     void serializeTest() throws Exception {
         Locale.setDefault(new Locale("fa"));
-//        List<SearchDataRowModel> gridRowModelList = new ArrayList<>();
-//        gridRowModelList.add(new SearchDataRowModel(1, new SearchRowViewTest()));
-//        gridRowModelList.add(new SearchDataRowModel(2,new SearchRowViewTest()));
-//        SearchDataModel searchDataModel =new SearchDataModel(1,10l,20l,gridRowModelList,null);
-//
-
-
-        List<SearchFilterRestrictionModel> searchFilterRestrictionModelList=new ArrayList<>();
-        searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH,"mostafa"));
-        List<SearchFilterSortModel> searchFilterSortModelList=new ArrayList<>();
+        List<SearchFilterRestrictionModel> searchFilterRestrictionModelList = new ArrayList<>();
+        searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH, "mostafa"));
+        List<SearchFilterSortModel> searchFilterSortModelList = new ArrayList<>();
         searchFilterSortModelList.add(new SearchFilterSortModel("lastName", SearchFilterSortTypeEnum.ASC));
-        SearchFilterModel searchFilterModel=new SearchFilterModel();
+        SearchFilterModel searchFilterModel = new SearchFilterModel();
         searchFilterModel.setSearchRowView(SearchRowViewUserBrief.class);
         searchFilterModel.setPage(1);
         searchFilterModel.setRows(10);
         searchFilterModel.setRestrictionList(searchFilterRestrictionModelList);
         searchFilterModel.setSortList(searchFilterSortModelList);
 
-//        System.out.println("SearchDataModelTests.serializeTest searchFilterModel:" + searchFilterModel.toString());
-
         SearchRowViewUserBriefImpl searchRowViewTest = null;
         List<SearchRowViewUserBrief> viewList = new ArrayList<>();
-        viewList.add (new SearchRowViewUserBriefImpl(1) );
-        viewList.add (new SearchRowViewUserBriefImpl(2) );
+        viewList.add(new SearchRowViewUserBriefImpl(1));
+        viewList.add(new SearchRowViewUserBriefImpl(2));
         Page<SearchRowViewUserBrief> viewPage = new PageImpl<>(viewList);
 
 
-//        SearchDataModel searchDataModel =new SearchDataModel((long) viewPage.getTotalPages(),viewPage.getTotalElements(),viewPage.getContent(),searchFilterModel,null);
-        SearchDataModel searchDataModel =new SearchDataModel(viewPage,searchFilterModel,null);
+        SearchDataModel searchDataModel = new SearchDataModel(viewPage, searchFilterModel, null);
 
         System.out.println("searchDataModel:" + searchDataModel.toString());
 
-        String json =mapper.writeValueAsString(searchDataModel);
+        String json = mapper.writeValueAsString(searchDataModel);
         assertThat(json.contains("records")).isEqualTo(true);
     }
 }

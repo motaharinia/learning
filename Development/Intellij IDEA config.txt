@@ -11,3 +11,9 @@
 5.IntelijIDEA: File -> Settings -> Editor -> Color Scheme -> Color Scheme Font -> Scheme: Default & set font to "Tahoma"
 
 6.IntelijIDEA: Run -> Edit Configuration -> Spring Boot -> XXXApplication -> Environment -> VM Options: -Dspring.profiles.active=dev
+
+7.IntelijIDEA HotKeys:
+Ctrl+Alt+L        : Format Code
+Ctrl+D            : Duplicate Code Line
+Shift+Alt+Up/Down : Move Code Line
+Ctrl+Alt+O        : Remove Unused Import Lines
