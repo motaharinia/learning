@@ -18,7 +18,8 @@ import java.util.List;
  * User: https://github.com/motaharinia
  * Date: 2020-06-17
  * Time: 18:28:02
- * Description:
+ * Description: از این انوتیشن برای تنظیم کردن مشخصات نمایشی ستونهای خروجی داده استفاده میشود
+ * فیلد ایندکس و نام ضروری هستند
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
