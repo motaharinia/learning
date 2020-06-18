@@ -1,17 +1,13 @@
-package com.motaharinia.msutility.annotation;
+package com.motaharinia.msutility.search.annotation;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.motaharinia.msutility.search.data.SearchDataColAlignEnum;
-import com.motaharinia.msutility.search.data.SearchDataColModel;
 import com.motaharinia.msutility.search.data.SearchDataColSearchTypeEnum;
 import com.motaharinia.msutility.search.data.SearchDataColSortTypeEnum;
-import com.motaharinia.msutility.search.filter.SearchFilterOperationEnum;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -23,7 +19,7 @@ import java.util.List;
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface SpringDataColumn {
+public @interface SearchDataColumn {
     //نام فیلد ستون
     public String name();
     //اندیس و ترتیب قرارگیری ستون

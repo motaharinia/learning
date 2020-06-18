@@ -1,7 +1,7 @@
 package com.motaharinia.msutility.search.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.motaharinia.msutility.annotation.SpringDataColumn;
+import com.motaharinia.msutility.search.annotation.SearchDataColumn;
 import com.motaharinia.msutility.search.filter.SearchFilterModel;
 import com.motaharinia.msutility.search.filter.SearchFilterOperationEnum;
 import org.apache.commons.lang3.StringUtils;
@@ -77,12 +77,12 @@ public class SearchDataModel implements Serializable {
 
 
         //searchDataColModelList:
-        HashMap<Integer, SpringDataColumn> indexAnnotationHashMap = new HashMap<>();
+        HashMap<Integer, SearchDataColumn> indexAnnotationHashMap = new HashMap<>();
         List<SearchDataColModel> searchDataColModelList = new ArrayList<>();
         Set<Method> getterMethodSet1 = ReflectionUtils.getAllMethods(searchFilterModel.getSearchRowView(), ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
         getterMethodSet1.stream().forEach(getterMethod -> {
-            if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(SpringDataColumn.class))) {
-                indexAnnotationHashMap.put(getterMethod.getAnnotation(SpringDataColumn.class).index(), getterMethod.getAnnotation(SpringDataColumn.class));
+            if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(SearchDataColumn.class))) {
+                indexAnnotationHashMap.put(getterMethod.getAnnotation(SearchDataColumn.class).index(), getterMethod.getAnnotation(SearchDataColumn.class));
             }
         });
         indexAnnotationHashMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
@@ -118,8 +118,8 @@ public class SearchDataModel implements Serializable {
             Set<Method> getterMethodSet = ReflectionUtils.getAllMethods(searchFilterModel.getSearchRowView(), ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
             getterMethodSet.stream().forEach(getterMethod -> {
                 try {
-                    if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(SpringDataColumn.class))) {
-                        indexMethodHashMap.put(getterMethod.getAnnotation(SpringDataColumn.class).index(), getterMethod);
+                    if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(SearchDataColumn.class))) {
+                        indexMethodHashMap.put(getterMethod.getAnnotation(SearchDataColumn.class).index(), getterMethod);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
