@@ -2,12 +2,13 @@ package com.motaharinia.persistence.orm.adminuser;
 
 
 import com.motaharinia.msutility.entity.GenericEntity;
+import com.motaharinia.persistence.orm.adminusercontact.AdminUserContact;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "user_")
+@Table(name = "admin_user")
 public class AdminUser extends GenericEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,13 +21,15 @@ public class AdminUser extends GenericEntity implements Serializable {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "firstname")
+    @Column(name = "first_name")
     private String firstName;
 
-    @Column(name = "lastname")
+    @Column(name = "last_name")
     private String lastName;
 
-
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "default_admin_user_contact_id", referencedColumnName = "id")
+    private AdminUserContact defaultAdminUserContact;
 
     //getter-setter:
     public Integer  getId() {
@@ -69,8 +72,11 @@ public class AdminUser extends GenericEntity implements Serializable {
         this.lastName = lastName;
     }
 
-    @Override
-    public String toString() {
-        return "User [id=" + id + ", username=" + username + "]";
+    public AdminUserContact getDefaultAdminUserContact() {
+        return defaultAdminUserContact;
+    }
+
+    public void setDefaultAdminUserContact(AdminUserContact defaultAdminUserContact) {
+        this.defaultAdminUserContact = defaultAdminUserContact;
     }
 }

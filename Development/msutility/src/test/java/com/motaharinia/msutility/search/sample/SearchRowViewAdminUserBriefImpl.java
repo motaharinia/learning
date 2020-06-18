@@ -5,19 +5,19 @@ package com.motaharinia.msutility.search.sample;
  * Date: 2020-06-14<br>
  * Time: 20:49:58<br>
  * Description:<br>
- *     کلاس نمونه جهت تست SearchDataModelTests
+ * کلاس نمونه جهت تست SearchDataModelTests
  */
 public class SearchRowViewAdminUserBriefImpl implements SearchRowViewAdminUserBrief {
 
     private Integer id;
 
-    public SearchRowViewAdminUserBriefImpl(Integer id) {
-        this.id=id;
-    }
-
-
     public SearchRowViewAdminUserBriefImpl() {
     }
+
+    public SearchRowViewAdminUserBriefImpl(Integer id) {
+        this.id = id;
+    }
+
 
     @Override
     public Integer getId() {
@@ -26,11 +26,33 @@ public class SearchRowViewAdminUserBriefImpl implements SearchRowViewAdminUserBr
 
     @Override
     public String getFirstName() {
-        return "Mostafa"+this.id;
+        return "Mostafa" + this.id;
     }
 
     @Override
     public String getLastName() {
-        return "Motaharinia"+this.id;
+        return "Motaharinia" + this.id;
+    }
+
+    @Override
+    public DefaultAdminUserContact getDefaultAdminUserContact() {
+        return new DefaultAdminUserContactImpl(this.id);
+    }
+
+    class DefaultAdminUserContactImpl implements DefaultAdminUserContact {
+
+        private Integer id;
+
+        public DefaultAdminUserContactImpl() {
+        }
+
+        public DefaultAdminUserContactImpl(Integer id) {
+            this.id = id;
+        }
+
+        @Override
+        public String getAddress() {
+            return "Tehran" + this.id;
+        }
     }
 }

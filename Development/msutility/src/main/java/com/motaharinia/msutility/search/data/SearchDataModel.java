@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
  * Date: 2020-06-12<br>
  * Time: 01:05:58<br>
  * Description:<br>
- *     این کلاس مدل حاوی نتیجه جستجوی اطلاعات میباشد
+ * این کلاس مدل حاوی نتیجه جستجوی اطلاعات میباشد
  */
 
 public class SearchDataModel implements Serializable {
@@ -68,12 +68,41 @@ public class SearchDataModel implements Serializable {
     }
 
 
+    private List<Object> recursiveDataRowModelList(Object object, HashMap<Integer, Method> indexMethodHashMap, HashMap<Integer, Object> indexObjectHashMap) {
+        Set<Method> getterMethodSet = ReflectionUtils.getAllMethods(object.getClass(), ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
+        getterMethodSet.stream().forEach(getterMethod -> {
+            try {
+                if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(SearchDataColumn.class))) {
+                    if (getterMethod.getReturnType().getName().startsWith("java.lang")) {
+                       indexMethodHashMap.put(getterMethod.getAnnotation(SearchDataColumn.class).index(), getterMethod);
+                        indexObjectHashMap.put(getterMethod.getAnnotation(SearchDataColumn.class).index(), object);
+                    } else {
+                        getterMethod.setAccessible(true);
+                        Object childObject = getterMethod.invoke(object);
+                        recursiveDataRowModelList( childObject, indexMethodHashMap,indexObjectHashMap);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        List<Object> rowCellList = new ArrayList<>();
+        indexMethodHashMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
+            try {
+                entry.getValue().setAccessible(true);
+                rowCellList.add(entry.getValue().invoke(indexObjectHashMap.get(entry.getKey())));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        return rowCellList;
+    }
+
     public SearchDataModel(Page<?> viewPage, SearchFilterModel searchFilterModel, Object userData) {
         this.userData = userData;
         this.page = searchFilterModel.getPage();
         this.total = (long) viewPage.getTotalPages();
         this.records = viewPage.getTotalElements();
-
 
 
         //searchDataColModelList:
@@ -108,41 +137,19 @@ public class SearchDataModel implements Serializable {
             }
         });
         this.searchDataColModelList = searchDataColModelList;
-        this.searchDataColModelList.stream().forEach(item-> System.out.println(item.toString()));
+        this.searchDataColModelList.stream().forEach(item -> System.out.println(item.toString()));
 
         //searchDataRowModelList:
-        HashMap<Integer, Method> indexMethodHashMap = new HashMap<>();
         List<SearchDataRowModel> searchDataRowModelList = new ArrayList<>();
         viewPage.stream().forEach(item -> {
-            indexMethodHashMap.clear();
-            Set<Method> getterMethodSet = ReflectionUtils.getAllMethods(searchFilterModel.getSearchRowView(), ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
-            getterMethodSet.stream().forEach(getterMethod -> {
-                try {
-                    if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(SearchDataColumn.class))) {
-                        indexMethodHashMap.put(getterMethod.getAnnotation(SearchDataColumn.class).index(), getterMethod);
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-            List<Object> rowCellList = new ArrayList<>();
-            indexMethodHashMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
-                try {
-                    rowCellList.add(entry.getValue().invoke(item));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
-
             try {
-                searchDataRowModelList.add(new SearchDataRowModel((Integer) item.getClass().getDeclaredMethod("getId").invoke(item), rowCellList.toArray()));
+                searchDataRowModelList.add(new SearchDataRowModel((Integer) item.getClass().getDeclaredMethod("getId").invoke(item), recursiveDataRowModelList(item, new HashMap<>(), new HashMap<>()).toArray()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
         });
         this.searchDataRowModelList = searchDataRowModelList;
-        this.searchDataRowModelList.stream().forEach(item->System.out.println(item.toString()));
+        this.searchDataRowModelList.stream().forEach(item -> System.out.println(item.toString()));
     }
 
     /**

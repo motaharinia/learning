@@ -65,7 +65,7 @@ public class SearchFilterModel implements Serializable {
             if (searchFilterSortModel.getType().equals(SearchFilterSortTypeEnum.DSC)) {
                 newSort = Sort.by(searchFilterSortModel.getFieldName()).descending();
             }
-            if (allSort == null) {
+            if (ObjectUtils.isEmpty(allSort)) {
                 allSort = newSort;
             } else {
                 allSort = allSort.and(newSort);
