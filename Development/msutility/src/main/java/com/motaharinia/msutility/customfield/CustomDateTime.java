@@ -1,7 +1,8 @@
-package com.motaharinia.msutility.calendar;
+package com.motaharinia.msutility.customfield;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.motaharinia.msutility.calendar.CalendarTools;
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.customexception.UtilityExceptionKeyEnum;
 import org.jetbrains.annotations.NotNull;
@@ -65,7 +66,7 @@ public class CustomDateTime implements Comparable, Serializable {
 
     public CustomDateTime(@NotNull Date date) throws Exception {
         if (ObjectUtils.isEmpty(date)) {
-            throw new UtilityException(CalDateTime.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
         }
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -83,13 +84,13 @@ public class CustomDateTime implements Comparable, Serializable {
         }
         Locale currentLocale = LocaleContextHolder.getLocale();
         if (!validateDate(currentLocale.getLanguage())) {
-            throw new UtilityException(CalDateTime.class, UtilityExceptionKeyEnum.DATE_TIME_VALIDATION_FAILED, "");
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.DATE_TIME_VALIDATION_FAILED, "");
         }
         if (currentLocale.getLanguage().equals("fa")) {
             //user entered a jalali date
             String jalaiDateStringTime = this.year + "/" + this.month + "/" + this.day + " " + this.hour + ":" + this.minute + ":" + this.second;
             try {
-                String gregorianDateString = CalDateTime.jalaliToGregorianDateTime(jalaiDateStringTime, "/", "/");
+                String gregorianDateString = CalendarTools.jalaliToGregorianDateTime(jalaiDateStringTime, "/", "/");
                 String[] dateTimeParts = gregorianDateString.split(" ");
                 String[] dateParts = dateTimeParts[0].split("/");
                 String[] timeParts = dateTimeParts[1].split(":");
@@ -112,9 +113,9 @@ public class CustomDateTime implements Comparable, Serializable {
 
     private Boolean validateDate(String locale) {
         boolean result = true;
-        if (locale.equals("fa") && !CalDateTime.checkJalaliDateValidity(year, month, day)) {
+        if (locale.equals("fa") && !CalendarTools.checkJalaliDateValidity(year, month, day)) {
             result = false;
-        } else if (locale.equals("en") && !CalDateTime.checkGregorianDateValidity(year, month, day)) {
+        } else if (locale.equals("en") && !CalendarTools.checkGregorianDateValidity(year, month, day)) {
             result = false;
         }
         return result;
@@ -133,7 +134,7 @@ public class CustomDateTime implements Comparable, Serializable {
     @NotNull
     public String getFormattedString(@NotNull  String dateDelimiter){
         if (!CustomDateTime.isEmpty(this)) {
-            return year + dateDelimiter+ CalDateTime.fixOneDigit(month.toString()) + dateDelimiter + CalDateTime.fixOneDigit(day.toString()) + " " + CalDateTime.fixOneDigit(hour.toString()) + ":" + CalDateTime.fixOneDigit(minute.toString()) + ":" + CalDateTime.fixOneDigit(second.toString())  ;
+            return year + dateDelimiter+ CalendarTools.fixOneDigit(month.toString()) + dateDelimiter + CalendarTools.fixOneDigit(day.toString()) + " " + CalendarTools.fixOneDigit(hour.toString()) + ":" + CalendarTools.fixOneDigit(minute.toString()) + ":" + CalendarTools.fixOneDigit(second.toString())  ;
         } else {
             return "Empty";
         }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.motaharinia.msutility.string.StringTools;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 
@@ -21,11 +22,14 @@ public class JsonDeserializerString extends JsonDeserializer<String> {
 
     @Override
     public String deserialize(JsonParser jp, DeserializationContext dc) throws IOException, JsonProcessingException {
-        if (jp.getCurrentName() != null) {
+        if (StringUtils.isEmpty(jp.getCurrentName()) || StringUtils.isEmpty(jp.getText())) {
+            return jp.getText();
+        } else {
             if (jp.getCurrentName().toLowerCase().equals("htmlCustomString".toLowerCase())) {
                 return jp.getText();
+            } else {
+                return StringTools.removeHtml(jp.getText());
             }
         }
-        return StringTools.removeHtml(jp.getText());
     }
 }

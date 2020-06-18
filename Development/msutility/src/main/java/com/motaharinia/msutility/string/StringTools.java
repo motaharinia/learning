@@ -1,38 +1,37 @@
 package com.motaharinia.msutility.string;
 
+import com.motaharinia.msutility.customexception.UtilityException;
+import com.motaharinia.msutility.customexception.UtilityExceptionKeyEnum;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
+
 
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Random;
 
+/**
+ * Created by IntelliJ IDEA.
+ * User: https://github.com/motaharinia
+ * Date: 2020-06-16
+ * Time: 23:14:13
+ * Description: اینترفیس پدر تمامی اینترفیسهای جستجوی پیشرفته دیتابیس که حکم میکند تمام آنها باید متد گتر آی دی را داشته باشند
+ * تمام اینترفیسهای جستجوی پیشرفته دیتابیس باید از این اینترفیس گسترش یابند
+ */
+public interface StringTools {
 
-public class StringTools {
 
-    public enum StringType {
-
-        characterAll("characterAll"),
-        characterLower("characterLower"),
-        characterUpper("characterUpper"),
-        number("number"),
-        characterNumber("characterNumber"),
-        punc("punc"),
-        characterNumberPunc("characterNumberPunc"),
-        characterNumberUnderline("characterNumberUnderline"),
-        numberUnderline("numberUnderline");
-        private final String value;
-
-        private StringType(String value) {
-            this.value = value;
-        }
-
-        public String getValue() {
-            return value;
-        }
-    }
-
-    public static String generateMD5Hash(String input, Integer resultLength) throws Exception {
-
+    /**
+     * این متد رشته و طول مورد نظر را از ورودی دریافت میکند و رشته هش شده بر مبنای الگوی رمزگذاری ام دی 5 با حداکثر طول درخواستی را تولید میکند
+     *
+     * @param input        رشته ورودی جهت رمزنگاری
+     * @param resultLength حداکثر طول رشته هش شده خروجی
+     * @return خروجی: رشته هش شده بر مبنای الگوی رمزگذاری ام دی 5 با حداکثر طول درخواستی
+     * @throws Exception
+     */
+    static String generateMD5Hash(String input, Integer resultLength) throws Exception {
         MessageDigest md = MessageDigest.getInstance("MD5");
         byte[] md5sum = md.digest(input.getBytes());
         String output = String.format("%032x", new BigInteger(1, md5sum));
@@ -43,13 +42,34 @@ public class StringTools {
         }
     }
 
-    //Remove HTML tag from java String  
-    public static String removeHtml(String htmlString) {
+    /**
+     * این متد رشته ای را از ورودی دریافت میکند و تمام تگهای اچ تی ام ال آن را حذف میکند
+     *
+     * @param htmlString رشته ورودی
+     * @return خروجی: رشته بدون تگهای اچ تی ام ال
+     */
+    @NotNull
+    static String removeHtml(@NotNull String htmlString) {
+        if (StringUtils.isEmpty(htmlString)) {
+            throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+        }
         return Jsoup.parse(htmlString).text();
     }
 
-    //generate short string from input string
-    public static String summerizeString(String input, Integer charNumber) {
+    /**
+     * این متد رشته ورودی و طول مورد نظر رشته خروجی را دریافت میکند و رشته مورد نظر را به اندازه طول درخواستی کوتاه میکند
+     * اگر طول رشته ورودی کمتر یا مساوی طول درخواستی باشد تغییری در رشته داده نمیشود
+     * ولی در غیر این صورت رشته ورودی کوتاه شده و در انتهای آن سه نقطه قرار میگیرد
+     *
+     * @param input      رشته ورودی
+     * @param charNumber طول مورد نظر
+     * @return خروجی: رشته اصلاح شده طبق طول مورد نظر
+     */
+    @NotNull
+    static String summarizeString(@NotNull String input, @NotNull Integer charNumber) {
+        if (StringUtils.isEmpty(input) || ObjectUtils.isEmpty(charNumber)) {
+            throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+        }
         String result;
         if (input.length() < charNumber) {
             result = input;
@@ -59,52 +79,73 @@ public class StringTools {
         return result;
     }
 
-    //Highlight part of string
-    public static String highlight(String inputText, String search) {
-
-        return (inputText != null) ? inputText.replaceAll(search, "<span class='highlight'>" + search + "</span>") : null;
+    /**
+     * این متد رشته ورودی و عبارت مورد نظر را از ورودی میگیرد و آن عبارت در رشته را هایلایت مینماید
+     *
+     * @param inputText رشته ورودی
+     * @param search    عبارت مورد نظر جهت هایلایت
+     * @return خروجی: رشته با عبارات هایلایت شده
+     */
+    @NotNull
+    static String highlight(@NotNull String inputText, @NotNull String search) {
+        if (StringUtils.isEmpty(inputText) || StringUtils.isEmpty(search)) {
+            throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+        }
+        return inputText.replaceAll(search, "<span class='highlight'>" + search + "</span>");
     }
 
-    public static String generateRandomString(StringType stringType, Integer length, Boolean withLeadingZero) {
+    /**
+     * این متد رشته ای تصادفی را با توجه به نوع ، طول و اینکه اعداد با پیش صفر باشند یا خیر را تولید میکند
+     *
+     * @param randomGenerationTypeEnum نوع ترکیب رشته تصادفی
+     * @param length                   طول رشته مورد نظر
+     * @param withLeadingZero          با صفر شروع شود؟
+     * @return خروجی: رشته تصادفی
+     */
+    @NotNull
+    static String generateRandomString(@NotNull RandomGenerationTypeEnum randomGenerationTypeEnum, @NotNull Integer length, @NotNull Boolean withLeadingZero) {
+        if (ObjectUtils.isEmpty(randomGenerationTypeEnum) || ObjectUtils.isEmpty(length) || ObjectUtils.isEmpty(withLeadingZero)) {
+            throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+        }
         String characterLower = "abcdefghigklmnopqrstuvwxyz";
         String characterUpper = "ABCDEFGHIJKLMNPQRSTUVWXYZ";
         String number = "1234567890";
         String punc = "_-$#@%^*&=+";
         String characters = "";
 
-        switch (stringType.getValue()) {
-            case "characterAll":
+        switch (randomGenerationTypeEnum) {
+            case CHARACTER_ALL:
                 characters = characterLower + characterUpper;
                 break;
-            case "characterLower":
+            case CHARACTER_LOWER:
                 characters = characterLower;
                 break;
-            case "characterUpper":
+            case CHARACTER_UPPER:
                 characters = characterUpper;
                 break;
-            case "number":
+            case NUMBER:
                 characters = number;
                 break;
-            case "characterNumber":
+            case CHARACTER_NUMBER:
                 characters = characterLower + characterUpper + number;
                 break;
-            case "punc":
+            case PUNCTUATION:
                 characters = punc;
                 break;
-            case "characterNumberPunc":
+            case CHARACTER_NUMBER_PUNCTUATION:
                 characters = characterLower + characterUpper + number + punc;
                 break;
-            case "characterNumberUnderline":
+            case CHARACTER_NUMBER_UNDERLINE:
                 characters = characterLower + characterUpper + number + "_";
                 break;
-            case "numberUnderline":
+            case NUMBER_UNDERLINE:
                 characters = number + "_";
                 break;
         }
         String result = "";
         Random rand = new Random();
         Integer charactersLength = characters.length();
-        int randomNum = 0;
+        Integer randomNum = 0;
         Character randomChar;
         for (int i = 0; i < length; i++) {
             randomNum = rand.nextInt(charactersLength);
@@ -115,9 +156,7 @@ public class StringTools {
                     randomChar = characters.charAt(randomNum);
                 }
             }
-
             result += randomChar;
-
         }
         return result;
     }

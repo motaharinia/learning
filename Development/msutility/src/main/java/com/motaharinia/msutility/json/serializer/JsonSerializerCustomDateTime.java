@@ -3,8 +3,8 @@ package com.motaharinia.msutility.json.serializer;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.motaharinia.msutility.calendar.CalDateTime;
-import com.motaharinia.msutility.calendar.CustomDateTime;
+import com.motaharinia.msutility.calendar.CalendarTools;
+import com.motaharinia.msutility.customfield.CustomDateTime;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Date;
@@ -27,17 +27,17 @@ public class JsonSerializerCustomDateTime extends JsonSerializer<CustomDateTime>
         try {
             Locale currentLocale = LocaleContextHolder.getLocale();
             if (currentLocale.getLanguage().equals("fa")) {
-                Date date= CalDateTime.getDateFromCustomDateTime(customDateTime);
-                customDateTime = CalDateTime.gregorianToJalaliDateTime(date);
+                Date date= CalendarTools.getDateFromCustomDateTime(customDateTime);
+                customDateTime = CalendarTools.gregorianToJalaliDateTime(date);
             }
             //برای حفظ ترتیب درج بجای هشمپ از لینکدهشمپ استفاده میکنیم
             LinkedHashMap<String, String> output = new LinkedHashMap<>();
             output.put("year", customDateTime.getYear().toString());
-            output.put("month",CalDateTime.fixOneDigit(customDateTime.getMonth().toString()));
-            output.put("day", CalDateTime.fixOneDigit(customDateTime.getDay().toString()));
-            output.put("hour", CalDateTime.fixOneDigit(customDateTime.getHour().toString()));
-            output.put("minute", CalDateTime.fixOneDigit(customDateTime.getMinute().toString()));
-            output.put("second", CalDateTime.fixOneDigit(customDateTime.getSecond().toString()));
+            output.put("month", CalendarTools.fixOneDigit(customDateTime.getMonth().toString()));
+            output.put("day", CalendarTools.fixOneDigit(customDateTime.getDay().toString()));
+            output.put("hour", CalendarTools.fixOneDigit(customDateTime.getHour().toString()));
+            output.put("minute", CalendarTools.fixOneDigit(customDateTime.getMinute().toString()));
+            output.put("second", CalendarTools.fixOneDigit(customDateTime.getSecond().toString()));
             jg.writeObject(output);
         } catch (Exception ex) {
             Logger.getLogger(JsonSerializerCustomDateTime.class.getName()).log(Level.SEVERE, null, ex);
