@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.Random;
 
@@ -62,6 +63,7 @@ public class Captcha {
     }
 
     public BufferedImage generateCaptcha(String code, String contextPath,Integer imageType) throws Exception {
+        InputStream inputStream;
         random = new Random();
         int fontIndex;
         if (multiFont) {
@@ -70,10 +72,13 @@ public class Captcha {
         else {
             fontIndex = defaultFontIndex;
         }
-
-        URL fontUrl = new URL(contextPath + "/vutility/resources/fonts/captcha/" + fontIndex + ".ttf");
         Font font = new Font("Monospaced", Font.ITALIC | Font.BOLD, fontSize);
-        Font customFont = Font.createFont(Font.TRUETYPE_FONT, fontUrl.openStream()).deriveFont(getFontSize(fontIndex));
+
+        inputStream = this.getClass().getClassLoader().getResourceAsStream(contextPath + "/vutility/resources/fonts/captcha/" + fontIndex + ".ttf");
+        Font customFont = Font.createFont(Font.TRUETYPE_FONT, inputStream).deriveFont(getFontSize(fontIndex));
+
+//        URL fontUrl = new URL(contextPath + "/vutility/resources/fonts/captcha/" + fontIndex + ".ttf");
+//        Font customFont = Font.createFont(Font.TRUETYPE_FONT, fontUrl.openStream()).deriveFont(getFontSize(fontIndex));
 
 //        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 //        ge.registerFont(customFont);
@@ -91,7 +96,9 @@ public class Captcha {
         else {
             backgroundIndex = defaultBackgroundIndex;
         }
-        BufferedImage back = ImageIO.read(new URL(contextPath + "/vutility/resources/img/captcha/background/" + backgroundIndex + ".png"));
+        inputStream = this.getClass().getClassLoader().getResourceAsStream(contextPath + "/vutility/resources/img/captcha/background/" + backgroundIndex + ".png");
+        BufferedImage back = ImageIO.read(inputStream);
+//        BufferedImage back = ImageIO.read(new URL(contextPath + "/vutility/resources/img/captcha/background/" + backgroundIndex + ".png"));
         g.drawImage(back, 0, 0, width, height, null);
 
         //تولید متن کپچا

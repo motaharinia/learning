@@ -89,7 +89,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Override
     public SearchDataModel readGrid(SearchFilterModel searchFilterModel) {
         adminUserSpecification = (AdminUserSpecification) searchFilterModel.makeSpecification(adminUserSpecification);
-        Page<SearchRowViewAdminUserBrief> viewPage = adminUserRepository2.findAll(adminUserSpecification, SearchRowViewAdminUserBrief.class, PageRequest.of(searchFilterModel.getPage(), searchFilterModel.getRows()));
+        Page<SearchRowViewAdminUserBrief> viewPage = adminUserRepository2.findAll(adminUserSpecification, SearchRowViewAdminUserBrief.class, searchFilterModel.makePageable());
         SearchDataModel searchDataModel = new SearchDataModel(viewPage, searchFilterModel, null);
         return searchDataModel;
     }

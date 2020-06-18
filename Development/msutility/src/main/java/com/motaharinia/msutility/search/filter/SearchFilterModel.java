@@ -3,6 +3,9 @@ package com.motaharinia.msutility.search.filter;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.motaharinia.msutility.json.deserializer.JsonDeserializerClass;
 import com.motaharinia.msutility.jparepository.GenericSpecification;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.util.ObjectUtils;
 
 import java.io.Serializable;
@@ -15,7 +18,7 @@ import java.util.stream.Collectors;
  * Date: 2020-06-16<br>
  * Time: 23:07:01<br>
  * Description:<br>
- *     این کلاس برای جستجوی پیشرفته داده ها از کلاینت به سرور استفاده میگردد
+ * این کلاس برای جستجوی پیشرفته داده ها از کلاینت به سرور استفاده میگردد
  */
 public class SearchFilterModel implements Serializable {
     /**
@@ -52,6 +55,28 @@ public class SearchFilterModel implements Serializable {
         return genericSpecification;
     }
 
+    public Pageable makePageable() {
+        Sort allSort = null;
+        for (SearchFilterSortModel searchFilterSortModel : this.getSortList()) {
+            Sort newSort = null;
+            if (searchFilterSortModel.getType().equals(SearchFilterSortTypeEnum.ASC)) {
+                newSort = Sort.by(searchFilterSortModel.getFieldName()).ascending();
+            }
+            if (searchFilterSortModel.getType().equals(SearchFilterSortTypeEnum.DSC)) {
+                newSort = Sort.by(searchFilterSortModel.getFieldName()).descending();
+            }
+            if (allSort == null) {
+                allSort = newSort;
+            } else {
+                allSort = allSort.and(newSort);
+            }
+        }
+        if (ObjectUtils.isEmpty(allSort)) {
+            return PageRequest.of(this.getPage(), this.getRows());
+        } else {
+            return PageRequest.of(this.getPage(), this.getRows(), allSort);
+        }
+    }
 
     @Override
     public String toString() {

@@ -83,7 +83,8 @@ public class AdminUserControllerTest {
         List<SearchFilterRestrictionModel> searchFilterRestrictionModelList=new ArrayList<>();
         searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH,"mostafa"));
         List<SearchFilterSortModel> searchFilterSortModelList=new ArrayList<>();
-        searchFilterSortModelList.add(new SearchFilterSortModel("lastName", SearchFilterSortTypeEnum.ASC));
+        searchFilterSortModelList.add(new SearchFilterSortModel("firstName", SearchFilterSortTypeEnum.ASC));
+        searchFilterSortModelList.add(new SearchFilterSortModel("lastName", SearchFilterSortTypeEnum.DSC));
         SearchFilterModel searchFilterModel=new SearchFilterModel();
         searchFilterModel.setSearchRowView(SearchRowViewAdminUserBrief.class);
         searchFilterModel.setPage(0);
