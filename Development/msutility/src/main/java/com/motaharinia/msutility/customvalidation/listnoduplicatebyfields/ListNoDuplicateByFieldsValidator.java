@@ -67,8 +67,20 @@ public class ListNoDuplicateByFieldsValidator implements ConstraintValidator<Lis
 
     private Boolean checkTwoObjectEquality(Object obj1, Object obj2) {
         for(String field: fields){
-            if(!getObjectFieldValue(obj1, field).equals(getObjectFieldValue(obj2, field))){
-                return false;
+            Object o1=getObjectFieldValue(obj1, field);
+            Object o2=getObjectFieldValue(obj2, field);
+            if(ObjectUtils.isEmpty(o1) || ObjectUtils.isEmpty(o2) ){
+                if(ObjectUtils.isEmpty(o1) && ObjectUtils.isEmpty(o2) ){
+                    return true;
+                }else{
+                    return false;
+                }
+            }else{
+                if(!getObjectFieldValue(obj1, field).equals(getObjectFieldValue(obj2, field))){
+                    return false;
+                }else{
+                    return true;
+                }
             }
         }
         return true;

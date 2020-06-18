@@ -1,19 +1,15 @@
 package com.motaharinia.msutility.customvalidation;
 
 import com.motaharinia.msutility.customfield.CustomDate;
-import com.motaharinia.msutility.customvalidation.sample.CompanyPhoneTestModel;
-import com.motaharinia.msutility.customvalidation.sample.DateRangeTestModel;
-import com.motaharinia.msutility.customvalidation.sample.DecimalCountTestModel;
-import com.motaharinia.msutility.customvalidation.sample.DoubleRangeTestModel;
+import com.motaharinia.msutility.customvalidation.sample.*;
 import org.junit.jupiter.api.*;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Set;
+import java.math.BigDecimal;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,14 +18,14 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Date: 2020-06-13<br>
  * Time: 16:40:56<br>
  * Description:<br>
- *     کلاس تست CustomValidation
+ * کلاس تست CustomValidation
  */
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CustomValidationTests {
 
     private ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
-    private Validator validator= factory.getValidator();
+    private Validator validator = factory.getValidator();
 
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
@@ -48,49 +44,51 @@ public class CustomValidationTests {
     }
 
 
-
     @Order(1)
     @Test
-    void companyPhoneTest() throws Exception {
+    void customValidationTest() throws Exception {
         Locale.setDefault(new Locale("fa"));
-        CompanyPhoneTestModel model = new CompanyPhoneTestModel();
+        CustomValidationTestModel model = new CustomValidationTestModel();
         model.setCompanyPhoneNo("22555");
-        Set<ConstraintViolation<CompanyPhoneTestModel>> violations = validator.validate(model);
+        model.setDateRange1(new CustomDate(new Date()));
+        model.setDateRange2(new CustomDate(new Date()));
+        model.setDateRange3(new CustomDate(new Date()));
+        model.setDateRange4(new CustomDate(new Date()));
+        model.setDecimalCount1(12.582);
+        model.setDecimalCount2(12.582);
+        model.setDoubleRange(12.582);
+        model.setEmail("eng.motahari@gmail.com");
+        model.setIntegerRange(12);
+        model.setLatinCharacter("this is a latin character string");
+        model.setListLength1(Arrays.asList(new String[]{"item1", "item2", "item3"}));
+        model.setListLength2(Arrays.asList(new String[]{"item1", "item2", "item3"}));
+        model.setListNoDuplicate(Arrays.asList(new String[]{"item1", "item2", "item3"}));
+        model.setListNoDuplicateByFields(Arrays.asList(new ListNoDuplicateByFieldsModel[]{new ListNoDuplicateByFieldsModel("f11", "f12"), new ListNoDuplicateByFieldsModel("f21", "f22"), new ListNoDuplicateByFieldsModel("f31", "f32")}));
+        model.setMobile("09124376251");
+        model.setNationalCode("0557093007");
+        model.setOrganizationEconomicCode("12345678901234");
+        model.setOrganizationNationalCode("12345678901");
+        model.setOrganizationRegistrationNo("2315");
+        model.setPassword1("123456");
+        model.setPassword2("123$Abc");
+        model.setPersianCharacters("مصطفی مطهری نیا");
+        model.setPersonPhone("88888888");
+        model.setPostalCode("1234567890");
+        model.setPrice(new BigDecimal(15000));
+        model.setRequired1("Mostafa Motaharinia");
+        model.setRequired2(15000);
+        model.setRequired3(true);
+        model.setRequired4(Arrays.asList(new String[]{"item1", "item2"}));
+        model.setRequired5(Map.of(1, "A", 2, "B", 3, "C"));
+        model.setStringLength1("abc");
+        model.setStringLength2("abc");
+        model.setStringPattern("4012888888881881");
+        model.setUsername1("09124376251");
+        model.setUsername2("eng.motahari@gmail.com");
+        Set<ConstraintViolation<CustomValidationTestModel>> violations = validator.validate(model);
+        violations.stream().forEach(item -> System.out.println(item.toString()));
         assertThat(violations.isEmpty()).isEqualTo(true);
     }
 
-    @Order(2)
-    @Test
-    void dateRangeTest() throws Exception {
-        Locale.setDefault(new Locale("fa"));
-        DateRangeTestModel model = new DateRangeTestModel();
-        model.setRegisterDate(new CustomDate(new Date()));
-        model.setCreateDate(new CustomDate(new Date()));
-        model.setUpdateDate(new CustomDate(new Date()));
-        model.setDeleteDate(new CustomDate(new Date()));
-        Set<ConstraintViolation<DateRangeTestModel>> violations = validator.validate(model);
-        assertThat(violations.isEmpty()).isEqualTo(true);
-    }
-
-    @Order(3)
-    @Test
-    void decimalCountTest() throws Exception {
-        Locale.setDefault(new Locale("fa"));
-        DecimalCountTestModel model = new DecimalCountTestModel();
-        model.setDouble1(12.582);
-        model.setDouble2(12.582);
-        Set<ConstraintViolation<DecimalCountTestModel>> violations = validator.validate(model);
-        assertThat(violations.isEmpty()).isEqualTo(true);
-    }
-
-    @Order(4)
-    @Test
-    void doubleRangeTest() throws Exception {
-        Locale.setDefault(new Locale("fa"));
-        DoubleRangeTestModel model = new DoubleRangeTestModel();
-        model.setDouble1(12.582);
-        Set<ConstraintViolation<DoubleRangeTestModel>> violations = validator.validate(model);
-        assertThat(violations.isEmpty()).isEqualTo(true);
-    }
 
 }
