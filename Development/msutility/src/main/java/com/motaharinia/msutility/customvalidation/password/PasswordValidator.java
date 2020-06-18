@@ -24,6 +24,7 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
     public void initialize(Password a) {
         minLength = a.minLength();
         complicated = a.complicated();
+        message=a.message();
     }
 
     @Override
@@ -38,7 +39,7 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
 
         boolean result = true;
         if (password.length() < minLength) {
-            message = "customValidation.password[minLength=" + minLength + "]";
+            message += "[minLength=" + minLength + "]";
             cvc.disableDefaultConstraintViolation();
             cvc.buildConstraintViolationWithTemplate(message).addConstraintViolation();
             return false;
@@ -46,7 +47,7 @@ public class PasswordValidator implements ConstraintValidator<Password, String> 
 
         if (complicated.equals(true)) {
             if (!validateComplicatedPassword(password)) {
-                message = "customValidation.password[complicated=true]";
+                message += "[complicated=true]";
                 cvc.disableDefaultConstraintViolation();
                 cvc.buildConstraintViolationWithTemplate(message).addConstraintViolation();
                 result = false;

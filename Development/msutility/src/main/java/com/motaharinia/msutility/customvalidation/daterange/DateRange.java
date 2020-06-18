@@ -25,13 +25,21 @@ public @interface DateRange {
     Class<? extends Payload>[] payload() default {};
 
     /**
-     * ابتدای محدوده زمانی که غیر از تاریخ میتواند به صورت unlimited به معنی بی نهایت و یا به صورت today به معنی امروز نیز پر شود
+     * تاریخ جلالی ابتدای محدوده زمانی<br>
+     * فرمتها<br>
+     *YYYY-MM-DD <br>
+     * unlimited <br>
+     * today <br>
      * @return خروجی: ابتدای محدوده زمانی
      */
     String from() default  "unlimited";
 
     /**
-     * انتهای محدوده زمانی که غیر از تاریخ میتواند به صورت unlimited به معنی بی نهایت و یا به صورت today به معنی امروز نیز پر شود
+     * تاریخ جلالی انتهای محدوده زمانی<br>
+     * فرمتها<br>
+     *YYYY-MM-DD <br>
+     * unlimited <br>
+     * today <br>
      * @return خروجی: انتهای محدوده زمانی
      */
     String to() default "unlimited";

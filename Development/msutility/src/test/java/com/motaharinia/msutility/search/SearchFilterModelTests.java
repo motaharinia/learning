@@ -1,7 +1,8 @@
-package com.motaharinia.msutility.search.filter;
+package com.motaharinia.msutility.search;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.motaharinia.msutility.search.data.SearchRowViewUserBrief;
+import com.motaharinia.msutility.search.filter.*;
+import com.motaharinia.msutility.search.sample.SearchRowViewUserBrief;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;

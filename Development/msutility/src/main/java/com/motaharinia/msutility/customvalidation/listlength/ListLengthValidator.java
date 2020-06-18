@@ -26,6 +26,7 @@ public class ListLengthValidator implements ConstraintValidator<ListLength, List
         min = a.min();
         max = a.max();
         exact = a.exact();
+        message = a.message();
     }
 
     @Override
@@ -34,29 +35,26 @@ public class ListLengthValidator implements ConstraintValidator<ListLength, List
             return true;
         }
         boolean result = true;
-        if(exact > 0 && list.size() != exact){
-            result = false;
-            message = "customValidation.listLength[exact=" + exact + "]";
+        if (exact > 0) {
+            if (!exact.equals(list.size())) {
+                result = false;
+                message += "[exact=" + exact + "]";
+            }
+        } else {
+            if (min <= 0 && max <= 0) {
+                result = false;
+                message += "[min<=0 || max<=0]";
+            } else if (min > 0 && max > 0 && min > max) {
+                result = false;
+                message += "[min>max]";
+            } else if (min > 0 && list.size() < min) {
+                result = false;
+                message += "[min=" + min + "]";
+            } else if (max > 0 && list.size() > max) {
+                result = false;
+                message += "[max=" + max + "]";
+            }
         }
-        
-        else if (min <= 0 && max <= 0) {
-            result = false;  
-        }
-        
-        else if(min > 0 && max > 0 && min > max){
-            result = false;
-        }
-        
-        else if(min > 0 && list.size() < min){
-            result = false;
-            message = "customValidation.listLength[min=" + min + "]";
-        }
-        else if(max > 0 && list.size() > max){
-            result = false;
-            message = "customValidation.listLength[max=" + max + "]";
-        }
-        
-        
         cvc.disableDefaultConstraintViolation();
         cvc.buildConstraintViolationWithTemplate(message).addConstraintViolation();
         return result;

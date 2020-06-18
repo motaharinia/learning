@@ -25,6 +25,7 @@ public class DecimalCountValidator implements ConstraintValidator<DecimalCount, 
         min = a.min();
         max = a.max();
         exact = a.exact();
+        message=a.message();
     }
 
     @Override
@@ -36,35 +37,30 @@ public class DecimalCountValidator implements ConstraintValidator<DecimalCount, 
         String doubleStr = number + "";
         String parts[] = doubleStr.split("\\.");
         String decimalPart = parts[1];
-        
-        
-        if(exact > 0 && decimalPart.length() != exact){
-            result = false;
-            message = "customValidation.decimalCount[exact=" + exact + "]";
-        }
-        
-        else if (min <= 0 && max <= 0) {
-            result = false;  
-        }
-        
-        else if(min > 0 && max > 0 && min > max){
-            result = false;
-        }
-        
-        else if(min > 0 && decimalPart.length() < min){
-            result = false;
-            message = "customValidation.decimalCount[min=" + min + "]";
-        }
-        else if(max > 0 && decimalPart.length() > max){
-            result = false;
-            message = "customValidation.decimalCount[max=" + max + "]";
-        }
-        
-        
+
+       if(exact>0){
+           if(!exact.equals(decimalPart.length())){
+               result = false;
+               message += "[exact=" + exact + "]";
+           }
+       }else{
+           if (min <= 0 && max <= 0) {
+               result = false;
+               message += "[min<=0 || max<=0]";
+           }else if(min > 0 && max > 0 && min > max){
+               result = false;
+               message += "[min>max]";
+           }else if(min > 0 && decimalPart.length() < min){
+               result = false;
+               message += "[min=" + min + "]";
+           }else if(max > 0 && decimalPart.length() > max){
+               result = false;
+               message += "[max=" + max + "]";
+           }
+       }
         cvc.disableDefaultConstraintViolation();
         cvc.buildConstraintViolationWithTemplate(message).addConstraintViolation();
         return result;
-
     }
     
 

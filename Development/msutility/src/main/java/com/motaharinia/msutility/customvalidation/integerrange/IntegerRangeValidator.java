@@ -23,6 +23,7 @@ public class IntegerRangeValidator implements ConstraintValidator<IntegerRange, 
     public void initialize(IntegerRange a) {
         min = a.min();
         max = a.max();
+        message=a.message();
     }
 
     @Override
@@ -35,10 +36,10 @@ public class IntegerRangeValidator implements ConstraintValidator<IntegerRange, 
 
         if (number < min) {
             result = false;
-            message = "customValidation.integerRange[min=" + min + "]";
+            message += "[min=" + min + "]";
         } else if (number > max) {
             result = false;
-            message = "customValidation.integerRange[max=" + max + "]";
+            message += "[max=" + max + "]";
         }
 
         cvc.disableDefaultConstraintViolation();

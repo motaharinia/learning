@@ -25,6 +25,7 @@ public class StringLengthValidator implements ConstraintValidator<StringLength, 
         min = a.min();
         max = a.max();
         exact = a.exact();
+        message = a.message();
     }
 
     @Override
@@ -33,35 +34,33 @@ public class StringLengthValidator implements ConstraintValidator<StringLength, 
             return true;
         }
 
+
         boolean result = true;
-        if(exact > 0 && string.length() != exact){
-            result = false;
-            message = "customValidation.stringLength[exact=" + exact + "]";
+        if (exact > 0) {
+            if (!exact.equals(string.length())) {
+                result = false;
+                message += "[exact=" + exact + "]";
+            }
+        } else {
+            if (min <= 0 && max <= 0) {
+                result = false;
+                message += "[min<=0 || max<=0]";
+            } else if (min > 0 && max > 0 && min > max) {
+                result = false;
+                message += "[min>max]";
+            } else if (min > 0 && string.length() < min) {
+                result = false;
+                message += "[min=" + min + "]";
+            } else if (max > 0 && string.length() > max) {
+                result = false;
+                message += "[max=" + max + "]";
+            }
         }
-        
-        else if (min <= 0 && max <= 0) {
-            result = false;  
-        }
-        
-        else if(min > 0 && max > 0 && min > max){
-            result = false;
-        }
-        
-        else if(min > 0 && string.length() < min){
-            result = false;
-            message = "customValidation.stringLength[min=" + min + "]";
-        }
-        else if(max > 0 && string.length() > max){
-            result = false;
-            message = "customValidation.stringLength[max=" + max + "]";
-        }
-        
-        
+
         cvc.disableDefaultConstraintViolation();
         cvc.buildConstraintViolationWithTemplate(message).addConstraintViolation();
         return result;
     }
-    
- 
+
 
 }

@@ -1,4 +1,4 @@
-package com.motaharinia.msutility.search.data;
+package com.motaharinia.msutility.search.sample;
 
 /**
  * User: https://github.com/motaharinia<br>

@@ -23,6 +23,7 @@ public class DoubleRangeValidator implements ConstraintValidator<DoubleRange, Do
     public void initialize(DoubleRange a) {
         min = a.min();
         max = a.max();
+        message=a.message();
     }
 
     @Override
@@ -30,16 +31,14 @@ public class DoubleRangeValidator implements ConstraintValidator<DoubleRange, Do
         if (ObjectUtils.isEmpty(number)) {
             return true;
         }
-
         boolean result = true;
         if (number < min) {
             result = false;
-            message = "customValidation.doubleRange[min=" + min + "]";
+            message += "[min=" + min + "]";
         } else if (number > max) {
             result = false;
-            message = "customValidation.doubleRange[max=" + max + "]";
+            message += "[max=" + max + "]";
         }
-
         cvc.disableDefaultConstraintViolation();
         cvc.buildConstraintViolationWithTemplate(message).addConstraintViolation();
         return result;

@@ -1,12 +1,13 @@
-package com.motaharinia.msutility.search.data;
+package com.motaharinia.msutility.search;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.motaharinia.msutility.search.SearchRowView;
+import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.*;
+import com.motaharinia.msutility.search.sample.SearchRowViewUserBrief;
+import com.motaharinia.msutility.search.sample.SearchRowViewUserBriefImpl;
 import org.junit.jupiter.api.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
 import java.util.List;

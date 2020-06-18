@@ -1,4 +1,4 @@
-package com.motaharinia.msutility.search.data;
+package com.motaharinia.msutility.search.sample;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

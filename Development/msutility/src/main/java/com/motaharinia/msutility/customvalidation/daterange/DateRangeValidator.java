@@ -23,7 +23,7 @@ import java.util.Date;
  */
 public class DateRangeValidator implements ConstraintValidator<DateRange, CustomDate> {
 
-    private String message = "customValidation.dateRange";
+    private String message;
     private String from;
     private String to;
 
@@ -31,6 +31,7 @@ public class DateRangeValidator implements ConstraintValidator<DateRange, Custom
     public void initialize(DateRange a) {
         from = a.from();
         to = a.to();
+        message=a.message();
     }
 
     @Override
@@ -87,7 +88,7 @@ public class DateRangeValidator implements ConstraintValidator<DateRange, Custom
 
                 result = userEnteredDate.before(c.getTime());
                 if (!result) {
-                    message = "customValidation.dateRange[to=" + to + "]";
+                    message += "[to=" + to + "]";
                 }
 
             } else {
@@ -98,7 +99,7 @@ public class DateRangeValidator implements ConstraintValidator<DateRange, Custom
                     Date gregorian_TO_Date = df.parse(gregorian_TO_String);
                     result = userEnteredDate.before(gregorian_TO_Date);
                     if (!result) {
-                        message = "customValidation.dateRange[to=" + to + "]";
+                        message += "[to=" + to + "]";
                     }
                 } catch (ParseException ex) {
                     result = false;
@@ -121,7 +122,7 @@ public class DateRangeValidator implements ConstraintValidator<DateRange, Custom
                 c.add(Calendar.DATE, -1);
                 result = userEnteredDate.after(c.getTime());
                 if (!result) {
-                    message = "customValidation.dateRange[from=" + from + "]";
+                    message += "[from=" + from + "]";
                 }
             } else {
                 //convert TO date from jalali to gregorian
@@ -131,7 +132,7 @@ public class DateRangeValidator implements ConstraintValidator<DateRange, Custom
                     Date gregorian_FROM_Date = df.parse(gregorian_FROM_String);
                     result = userEnteredDate.after(gregorian_FROM_Date);
                     if (!result) {
-                        message = "customValidation.dateRange[from=" + from + "]";
+                        message += "[from=" + from + "]";
                     }
                 } catch (ParseException ex) {
                     result = false;
@@ -189,11 +190,11 @@ public class DateRangeValidator implements ConstraintValidator<DateRange, Custom
             if (fromDate != null && toDate != null) {
                 if (fromDate.compareTo(toDate) > 0) {
                     result = false;
-                    message = "customValidation.dateRange";
+                    message += "[from>to]";
                 } else {
                     result = userEnteredDate.after(fromDate) && userEnteredDate.before(toDate);
                     if (!result) {
-                        message = "customValidation.dateRange[from=" + from + ", to=" + to + "]";
+                        message = "[from=" + from + ", to=" + to + "]";
                     }
                 }
 
