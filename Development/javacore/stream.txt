@@ -1,0 +1,34 @@
+methodhaye aghazin:
+--------------------
+generate(function)
+of(item1,...)
+builder
+iterate(seed,item->nextItem)
+parallel or sequential
+
+
+
+methodhaye miani:
+--------------------
+filter(item->condition)
+map(item->return)
+limit(number)
+flatmap(item.stream())
+peek(sout)
+skip(length)
+sorted(Comparator.xxxx)
+
+
+methodhaye payani:
+--------------------
+collect(Collectors.xxxx)
+forEach(sout or call method)
+max(a1,a2->condition).get()
+min(a1,a2->condition).get()
+allMatch(condition)
+anyMatch(condition)
+noneMatch(condition)
+findAll(condition)
+findAny(condition)
+toArray(Object[]:new)
+reduce(initialValue,Float::sum) or reduce(initialValue,(result,item)->result+item)
