@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.string.StringTools;
 import org.springframework.util.ObjectUtils;
 
@@ -28,7 +29,11 @@ public class JsonDeserializerString extends JsonDeserializer<String> {
             if (jp.getCurrentName().toLowerCase().equals("htmlCustomString".toLowerCase())) {
                 return jp.getText();
             } else {
-                return StringTools.removeHtml(jp.getText());
+                try {
+                    return StringTools.removeHtml(jp.getText());
+                } catch (UtilityException e) {
+                    return jp.getText();
+                }
             }
         }
     }

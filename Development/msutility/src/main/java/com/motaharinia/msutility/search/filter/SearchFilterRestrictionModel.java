@@ -7,21 +7,37 @@ import java.io.Serializable;
  * Date: 2020-06-16<br>
  * Time: 23:05:15<br>
  * Description:<br>
- *     این کلاس مدل شرطی است که میخواهیم در جستجو هایی مانند جستجوی گرید از آن استفاده کنیم
+ * این کلاس مدل شرطی است که میخواهیم در جستجو هایی مانند جستجوی گرید از آن استفاده کنیم
  */
 public class SearchFilterRestrictionModel implements Serializable {
 
-    //فیلدی که روی آن شرط گذاشته میشود
+    /**
+     * نام فیلدی که روی آن شرط گذاشته میشود
+     */
     private String fieldName;
-    //عملیات مورد نظر
+    /**
+     * عملیات شرط برای فیلد مورد نظر در جستجو
+     */
     private SearchFilterOperationEnum fieldOperation;
-    //مقدار شرط فیلد مورد نظر
+    /**
+     * مقدار شرط برای فیلد مورد نظر در جستجو
+     */
     private Object fieldValue;
 
 
+    /**
+     * متد سازنده پیش فرض
+     */
     public SearchFilterRestrictionModel() {
     }
 
+    /**
+     * متد سازنده که با دریافت نام فیلد و عملیات شرط و مقدار شرط مدل را می سازد
+     *
+     * @param fieldName      نام فیلدی که روی آن شرط گذاشته میشود
+     * @param fieldOperation عملیات شرط برای فیلد مورد نظر در جستجو
+     * @param fieldValue     مقدار شرط برای فیلد مورد نظر در جستجو
+     */
     public SearchFilterRestrictionModel(String fieldName, SearchFilterOperationEnum fieldOperation, Object fieldValue) {
         this.fieldName = fieldName;
         this.fieldOperation = fieldOperation;

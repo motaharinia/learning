@@ -45,9 +45,19 @@ public class SearchFilterModel implements Serializable {
     private Integer rows;
 
 
+    /**
+     * متد سازنده پیش فرض
+     */
     public SearchFilterModel() {
     }
 
+    /**
+     * متدی که مشخصات جستجو  ریپازیتوری مورد نظر را از ورودی دریافت میکند و تمام موارد لیست شرطهای جستجو را به آن اضافه میکند
+     * تا در مرحله بعد این مشخصات جستجو به سمت ریپازیتوری برای جستجو در دیتابیس ارسال گردد
+     *
+     * @param genericSpecification مشخصات جستجو ریپازیتوری مورد نظر
+     * @return خروجی: مشخصات جستجوی ریپازیتوری حاوی شرایط جستجو
+     */
     public GenericSpecification makeSpecification(GenericSpecification genericSpecification) {
         if (!ObjectUtils.isEmpty(this.restrictionList)) {
             restrictionList.stream().forEach(item -> genericSpecification.add(item));
@@ -55,6 +65,12 @@ public class SearchFilterModel implements Serializable {
         return genericSpecification;
     }
 
+    /**
+     * این متد شیی صفحه بندی-مرتب سازی را مطابق اطلاعات دریافتی مدل جستجو تولید میکند
+     * تا در مرحله بعد این شیی به سمت ریپازیتوری برای جستجو در دیتابیس ارسال گردد
+     *
+     * @return خروجی: شیی صفحه بندی-مرتب سازی جهت استفاده در ریپازیتوری
+     */
     public Pageable makePageable() {
         Sort allSort = null;
         for (SearchFilterSortModel searchFilterSortModel : this.getSortList()) {

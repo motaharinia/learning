@@ -10,13 +10,14 @@ import java.util.List;
 import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 /**
  * User: https://github.com/motaharinia<br>
  * Date: 2020-06-14<br>
  * Time: 20:49:58<br>
  * Description:<br>
- *     کلاس تست SearchFilterModel
+ * کلاس تست SearchFilterModel
  */
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SearchFilterModelTests {
@@ -41,22 +42,26 @@ public class SearchFilterModelTests {
 
     @Order(1)
     @Test
-    void serializeDeserializeTest() throws Exception {
-        Locale.setDefault(new Locale("fa"));
+    void serializeDeserializeTest() {
+        try {
+            Locale.setDefault(new Locale("fa"));
 
-        List<SearchFilterRestrictionModel> searchFilterRestrictionModelList=new ArrayList<>();
-        searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH,"mostafa"));
-        List<SearchFilterSortModel> searchFilterSortModelList=new ArrayList<>();
-        searchFilterSortModelList.add(new SearchFilterSortModel("lastName", SearchFilterSortTypeEnum.ASC));
-        SearchFilterModel searchFilterModel=new SearchFilterModel();
-        searchFilterModel.setSearchRowView(SearchRowViewAdminUserBrief.class);
-        searchFilterModel.setPage(1);
-        searchFilterModel.setRows(10);
-        searchFilterModel.setRestrictionList(searchFilterRestrictionModelList);
-        searchFilterModel.setSortList(searchFilterSortModelList);
+            List<SearchFilterRestrictionModel> searchFilterRestrictionModelList = new ArrayList<>();
+            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH, "mostafa"));
+            List<SearchFilterSortModel> searchFilterSortModelList = new ArrayList<>();
+            searchFilterSortModelList.add(new SearchFilterSortModel("lastName", SearchFilterSortTypeEnum.ASC));
+            SearchFilterModel searchFilterModel = new SearchFilterModel();
+            searchFilterModel.setSearchRowView(SearchRowViewAdminUserBrief.class);
+            searchFilterModel.setPage(1);
+            searchFilterModel.setRows(10);
+            searchFilterModel.setRestrictionList(searchFilterRestrictionModelList);
+            searchFilterModel.setSortList(searchFilterSortModelList);
 
-        String json=mapper.writeValueAsString(searchFilterModel);
-        SearchFilterModel searchFilterModel2=mapper.readValue(json, SearchFilterModel.class);
-        assertThat(searchFilterModel2.getRestrictionList().get(0).getFieldValue()).isEqualTo("mostafa");
+            String json = mapper.writeValueAsString(searchFilterModel);
+            SearchFilterModel searchFilterModel2 = mapper.readValue(json, SearchFilterModel.class);
+            assertThat(searchFilterModel2.getRestrictionList().get(0).getFieldValue()).isEqualTo("mostafa");
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
     }
 }

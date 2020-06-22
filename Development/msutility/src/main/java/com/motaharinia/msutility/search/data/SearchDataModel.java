@@ -1,14 +1,17 @@
 package com.motaharinia.msutility.search.data;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.motaharinia.msutility.customexception.UtilityException;
+import com.motaharinia.msutility.customexception.UtilityExceptionKeyEnum;
+import com.motaharinia.msutility.search.annotation.SearchDataColumn;
 import com.motaharinia.msutility.search.filter.SearchFilterModel;
 import com.motaharinia.msutility.search.filter.SearchFilterOperationEnum;
+import org.jetbrains.annotations.NotNull;
 import org.reflections.ReflectionUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.util.ObjectUtils;
-import com.motaharinia.msutility.search.annotation.SearchDataColumn;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
@@ -64,41 +67,29 @@ public class SearchDataModel implements Serializable {
     public Object userData;
 
 
+    /**
+     * متد سازنده پیش فرض
+     */
     public SearchDataModel() {
     }
 
-
-    private List<Object> recursiveDataRowModelList(Object object, HashMap<Integer, Method> indexMethodHashMap, HashMap<Integer, Object> indexObjectHashMap) {
-        Set<Method> getterMethodSet = ReflectionUtils.getAllMethods(object.getClass(), ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
-        getterMethodSet.stream().forEach(getterMethod -> {
-            try {
-                if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(SearchDataColumn.class))) {
-                    if (getterMethod.getReturnType().getName().startsWith("java.lang")) {
-                       indexMethodHashMap.put(getterMethod.getAnnotation(SearchDataColumn.class).index(), getterMethod);
-                        indexObjectHashMap.put(getterMethod.getAnnotation(SearchDataColumn.class).index(), object);
-                    } else {
-                        getterMethod.setAccessible(true);
-                        Object childObject = getterMethod.invoke(object);
-                        recursiveDataRowModelList( childObject, indexMethodHashMap,indexObjectHashMap);
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-        List<Object> rowCellList = new ArrayList<>();
-        indexMethodHashMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
-            try {
-                entry.getValue().setAccessible(true);
-                rowCellList.add(entry.getValue().invoke(indexObjectHashMap.get(entry.getKey())));
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-        return rowCellList;
-    }
-
-    public SearchDataModel(Page<?> viewPage, SearchFilterModel searchFilterModel, Object userData) {
+    /**
+     * متد سازنده مدل جستجوی داده که صفحه ای از اینتیرفیس ریپازیتوری دریافت شده از دیتابیس و مدل جستجو و اطلاعات اضافی را از ورودی دریافت میکند و مدل جستجوی داده را طبق آنها برای ارسال به کلاینت می سازد
+     *
+     * @param viewPage          صفحه ای از اینتیرفیس ریپازیتوری دریافت شده از دیتابیس
+     * @param searchFilterModel مدل جستجو
+     * @param userData          خروجی: مدل جستجوی داده برای ارسال به کلاینت
+     */
+    public SearchDataModel(@NotNull Page<?> viewPage, @NotNull SearchFilterModel searchFilterModel, @NotNull Object userData) throws UtilityException {
+        if (ObjectUtils.isEmpty(viewPage)) {
+            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "viewPage");
+        }
+        if (ObjectUtils.isEmpty(searchFilterModel)) {
+            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "searchFilterModel");
+        }
+        if (userData.equals(null)) {
+            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "userData");
+        }
         this.userData = userData;
         this.page = searchFilterModel.getPage();
         this.total = (long) viewPage.getTotalPages();
@@ -143,7 +134,7 @@ public class SearchDataModel implements Serializable {
         List<SearchDataRowModel> searchDataRowModelList = new ArrayList<>();
         viewPage.stream().forEach(item -> {
             try {
-                searchDataRowModelList.add(new SearchDataRowModel((Integer) item.getClass().getDeclaredMethod("getId").invoke(item), recursiveDataRowModelList(item, new HashMap<>(), new HashMap<>()).toArray()));
+                searchDataRowModelList.add(new SearchDataRowModel((Integer) item.getClass().getDeclaredMethod("getId").invoke(item), recursiveDataRowModelList(item, item.getClass(), new HashMap<>(), new HashMap<>()).toArray()));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -151,6 +142,64 @@ public class SearchDataModel implements Serializable {
         this.searchDataRowModelList = searchDataRowModelList;
         this.searchDataRowModelList.stream().forEach(item -> System.out.println(item.toString()));
     }
+
+
+    /**
+     * متد بازگشتی که شیی اینترفیس ریپازیتوری و هش مپ اندیس-متد و هش مپ اندیس-شیی آن اینترفیس را ورودی میگیرد و در نهایت لیستی از آرایه مقادیر ستونهای دیتای جستجو را خروجی میدهد
+     *
+     * @param object             شیی اینترفیس ریپازیتوری
+     * @param indexMethodHashMap هش مپ اندیس-متد اینترفیس
+     * @param indexObjectHashMap هش مپ اندیس-شیی اینترفیس
+     * @return خروجی:  لیستی از آرایه مقادیر ستونهای دیتای جستجو
+     */
+    @NotNull
+    private List<Object> recursiveDataRowModelList(@NotNull Object object, Class clazz, @NotNull HashMap<Integer, Method> indexMethodHashMap, @NotNull HashMap<Integer, Object> indexObjectHashMap) throws UtilityException {
+        if (ObjectUtils.isEmpty(clazz)) {
+            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "clazz");
+        }
+        if (indexMethodHashMap.equals(null)) {
+            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "indexMethodHashMap");
+        }
+        if (indexObjectHashMap.equals(null)) {
+            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "indexObjectHashMap");
+        }
+        Set<Method> getterMethodSet = ReflectionUtils.getAllMethods(clazz, ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
+        getterMethodSet.stream().forEach(getterMethod -> {
+            try {
+                if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(SearchDataColumn.class))) {
+                    if (getterMethod.getReturnType().getName().startsWith("java.lang")) {
+                        indexMethodHashMap.put(getterMethod.getAnnotation(SearchDataColumn.class).index(), getterMethod);
+                        indexObjectHashMap.put(getterMethod.getAnnotation(SearchDataColumn.class).index(), object);
+                    } else {
+                        getterMethod.setAccessible(true);
+                        Object childObject = null;
+                        if (!object.equals(null)) {
+                            childObject = getterMethod.invoke(object);
+                        }
+                        recursiveDataRowModelList(childObject, getterMethod.getReturnType(), indexMethodHashMap, indexObjectHashMap);
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        List<Object> rowCellList = new ArrayList<>();
+        indexMethodHashMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
+            try {
+                entry.getValue().setAccessible(true);
+                if(ObjectUtils.isEmpty(indexObjectHashMap.get(entry.getKey()))){
+                    rowCellList.add("");
+                }else{
+                    rowCellList.add(entry.getValue().invoke(indexObjectHashMap.get(entry.getKey())));
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+        return rowCellList;
+    }
+
 
     /**
      * متد سازنده
@@ -179,7 +228,7 @@ public class SearchDataModel implements Serializable {
 
 //    public SearchDataModel GridDataFixForExcel(@NotNull SearchDataModel gridData, @NotNull List<GridColModel> pageGridColModelList, @NotNull MessageSource messageSource, @NotNull  HashMap<String, List<Object[]>> formatters) throws Exception {
 //        if (ObjectUtils.isEmpty(gridData) || ObjectUtils.isEmpty(pageGridColModelList)) {
-//            throw new UtilityException(CalDateTime.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+//            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
 //        }
 //        List<Object[]> objectArrayList = gridData.getRows();
 //        Object[] objectArray;
@@ -215,7 +264,14 @@ public class SearchDataModel implements Serializable {
 
 
     //لیستی از فرمترهای گرید و یک داده را دریافت میکند و اگر آن داده ورودی با یکی از داده های لیست فرمترها بخواند مقدار فرمت شده فرمتر را بجای داده خروجی میدهد
-    public String fixFormatter(List<Object[]> formatterArrayList, Object object) {
+    @NotNull
+    public String fixFormatter(@NotNull List<Object[]> formatterArrayList, @NotNull Object object) throws UtilityException {
+        if (ObjectUtils.isEmpty(formatterArrayList)) {
+            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "formatterArrayList");
+        }
+        if (ObjectUtils.isEmpty(object)) {
+            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "object");
+        }
         for (int i = 0; i < formatterArrayList.size(); i++) {
             if (formatterArrayList.get(i)[0].toString().equals(object + "")) {
                 return formatterArrayList.get(i)[1].toString();

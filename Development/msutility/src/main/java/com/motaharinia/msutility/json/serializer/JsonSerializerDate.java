@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.motaharinia.msutility.calendar.CalendarTools;
+import com.motaharinia.msutility.customexception.UtilityException;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.io.IOException;
@@ -26,7 +27,7 @@ public class JsonSerializerDate extends JsonSerializer<Date> {
     public void serialize(Date date, JsonGenerator jsonGen, SerializerProvider sp) throws IOException, JsonProcessingException {
         try {
             jsonGen.writeString( CalendarTools.fixToLocaleDate(date,"/",LocaleContextHolder.getLocale()));
-        } catch (ParseException ex) {
+        } catch (ParseException | UtilityException ex) {
             Logger.getLogger(JsonSerializerCustomDateTime.class.getName()).log(Level.SEVERE, null, ex);
         }
     }

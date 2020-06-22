@@ -10,34 +10,56 @@ import org.jetbrains.annotations.NotNull;
  * Description:<br>
  * کلاس اکسپشن پدر پروژه که در دیتابیس لاگ میشود و انواع دیگر اکسپشنها از آن گسترش میابند
  */
-public class CustomException extends RuntimeException {
+public class CustomException extends Exception {
 
     /**
-     * Exception Type
+     * نوع اکسپشن
      */
     @NotNull
     private CustomExceptionTypeEnum exceptionType;
     /**
-     * The class which exception occurred in. exception message consists of this class info
+     * کلاسی که در آن اکسپشن اتفاق افتاده است
      */
     @NotNull
     private Class exceptionOccurredClass;
     /**
-     * this field improves exception information. and can be used to send additional data to client.
+     * کلید خطای اکسپشن که در کلاینت ترجمه خواهد شد
+     * در این کلاس کلید ارسالی توسط نوع اکسپشن (بیزینس یا یوتیلیتی یا لیست) و نام کلاسی که خطا در آن اتفاق افتاده کامل میشود
+     * تا در کلاینت کلیدهای خطا دسته بندی شده در یک رشته دریافت گردد
+     * نمونه:
+     * BUSINESS_EXCEPTION.MEMBER.NATIONAL_CODE_DUPLICATE
      */
     @NotNull
     private String exceptionMessage;
     /**
-     * this field improves exception information. and can be used to send additional data to client.
+     * توضیحات خطا که میخواهیم به کلاینت ارسال نماییم
      */
     private String exceptionDescription;
 
-
+    /**
+     * متد سازنده کاستوم اکسپشن
+     *
+     * @param exceptionType          نوع اکسپشن
+     * @param exceptionOccurredClass کلاسی که در آن اکسپشن اتفاق افتاده است
+     * @param customExceptionKey     کلید خطای اکسپشن که در کلاینت ترجمه خواهد شد
+     * @param exceptionDescription   توضیحات خطا که میخواهیم به کلاینت ارسال نماییم
+     */
     public CustomException(@NotNull CustomExceptionTypeEnum exceptionType, @NotNull Class exceptionOccurredClass, @NotNull CustomExceptionKey customExceptionKey, String exceptionDescription) {
+//        super(exceptionType.getValue().toUpperCase() + "." + exceptionOccurredClass.getSimpleName().toUpperCase() + "." + customExceptionKey.getValue().toUpperCase());
         this.exceptionType = exceptionType;
         this.exceptionOccurredClass = exceptionOccurredClass;
-        this.exceptionMessage = exceptionType.getValue() + "." + exceptionOccurredClass.getSimpleName() + "." + customExceptionKey.getValue();
+        this.exceptionMessage = exceptionType.getValue().toUpperCase() + "." + exceptionOccurredClass.getSimpleName().toUpperCase() + "." + customExceptionKey.getValue().toUpperCase();
         this.exceptionDescription = exceptionDescription;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomException{" +
+                "exceptionType=" + exceptionType +
+                ", exceptionOccurredClass=" + exceptionOccurredClass +
+                ", exceptionMessage='" + exceptionMessage + '\'' +
+                ", exceptionDescription='" + exceptionDescription + '\'' +
+                '}';
     }
 
 

@@ -11,6 +11,8 @@ public class AdminUserModel {
 
     private String lastName;
 
+    private String defaultAdminUserContact_address;
+
     //getter-setter:
 
     public Integer  getId() {
@@ -53,15 +55,23 @@ public class AdminUserModel {
         this.lastName = lastName;
     }
 
+    public String getDefaultAdminUserContact_address() {
+        return defaultAdminUserContact_address;
+    }
+
+    public void setDefaultAdminUserContact_address(String defaultAdminUserContact_address) {
+        this.defaultAdminUserContact_address = defaultAdminUserContact_address;
+    }
 
     @Override
     public String toString() {
-        return "UserModel{" +
+        return "AdminUserModel{" +
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", defaultAdminUserContact_address='" + defaultAdminUserContact_address + '\'' +
                 '}';
     }
 }

@@ -9,7 +9,6 @@ import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.ObjectUtils;
 
 
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -26,6 +25,9 @@ import java.util.Locale;
  */
 public interface CalendarTools {
 
+    /**
+     * کلاس مبدل تاریخ میلادی و جلالی
+     */
     JalaliCalendar jalaliCalendar = new JalaliCalendar();
 
     //--------------------------------------------------متدهای کمکی--------------------------------------------------
@@ -37,11 +39,11 @@ public interface CalendarTools {
      * @return خروجی: عدد دورقمی شده
      */
     @NotNull
-    static String fixOneDigit(@NotNull String inputDigit) {
+    static String fixOneDigit(@NotNull String inputDigit) throws UtilityException {
         if (ObjectUtils.isEmpty(inputDigit)) {
             throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
         }
-        if (inputDigit.length() >1) {
+        if (inputDigit.length() > 1) {
             return inputDigit;
         } else {
             return "0" + inputDigit;
@@ -56,13 +58,16 @@ public interface CalendarTools {
      * @return خروجی: رشته تاریخ اصلاح شده
      */
     @NotNull
-    static String fixDateSlash(@NotNull String inputDateString, @NotNull String delimiter) {
-        if (ObjectUtils.isEmpty(inputDateString) || ObjectUtils.isEmpty(delimiter)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+    static String fixDateSlash(@NotNull String inputDateString, @NotNull String delimiter) throws UtilityException {
+        if (ObjectUtils.isEmpty(inputDateString)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "inputDateString");
+        }
+        if (ObjectUtils.isEmpty(delimiter)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "delimiter");
         }
         String[] tmpArray = inputDateString.split("/", -1);
         if (tmpArray.length != 3) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.INCORRECT_STRING_DATE_FORMAT, "");
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.INCORRECT_STRING_DATE_FORMAT, "inputDateString");
         }
         return tmpArray[0] + delimiter + fixOneDigit(tmpArray[1]) + delimiter + fixOneDigit(tmpArray[2]);
     }
@@ -77,9 +82,9 @@ public interface CalendarTools {
      * @return خروجی: رشته تاریخ میلادی فعلی
      */
     @NotNull
-    static String getCurrentGregorianDateString(@NotNull String dateDelimiter) {
+    static String getCurrentGregorianDateString(@NotNull String dateDelimiter) throws UtilityException {
         if (ObjectUtils.isEmpty(dateDelimiter)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "dateDelimiter");
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy" + dateDelimiter + "MM" + dateDelimiter + "dd", Locale.ENGLISH);
         return simpleDateFormat.format(new Date());
@@ -92,9 +97,9 @@ public interface CalendarTools {
      * @return خروجی: رشته تاریخ میلادی و ساعت فعلی
      */
     @NotNull
-    static String getCurrentGregorianDateTimeString(@NotNull String dateDelimiter) {
+    static String getCurrentGregorianDateTimeString(@NotNull String dateDelimiter) throws UtilityException {
         if (ObjectUtils.isEmpty(dateDelimiter)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "dateDelimiter");
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy" + dateDelimiter + "MM" + dateDelimiter + "dd HH:mm:ss", Locale.ENGLISH);
         return simpleDateFormat.format(new Date());
@@ -107,9 +112,9 @@ public interface CalendarTools {
      * @return خروجی: رشته تاریخ جلالی فعلی
      */
     @NotNull
-    static String getCurrentJalaliDateString(@NotNull String dateDelimiter) {
+    static String getCurrentJalaliDateString(@NotNull String dateDelimiter) throws UtilityException {
         if (ObjectUtils.isEmpty(dateDelimiter)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "dateDelimiter");
         }
         return fixDateSlash(jalaliCalendar.getJalaliDate(new Date()), dateDelimiter);
     }
@@ -121,9 +126,9 @@ public interface CalendarTools {
      * @return خروجی: رشته تاریخ میلادی و ساعت فعلی
      */
     @NotNull
-    static String getCurrentJalaliDateTimeString(@NotNull String dateDelimiter) {
+    static String getCurrentJalaliDateTimeString(@NotNull String dateDelimiter) throws UtilityException {
         if (ObjectUtils.isEmpty(dateDelimiter)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "dateDelimiter");
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss", Locale.ENGLISH);
         return fixDateSlash(jalaliCalendar.getJalaliDate(new Date()), dateDelimiter) + " " + simpleDateFormat.format(new Date());
@@ -140,9 +145,12 @@ public interface CalendarTools {
      * @return خروجی: Date میلادی
      */
     @NotNull
-    static Date jalaliToGregorianDate(@NotNull String sourceDate, @NotNull String sourceDateDelimiter) {
-        if (ObjectUtils.isEmpty(sourceDate) || ObjectUtils.isEmpty(sourceDateDelimiter)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+    static Date jalaliToGregorianDate(@NotNull String sourceDate, @NotNull String sourceDateDelimiter) throws UtilityException {
+        if (ObjectUtils.isEmpty(sourceDate)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "sourceDate");
+        }
+        if (ObjectUtils.isEmpty(sourceDateDelimiter)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "sourceDateDelimiter");
         }
         Date destination = jalaliCalendar.getGregorianDate(sourceDate.replaceAll(sourceDateDelimiter, "/"));
         return destination;
@@ -157,9 +165,15 @@ public interface CalendarTools {
      * @return خروجی: رشته میلادی
      */
     @NotNull
-    static String jalaliToGregorianDate(@NotNull String sourceDate, String sourceDateDelimiter, String destinationDateDelimiter) {
-        if (ObjectUtils.isEmpty(sourceDate) || ObjectUtils.isEmpty(sourceDateDelimiter) || ObjectUtils.isEmpty(destinationDateDelimiter)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+    static String jalaliToGregorianDate(@NotNull String sourceDate, String sourceDateDelimiter, String destinationDateDelimiter) throws UtilityException {
+        if (ObjectUtils.isEmpty(sourceDate)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "sourceDate");
+        }
+        if (ObjectUtils.isEmpty(sourceDateDelimiter)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "sourceDateDelimiter");
+        }
+        if (ObjectUtils.isEmpty(destinationDateDelimiter)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "destinationDateDelimiter");
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy" + destinationDateDelimiter + "MM" + destinationDateDelimiter + "dd", Locale.ENGLISH);
         Date destination = jalaliToGregorianDate(sourceDate, sourceDateDelimiter);
@@ -176,9 +190,12 @@ public interface CalendarTools {
      * @return خروجی: Date میلادی
      */
     @NotNull
-    static Date jalaliToGregorianDateTime(@NotNull String sourceDateTime, @NotNull String sourceDateDelimiter) {
-        if (ObjectUtils.isEmpty(sourceDateTime) || ObjectUtils.isEmpty(sourceDateDelimiter)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+    static Date jalaliToGregorianDateTime(@NotNull String sourceDateTime, @NotNull String sourceDateDelimiter) throws UtilityException {
+        if (ObjectUtils.isEmpty(sourceDateTime)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "sourceDateTime");
+        }
+        if (ObjectUtils.isEmpty(sourceDateDelimiter)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "sourceDateDelimiter");
         }
         String[] sourceDateArray = sourceDateTime.split(" ", -1);
         String[] sourceTimeArray = sourceDateArray[1].split(":", -1);
@@ -203,9 +220,15 @@ public interface CalendarTools {
      * @return خروجی: رشته تاریخ-زمان میلادی
      */
     @NotNull
-    static String jalaliToGregorianDateTime(@NotNull String sourceDateTime, @NotNull String sourceDateDelimiter, @NotNull String destinationDateDelimiter) {
-        if (ObjectUtils.isEmpty(sourceDateTime) || ObjectUtils.isEmpty(sourceDateDelimiter) || ObjectUtils.isEmpty(destinationDateDelimiter)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+    static String jalaliToGregorianDateTime(@NotNull String sourceDateTime, @NotNull String sourceDateDelimiter, @NotNull String destinationDateDelimiter) throws UtilityException {
+        if (ObjectUtils.isEmpty(sourceDateTime)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "sourceDateTime");
+        }
+        if (ObjectUtils.isEmpty(sourceDateDelimiter)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "sourceDateDelimiter");
+        }
+        if (ObjectUtils.isEmpty(destinationDateDelimiter)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "destinationDateDelimiter");
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy" + destinationDateDelimiter + "MM" + destinationDateDelimiter + "dd", Locale.ENGLISH);
         Date destination = jalaliToGregorianDateTime(sourceDateTime, sourceDateDelimiter);
@@ -226,9 +249,15 @@ public interface CalendarTools {
      * @throws ParseException
      */
     @NotNull
-    static String gregorianToJalaliDate(@NotNull String sourceDate, @NotNull String sourceDateDelimiter, @NotNull String destinationDateDelimiter) throws ParseException {
-        if (ObjectUtils.isEmpty(sourceDate) || ObjectUtils.isEmpty(sourceDateDelimiter) || ObjectUtils.isEmpty(destinationDateDelimiter)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+    static String gregorianToJalaliDate(@NotNull String sourceDate, @NotNull String sourceDateDelimiter, @NotNull String destinationDateDelimiter) throws UtilityException, ParseException {
+        if (ObjectUtils.isEmpty(sourceDate)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "sourceDate");
+        }
+        if (ObjectUtils.isEmpty(sourceDateDelimiter)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "sourceDateDelimiter");
+        }
+        if (ObjectUtils.isEmpty(destinationDateDelimiter)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "destinationDateDelimiter");
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy" + sourceDateDelimiter + "MM" + sourceDateDelimiter + "dd", Locale.ENGLISH);
         Date destination = simpleDateFormat.parse(sourceDate);
@@ -244,9 +273,9 @@ public interface CalendarTools {
      * @throws ParseException
      */
     @NotNull
-    static CustomDate gregorianToJalaliDate(@NotNull Date source) throws ParseException {
+    static CustomDate gregorianToJalaliDate(@NotNull Date source) throws UtilityException {
         if (ObjectUtils.isEmpty(source)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "source");
         }
         CustomDate destinationCustomDate = new CustomDate();
         String destinationDate = jalaliCalendar.getJalaliDate(source);
@@ -269,9 +298,15 @@ public interface CalendarTools {
      * @throws ParseException
      */
     @NotNull
-    static String gregorianToJalaliDateTime(@NotNull String sourceDateTime, @NotNull String sourceDateDelimiter, @NotNull String destinationDateDelimiter) throws ParseException {
-        if (ObjectUtils.isEmpty(sourceDateTime) || ObjectUtils.isEmpty(sourceDateDelimiter) || ObjectUtils.isEmpty(destinationDateDelimiter)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+    static String gregorianToJalaliDateTime(@NotNull String sourceDateTime, @NotNull String sourceDateDelimiter, @NotNull String destinationDateDelimiter) throws UtilityException, ParseException {
+        if (ObjectUtils.isEmpty(sourceDateTime)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "sourceDateTime");
+        }
+        if (ObjectUtils.isEmpty(sourceDateDelimiter)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "sourceDateDelimiter");
+        }
+        if (ObjectUtils.isEmpty(destinationDateDelimiter)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "destinationDateDelimiter");
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy" + sourceDateDelimiter + "MM" + sourceDateDelimiter + "dd", Locale.ENGLISH);
         String[] sourceDateTimeArray = sourceDateTime.split(" ", -1);
@@ -289,9 +324,9 @@ public interface CalendarTools {
      * @throws ParseException
      */
     @NotNull
-    static CustomDateTime gregorianToJalaliDateTime(@NotNull Date source) throws ParseException {
+    static CustomDateTime gregorianToJalaliDateTime(@NotNull Date source) throws UtilityException {
         if (ObjectUtils.isEmpty(source)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "source");
         }
         CustomDateTime destinationCustomDateTime = new CustomDateTime();
         Calendar calendar = Calendar.getInstance();
@@ -301,13 +336,14 @@ public interface CalendarTools {
         destinationCustomDateTime.setYear(Integer.parseInt(destinationDateArray[0]));
         destinationCustomDateTime.setMonth(Integer.parseInt(destinationDateArray[1]));
         destinationCustomDateTime.setDay(Integer.parseInt(destinationDateArray[2]));
-        destinationCustomDateTime.setHour(calendar.get(Calendar.HOUR_OF_DAY) );
+        destinationCustomDateTime.setHour(calendar.get(Calendar.HOUR_OF_DAY));
         destinationCustomDateTime.setMinute(calendar.get(Calendar.MINUTE));
         destinationCustomDateTime.setSecond(calendar.get(Calendar.SECOND));
         return destinationCustomDateTime;
     }
 
     //--------------------------------------------------متدهای اصلاح کننده متناسب با زبان لوکال و تفاوت زمانی بین دو تاریخ--------------------------------------------------
+
     /**
      * این متد رشته تاریخ و رشته جدا کننده تاریخ خروجی و زبان لوکال (زبان انتخابی کاربر در کلاینت) را از ورودی دریافت میکند و رشته تاریخ ورودی را متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی ، به صورت رشته تاریخ خروجی میدهد
      *
@@ -318,9 +354,12 @@ public interface CalendarTools {
      * @throws ParseException
      */
     @NotNull
-    static String fixToLocaleDate(@NotNull String sourceDate, @NotNull String destinationDateDelimiter, Locale locale) throws ParseException {
-        if (ObjectUtils.isEmpty(sourceDate) || ObjectUtils.isEmpty(destinationDateDelimiter)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+    static String fixToLocaleDate(@NotNull String sourceDate, @NotNull String destinationDateDelimiter, Locale locale) throws UtilityException, ParseException {
+        if (ObjectUtils.isEmpty(sourceDate)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "sourceDate");
+        }
+        if (ObjectUtils.isEmpty(destinationDateDelimiter)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "destinationDateDelimiter");
         }
         if (locale.equals(null)) {
             locale = LocaleContextHolder.getLocale();
@@ -352,36 +391,42 @@ public interface CalendarTools {
     /**
      * این متد Date تاریخ و رشته جدا کننده تاریخ خروجی و زبان لوکال (زبان انتخابی کاربر در کلاینت) را از ورودی دریافت میکند و Date تاریخ ورودی را متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی ، به صورت رشته تاریخ خروجی میدهد
      *
-     * @param source              Date تاریخ ورودی
+     * @param source                   Date تاریخ ورودی
      * @param destinationDateDelimiter رشته جدا کننده تاریخ خروجی
      * @param locale                   زبان لوکال کلاینت
      * @return خروجی: رشته تاریخ متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی
      * @throws ParseException
      */
     @NotNull
-    static String fixToLocaleDate(@NotNull Date source, @NotNull String destinationDateDelimiter, Locale locale) throws ParseException {
-        if (ObjectUtils.isEmpty(source) || ObjectUtils.isEmpty(destinationDateDelimiter)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+    static String fixToLocaleDate(@NotNull Date source, @NotNull String destinationDateDelimiter, Locale locale) throws UtilityException, ParseException {
+        if (ObjectUtils.isEmpty(source)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "source");
+        }
+        if (ObjectUtils.isEmpty(destinationDateDelimiter)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "destinationDateDelimiter");
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-        return fixToLocaleDate(simpleDateFormat.format(source),destinationDateDelimiter,locale) ;
+        return fixToLocaleDate(simpleDateFormat.format(source), destinationDateDelimiter, locale);
     }
 
     /**
      * این متد CustomDate تاریخ و رشته جدا کننده تاریخ خروجی و زبان لوکال (زبان انتخابی کاربر در کلاینت) را از ورودی دریافت میکند و CustomDate تاریخ ورودی را متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی ، به صورت رشته تاریخ خروجی میدهد
      *
-     * @param customDate              CustomDate تاریخ ورودی
+     * @param customDate               CustomDate تاریخ ورودی
      * @param destinationDateDelimiter رشته جدا کننده تاریخ خروجی
      * @param locale                   زبان لوکال کلاینت
      * @return خروجی: رشته تاریخ متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی
      * @throws ParseException
      */
     @NotNull
-    static String fixToLocaleDate(@NotNull CustomDate customDate, @NotNull String destinationDateDelimiter, Locale locale) throws ParseException {
-        if (ObjectUtils.isEmpty(customDate) || ObjectUtils.isEmpty(destinationDateDelimiter)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+    static String fixToLocaleDate(@NotNull CustomDate customDate, @NotNull String destinationDateDelimiter, Locale locale) throws UtilityException, ParseException {
+        if (ObjectUtils.isEmpty(customDate)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "customDate");
         }
-        return fixToLocaleDate(customDate.getFormattedString("-"),destinationDateDelimiter,locale) ;
+        if (ObjectUtils.isEmpty(destinationDateDelimiter)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "destinationDateDelimiter");
+        }
+        return fixToLocaleDate(customDate.getFormattedString("-"), destinationDateDelimiter, locale);
     }
 
     /**
@@ -394,9 +439,12 @@ public interface CalendarTools {
      * @throws ParseException
      */
     @NotNull
-    static String fixToLocaleDateTime(@NotNull String sourceDateTime, @NotNull String destinationDateDelimiter, Locale locale) throws ParseException {
-        if (ObjectUtils.isEmpty(sourceDateTime) || ObjectUtils.isEmpty(destinationDateDelimiter)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+    static String fixToLocaleDateTime(@NotNull String sourceDateTime, @NotNull String destinationDateDelimiter, Locale locale) throws UtilityException, ParseException {
+        if (ObjectUtils.isEmpty(sourceDateTime)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "sourceDateTime");
+        }
+        if (ObjectUtils.isEmpty(destinationDateDelimiter)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "destinationDateDelimiter");
         }
         if (locale.equals(null)) {
             locale = LocaleContextHolder.getLocale();
@@ -428,35 +476,42 @@ public interface CalendarTools {
     /**
      * این متد Date تاریخ-زمان و رشته جدا کننده تاریخ خروجی و زبان لوکال (زبان انتخابی کاربر در کلاینت) را از ورودی دریافت میکند و Date تاریخ-زمان ورودی را متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی ، به صورت رشته تاریخ-زمان خروجی میدهد
      *
-     * @param source           Date تاریخ-زمان ورودی
+     * @param source                   Date تاریخ-زمان ورودی
      * @param destinationDateDelimiter رشته جدا کننده تاریخ خروجی
      * @param locale                   زبان لوکال کلاینت
      * @return خروجی: رشته تاریخ-زمان متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی
      * @throws ParseException
      */
     @NotNull
-    static String fixToLocaleDateTime(@NotNull Date source, @NotNull String destinationDateDelimiter, Locale locale) throws ParseException {
-        if (ObjectUtils.isEmpty(source) || ObjectUtils.isEmpty(destinationDateDelimiter)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+    static String fixToLocaleDateTime(@NotNull Date source, @NotNull String destinationDateDelimiter, Locale locale) throws UtilityException, ParseException {
+        if (ObjectUtils.isEmpty(source)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "source");
+        }
+        if (ObjectUtils.isEmpty(destinationDateDelimiter)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "destinationDateDelimiter");
         }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-        return fixToLocaleDateTime(simpleDateFormat.format(source),destinationDateDelimiter,locale) ;
+        return fixToLocaleDateTime(simpleDateFormat.format(source), destinationDateDelimiter, locale);
     }
+
     /**
      * این متد CustomDateTime تاریخ-زمان و رشته جدا کننده تاریخ خروجی و زبان لوکال (زبان انتخابی کاربر در کلاینت) را از ورودی دریافت میکند و CustomDate تاریخ-زمان ورودی را متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی ، به صورت رشته تاریخ-زمان خروجی میدهد
      *
-     * @param customDateTime              CustomDateTime تاریخ-زمان ورودی
+     * @param customDateTime           CustomDateTime تاریخ-زمان ورودی
      * @param destinationDateDelimiter رشته جدا کننده تاریخ خروجی
      * @param locale                   زبان لوکال کلاینت
      * @return خروجی: رشته تاریخ متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی
      * @throws ParseException
      */
     @NotNull
-    static String fixToLocaleDateTime(@NotNull CustomDateTime customDateTime, @NotNull String destinationDateDelimiter, Locale locale) throws ParseException {
-        if (ObjectUtils.isEmpty(customDateTime) || ObjectUtils.isEmpty(destinationDateDelimiter)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+    static String fixToLocaleDateTime(@NotNull CustomDateTime customDateTime, @NotNull String destinationDateDelimiter, Locale locale) throws UtilityException, ParseException {
+        if (ObjectUtils.isEmpty(customDateTime)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "customDateTime");
         }
-        return fixToLocaleDateTime(customDateTime.getFormattedString("-"),destinationDateDelimiter,locale) ;
+        if (ObjectUtils.isEmpty(destinationDateDelimiter)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "destinationDateDelimiter");
+        }
+        return fixToLocaleDateTime(customDateTime.getFormattedString("-"), destinationDateDelimiter, locale);
     }
 
     /**
@@ -468,9 +523,15 @@ public interface CalendarTools {
      * @return خروجی: میزان اختلاف آن تاریخ ورودی براساس واحد زمانی ورودی
      */
     @NotNull
-    static long getTwoDateDifference(@NotNull Date date1, @NotNull Date date2, @NotNull DateTimeUnitEnum dateTimeUnitEnum) {
-        if (ObjectUtils.isEmpty(date1) || ObjectUtils.isEmpty(date2) || ObjectUtils.isEmpty(dateTimeUnitEnum)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+    static long getTwoDateDifference(@NotNull Date date1, @NotNull Date date2, @NotNull DateTimeUnitEnum dateTimeUnitEnum) throws UtilityException {
+        if (ObjectUtils.isEmpty(date1)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "date1");
+        }
+        if (ObjectUtils.isEmpty(date2)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "date2");
+        }
+        if (ObjectUtils.isEmpty(dateTimeUnitEnum)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "dateTimeUnitEnum");
         }
         long differenceInMillisecond = (date2.getTime() - date1.getTime());
         switch (dateTimeUnitEnum) {
@@ -505,9 +566,9 @@ public interface CalendarTools {
      * @return خروجی: Date میلادی
      */
     @NotNull
-    static Date getDateFromCustomDate(@NotNull CustomDate customDate) {
+    static Date getDateFromCustomDate(@NotNull CustomDate customDate) throws UtilityException {
         if (CustomDate.isEmpty(customDate)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "customDate");
         }
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, customDate.getYear());
@@ -527,9 +588,9 @@ public interface CalendarTools {
      * @return خروجی: Date میلادی
      */
     @NotNull
-    static Date getDateFromCustomDateTime(@NotNull CustomDateTime customDateTime) {
+    static Date getDateFromCustomDateTime(@NotNull CustomDateTime customDateTime) throws UtilityException {
         if (CustomDateTime.isEmpty(customDateTime)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "customDateTime");
         }
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.YEAR, customDateTime.getYear());
@@ -553,9 +614,15 @@ public interface CalendarTools {
      * @return خروجی: نتیجه بررسی صحت تاریخ
      */
     @NotNull
-    static Boolean checkJalaliDateValidity(@NotNull Integer year, @NotNull Integer month, @NotNull Integer day) {
-        if (ObjectUtils.isEmpty(year) || ObjectUtils.isEmpty(month) || ObjectUtils.isEmpty(day)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+    static Boolean checkJalaliDateValidity(@NotNull Integer year, @NotNull Integer month, @NotNull Integer day) throws UtilityException {
+        if (ObjectUtils.isEmpty(year)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "year");
+        }
+        if (ObjectUtils.isEmpty(month)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "month");
+        }
+        if (ObjectUtils.isEmpty(day)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "day");
         }
         if (year <= 0 || month <= 0 || month > 12 || day <= 0) {
             return false;
@@ -575,9 +642,15 @@ public interface CalendarTools {
      * @return خروجی: نتیجه بررسی صحت تاریخ
      */
     @NotNull
-    static Boolean checkGregorianDateValidity(@NotNull Integer year, @NotNull Integer month, @NotNull Integer day) {
-        if (ObjectUtils.isEmpty(year) || ObjectUtils.isEmpty(month) || ObjectUtils.isEmpty(day)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+    static Boolean checkGregorianDateValidity(@NotNull Integer year, @NotNull Integer month, @NotNull Integer day) throws UtilityException {
+        if (ObjectUtils.isEmpty(year)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "year");
+        }
+        if (ObjectUtils.isEmpty(month)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "month");
+        }
+        if (ObjectUtils.isEmpty(day)) {
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "day");
         }
         boolean result = true;
         String dateFormat = "yyyy/MM/dd";

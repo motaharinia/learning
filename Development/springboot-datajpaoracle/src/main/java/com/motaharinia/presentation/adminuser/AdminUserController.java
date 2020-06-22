@@ -3,6 +3,7 @@ package com.motaharinia.presentation.adminuser;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.motaharinia.business.service.adminuser.AdminUserService;
+import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.json.CustomObjectMapper;
 import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.SearchFilterModel;
@@ -22,37 +23,65 @@ public class AdminUserController {
         this.adminUserService = adminUserService;
     }
 
-    //method that posts a new adminuser detail
+
+    /**
+     * متد ثبت
+     *
+     * @param adminUserModel مدل ثبت
+     * @return خروجی: مدل ثبت حاوی شناسه
+     */
     @PostMapping("/adminUser")
     public AdminUserModel create(@RequestBody @Validated AdminUserModel adminUserModel) {
         return adminUserService.create(adminUserModel);
     }
 
-    //retrieves a specific adminuser detail
+    /**
+     * متد جستجوی با شناسه
+     *
+     * @param id شناسه
+     * @return خروجی: مدل جستجو شده
+     */
     @GetMapping("/adminUser/{id}")
-    public AdminUserModel readOne(@PathVariable Integer id) {
-        return adminUserService.readOne(id);
+    public AdminUserModel readById(@PathVariable Integer id) {
+        return adminUserService.readById(id);
     }
 
+    /**
+     * متد جستجو با مدل فیلتر جستجو
+     *
+     * @param searchFilterModelJson رشته جیسون مدل فیلتر جستجو
+     * @return خروجی: مدل داده جستجو
+     * @throws UtilityException
+     */
     @GetMapping("/adminUser")
-    public SearchDataModel readGrid (@RequestParam(name = "searchFilterModel") Optional<String> searchFilterModelJson) throws JsonProcessingException {
-        System.out.println("UserController.readGrid searchFilterModelJson.get():"+searchFilterModelJson.get());
-        CustomObjectMapper customObjectMapper=new CustomObjectMapper();
-        SearchFilterModel searchFilterModel = customObjectMapper.readValue(searchFilterModelJson.get(),SearchFilterModel.class);
-        System.out.println("UserController.readGrid searchFilterModel:"+searchFilterModel.toString());
-        SearchDataModel searchDataModel= adminUserService.readGrid(searchFilterModel);
-        System.out.println("UserController.readGrid searchDataModel:"+searchDataModel.toString());
+    public SearchDataModel readGrid(@RequestParam(name = "searchFilterModel") Optional<String> searchFilterModelJson) throws JsonProcessingException, UtilityException {
+        CustomObjectMapper customObjectMapper = new CustomObjectMapper();
+        SearchFilterModel searchFilterModel = customObjectMapper.readValue(searchFilterModelJson.get(), SearchFilterModel.class);
+        SearchDataModel searchDataModel = adminUserService.readGrid(searchFilterModel);
         return searchDataModel;
     }
 
+    /**
+     * متد ویرایش
+     *
+     * @param adminUserModel مدل ویرایش
+     * @return خروجی: مدل ویرایش شده
+     */
+    @PutMapping("/adminUser")
+    public AdminUserModel update(@RequestBody @Validated AdminUserModel adminUserModel) {
+        return adminUserService.update(adminUserModel);
+    }
+
+    /**
+     * متد حذف با شناسه
+     *
+     * @param id شناسه
+     * @return خروجی: مدل حذف شده
+     */
     @DeleteMapping("/adminUser/{id}")
     public AdminUserModel delete(@PathVariable Integer id) {
         return adminUserService.delete(id);
     }
 
 
-//    @GetMapping("/adminUser/firstName/{firstName}")
-//    public GridDataModel listGrid(@PathVariable String firstName) {
-//        return userService.listGrid(firstName);
-//    }
 }

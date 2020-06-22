@@ -3,6 +3,7 @@ package com.motaharinia.msutility.customvalidation.daterange;
 
 
 import com.motaharinia.msutility.calendar.CalendarTools;
+import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.customfield.CustomDate;
 
 import javax.validation.ConstraintValidator;
@@ -48,7 +49,12 @@ public class DateRangeValidator implements ConstraintValidator<DateRange, Custom
             return false;
         }
 
-        boolean result = validateDateRange(customDate);
+        boolean result = false;
+        try {
+            result = validateDateRange(customDate);
+        } catch (UtilityException e) {
+            result = false;
+        }
         cvc.disableDefaultConstraintViolation();
         cvc.buildConstraintViolationWithTemplate(message).addConstraintViolation();
         return result;
@@ -60,14 +66,18 @@ public class DateRangeValidator implements ConstraintValidator<DateRange, Custom
             return true;
         } else if (param.matches(datePattern)) {
             String[] paramParts = param.split("-");
-            return CalendarTools.checkJalaliDateValidity(Integer.parseInt(paramParts[0]), Integer.parseInt(paramParts[1]), Integer.parseInt(paramParts[2]));
+            try {
+                return CalendarTools.checkJalaliDateValidity(Integer.parseInt(paramParts[0]), Integer.parseInt(paramParts[1]), Integer.parseInt(paramParts[2]));
+            } catch (UtilityException e) {
+                return false;
+            }
         } else {
             return false;
         }
 
     }
 
-    private boolean validateDateRange(CustomDate customDate) {
+    private boolean validateDateRange(CustomDate customDate) throws UtilityException {
         boolean result = false;
         if (from.equalsIgnoreCase("unlimited") && to.equalsIgnoreCase("unlimited")) {
             //In this case, no need to validate date, every data is acceptable

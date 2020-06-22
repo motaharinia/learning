@@ -30,7 +30,14 @@ public interface StringTools {
      * @return خروجی: رشته هش شده بر مبنای الگوی رمزگذاری ام دی 5 با حداکثر طول درخواستی
      * @throws Exception
      */
-    static String generateMD5Hash(String input, Integer resultLength) throws Exception {
+    @NotNull
+    static String generateMD5Hash(@NotNull String input, @NotNull Integer resultLength) throws Exception {
+        if (ObjectUtils.isEmpty(input)) {
+            throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "input");
+        }
+        if (ObjectUtils.isEmpty(resultLength)) {
+            throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "resultLength");
+        }
         MessageDigest md = MessageDigest.getInstance("MD5");
         byte[] md5sum = md.digest(input.getBytes());
         String output = String.format("%032x", new BigInteger(1, md5sum));
@@ -48,9 +55,9 @@ public interface StringTools {
      * @return خروجی: رشته بدون تگهای اچ تی ام ال
      */
     @NotNull
-    static String removeHtml(@NotNull String htmlString) {
+    static String removeHtml(@NotNull String htmlString) throws UtilityException {
         if (ObjectUtils.isEmpty(htmlString)) {
-            throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+            throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "htmlString");
         }
         return Jsoup.parse(htmlString).text();
     }
@@ -65,9 +72,12 @@ public interface StringTools {
      * @return خروجی: رشته اصلاح شده طبق طول مورد نظر
      */
     @NotNull
-    static String summarizeString(@NotNull String input, @NotNull Integer charNumber) {
-        if (ObjectUtils.isEmpty(input) || ObjectUtils.isEmpty(charNumber)) {
-            throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+    static String summarizeString(@NotNull String input, @NotNull Integer charNumber) throws UtilityException {
+        if (ObjectUtils.isEmpty(input)) {
+            throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "input");
+        }
+        if (ObjectUtils.isEmpty(charNumber)) {
+            throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "charNumber");
         }
         String result;
         if (input.length() < charNumber) {
@@ -90,9 +100,12 @@ public interface StringTools {
      * @return خروجی: رشته با عبارات هایلایت شده
      */
     @NotNull
-    static String highlight(@NotNull String inputText, @NotNull String search) {
-        if (ObjectUtils.isEmpty(inputText) || ObjectUtils.isEmpty(search)) {
-            throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+    static String highlight(@NotNull String inputText, @NotNull String search) throws UtilityException {
+        if (ObjectUtils.isEmpty(inputText)) {
+            throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "inputText");
+        }
+        if (ObjectUtils.isEmpty(search)) {
+            throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "search");
         }
         return inputText.replaceAll(search, "<span class='highlight'>" + search + "</span>");
     }
@@ -106,9 +119,15 @@ public interface StringTools {
      * @return خروجی: رشته تصادفی
      */
     @NotNull
-    static String generateRandomString(@NotNull RandomGenerationTypeEnum randomGenerationTypeEnum, @NotNull Integer length, @NotNull Boolean withLeadingZero) {
-        if (ObjectUtils.isEmpty(randomGenerationTypeEnum) || ObjectUtils.isEmpty(length) || ObjectUtils.isEmpty(withLeadingZero)) {
-            throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+    static String generateRandomString(@NotNull RandomGenerationTypeEnum randomGenerationTypeEnum, @NotNull Integer length, @NotNull Boolean withLeadingZero) throws UtilityException {
+        if (ObjectUtils.isEmpty(randomGenerationTypeEnum)) {
+            throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "randomGenerationTypeEnum");
+        }
+        if (ObjectUtils.isEmpty(length)) {
+            throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "length");
+        }
+        if (ObjectUtils.isEmpty(withLeadingZero)) {
+            throw new UtilityException(StringTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "withLeadingZero");
         }
         String characterLower = "abcdefghigklmnopqrstuvwxyz";
         String characterUpper = "ABCDEFGHIJKLMNPQRSTUVWXYZ";

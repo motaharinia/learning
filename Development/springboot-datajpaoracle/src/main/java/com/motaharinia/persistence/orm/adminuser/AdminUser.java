@@ -31,6 +31,8 @@ public class AdminUser extends GenericEntity implements Serializable {
     @JoinColumn(name = "default_admin_user_contact_id", referencedColumnName = "id")
     private AdminUserContact defaultAdminUserContact;
 
+
+
     //getter-setter:
     public Integer  getId() {
         return id;

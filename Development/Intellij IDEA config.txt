@@ -2,18 +2,34 @@
 -Dfile.encoding=UTF-8
 -Dconsole.encoding=UTF-8
 
-2.IntelijIDEA: File -> Settings -> Editor -> File Encodings form "System default" to UTF-8. May be it affected somehow.
+2.IntelijIDEA: File -> Settings -> Editor -> File Encodings-> Project Encoding: form "System default" to UTF-8. May be it affected somehow.
 
 3.IntelijIDEA: File -> Settings -> Editor -> General -> Code Completion -> check "show the documentation popup in 500 ms"
 
 4.IntelijIDEA: File -> Settings -> Editor -> General -> Auto Import -> check "Optimize imports on the fly (for current project)"
 
-5.IntelijIDEA: File -> Settings -> Editor -> Color Scheme -> Color Scheme Font -> Scheme: Default & set font to "Tahoma"
+5.IntelijIDEA: File -> Settings -> Editor -> Color Scheme -> Color Scheme Font -> Scheme: Default -> uncheck "Show only monospaced fonts" and set font to "Tahoma"
 
-6.IntelijIDEA: Run -> Edit Configuration -> Spring Boot -> XXXApplication -> Environment -> VM Options: -Dspring.profiles.active=dev
+6.IntelijIDEA: File -> New -> Edit File Templates... -> Class -> edit right box:
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+#parse("File Header.java")
 
-7.IntelijIDEA HotKeys:
+/**
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-16<br>
+ * Time: 23:27:46<br>
+ * Description:<br>
+ */
+public class ${NAME} {
+}
+
+7.IntelijIDEA: Run -> Edit Configuration -> Spring Boot -> XXXApplication -> Environment -> VM Options: -Dspring.profiles.active=dev
+
+8.IntelijIDEA: Run -> Edit Configuration -> Spring Boot -> XXXApplication -> add "Launch Web Browser" in "Before launch: Build, launch web browser..."
+
+9.IntelijIDEA HotKeys:
 Ctrl+Alt+L        : Format Code
 Ctrl+D            : Duplicate Code Line
+Shift+F6          : Rename
 Shift+Alt+Up/Down : Move Code Line
 Ctrl+Alt+O        : Remove Unused Import Lines

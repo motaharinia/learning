@@ -20,7 +20,7 @@ import java.util.Objects;
  * Date: 2020-06-12<br>
  * Time: 01:05:58<br>
  * Description: <br>
- *     این کلاس برای جابجا کردن فیلد تاریخ-زمان در مدلها از شمسی به میلادی در زمان ارسال درخواست از کلاینت به سرور و بالعکس استفاده میشود
+ * این کلاس برای جابجا کردن فیلد تاریخ-زمان در مدلها از شمسی به میلادی در زمان ارسال درخواست از کلاینت به سرور و بالعکس استفاده میشود
  */
 public class CustomDateTime implements Comparable, Serializable {
 
@@ -64,9 +64,15 @@ public class CustomDateTime implements Comparable, Serializable {
         deserializeDateTime();
     }
 
-    public CustomDateTime(@NotNull Date date) throws Exception {
+    /**
+     * این متد تاریخ میلادی در ورودی دریافت میکند و یک کاستوم میلادی بر طبق آن تولید میکند
+     *
+     * @param date تاریخ میلادی
+     * @throws UtilityException
+     */
+    public CustomDateTime(@NotNull Date date) throws UtilityException {
         if (ObjectUtils.isEmpty(date)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "date");
         }
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -78,13 +84,13 @@ public class CustomDateTime implements Comparable, Serializable {
         this.setSecond(calendar.get(Calendar.SECOND));
     }
 
-    private void deserializeDateTime() throws Exception {
+    private void deserializeDateTime() throws UtilityException {
         if (ObjectUtils.isEmpty(this.year) && ObjectUtils.isEmpty(this.month) && ObjectUtils.isEmpty(this.day)) {
             return;
         }
         Locale currentLocale = LocaleContextHolder.getLocale();
-        if (!validateDate(currentLocale.getLanguage())) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.DATE_TIME_VALIDATION_FAILED, "");
+        if (!validateByLocal(currentLocale.getLanguage())) {
+            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.DATE_TIME_VALIDATION_FAILED, "");
         }
         if (currentLocale.getLanguage().equals("fa")) {
             //user entered a jalali date
@@ -111,7 +117,16 @@ public class CustomDateTime implements Comparable, Serializable {
         }
     }
 
-    private Boolean validateDate(String locale) {
+    /**
+     * این متد بررسی میکند که آیا متناسب با لوکال فعلی تاریخ کلاس معتبر است یا خیر
+     * @param locale  لوکال فعلی
+     * @return خروجی: نتیجه بررسی
+     * @throws UtilityException
+     */
+    private Boolean validateByLocal(String locale) throws UtilityException {
+        if (ObjectUtils.isEmpty(locale)) {
+            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "locale");
+        }
         boolean result = true;
         if (locale.equals("fa") && !CalendarTools.checkJalaliDateValidity(year, month, day)) {
             result = false;
@@ -121,6 +136,14 @@ public class CustomDateTime implements Comparable, Serializable {
         return result;
     }
 
+
+    /**
+     * بررسی میکند آیا کاستوم ورودی نال یا خالی هست
+     *
+     * @param customDateTime کاستوم ورودی
+     * @return خروجی: نتیجه بررسی
+     */
+    @NotNull
     public static Boolean isEmpty(CustomDateTime customDateTime) {
         if (ObjectUtils.isEmpty(customDateTime)) {
             return true;
@@ -131,10 +154,19 @@ public class CustomDateTime implements Comparable, Serializable {
         return false;
     }
 
+    /**
+     * این متد یک رشته جداکننده تاریخ از ورودی دریافت میکند و در صورت خالی نبودن کلاس ، رشته تاریخ-زمان متناسب با فیلدهای کلاس را با فرمت مورد نظر ورودی خروجی میدهد
+     *
+     * @param dateDelimiter رشته جدا کننده تاریخ
+     * @return خروجی: رشته تاریخ-زمان
+     */
     @NotNull
-    public String getFormattedString(@NotNull  String dateDelimiter){
+    public String getFormattedString(@NotNull String dateDelimiter) throws UtilityException{
+        if (ObjectUtils.isEmpty(dateDelimiter)) {
+            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "dateDelimiter");
+        }
         if (!CustomDateTime.isEmpty(this)) {
-            return year + dateDelimiter+ CalendarTools.fixOneDigit(month.toString()) + dateDelimiter + CalendarTools.fixOneDigit(day.toString()) + " " + CalendarTools.fixOneDigit(hour.toString()) + ":" + CalendarTools.fixOneDigit(minute.toString()) + ":" + CalendarTools.fixOneDigit(second.toString())  ;
+            return year + dateDelimiter + CalendarTools.fixOneDigit(month.toString()) + dateDelimiter + CalendarTools.fixOneDigit(day.toString()) + " " + CalendarTools.fixOneDigit(hour.toString()) + ":" + CalendarTools.fixOneDigit(minute.toString()) + ":" + CalendarTools.fixOneDigit(second.toString());
         } else {
             return "Empty";
         }
@@ -142,7 +174,11 @@ public class CustomDateTime implements Comparable, Serializable {
 
     @Override
     public String toString() {
-        return "CustomDateTime{" +this.getFormattedString("-")+ '}';
+        try {
+            return "CustomDateTime{" + this.getFormattedString("-") + '}';
+        } catch (UtilityException e) {
+            return "CustomDateTime{" + e.getMessage() + '}';
+        }
     }
 
     @Override

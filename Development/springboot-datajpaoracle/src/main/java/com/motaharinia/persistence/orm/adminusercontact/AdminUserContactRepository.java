@@ -1,4 +1,4 @@
-package com.motaharinia.persistence.orm.adminuser;
+package com.motaharinia.persistence.orm.adminusercontact;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -10,6 +10,6 @@ import th.co.geniustree.springdata.jpa.repository.JpaSpecificationExecutorWithPr
 //https://stackoverflow.com/questions/22171822/spring-data-jpa-specification-to-select-specific-columns
 
 @Repository
-public interface AdminUserRepository2 extends JpaRepository<AdminUser, Integer>, JpaSpecificationExecutorWithProjection<AdminUser> {
+public interface AdminUserContactRepository extends JpaRepository<AdminUserContact, Integer>, JpaSpecificationExecutorWithProjection<AdminUserContact> {
 
 }

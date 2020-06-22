@@ -14,34 +14,71 @@ import java.util.List;
  * از این کلاس مدل برای تنظیم کردن مشخصات نمایشی ستونهای خروجی داده استفاده میشود
  */
 public class SearchDataColModel implements Serializable {
-    //نام فیلد ستون
+    /**
+     * نام فیلد ستون
+     */
     private String name;
-    //اندیس و ترتیب قرارگیری ستون
+    /**
+     * اندیس و ترتیب قرارگیری ستون
+     */
     private String index;
-    //جهت نمایش افقی
+    /**
+     * جهت نمایش افقی
+     */
     private SearchDataColAlignEnum align = SearchDataColAlignEnum.CENTER;
-    //عرض ستون
+    /**
+     * عرض ستون
+     */
     private Integer width;
-    //نوع مرتب سازی ستون که عددی یا متنی است
+    /**
+     * نوع مرتب سازی ستون که عددی یا متنی است
+     */
     private SearchDataColSortTypeEnum sortType;
-    //نوع جستجوی ستون
+    /**
+     * نوع جستجوی ستون که متنی یا انتخابی است
+     */
     @JsonProperty("stype")
     private SearchDataColSearchTypeEnum searchType;
-    //مدل آپشنهای جستجوی پیشرفته گریدهای بک پنل برای هر ستون
+    /**
+     * لیستی از آپشنهای جستجوی پیشرفته قابل استفاده در این ستون که بیشتر در جستجوی پیشرفته استفاده میشود
+     */
     @JsonProperty(value = "searchoptions")
     private List<SearchFilterOperationEnum> searchFilterOperationList;
-    //فرمت کننده ستون
-    //مثلا میخواهیم برای مقادیر صفر در ستون کلمه خیر بیاریم و برای مقادیر یک در ستون کلمه بلی بیاریم
+    /**
+     * رشته فرمت کننده ستون
+     * مثلا میخواهیم برای مقادیر صفر در ستون کلمه خیر بیاریم و برای مقادیر یک در ستون کلمه بلی بیاریم
+     */
     private String formatter;
-    //جستجوی پیشرفته دارد یا خیر
+    /**
+     * جستجوی پیشرفته دارد یا خیر
+     */
     @JsonProperty("search")
     private Boolean searchable;
-    //ستون قابل مرتب سازی داده هست یا خیر
+    /**
+     * قابل مرتب سازی داده هست یا خیر
+     */
     private Boolean sortable;
 
+    /**
+     * متد سازنده پیش فرض
+     */
     public SearchDataColModel() {
     }
 
+    /**
+     * متد سازنده
+     *
+     * @param name                      نام فیلد ستون
+     * @param index                     اندیس و ترتیب قرارگیری ستون
+     * @param align                     جهت نمایش افقی
+     * @param width                     عرض ستون
+     * @param sortType                  نوع مرتب سازی ستون که عددی یا متنی است
+     * @param searchType                نوع جستجوی ستون که متنی یا انتخابی است
+     * @param searchFilterOperationList لیستی از آپشنهای جستجوی پیشرفته قابل استفاده در این ستون که بیشتر در جستجوی پیشرفته استفاده میشود
+     * @param formatter                 رشته فرمت کننده ستون
+     * @param searchable                جستجوی پیشرفته دارد یا خیر
+     * @param sortable                  قابل مرتب سازی داده هست یا خیر
+     */
     public SearchDataColModel(String name, String index, SearchDataColAlignEnum align, Integer width, SearchDataColSortTypeEnum sortType, SearchDataColSearchTypeEnum searchType, List<SearchFilterOperationEnum> searchFilterOperationList, String formatter, Boolean searchable, Boolean sortable) {
         this.name = name;
         this.index = index;
