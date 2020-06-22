@@ -62,6 +62,7 @@ public class AdminUserControllerTest {
             adminUserModel.setLastName("Motaharinia");
             adminUserModel.setPassword("123456789");
             adminUserModel.setUsername("eng.motahari@gmail.com");
+            adminUserModel.setDefaultAdminUserContact_address("ُShahrak Gharb");
 
             adminUserModel = restTemplate.postForObject(uri, adminUserModel, AdminUserModel.class, variableHashMap);
             System.out.println("create userModel.toString():" + adminUserModel.toString());

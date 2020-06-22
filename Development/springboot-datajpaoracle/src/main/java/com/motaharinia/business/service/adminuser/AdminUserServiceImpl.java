@@ -121,6 +121,7 @@ public class AdminUserServiceImpl implements AdminUserService {
     public SearchDataModel readGrid(SearchFilterModel searchFilterModel) throws UtilityException {
         adminUserSpecification = (AdminUserSpecification) searchFilterModel.makeSpecification(adminUserSpecification);
         Page<SearchRowViewAdminUserBrief> viewPage = adminUserRepository.findAll(adminUserSpecification, SearchRowViewAdminUserBrief.class, searchFilterModel.makePageable());
+        viewPage.getContent().stream().forEach(item-> System.out.println(item.getDefaultAdminUserContact()));
         SearchDataModel searchDataModel = new SearchDataModel(viewPage, searchFilterModel, "");
         return searchDataModel;
     }
