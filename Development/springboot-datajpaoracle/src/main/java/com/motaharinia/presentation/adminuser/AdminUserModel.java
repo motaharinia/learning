@@ -1,25 +1,69 @@
 package com.motaharinia.presentation.adminuser;
 
-public class AdminUserModel {
-    private Integer  id;
+import com.motaharinia.presentation.adminuserskill.AdminUserSkillModel;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class AdminUserModel {
+    /**
+     * شناسه
+     */
+    private Integer id;
+
+    /**
+     * نام کاربری
+     */
     private String username;
 
+    /**
+     * رمز عبور
+     */
     private String password;
 
+    /**
+     * نام
+     */
     private String firstName;
 
+    /**
+     * نام خانوادگی
+     */
     private String lastName;
 
+    /**
+     * نشانی اطلاعات تماس پیش فرض
+     */
     private String defaultAdminUserContact_address;
+
+    /**
+     * لیست مهارتها
+     */
+    private List<AdminUserSkillModel> skillList = new ArrayList<>();
+
+
+    @Override
+    public String toString() {
+        return "AdminUserModel{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", defaultAdminUserContact_address='" + defaultAdminUserContact_address + '\'' +
+                ", skillList=[" + skillList.stream().map(item->item.toString()).collect(Collectors.joining(",")) + "]" +
+                '}';
+    }
+
 
     //getter-setter:
 
-    public Integer  getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Integer  id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -63,15 +107,12 @@ public class AdminUserModel {
         this.defaultAdminUserContact_address = defaultAdminUserContact_address;
     }
 
-    @Override
-    public String toString() {
-        return "AdminUserModel{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", defaultAdminUserContact_address='" + defaultAdminUserContact_address + '\'' +
-                '}';
+
+    public List<AdminUserSkillModel> getSkillList() {
+        return skillList;
+    }
+
+    public void setSkillList(List<AdminUserSkillModel> skillList) {
+        this.skillList = skillList;
     }
 }

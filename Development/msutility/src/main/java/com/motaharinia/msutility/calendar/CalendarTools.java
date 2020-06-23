@@ -120,10 +120,10 @@ public interface CalendarTools {
     }
 
     /**
-     * این متد تاریخ و ساعت فعلی سیستم را با توجه به رشته جدا کننده تاریخ ورودی به صورت رشته تاریخ میلادی و ساعت خروجی میدهد
+     * این متد تاریخ و ساعت فعلی سیستم را با توجه به رشته جدا کننده تاریخ ورودی به صورت رشته تاریخ جلالی و ساعت خروجی میدهد
      *
      * @param dateDelimiter رشته جدا کننده تاریخ
-     * @return خروجی: رشته تاریخ میلادی و ساعت فعلی
+     * @return خروجی: رشته تاریخ جلالی و ساعت فعلی
      */
     @NotNull
     static String getCurrentJalaliDateTimeString(@NotNull String dateDelimiter) throws UtilityException {

@@ -1,7 +1,8 @@
 package com.motaharinia.persistence.orm.adminuser;
 
 
-import com.motaharinia.msutility.jparepository.GenericSpecification;
+
+import com.motaharinia.persistence.orm.jparepository.GenericSpecification;
 import org.springframework.stereotype.Component;
 
 /**

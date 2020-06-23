@@ -1,6 +1,7 @@
 package com.motaharinia.business.service.adminuser;
 
 
+import com.motaharinia.business.service.adminuserskill.AdminUserSkillService;
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.SearchFilterModel;
@@ -9,7 +10,9 @@ import com.motaharinia.persistence.orm.adminuser.AdminUserRepository;
 import com.motaharinia.persistence.orm.adminuser.AdminUserSpecification;
 import com.motaharinia.persistence.orm.adminusercontact.AdminUserContact;
 import com.motaharinia.persistence.orm.adminusercontact.AdminUserContactRepository;
+import com.motaharinia.persistence.orm.adminuserskill.AdminUserSkill;
 import com.motaharinia.presentation.adminuser.AdminUserModel;
+import com.motaharinia.presentation.adminuserskill.AdminUserSkillModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,6 +40,11 @@ public class AdminUserServiceImpl implements AdminUserService {
      * ریپازیتوری اطلاعات تماس ادمین
      */
     private AdminUserContactRepository adminUserContactRepository;
+
+    /**
+     * سرویس مهارتها
+     */
+    private AdminUserSkillService adminUserSkillService;
     /**
      * مشخصات جستجوی ادمین
      */
@@ -56,9 +64,10 @@ public class AdminUserServiceImpl implements AdminUserService {
      * متد سازنده
      */
     @Autowired
-    public AdminUserServiceImpl(AdminUserRepository adminUserRepository, AdminUserContactRepository adminUserContactRepository, AdminUserSpecification adminUserSpecification, ModelMapper modelMapper) {
+    public AdminUserServiceImpl(AdminUserRepository adminUserRepository, AdminUserContactRepository adminUserContactRepository, AdminUserSkillService adminUserSkillService, AdminUserSpecification adminUserSpecification, ModelMapper modelMapper) {
         this.adminUserRepository = adminUserRepository;
         this.adminUserContactRepository = adminUserContactRepository;
+        this.adminUserSkillService = adminUserSkillService;
         this.modelMapper = modelMapper;
         this.adminUserSpecification = adminUserSpecification;
     }
@@ -76,6 +85,12 @@ public class AdminUserServiceImpl implements AdminUserService {
         AdminUserContact adminUserContact = new AdminUserContact();
         adminUserContact.setAddress(adminUserModel.getDefaultAdminUserContact_address());
         adminUserContact = adminUserContactRepository.save(adminUserContact);
+
+        //ثبت مهارتهای ادمین
+        adminUserModel.getSkillList().stream().forEach(item -> {
+            adminUserSkillService.create(new AdminUserSkillModel(null, item.getTitle()));
+        });
+
         //ثبت ادمین
         AdminUser adminUser = new AdminUser();
         adminUser.setFirstName(adminUserModel.getFirstName());
@@ -102,10 +117,15 @@ public class AdminUserServiceImpl implements AdminUserService {
         adminUserModel.setUsername(adminUser.getUsername());
         adminUserModel.setFirstName(adminUser.getFirstName());
         adminUserModel.setLastName(adminUser.getLastName());
+        adminUserModel.setPassword(adminUser.getPassword());
         if (!ObjectUtils.isEmpty(adminUser.getDefaultAdminUserContact())) {
-            adminUserModel.setPassword(adminUser.getDefaultAdminUserContact().getAddress());
+            adminUserModel.setDefaultAdminUserContact_address(adminUser.getDefaultAdminUserContact().getAddress());
         }
-        adminUserModel.setDefaultAdminUserContact_address(adminUser.getPassword());
+        if (!ObjectUtils.isEmpty(adminUser.getSkillCollection())) {
+            adminUser.getSkillCollection().stream().forEach(item -> {
+                adminUserModel.getSkillList().add(new AdminUserSkillModel(item.getId(), item.getTitle()));
+            });
+        }
 //    UserModel  userModel= (UserModel) SerializationUtils.clone(adminuser);
         return adminUserModel;
     }
@@ -119,9 +139,16 @@ public class AdminUserServiceImpl implements AdminUserService {
      */
     @Override
     public SearchDataModel readGrid(SearchFilterModel searchFilterModel) throws UtilityException {
-        adminUserSpecification = (AdminUserSpecification) searchFilterModel.makeSpecification(adminUserSpecification);
+//        adminUserSpecification = (AdminUserSpecification) searchFilterModel.makeSpecification(adminUserSpecification);
+        if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
+            searchFilterModel.getRestrictionList().stream().forEach((item) -> {
+                adminUserSpecification.add(item);
+            });
+        }
+
+
         Page<SearchRowViewAdminUserBrief> viewPage = adminUserRepository.findAll(adminUserSpecification, SearchRowViewAdminUserBrief.class, searchFilterModel.makePageable());
-        viewPage.getContent().stream().forEach(item-> System.out.println(item.getDefaultAdminUserContact()));
+        viewPage.getContent().stream().forEach(item -> System.out.println(item.getDefaultAdminUserContact()));
         SearchDataModel searchDataModel = new SearchDataModel(viewPage, searchFilterModel, "");
         return searchDataModel;
     }
@@ -139,14 +166,25 @@ public class AdminUserServiceImpl implements AdminUserService {
         adminUser.setLastName(adminUserModel.getLastName());
         adminUser.setPassword(adminUserModel.getPassword());
         adminUser.setUsername(adminUserModel.getUsername());
-        if(ObjectUtils.isEmpty(adminUser.getDefaultAdminUserContact())){
+        if (ObjectUtils.isEmpty(adminUser.getDefaultAdminUserContact())) {
             AdminUserContact adminUserContact = new AdminUserContact();
             adminUserContact.setAddress(adminUserModel.getDefaultAdminUserContact_address());
             adminUserContact = adminUserContactRepository.save(adminUserContact);
             adminUser.setDefaultAdminUserContact(adminUserContact);
-        }else{
+        } else {
             adminUser.getDefaultAdminUserContact().setAddress(adminUserModel.getDefaultAdminUserContact_address());
         }
+
+        //ویرایش مهارتهای ادمین
+//        adminUserModel.getSkillList().stream().forEach(item -> {
+//            if(ObjectUtils.isEmpty(item.getId())){
+//                AdminUserSkillModel adminUserSkillModel=    new AdminUserSkillModel(null, item.getTitle());
+//                adminUserSkillModel= adminUserSkillService.create(adminUserSkillModel);
+//                adminUser.getSkillCollection().add(adminUserSkillService.readById(adminUserSkillModel.getId()))
+//            }else{
+//                AdminUserSkill = adminUserSkillService.readById(item.getId());
+//            }
+//        });
 
         adminUserRepository.save(adminUser);
         return adminUserModel;

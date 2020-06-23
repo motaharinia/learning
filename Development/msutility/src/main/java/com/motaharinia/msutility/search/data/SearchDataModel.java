@@ -163,6 +163,8 @@ public class SearchDataModel implements Serializable {
         if (indexObjectHashMap.equals(null)) {
             throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "indexObjectHashMap");
         }
+
+
         Set<Method> getterMethodSet = ReflectionUtils.getAllMethods(clazz, ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
         getterMethodSet.stream().forEach(getterMethod -> {
             try {
