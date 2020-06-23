@@ -6,6 +6,8 @@ import com.motaharinia.msutility.search.SearchRowView;
 import com.motaharinia.msutility.search.annotation.SearchDataColumn;
 import com.motaharinia.persistence.orm.adminuser.AdminUser;
 
+import java.util.Date;
+
 @JsonDeserialize(as= AdminUser.class)
 public interface SearchRowViewAdminUserBrief extends SearchRowView {
 
@@ -20,12 +22,14 @@ public interface SearchRowViewAdminUserBrief extends SearchRowView {
     @SearchDataColumn(index = 3,name = "lastName")
     String getLastName();
 
+    @SearchDataColumn(index = 4,name = "lastName")
+    Date getDateOfBirth();
 
     @SearchDataColumn(index = -1,name = "defaultAdminUserContact")
     DefaultAdminUserContact getDefaultAdminUserContact();
 
     interface DefaultAdminUserContact {
-        @SearchDataColumn(index = 4,name = "address")
+        @SearchDataColumn(index = 5,name = "address")
         String getAddress();
     }
 

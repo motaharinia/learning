@@ -2,6 +2,7 @@ package com.motaharinia.presentation.adminuser;
 
 
 import com.motaharinia.business.service.adminuser.SearchRowViewAdminUserBrief;
+import com.motaharinia.msutility.customfield.CustomDate;
 import com.motaharinia.msutility.json.CustomObjectMapper;
 import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.*;
@@ -47,7 +48,7 @@ public class AdminUserControllerTest {
      */
     @BeforeEach
     void initUseCase() {
-
+        Locale.setDefault(new Locale("fa"));
     }
 
     @Test
@@ -58,12 +59,17 @@ public class AdminUserControllerTest {
             Map<String, String> variableHashMap = new HashMap<String, String>();
 
              random=StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL,5,false);
+            CustomDate dateOfBirth=new CustomDate();
+            dateOfBirth.setYear(1399);
+            dateOfBirth.setMonth(4);
+            dateOfBirth.setDay(3);
 
             AdminUserModel adminUserModel = new AdminUserModel();
             adminUserModel.setFirstName("Mostafa " + random);
             adminUserModel.setLastName("Motaharinia " + random);
             adminUserModel.setPassword("123456789");
             adminUserModel.setUsername("eng.motahari_"+random+"@gmail.com");
+            adminUserModel.setDateOfBirth(dateOfBirth);
             adminUserModel.setDefaultAdminUserContact_address("Shahrak Gharb " + random);
             adminUserModel.setSkillList(Arrays.asList(new AdminUserSkillModel[]{new AdminUserSkillModel(null,"skill-" + random),new AdminUserSkillModel(null,"skill-" + StringTools.generateRandomString(RandomGenerationTypeEnum.NUMBER,5,false))}));
 

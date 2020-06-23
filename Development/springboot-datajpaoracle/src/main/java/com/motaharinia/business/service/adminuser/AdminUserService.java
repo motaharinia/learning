@@ -15,7 +15,7 @@ public interface AdminUserService {
      * @param adminUserModel مدل ثبت
      * @return خروجی: مدل ثبت حاوی شناسه
      */
-    AdminUserModel create(AdminUserModel adminUserModel);
+    AdminUserModel create(AdminUserModel adminUserModel) throws UtilityException;
 
     /**
      * متد جستجوی با شناسه
@@ -23,7 +23,7 @@ public interface AdminUserService {
      * @param id شناسه
      * @return خروجی: مدل جستجو شده
      */
-    AdminUserModel readById(Integer id);
+    AdminUserModel readById(Integer id) throws UtilityException;
 
     /**
      * متد جستجو با مدل فیلتر جستجو
@@ -40,7 +40,7 @@ public interface AdminUserService {
      * @param adminUserModel مدل ویرایش
      * @return خروجی: مدل ویرایش شده
      */
-    AdminUserModel update(AdminUserModel adminUserModel);
+    AdminUserModel update(AdminUserModel adminUserModel) throws UtilityException;
 
     /**
      * متد حذف با شناسه
@@ -48,6 +48,6 @@ public interface AdminUserService {
      * @param id شناسه
      * @return خروجی: مدل حذف شده
      */
-    AdminUserModel delete(Integer id);
+    AdminUserModel delete(Integer id) throws UtilityException;
 
 }

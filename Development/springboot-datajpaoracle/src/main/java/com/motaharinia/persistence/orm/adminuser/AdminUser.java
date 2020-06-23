@@ -2,11 +2,13 @@ package com.motaharinia.persistence.orm.adminuser;
 
 
 import com.motaharinia.msutility.entity.GenericEntity;
+import com.motaharinia.msutility.entity.OracleUtility;
 import com.motaharinia.persistence.orm.adminusercontact.AdminUserContact;
 import com.motaharinia.persistence.orm.adminuserskill.AdminUserSkill;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -45,6 +47,13 @@ public class AdminUser extends GenericEntity implements Serializable {
      */
     @Column(name = "last_name")
     private String lastName;
+
+
+    /**
+     *تاریخ تولد
+     */
+    @Column(name = "date_of_birth", columnDefinition = OracleUtility.COLUMN_DEFINITION_DATE)
+    private Date dateOfBirth;
 
     /**
      * اطلاعات تماس پیش فرض
@@ -118,5 +127,13 @@ public class AdminUser extends GenericEntity implements Serializable {
 
     public void setSkillSet(Set<AdminUserSkill> skillCollection) {
         this.skillSet = skillCollection;
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(Date dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 }

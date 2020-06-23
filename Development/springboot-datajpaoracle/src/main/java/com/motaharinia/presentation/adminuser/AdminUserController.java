@@ -31,7 +31,7 @@ public class AdminUserController {
      * @return خروجی: مدل ثبت حاوی شناسه
      */
     @PostMapping("/adminUser")
-    public AdminUserModel create(@RequestBody @Validated AdminUserModel adminUserModel) {
+    public AdminUserModel create(@RequestBody @Validated AdminUserModel adminUserModel) throws UtilityException {
         return adminUserService.create(adminUserModel);
     }
 
@@ -42,7 +42,7 @@ public class AdminUserController {
      * @return خروجی: مدل جستجو شده
      */
     @GetMapping("/adminUser/{id}")
-    public AdminUserModel readById(@PathVariable Integer id) {
+    public AdminUserModel readById(@PathVariable Integer id) throws UtilityException {
         return adminUserService.readById(id);
     }
 
@@ -68,7 +68,7 @@ public class AdminUserController {
      * @return خروجی: مدل ویرایش شده
      */
     @PutMapping("/adminUser")
-    public AdminUserModel update(@RequestBody @Validated AdminUserModel adminUserModel) {
+    public AdminUserModel update(@RequestBody @Validated AdminUserModel adminUserModel) throws UtilityException {
         return adminUserService.update(adminUserModel);
     }
 
@@ -79,7 +79,7 @@ public class AdminUserController {
      * @return خروجی: مدل حذف شده
      */
     @DeleteMapping("/adminUser/{id}")
-    public AdminUserModel delete(@PathVariable Integer id) {
+    public AdminUserModel delete(@PathVariable Integer id) throws UtilityException {
         return adminUserService.delete(id);
     }
 

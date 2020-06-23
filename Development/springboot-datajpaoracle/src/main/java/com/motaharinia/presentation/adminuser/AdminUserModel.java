@@ -1,5 +1,6 @@
 package com.motaharinia.presentation.adminuser;
 
+import com.motaharinia.msutility.customfield.CustomDate;
 import com.motaharinia.presentation.adminuserskill.AdminUserSkillModel;
 
 import java.util.ArrayList;
@@ -33,6 +34,11 @@ public class AdminUserModel {
     private String lastName;
 
     /**
+     * تاریخ تولد
+     */
+    private CustomDate dateOfBirth;
+
+    /**
      * نشانی اطلاعات تماس پیش فرض
      */
     private String defaultAdminUserContact_address;
@@ -52,7 +58,7 @@ public class AdminUserModel {
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", defaultAdminUserContact_address='" + defaultAdminUserContact_address + '\'' +
-                ", skillList=[" + skillList.stream().map(item->item.toString()).collect(Collectors.joining(",")) + "]" +
+                ", skillList=[" + skillList.stream().map(item -> item.toString()).collect(Collectors.joining(",")) + "]" +
                 '}';
     }
 
@@ -114,5 +120,13 @@ public class AdminUserModel {
 
     public void setSkillList(List<AdminUserSkillModel> skillList) {
         this.skillList = skillList;
+    }
+
+    public CustomDate getDateOfBirth() {
+        return dateOfBirth;
+    }
+
+    public void setDateOfBirth(CustomDate dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 }
