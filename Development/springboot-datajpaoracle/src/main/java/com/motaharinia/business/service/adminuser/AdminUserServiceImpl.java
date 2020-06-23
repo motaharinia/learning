@@ -10,7 +10,6 @@ import com.motaharinia.persistence.orm.adminuser.AdminUserRepository;
 import com.motaharinia.persistence.orm.adminuser.AdminUserSpecification;
 import com.motaharinia.persistence.orm.adminusercontact.AdminUserContact;
 import com.motaharinia.persistence.orm.adminusercontact.AdminUserContactRepository;
-import com.motaharinia.persistence.orm.adminuserskill.AdminUserSkill;
 import com.motaharinia.presentation.adminuser.AdminUserModel;
 import com.motaharinia.presentation.adminuserskill.AdminUserSkillModel;
 import org.modelmapper.ModelMapper;
@@ -86,17 +85,15 @@ public class AdminUserServiceImpl implements AdminUserService {
         adminUserContact.setAddress(adminUserModel.getDefaultAdminUserContact_address());
         adminUserContact = adminUserContactRepository.save(adminUserContact);
 
-        //ثبت مهارتهای ادمین
-        adminUserModel.getSkillList().stream().forEach(item -> {
-            adminUserSkillService.create(new AdminUserSkillModel(null, item.getTitle()));
-        });
-
         //ثبت ادمین
         AdminUser adminUser = new AdminUser();
         adminUser.setFirstName(adminUserModel.getFirstName());
         adminUser.setLastName(adminUserModel.getLastName());
         adminUser.setPassword(adminUserModel.getPassword());
         adminUser.setUsername(adminUserModel.getUsername());
+        //ثبت مهارتهای ادمین
+        adminUser=  adminUserSkillService.createByAdminUser(adminUser, adminUserModel.getSkillList());
+
         adminUser = adminUserRepository.save(adminUser);
         adminUser.setDefaultAdminUserContact(adminUserContact);
         adminUserModel.setId(adminUser.getId());
@@ -121,8 +118,8 @@ public class AdminUserServiceImpl implements AdminUserService {
         if (!ObjectUtils.isEmpty(adminUser.getDefaultAdminUserContact())) {
             adminUserModel.setDefaultAdminUserContact_address(adminUser.getDefaultAdminUserContact().getAddress());
         }
-        if (!ObjectUtils.isEmpty(adminUser.getSkillCollection())) {
-            adminUser.getSkillCollection().stream().forEach(item -> {
+        if (!ObjectUtils.isEmpty(adminUser.getSkillSet())) {
+            adminUser.getSkillSet().stream().forEach(item -> {
                 adminUserModel.getSkillList().add(new AdminUserSkillModel(item.getId(), item.getTitle()));
             });
         }
@@ -176,16 +173,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         }
 
         //ویرایش مهارتهای ادمین
-//        adminUserModel.getSkillList().stream().forEach(item -> {
-//            if(ObjectUtils.isEmpty(item.getId())){
-//                AdminUserSkillModel adminUserSkillModel=    new AdminUserSkillModel(null, item.getTitle());
-//                adminUserSkillModel= adminUserSkillService.create(adminUserSkillModel);
-//                adminUser.getSkillCollection().add(adminUserSkillService.readById(adminUserSkillModel.getId()))
-//            }else{
-//                AdminUserSkill = adminUserSkillService.readById(item.getId());
-//            }
-//        });
-
+        adminUser=  adminUserSkillService.updateByAdminUser(adminUser, adminUserModel.getSkillList());
         adminUserRepository.save(adminUser);
         return adminUserModel;
     }
@@ -199,7 +187,11 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Override
     public AdminUserModel delete(Integer id) {
         AdminUserModel adminUserModel = this.readById(id);
-        adminUserRepository.deleteById(id);
+        AdminUser adminUser = adminUserRepository.findById(adminUserModel.getId()).get();
+        //حذف مهارتهای ادمین
+        adminUser=  adminUserSkillService.deleteByAdminUser(adminUser);
+        adminUserRepository.save(adminUser);
+        adminUserRepository.delete(adminUser);
         return adminUserModel;
     }
 

@@ -1,18 +1,22 @@
 package com.motaharinia.business.service.adminuserskill;
 
+import com.motaharinia.persistence.orm.adminuser.AdminUser;
 import com.motaharinia.presentation.adminuserskill.AdminUserSkillModel;
+
+import java.util.List;
 
 /**
  * کلاس سرویس مدیریت مهارتها
  */
 public interface AdminUserSkillService {
     /**
-     * متد ثبت
+     * متد ثبت مهارت برای ادمین
      *
-     * @param adminUserSkillModel مدل ثبت
-     * @return خروجی: مدل ثبت حاوی شناسه
+     * @param adminUser انتیتی ادمین
+     * @param adminUserSkillModelList لیست مدلهای ثبت
+     * @return خروجی: انتیتی ادمین تکمیل شده
      */
-    AdminUserSkillModel create(AdminUserSkillModel adminUserSkillModel);
+    AdminUser createByAdminUser(AdminUser adminUser, List<AdminUserSkillModel> adminUserSkillModelList);
 
     /**
      * متد جستجوی با شناسه
@@ -24,11 +28,21 @@ public interface AdminUserSkillService {
 
 
     /**
+     * متد ویرایش مهارت برای ادمین
+     *
+     * @param adminUser انتیتی ادمین
+     * @param adminUserSkillModelList لیست مدلهای ویرایش
+     * @return خروجی: انتیتی ادمین تکمیل شده
+     */
+    AdminUser updateByAdminUser(AdminUser adminUser, List<AdminUserSkillModel> adminUserSkillModelList);
+
+
+    /**
      * متد حذف با شناسه
      *
      * @param id شناسه
      * @return خروجی: مدل حذف شده
      */
-    AdminUserSkillModel delete(Integer id);
+    AdminUser deleteByAdminUser(AdminUser adminUser) ;
 
 }

@@ -61,7 +61,7 @@ public class AdminUserControllerTest {
             adminUserModel.setLastName("Motaharinia");
             adminUserModel.setPassword("123456789");
             adminUserModel.setUsername("eng.motahari@gmail.com");
-            adminUserModel.setDefaultAdminUserContact_address("ُShahrak Gharb");
+            adminUserModel.setDefaultAdminUserContact_address("Shahrak Gharb");
             adminUserModel.setSkillList(Arrays.asList(new AdminUserSkillModel[]{new AdminUserSkillModel(null,"skill-" + StringTools.generateRandomString(RandomGenerationTypeEnum.NUMBER,5,false)),new AdminUserSkillModel(null,"skill-" + StringTools.generateRandomString(RandomGenerationTypeEnum.NUMBER,5,false))}));
 
             adminUserModel = restTemplate.postForObject(uri, adminUserModel, AdminUserModel.class, variableHashMap);
@@ -94,6 +94,7 @@ public class AdminUserControllerTest {
             List<SearchFilterRestrictionModel> searchFilterRestrictionModelList = new ArrayList<>();
             searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH, "mostafa"));
             searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("defaultAdminUserContact.address", SearchFilterOperationEnum.MATCH, "Shahrak Gharb"));
+//            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("skillSet", SearchFilterOperationEnum.EQUAL, "id=1"));
             List<SearchFilterSortModel> searchFilterSortModelList = new ArrayList<>();
             searchFilterSortModelList.add(new SearchFilterSortModel("firstName", SearchFilterSortTypeEnum.ASC));
             searchFilterSortModelList.add(new SearchFilterSortModel("lastName", SearchFilterSortTypeEnum.DSC));

@@ -29,7 +29,7 @@ public class AdminUserSkill extends GenericEntity implements Serializable {
     /**
      * ادمین های متصل به این مهارت
      */
-    @ManyToMany(mappedBy = "skillCollection", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "skillSet", fetch = FetchType.LAZY)
     private Collection<AdminUser> userCollection;
 
     @Override

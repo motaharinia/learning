@@ -7,7 +7,8 @@ import com.motaharinia.persistence.orm.adminuserskill.AdminUserSkill;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "admin_user", uniqueConstraints = {
@@ -60,7 +61,7 @@ public class AdminUser extends GenericEntity implements Serializable {
             @JoinColumn(name = "admin_user_id", referencedColumnName = "id")}, inverseJoinColumns = {
             @JoinColumn(name = "admin_user_skill_id", referencedColumnName = "id")})
     @ManyToMany(fetch = FetchType.LAZY)
-    private Collection<AdminUserSkill> skillCollection;
+    private Set<AdminUserSkill> skillSet=new HashSet<>();
 
     //getter-setter:
     public Integer getId() {
@@ -111,11 +112,11 @@ public class AdminUser extends GenericEntity implements Serializable {
         this.defaultAdminUserContact = defaultAdminUserContact;
     }
 
-    public Collection<AdminUserSkill> getSkillCollection() {
-        return skillCollection;
+    public Set<AdminUserSkill> getSkillSet() {
+        return skillSet;
     }
 
-    public void setSkillCollection(Collection<AdminUserSkill> skillCollection) {
-        this.skillCollection = skillCollection;
+    public void setSkillSet(Set<AdminUserSkill> skillCollection) {
+        this.skillSet = skillCollection;
     }
 }
