@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.util.ObjectUtils;
 
 import java.util.*;
 
@@ -100,6 +102,9 @@ public class AdminUserControllerTest {
         try {
             String uri = "http://localhost:" + port + "/adminUser";
 
+            if(ObjectUtils.isEmpty(random)){
+                random="skill";
+            }
             List<SearchFilterRestrictionModel> searchFilterRestrictionModelList = new ArrayList<>();
             searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH, "mostafa"));
             searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("defaultAdminUserContact.address", SearchFilterOperationEnum.MATCH, "Shahrak Gharb"));
@@ -117,7 +122,9 @@ public class AdminUserControllerTest {
             CustomObjectMapper customObjectMapper = new CustomObjectMapper();
             uri += "?searchFilterModel={searchFilterModel}";
 
-            SearchDataModel searchDataModel = restTemplate.getForObject(uri, SearchDataModel.class, customObjectMapper.writeValueAsString(searchFilterModel));
+//            SearchDataModel searchDataModel = restTemplate.getForObject(uri, SearchDataModel.class, customObjectMapper.writeValueAsString(searchFilterModel));
+            ResponseEntity<SearchDataModel> responseEntity  = restTemplate.getForEntity(uri, SearchDataModel.class, customObjectMapper.writeValueAsString(searchFilterModel));
+            SearchDataModel searchDataModel = responseEntity.getBody();
             System.out.println("searchDataModel:" + searchDataModel.toString());
             assertThat(searchDataModel.getPage()).isEqualTo(searchFilterModel.getPage());
         } catch (Exception ex) {

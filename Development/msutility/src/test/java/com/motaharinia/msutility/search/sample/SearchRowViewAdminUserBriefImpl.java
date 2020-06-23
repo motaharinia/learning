@@ -1,5 +1,7 @@
 package com.motaharinia.msutility.search.sample;
 
+import java.util.Date;
+
 /**
  * User: https://github.com/motaharinia<br>
  * Date: 2020-06-14<br>
@@ -32,6 +34,11 @@ public class SearchRowViewAdminUserBriefImpl implements SearchRowViewAdminUserBr
     @Override
     public String getLastName() {
         return "Motaharinia" + this.id;
+    }
+
+    @Override
+    public Date getDateOfBirth() {
+        return new Date();
     }
 
     @Override

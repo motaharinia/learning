@@ -33,6 +33,7 @@ public class JsonSerializerString extends JsonSerializer<String> {
 
     @Override
     public void serialize(String objString, JsonGenerator jsonGen, SerializerProvider provider) throws IOException {
+        System.out.println("JsonSerializerString.serialize: objString:" + objString );
         if (ObjectUtils.isEmpty(objString) ) {
             objString = "";
         } else {

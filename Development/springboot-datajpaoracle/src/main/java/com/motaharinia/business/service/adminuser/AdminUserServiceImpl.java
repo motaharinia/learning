@@ -140,12 +140,12 @@ public class AdminUserServiceImpl implements AdminUserService {
      */
     @Override
     public SearchDataModel readGrid(SearchFilterModel searchFilterModel) throws UtilityException {
-//        adminUserSpecification = (AdminUserSpecification) searchFilterModel.makeSpecification(adminUserSpecification);
-        if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
-            searchFilterModel.getRestrictionList().stream().forEach((item) -> {
-                adminUserSpecification.add(item);
-            });
-        }
+        adminUserSpecification = (AdminUserSpecification) searchFilterModel.makeSpecification(adminUserSpecification);
+//        if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
+//            searchFilterModel.getRestrictionList().stream().forEach((item) -> {
+//                adminUserSpecification.add(item);
+//            });
+//        }
 
 
         Page<SearchRowViewAdminUserBrief> viewPage = adminUserRepository.findAll(adminUserSpecification, SearchRowViewAdminUserBrief.class, searchFilterModel.makePageable());

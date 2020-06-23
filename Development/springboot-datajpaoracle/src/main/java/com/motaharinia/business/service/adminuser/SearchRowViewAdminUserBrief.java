@@ -8,6 +8,7 @@ import com.motaharinia.persistence.orm.adminuser.AdminUser;
 
 import java.util.Date;
 
+
 @JsonDeserialize(as= AdminUser.class)
 public interface SearchRowViewAdminUserBrief extends SearchRowView {
 
@@ -22,7 +23,7 @@ public interface SearchRowViewAdminUserBrief extends SearchRowView {
     @SearchDataColumn(index = 3,name = "lastName")
     String getLastName();
 
-    @SearchDataColumn(index = 4,name = "lastName")
+    @SearchDataColumn(index = 4,name = "dateOfBirth")
     Date getDateOfBirth();
 
     @SearchDataColumn(index = -1,name = "defaultAdminUserContact")
@@ -35,6 +36,6 @@ public interface SearchRowViewAdminUserBrief extends SearchRowView {
 
     @Override
     default String toOut() {
-        return this.getId() + "," + this.getFirstName() + "," + this.getLastName()+ "," + this.getDefaultAdminUserContact().getAddress();
+        return this.getId() + "," + this.getFirstName() + "," + this.getLastName()+ "," + getDateOfBirth()+ "," +  this.getDefaultAdminUserContact().getAddress();
     }
 }

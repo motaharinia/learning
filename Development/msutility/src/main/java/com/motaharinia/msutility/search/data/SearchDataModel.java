@@ -128,7 +128,7 @@ public class SearchDataModel implements Serializable {
             }
         });
         this.searchDataColModelList = searchDataColModelList;
-        this.searchDataColModelList.stream().forEach(item -> System.out.println(item.toString()));
+        this.searchDataColModelList.stream().forEach(item ->  System.out.println("SearchDataModel.Constructor searchDataColModelList.stream():"+item.toString()));
 
         //searchDataRowModelList:
         List<SearchDataRowModel> searchDataRowModelList = new ArrayList<>();
@@ -140,7 +140,7 @@ public class SearchDataModel implements Serializable {
             }
         });
         this.searchDataRowModelList = searchDataRowModelList;
-        this.searchDataRowModelList.stream().forEach(item -> System.out.println(item.toString()));
+        this.searchDataRowModelList.stream().forEach(item ->  System.out.println("SearchDataModel.Constructor searchDataRowModelList.stream():"+item.toString()));
     }
 
 
@@ -169,7 +169,7 @@ public class SearchDataModel implements Serializable {
         getterMethodSet.stream().forEach(getterMethod -> {
             try {
                 if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(SearchDataColumn.class))) {
-                    if (getterMethod.getReturnType().getName().startsWith("java.lang")) {
+                    if (getterMethod.getReturnType().getName().startsWith("java.lang")||getterMethod.getReturnType().getName().startsWith("java.util.Date")) {
                         indexMethodHashMap.put(getterMethod.getAnnotation(SearchDataColumn.class).index(), getterMethod);
                         indexObjectHashMap.put(getterMethod.getAnnotation(SearchDataColumn.class).index(), object);
                     } else {

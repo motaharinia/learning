@@ -26,6 +26,7 @@ public class JsonSerializerDate extends JsonSerializer<Date> {
     @Override
     public void serialize(Date date, JsonGenerator jsonGen, SerializerProvider sp) throws IOException, JsonProcessingException {
         try {
+            System.out.println("JsonSerializerDate.serialize: date:" + date + " CalendarTools.fixToLocaleDate:" +CalendarTools.fixToLocaleDate(date,"/",LocaleContextHolder.getLocale()) );
             jsonGen.writeString( CalendarTools.fixToLocaleDate(date,"/",LocaleContextHolder.getLocale()));
         } catch (ParseException | UtilityException ex) {
             Logger.getLogger(JsonSerializerCustomDateTime.class.getName()).log(Level.SEVERE, null, ex);

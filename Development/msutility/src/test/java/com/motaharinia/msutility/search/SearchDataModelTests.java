@@ -1,6 +1,6 @@
 package com.motaharinia.msutility.search;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.motaharinia.msutility.json.CustomObjectMapper;
 import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.*;
 import com.motaharinia.msutility.search.sample.SearchRowViewAdminUserBrief;
@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.fail;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SearchDataModelTests {
 
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final CustomObjectMapper mapper = new CustomObjectMapper();
 
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
@@ -70,9 +70,10 @@ public class SearchDataModelTests {
 
             SearchDataModel searchDataModel = new SearchDataModel(viewPage, searchFilterModel, "");
 
-            System.out.println("searchDataModel:" + searchDataModel.toString());
+
 
             String json = mapper.writeValueAsString(searchDataModel);
+            System.out.println("searchDataModel json:" + json);
             assertThat(json.contains("records")).isEqualTo(true);
         } catch (Exception ex) {
             fail(ex.toString());

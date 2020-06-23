@@ -1,6 +1,7 @@
 package com.motaharinia.msutility.search.data;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.motaharinia.msutility.json.serializer.JsonSerializerObjectArray;
 
 import java.io.Serializable;
 import java.util.Arrays;
@@ -98,6 +99,7 @@ public class SearchDataRowModel implements Serializable {
     }
 
 
+    @JsonSerialize(using = JsonSerializerObjectArray.class)
     public Object[] getRowCellArray() {
         return rowCellArray;
     }

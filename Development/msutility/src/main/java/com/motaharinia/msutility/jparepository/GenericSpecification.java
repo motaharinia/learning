@@ -33,7 +33,7 @@ public class GenericSpecification<T> implements Specification<T> {
 
         //add add criteria to predicates
         for (SearchFilterRestrictionModel searchFilterRestrictionModel : searchFilterRestrictionModelList) {
-            Path path = this.getPath(String.class, root, searchFilterRestrictionModel.getFieldName());
+            Path path = this.getPath(root, searchFilterRestrictionModel.getFieldName());
 
             switch (searchFilterRestrictionModel.getFieldOperation()) {
                 case GREATER_THAN:
@@ -76,22 +76,24 @@ public class GenericSpecification<T> implements Specification<T> {
 
 
     /**
-     * این متد برای به دست آوردن مسیر فیلد مورد نظر برای اضافه شدن شرایط میباشد. اگر این متد و path استفاده نشود در اینترفیسهای projection که میخواهیم فیلدی با جنس انتیتی را بخوانیم null pointer خواهیم گرفت
-     * https://stackoverflow.com/questions/13246959/jpa-specification-with-onetoone-relation
-     *
-     * @param resultType نوع کلاس خروجی متد
-     * @param root ریشه
-     * @param path نام فیلد
-     * @param <T> نوع  مسیر ریشه
-     * @param <R> نوع کلاس خروجی
-     * @return خروجی: مسیر فیلد مورد نظر
+     * این متد برای به دست آوردن Path فیلد مورد نظر برای اضافه شدن شرایط میباشد. اگر این متد و path استفاده نشود در اینترفیسهای projection که میخواهیم فیلدی با جنس انتیتی را بخوانیم null pointer خواهیم گرفت
+     * @param root ریشه انتیتی
+     * @param path نام فیلد (در صورت نیاز میتواند چند فیلد درون هم با نقطه از هم جدا شوند)
+     * @return خروجی: مقدار path مورد نیاز برای استفاده در شرطها
      */
-    private <T, R> Path<R> getPath(Class<R> resultType, Path<T> root, String path) {
-        String[] pathElements = path.split("\\.");
-        Path<?> retVal = root;
-        for (String pathEl : pathElements) {
-            retVal = (Path<R>) retVal.get(pathEl);
+    private Path getPath(Root root, String path) {
+        String[] pathArray = path.split("\\.");
+        if (pathArray.length > 1) {
+            //اگر داخل نام فیلد نقطه وجود داشته باشد باید به تعداد یکی کمتر از فیلدهای نقطه خورده جوین بزنیم تا بتوانیم روی آخرین جوین path فیلد نهایی را خروجی بدهیم
+            Join join = null;
+            for (int i = 0; i < pathArray.length - 1; i++) {
+                join = root.join(pathArray[i], JoinType.LEFT);
+            }
+            return join.get(pathArray[pathArray.length - 1]);
+        } else {
+            //اگر داخل نام فیلد نقطه وجود نداشته باشد فقط path همان فیلد در root انتیتی را خروجی میدهیم
+            return root.get(path);
         }
-        return (Path<R>) retVal;
     }
+
 }
