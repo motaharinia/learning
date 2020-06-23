@@ -8,6 +8,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
+//https://en.wikibooks.org/wiki/Java_Persistence/Criteria
+//https://www.codota.com/code/java/methods/javax.persistence.criteria.CriteriaBuilder/isMember
+//https://www.logicbig.com/tutorials/java-ee-tutorial/jpa/criteria-api-is-member-restriction.html
+//https://www.objectdb.com/java/jpa/query/jpql/collection
+
+
 /**
  * User: https://github.com/motaharinia<br>
  * Date: 2020-06-16<br>
@@ -82,6 +89,8 @@ public class GenericSpecification<T> implements Specification<T> {
                 case NOT_IN:
                     predicates.add(builder.not(path).in(searchFilterRestrictionModel.getFieldValue()));
                     break;
+                default:
+                    predicates.add(builder.isMember(searchFilterRestrictionModel.getFieldValue(),path));
             }
         }
         return builder.and(predicates.toArray(new Predicate[0]));

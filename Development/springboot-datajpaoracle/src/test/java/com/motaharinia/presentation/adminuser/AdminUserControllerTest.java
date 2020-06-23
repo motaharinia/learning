@@ -40,6 +40,7 @@ public class AdminUserControllerTest {
      * شیی crud
      */
     private static Integer crudId;
+    private static String random;
 
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
@@ -56,13 +57,15 @@ public class AdminUserControllerTest {
             String uri = "http://localhost:" + port + "/adminUser";
             Map<String, String> variableHashMap = new HashMap<String, String>();
 
+             random=StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL,5,false);
+
             AdminUserModel adminUserModel = new AdminUserModel();
-            adminUserModel.setFirstName("Mostafa");
-            adminUserModel.setLastName("Motaharinia");
+            adminUserModel.setFirstName("Mostafa " + random);
+            adminUserModel.setLastName("Motaharinia " + random);
             adminUserModel.setPassword("123456789");
-            adminUserModel.setUsername("eng.motahari@gmail.com");
-            adminUserModel.setDefaultAdminUserContact_address("Shahrak Gharb");
-            adminUserModel.setSkillList(Arrays.asList(new AdminUserSkillModel[]{new AdminUserSkillModel(null,"skill-" + StringTools.generateRandomString(RandomGenerationTypeEnum.NUMBER,5,false)),new AdminUserSkillModel(null,"skill-" + StringTools.generateRandomString(RandomGenerationTypeEnum.NUMBER,5,false))}));
+            adminUserModel.setUsername("eng.motahari_"+random+"@gmail.com");
+            adminUserModel.setDefaultAdminUserContact_address("Shahrak Gharb " + random);
+            adminUserModel.setSkillList(Arrays.asList(new AdminUserSkillModel[]{new AdminUserSkillModel(null,"skill-" + random),new AdminUserSkillModel(null,"skill-" + StringTools.generateRandomString(RandomGenerationTypeEnum.NUMBER,5,false))}));
 
             adminUserModel = restTemplate.postForObject(uri, adminUserModel, AdminUserModel.class, variableHashMap);
             System.out.println("create userModel.toString():" + adminUserModel.toString());
@@ -94,7 +97,7 @@ public class AdminUserControllerTest {
             List<SearchFilterRestrictionModel> searchFilterRestrictionModelList = new ArrayList<>();
             searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH, "mostafa"));
             searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("defaultAdminUserContact.address", SearchFilterOperationEnum.MATCH, "Shahrak Gharb"));
-//            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("skillSet", SearchFilterOperationEnum.EQUAL, "id=1"));
+            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("skillSet.title", SearchFilterOperationEnum.MATCH, random));
             List<SearchFilterSortModel> searchFilterSortModelList = new ArrayList<>();
             searchFilterSortModelList.add(new SearchFilterSortModel("firstName", SearchFilterSortTypeEnum.ASC));
             searchFilterSortModelList.add(new SearchFilterSortModel("lastName", SearchFilterSortTypeEnum.DSC));
