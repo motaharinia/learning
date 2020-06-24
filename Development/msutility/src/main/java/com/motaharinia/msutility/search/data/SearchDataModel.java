@@ -297,7 +297,7 @@ public class SearchDataModel implements Serializable {
         return "SearchDataModel{" +
                 "page=" + page +
                 ", records=" + records +
-                ", searchDataRowModelList=[" + searchDataRowModelList.stream().map(item ->item.toString() ).collect(Collectors.joining(System.lineSeparator()+"," )) + System.lineSeparator() +"]" +
+                ", searchDataRowModelList=[" +System.lineSeparator()+ searchDataRowModelList.stream().map(item ->item.toString() ).collect(Collectors.joining("," + System.lineSeparator() )) +System.lineSeparator()+"]" +
                 ", total=" + total +
                 ", userData=" + userData +
                 '}';
