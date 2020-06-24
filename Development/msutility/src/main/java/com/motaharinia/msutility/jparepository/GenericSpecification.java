@@ -1,10 +1,16 @@
 package com.motaharinia.msutility.jparepository;
 
+import com.motaharinia.msutility.calendar.CalendarTools;
+import com.motaharinia.msutility.customfield.CustomDate;
+import com.motaharinia.msutility.customfield.CustomDateTime;
+import com.motaharinia.msutility.json.CustomObjectMapper;
 import com.motaharinia.msutility.search.filter.SearchFilterRestrictionModel;
 import org.springframework.data.jpa.domain.Specification;
 
 import javax.persistence.criteria.*;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -15,6 +21,9 @@ import java.util.List;
  * این کلاس جنریک بیلدر لازم برای تمام کلاسهای مربوط به انجام کوئری های پیشرفته دیتابیس را دارا میباشد
  */
 public class GenericSpecification<T> implements Specification<T> {
+
+    private CustomObjectMapper customObjectMapper = new CustomObjectMapper();
+
     private List<SearchFilterRestrictionModel> searchFilterRestrictionModelList;
 
     public GenericSpecification() {
@@ -28,47 +37,171 @@ public class GenericSpecification<T> implements Specification<T> {
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
 
+        Date date = null;
+        String string = null;
         //create a new predicate list
         List<Predicate> predicates = new ArrayList<>();
 
         //add add criteria to predicates
         for (SearchFilterRestrictionModel searchFilterRestrictionModel : searchFilterRestrictionModelList) {
-            Path path = this.getPath(root, searchFilterRestrictionModel.getFieldName());
+            try {
+                Path path = this.getPath(root, searchFilterRestrictionModel.getFieldName());
 
-            switch (searchFilterRestrictionModel.getFieldOperation()) {
-                case GREATER_THAN:
-                    predicates.add(builder.greaterThan(path, searchFilterRestrictionModel.getFieldValue().toString()));
-                    break;
-                case LESS_THAN:
-                    predicates.add(builder.lessThan(path, searchFilterRestrictionModel.getFieldValue().toString()));
-                    break;
-                case GREATER_THAN_EQUAL:
-                    predicates.add(builder.greaterThanOrEqualTo(path, searchFilterRestrictionModel.getFieldValue().toString()));
-                    break;
-                case LESS_THAN_EQUAL:
-                    predicates.add(builder.lessThanOrEqualTo(path, searchFilterRestrictionModel.getFieldValue().toString()));
-                    break;
-                case NOT_EQUAL:
-                    predicates.add(builder.notEqual(path, searchFilterRestrictionModel.getFieldValue().toString()));
-                    break;
-                case EQUAL:
-                    predicates.add(builder.equal(path, searchFilterRestrictionModel.getFieldValue().toString()));
-                    break;
-                case MATCH:
-                    predicates.add(builder.like(builder.lower(path), "%" + searchFilterRestrictionModel.getFieldValue().toString().toLowerCase() + "%"));
-                    break;
-                case MATCH_START:
-                    predicates.add(builder.like(builder.lower(path), searchFilterRestrictionModel.getFieldValue().toString().toLowerCase() + "%"));
-                    break;
-                case MATCH_END:
-                    predicates.add(builder.like(builder.lower(path), "%" + searchFilterRestrictionModel.getFieldValue().toString().toLowerCase()));
-                    break;
-                case IN:
-                    predicates.add(builder.in(path).value(searchFilterRestrictionModel.getFieldValue()));
-                    break;
-                case NOT_IN:
-                    predicates.add(builder.not(path).in(searchFilterRestrictionModel.getFieldValue()));
-                    break;
+                Object fieldValue = searchFilterRestrictionModel.getFieldValue();
+
+                switch (searchFilterRestrictionModel.getFieldOperation()) {
+
+                    case GREATER_THAN:
+                        /**
+                         * بزرگتر از عدد یا تاریخ
+                         */
+//                        System.out.println("GenericSpecification.toPredicate case GREATER_THAN: fieldValue:"+fieldValue + " fieldValue.getClass():"+ fieldValue.getClass().toString());
+                        if (Integer.class.equals(fieldValue.getClass())) {
+                            predicates.add(builder.greaterThan(path, (Integer) fieldValue));
+                        } else {
+                            LinkedHashMap linkedHashMap = (LinkedHashMap) fieldValue;
+                            if (linkedHashMap.containsKey("hour")) {
+                                date = CalendarTools.getDateFromCustomDateTime(this.customObjectMapper.convertValue(linkedHashMap, CustomDateTime.class));
+                            } else {
+                                date = CalendarTools.getDateFromCustomDate(this.customObjectMapper.convertValue(linkedHashMap, CustomDate.class));
+                            }
+//                            System.out.println("GenericSpecification.toPredicate case GREATER_THAN : date:"+date);
+                            predicates.add(builder.greaterThan(path, date));
+                        }
+                        break;
+
+                    case LESS_THAN:
+                        /**
+                         * کوچکتر  از عدد یا تاریخ
+                         */
+//                        System.out.println("GenericSpecification.toPredicate case LESS_THAN: fieldValue:"+fieldValue + " fieldValue.getClass():"+ fieldValue.getClass().toString());
+                        if (Integer.class.equals(fieldValue.getClass())) {
+                            predicates.add(builder.lessThan(path, (Integer) fieldValue));
+                        } else {
+                            LinkedHashMap linkedHashMap = (LinkedHashMap) fieldValue;
+                            if (linkedHashMap.containsKey("hour")) {
+                                date = CalendarTools.getDateFromCustomDateTime(this.customObjectMapper.convertValue(linkedHashMap, CustomDateTime.class));
+                            } else {
+                                date = CalendarTools.getDateFromCustomDate(this.customObjectMapper.convertValue(linkedHashMap, CustomDate.class));
+                            }
+//                            System.out.println("GenericSpecification.toPredicate case LESS_THAN : date:"+date);
+                            predicates.add(builder.lessThan(path, date));
+                        }
+                        break;
+
+                    case GREATER_THAN_EQUAL:
+                        /**
+                         * بزرگتر مساوی از عدد یا تاریخ
+                         */
+                        //                        System.out.println("GenericSpecification.toPredicate case GREATER_THAN_EQUAL: fieldValue:"+fieldValue + " fieldValue.getClass():"+ fieldValue.getClass().toString());
+                        if (Integer.class.equals(fieldValue.getClass())) {
+                            predicates.add(builder.greaterThanOrEqualTo(path, (Integer) fieldValue));
+                        } else {
+                            LinkedHashMap linkedHashMap = (LinkedHashMap) fieldValue;
+                            if (linkedHashMap.containsKey("hour")) {
+                                date = CalendarTools.getDateFromCustomDateTime(this.customObjectMapper.convertValue(linkedHashMap, CustomDateTime.class));
+                            } else {
+                                date = CalendarTools.getDateFromCustomDate(this.customObjectMapper.convertValue(linkedHashMap, CustomDate.class));
+                            }
+//                            System.out.println("GenericSpecification.toPredicate case GREATER_THAN_EQUAL : date:"+date);
+                            predicates.add(builder.greaterThanOrEqualTo(path, date));
+                        }
+                        break;
+
+                    case LESS_THAN_EQUAL:
+                        /**
+                         * کوچکتر مساوی از عدد یا تاریخ
+                         */
+                        //                        System.out.println("GenericSpecification.toPredicate case LESS_THAN_EQUAL: fieldValue:"+fieldValue + " fieldValue.getClass():"+ fieldValue.getClass().toString());
+                        if (Integer.class.equals(fieldValue.getClass())) {
+                            predicates.add(builder.lessThanOrEqualTo(path, (Integer) fieldValue));
+                        } else {
+                            LinkedHashMap linkedHashMap = (LinkedHashMap) fieldValue;
+                            if (linkedHashMap.containsKey("hour")) {
+                                date = CalendarTools.getDateFromCustomDateTime(this.customObjectMapper.convertValue(linkedHashMap, CustomDateTime.class));
+                            } else {
+                                date = CalendarTools.getDateFromCustomDate(this.customObjectMapper.convertValue(linkedHashMap, CustomDate.class));
+                            }
+                            //                            System.out.println("GenericSpecification.toPredicate case LESS_THAN_EQUAL : date:"+date);
+                            predicates.add(builder.lessThanOrEqualTo(path, date));
+                        }
+                        break;
+
+                    case EQUAL:
+                        /**
+                         * برابر باشد با
+                         */
+                        predicates.add(builder.equal(path, fieldValue));
+                        break;
+
+                    case NOT_EQUAL:
+                        /**
+                         * برابر نباشد با
+                         */
+                        predicates.add(builder.notEqual(path, fieldValue));
+                        break;
+
+                    case MATCH:
+                        /**
+                         * تطبیق رشته ای داشته باشد با
+                         */
+                        if (String.class.equals(fieldValue.getClass())) {
+                            string = (String) fieldValue;
+                            predicates.add(builder.like(builder.lower(path), "%" + string.toLowerCase() + "%"));
+                        }
+                        break;
+
+                    case MATCH_START:
+                        /**
+                         * با ابتدای عبارت تطبیق رشته ای داشته باشد
+                         */
+                        if (String.class.equals(fieldValue.getClass())) {
+                            string = (String) fieldValue;
+                            predicates.add(builder.like(builder.lower(path), string.toLowerCase() + "%"));
+                        }
+                        break;
+
+                    case MATCH_END:
+                        /**
+                         * با انتهای عبارت تطبیق رشته ای داشته باشد
+                         */
+                        if (String.class.equals(fieldValue.getClass())) {
+                            string = (String) fieldValue;
+                            predicates.add(builder.like(builder.lower(path), "%" + string.toLowerCase()));
+                        }
+                        break;
+
+                    case IN:
+                        /**
+                         * مقدار فیلد انتیتی در بین یکی از گزینه های لیست مقادیر ورودی دلخواه باشد<br>
+                         * SELECT a FROM EntityA a WHERE a.field IN :valueCollection
+                         */
+                        predicates.add(builder.in(path).value(searchFilterRestrictionModel.getFieldValue()));
+                        break;
+                    case NOT_IN:
+                        /**
+                         * مقدار فیلد انتیتی در بین هیچ یک از گزینه های لیست مقادیر ورودی دلخواه نباشد<br>
+                         * SELECT a FROM EntityA a WHERE a.field NOT IN :valueCollection
+                         */
+                        predicates.add(builder.not(path).in(searchFilterRestrictionModel.getFieldValue()));
+                        break;
+                    case MEMBER_OF:
+                        /**
+                         *مقدار ورودی دلخواه عضوی از گزینه های فیلد انتیتی از نوع لیست باشد<br>
+                         * SELECT a FROM EntityA a WHERE :value MEMBER OF a.fieldCollection
+                         */
+                        predicates.add(builder.isMember(searchFilterRestrictionModel.getFieldValue(), path));
+                        break;
+                    case NOT_MEMBER_OF:
+                        /**
+                         *مقدار ورودی دلخواه عضوی از گزینه های فیلد انتیتی از نوع لیست نباشد<br>
+                         * SELECT a FROM EntityA a WHERE :value NOT MEMBER OF a.fieldCollection
+                         */
+                        predicates.add(builder.isNotMember(searchFilterRestrictionModel.getFieldValue(), path));
+                        break;
+                }
+            } catch (Exception e) {
+                System.out.println("GenericSpecification.toPredicate  Exception:" + e.toString());
             }
         }
         return builder.and(predicates.toArray(new Predicate[0]));
@@ -77,6 +210,7 @@ public class GenericSpecification<T> implements Specification<T> {
 
     /**
      * این متد برای به دست آوردن Path فیلد مورد نظر برای اضافه شدن شرایط میباشد. اگر این متد و path استفاده نشود در اینترفیسهای projection که میخواهیم فیلدی با جنس انتیتی را بخوانیم null pointer خواهیم گرفت
+     *
      * @param root ریشه انتیتی
      * @param path نام فیلد (در صورت نیاز میتواند چند فیلد درون هم با نقطه از هم جدا شوند)
      * @return خروجی: مقدار path مورد نیاز برای استفاده در شرطها
@@ -87,7 +221,11 @@ public class GenericSpecification<T> implements Specification<T> {
             //اگر داخل نام فیلد نقطه وجود داشته باشد باید به تعداد یکی کمتر از فیلدهای نقطه خورده جوین بزنیم تا بتوانیم روی آخرین جوین path فیلد نهایی را خروجی بدهیم
             Join join = null;
             for (int i = 0; i < pathArray.length - 1; i++) {
-                join = root.join(pathArray[i], JoinType.LEFT);
+                if (join == null) {
+                    join = root.join(pathArray[i], JoinType.LEFT);
+                } else {
+                    join = join.join(pathArray[i], JoinType.LEFT);
+                }
             }
             return join.get(pathArray[pathArray.length - 1]);
         } else {
@@ -95,5 +233,6 @@ public class GenericSpecification<T> implements Specification<T> {
             return root.get(path);
         }
     }
+
 
 }

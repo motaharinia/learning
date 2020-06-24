@@ -32,7 +32,7 @@ import javax.transaction.Transactional;
  * Date: 2020-06-12<br>
  * Time: 01:05:58<br>
  * Description:<br>
- *   کلاس پیاده سازی اینترفیس مدیریت ادمین ها
+ * کلاس پیاده سازی اینترفیس مدیریت ادمین ها
  */
 @Service
 @Transactional
@@ -102,7 +102,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         adminUser.setUsername(adminUserModel.getUsername());
         adminUser.setDateOfBirth(CalendarTools.getDateFromCustomDate(adminUserModel.getDateOfBirth()));
         //ثبت مهارتهای ادمین
-        adminUser=  adminUserSkillService.createByAdminUser(adminUser, adminUserModel.getSkillList());
+        adminUser = adminUserSkillService.createByAdminUser(adminUser, adminUserModel.getSkillList());
 
         adminUser = adminUserRepository.save(adminUser);
         adminUser.setDefaultAdminUserContact(adminUserContact);
@@ -149,6 +149,11 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Override
     @NotNull
     public SearchDataModel readGrid(@NotNull SearchFilterModel searchFilterModel) throws UtilityException {
+        if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
+            searchFilterModel.getRestrictionList().stream().forEach((item) -> {
+                System.out.println("AdminUserServiceImpl.readGrid searchFilterModel.getRestrictionList() loop item.getFieldValue():" + item.getFieldValue() + " item.getFieldValue().getClass():" + item.getFieldValue().getClass());
+            });
+        }
         adminUserSpecification = (AdminUserSpecification) searchFilterModel.makeSpecification(adminUserSpecification);
 //        if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
 //            searchFilterModel.getRestrictionList().stream().forEach((item) -> {
@@ -188,7 +193,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         }
 
         //ویرایش مهارتهای ادمین
-        adminUser=  adminUserSkillService.updateByAdminUser(adminUser, adminUserModel.getSkillList());
+        adminUser = adminUserSkillService.updateByAdminUser(adminUser, adminUserModel.getSkillList());
         adminUserRepository.save(adminUser);
         return adminUserModel;
     }
@@ -205,7 +210,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         AdminUserModel adminUserModel = this.readById(id);
         AdminUser adminUser = adminUserRepository.findById(adminUserModel.getId()).get();
         //حذف مهارتهای ادمین
-        adminUser=  adminUserSkillService.deleteByAdminUser(adminUser);
+        adminUser = adminUserSkillService.deleteByAdminUser(adminUser);
         adminUserRepository.save(adminUser);
         adminUserRepository.delete(adminUser);
         return adminUserModel;

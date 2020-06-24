@@ -128,7 +128,7 @@ public class SearchDataModel implements Serializable {
             }
         });
         this.searchDataColModelList = searchDataColModelList;
-        this.searchDataColModelList.stream().forEach(item ->  System.out.println("SearchDataModel.Constructor searchDataColModelList.stream():"+item.toString()));
+//        this.searchDataColModelList.stream().forEach(item ->  System.out.println("SearchDataModel.Constructor searchDataColModelList.stream():"+item.toString()));
 
         //searchDataRowModelList:
         List<SearchDataRowModel> searchDataRowModelList = new ArrayList<>();
@@ -140,7 +140,7 @@ public class SearchDataModel implements Serializable {
             }
         });
         this.searchDataRowModelList = searchDataRowModelList;
-        this.searchDataRowModelList.stream().forEach(item ->  System.out.println("SearchDataModel.Constructor searchDataRowModelList.stream():"+item.toString()));
+//        this.searchDataRowModelList.stream().forEach(item ->  System.out.println("SearchDataModel.Constructor searchDataRowModelList.stream():"+item.toString()));
     }
 
 
@@ -297,7 +297,7 @@ public class SearchDataModel implements Serializable {
         return "SearchDataModel{" +
                 "page=" + page +
                 ", records=" + records +
-                ", searchDataRowModelList=[" + searchDataRowModelList.stream().map(item -> item.toString()).collect(Collectors.joining(",")) + "]" +
+                ", searchDataRowModelList=[" + searchDataRowModelList.stream().map(item ->item.toString() ).collect(Collectors.joining(System.lineSeparator()+"," )) + System.lineSeparator() +"]" +
                 ", total=" + total +
                 ", userData=" + userData +
                 '}';

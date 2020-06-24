@@ -1,5 +1,6 @@
 package com.motaharinia.msutility.search;
 
+import com.motaharinia.msutility.customfield.CustomDate;
 import com.motaharinia.msutility.json.CustomObjectMapper;
 import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.*;
@@ -50,9 +51,16 @@ public class SearchDataModelTests {
     void serializeTest() {
         System.out.println("LocaleContextHolder.getLocale()"+ LocaleContextHolder.getLocale());
         try {
+            CustomDate dateOfBirth=new CustomDate();
+            dateOfBirth.setYear(1399);
+            dateOfBirth.setMonth(4);
+            dateOfBirth.setDay(3);
+
+
             Locale.setDefault(new Locale("fa"));
             List<SearchFilterRestrictionModel> searchFilterRestrictionModelList = new ArrayList<>();
             searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH, "mostafa"));
+            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("dateOfBirth", SearchFilterOperationEnum.GREATER_THAN, dateOfBirth));
             List<SearchFilterSortModel> searchFilterSortModelList = new ArrayList<>();
             searchFilterSortModelList.add(new SearchFilterSortModel("firstName", SearchFilterSortTypeEnum.ASC));
             searchFilterSortModelList.add(new SearchFilterSortModel("lastName", SearchFilterSortTypeEnum.DSC));
@@ -71,12 +79,10 @@ public class SearchDataModelTests {
 
 
             SearchDataModel searchDataModel = new SearchDataModel(viewPage, searchFilterModel, "");
+            System.out.println("searchDataModel.toString():" + searchDataModel.toString());
 
-
-
-            String json = mapper.writeValueAsString(searchDataModel);
-            System.out.println("searchDataModel json:" + json);
-            assertThat(json.contains("records")).isEqualTo(true);
+//            String json = mapper.writeValueAsString(searchDataModel);
+            assertThat(searchDataModel.getRecords()).isNotEqualTo(null);
         } catch (Exception ex) {
             fail(ex.toString());
         }

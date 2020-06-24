@@ -114,10 +114,22 @@ public class AdminUserControllerTest {
             if(ObjectUtils.isEmpty(random)){
                 random="skill";
             }
+            CustomDate dateOfBirthFrom=new CustomDate();
+            dateOfBirthFrom.setYear(1399);
+            dateOfBirthFrom.setMonth(4);
+            dateOfBirthFrom.setDay(3);
+
+            CustomDate dateOfBirthTo=new CustomDate();
+            dateOfBirthTo.setYear(1399);
+            dateOfBirthTo.setMonth(4);
+            dateOfBirthTo.setDay(6);
+
             List<SearchFilterRestrictionModel> searchFilterRestrictionModelList = new ArrayList<>();
             searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH, "mostafa"));
             searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("defaultAdminUserContact.address", SearchFilterOperationEnum.MATCH, "Shahrak Gharb"));
             searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("skillSet.title", SearchFilterOperationEnum.MATCH, random));
+            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("dateOfBirth", SearchFilterOperationEnum.GREATER_THAN_EQUAL, dateOfBirthFrom));
+            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("dateOfBirth", SearchFilterOperationEnum.LESS_THAN_EQUAL, dateOfBirthTo));
             List<SearchFilterSortModel> searchFilterSortModelList = new ArrayList<>();
             searchFilterSortModelList.add(new SearchFilterSortModel("firstName", SearchFilterSortTypeEnum.ASC));
             searchFilterSortModelList.add(new SearchFilterSortModel("lastName", SearchFilterSortTypeEnum.DSC));

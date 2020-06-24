@@ -10,49 +10,63 @@ package com.motaharinia.msutility.search.filter;
 public enum SearchFilterOperationEnum {
 
     /**
-     * بزرگتر از
+     * بزرگتر از عدد یا تاریخ
      */
     GREATER_THAN("GREATER_THAN"),
     /**
-     * کوچکتر از
+     * کوچکتر  از عدد یا تاریخ
      */
     LESS_THAN("LESS_THAN"),
     /**
-     * بزرگتر مساوی
+     * بزرگتر مساوی از عدد یا تاریخ
      */
     GREATER_THAN_EQUAL("GREATER_THAN_EQUAL"),
     /**
-     * کوچکتر مساوی
+     * کوچکتر مساوی از عدد یا تاریخ
      */
     LESS_THAN_EQUAL("LESS_THAN_EQUAL"),
     /**
-     * مساوی نباشد با
-     */
-    NOT_EQUAL("NOT_EQUAL"),
-    /**
-     * مساوی باشد با
+     * برابر باشد با
      */
     EQUAL("EQUAL"),
     /**
-     * تطبیق داشته باشد با
+     * برابر نباشد با
+     */
+    NOT_EQUAL("NOT_EQUAL"),
+    /**
+     * تطبیق رشته ای داشته باشد با
      */
     MATCH("MATCH"),
     /**
-     * با ابتدای عبارت تطبیق داشته باشد
+     * با ابتدای عبارت تطبیق رشته ای داشته باشد
      */
     MATCH_START("MATCH_START"),
     /**
-     * با انتهای عبارت تطبیق داشته باشد
+     * با انتهای عبارت تطبیق رشته ای داشته باشد
      */
     MATCH_END("MATCH_END"),
     /**
-     * در بین یکی از گزینه ها باشد
+     * مقدار فیلد انتیتی در بین یکی از گزینه های لیست مقادیر ورودی دلخواه باشد<br>
+     * SELECT a FROM EntityA a WHERE a.field IN :valueCollection
      */
     IN("IN"),
     /**
-     * در بین هیچ یک از گزینه ها نباشد
+     * مقدار فیلد انتیتی در بین هیچ یک از گزینه های لیست مقادیر ورودی دلخواه نباشد<br>
+     * SELECT a FROM EntityA a WHERE a.field NOT IN :valueCollection
      */
-    NOT_IN("NOT_IN");
+    NOT_IN("NOT_IN"),
+    /**
+     *مقدار ورودی دلخواه عضوی از گزینه های فیلد انتیتی از نوع لیست باشد<br>
+     * SELECT a FROM EntityA a WHERE :value MEMBER OF a.fieldCollection
+     */
+    MEMBER_OF("MEMBER_OF"),
+    /**
+     *مقدار ورودی دلخواه عضوی از گزینه های فیلد انتیتی از نوع لیست نباشد<br>
+     * SELECT a FROM EntityA a WHERE :value NOT MEMBER OF a.fieldCollection
+     */
+    NOT_MEMBER_OF("NOT_MEMBER_OF"),
+
+    ;
 
     private final String value;
 
