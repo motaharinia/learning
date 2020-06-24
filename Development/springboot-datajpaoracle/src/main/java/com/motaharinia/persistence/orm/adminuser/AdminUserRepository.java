@@ -14,6 +14,13 @@ import java.util.List;
 //https://github.com/pramoth/specification-with-projection
 //https://stackoverflow.com/questions/22171822/spring-data-jpa-specification-to-select-specific-columns
 
+/**
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ *  کلاس ریپازیتوری ادمین
+ */
 @Repository
 public interface AdminUserRepository extends JpaRepository<AdminUser, Integer>, JpaSpecificationExecutorWithProjection<AdminUser> {
 
@@ -33,11 +40,11 @@ public interface AdminUserRepository extends JpaRepository<AdminUser, Integer>, 
 
 
     @Query("select obj.id,obj.firstName,obj.lastName from AdminUser obj where obj.firstName= :firstName")
-    public List<Object[]> listGrid(@Param("firstName")String firstName);
+    List<Object[]> listGrid(@Param("firstName")String firstName);
 
-    public AdminUser findByLastNameLikeAndFirstNameStartingWith(String lastName, String firstName);
+    AdminUser findByLastNameLikeAndFirstNameStartingWith(String lastName, String firstName);
 
-    public List<AdminUser> findAllByLastNameLikeAndFirstNameStartingWith(String lastName, String firstName);
+    List<AdminUser> findAllByLastNameLikeAndFirstNameStartingWith(String lastName, String firstName);
 
 
 }

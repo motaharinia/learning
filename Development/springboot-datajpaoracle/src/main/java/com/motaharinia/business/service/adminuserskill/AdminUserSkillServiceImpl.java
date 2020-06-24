@@ -20,8 +20,13 @@ import java.util.stream.Collectors;
 //https://www.baeldung.com/spring-data-jpa-projections
 //https://walczak.it/blog/spring-data-jpa-projection-dynamic-queries
 
+
 /**
- * کلاس پیاده سازی سرویس مدیریت مهارتها
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ *   کلاس پیاده سازی اینترفیس مدیریت مهارتها
  */
 @Service
 @Transactional

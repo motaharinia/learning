@@ -24,7 +24,7 @@ public enum CustomExceptionTypeEnum {
     LIST_EXCEPTION("LIST_EXCEPTION");
     private final String value;
 
-    private CustomExceptionTypeEnum(String value) {
+    CustomExceptionTypeEnum(String value) {
         this.value = value;
     }
 

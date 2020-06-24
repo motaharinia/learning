@@ -1,5 +1,6 @@
-package com.motaharinia.persistence.orm.adminuserskill;
+package com.motaharinia.persistence.orm.etcitem;
 
+import com.motaharinia.persistence.orm.adminuserskill.AdminUserSkill;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import th.co.geniustree.springdata.jpa.repository.JpaSpecificationExecutorWithProjection;
@@ -14,11 +15,9 @@ import th.co.geniustree.springdata.jpa.repository.JpaSpecificationExecutorWithPr
  * Date: 2020-06-12<br>
  * Time: 01:05:58<br>
  * Description:<br>
- *  کلاس ریپازیتوری مهارت ادمین
+ *  کلاس ریپازیتوری مقادیر ثابت
  */
 @Repository
-public interface AdminUserSkillRepository extends JpaRepository<AdminUserSkill, Integer>, JpaSpecificationExecutorWithProjection<AdminUserSkill> {
-
-     AdminUserSkill findByTitle(String title);
+public interface EtcItemRepository extends JpaRepository<EtcItem, Integer>, JpaSpecificationExecutorWithProjection<EtcItem> {
 
 }

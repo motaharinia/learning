@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.ObjectUtils;
@@ -27,6 +28,13 @@ import static org.assertj.core.api.Assertions.fail;
 //https://www.javaguides.net/2018/09/spring-boot-2-rest-apis-integration-testing.html
 
 
+/**
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ *  کلاس تست ماژول ادمین
+ */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("dev")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -99,6 +107,7 @@ public class AdminUserControllerTest {
     @Test
     @Order(3)
     public void readGrid() {
+        System.out.println("LocaleContextHolder.getLocale()"+ LocaleContextHolder.getLocale());
         try {
             String uri = "http://localhost:" + port + "/adminUser";
 

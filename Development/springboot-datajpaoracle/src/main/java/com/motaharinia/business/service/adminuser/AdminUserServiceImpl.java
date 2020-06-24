@@ -14,6 +14,7 @@ import com.motaharinia.persistence.orm.adminusercontact.AdminUserContact;
 import com.motaharinia.persistence.orm.adminusercontact.AdminUserContactRepository;
 import com.motaharinia.presentation.adminuser.AdminUserModel;
 import com.motaharinia.presentation.adminuserskill.AdminUserSkillModel;
+import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,8 +26,13 @@ import javax.transaction.Transactional;
 //https://www.baeldung.com/spring-data-jpa-projections
 //https://walczak.it/blog/spring-data-jpa-projection-dynamic-queries
 
+
 /**
- * کلاس پیاده سازی سرویس مدیریت ادمین ها
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ *   کلاس پیاده سازی اینترفیس مدیریت ادمین ها
  */
 @Service
 @Transactional
@@ -80,7 +86,8 @@ public class AdminUserServiceImpl implements AdminUserService {
      * @return خروجی: مدل ثبت حاوی شناسه
      */
     @Override
-    public AdminUserModel create(AdminUserModel adminUserModel) throws UtilityException {
+    @NotNull
+    public AdminUserModel create(@NotNull AdminUserModel adminUserModel) throws UtilityException {
 
         //ثبت اطلاعات تماس ادمین
         AdminUserContact adminUserContact = new AdminUserContact();
@@ -110,7 +117,8 @@ public class AdminUserServiceImpl implements AdminUserService {
      * @return خروجی: مدل جستجو شده
      */
     @Override
-    public AdminUserModel readById(Integer id) throws UtilityException {
+    @NotNull
+    public AdminUserModel readById(@NotNull Integer id) throws UtilityException {
         AdminUser adminUser = adminUserRepository.findById(id).get();
         AdminUserModel adminUserModel = new AdminUserModel();
         adminUserModel.setId(adminUser.getId());
@@ -139,7 +147,8 @@ public class AdminUserServiceImpl implements AdminUserService {
      * @throws UtilityException
      */
     @Override
-    public SearchDataModel readGrid(SearchFilterModel searchFilterModel) throws UtilityException {
+    @NotNull
+    public SearchDataModel readGrid(@NotNull SearchFilterModel searchFilterModel) throws UtilityException {
         adminUserSpecification = (AdminUserSpecification) searchFilterModel.makeSpecification(adminUserSpecification);
 //        if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
 //            searchFilterModel.getRestrictionList().stream().forEach((item) -> {
@@ -161,7 +170,8 @@ public class AdminUserServiceImpl implements AdminUserService {
      * @return خروجی: مدل ویرایش شده
      */
     @Override
-    public AdminUserModel update(AdminUserModel adminUserModel) throws UtilityException {
+    @NotNull
+    public AdminUserModel update(@NotNull AdminUserModel adminUserModel) throws UtilityException {
         AdminUser adminUser = adminUserRepository.findById(adminUserModel.getId()).get();
         adminUser.setFirstName(adminUserModel.getFirstName());
         adminUser.setLastName(adminUserModel.getLastName());
@@ -190,7 +200,8 @@ public class AdminUserServiceImpl implements AdminUserService {
      * @return خروجی: مدل حذف شده
      */
     @Override
-    public AdminUserModel delete(Integer id) throws UtilityException {
+    @NotNull
+    public AdminUserModel delete(@NotNull Integer id) throws UtilityException {
         AdminUserModel adminUserModel = this.readById(id);
         AdminUser adminUser = adminUserRepository.findById(adminUserModel.getId()).get();
         //حذف مهارتهای ادمین
@@ -200,8 +211,8 @@ public class AdminUserServiceImpl implements AdminUserService {
         return adminUserModel;
     }
 
-
-    private AdminUserModel convertToDto(AdminUser adminUser) {
+    @NotNull
+    private AdminUserModel convertToDto(@NotNull AdminUser adminUser) {
         AdminUserModel adminUserModel = modelMapper.map(adminUser, AdminUserModel.class);
 //        userModel.setSubmissionDate(adminuser.getSubmissionDate(), userService.getCurrentUser().getPreference().getTimezone());
         return adminUserModel;

@@ -1,5 +1,12 @@
 package com.motaharinia.presentation.adminuserskill;
 
+/**
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ *  کلاس مدل مهارت ادمین
+ */
 public class AdminUserSkillModel {
     /**
      * شناسه

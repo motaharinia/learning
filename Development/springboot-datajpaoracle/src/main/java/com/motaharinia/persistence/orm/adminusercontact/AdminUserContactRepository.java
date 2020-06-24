@@ -9,6 +9,13 @@ import th.co.geniustree.springdata.jpa.repository.JpaSpecificationExecutorWithPr
 //https://github.com/pramoth/specification-with-projection
 //https://stackoverflow.com/questions/22171822/spring-data-jpa-specification-to-select-specific-columns
 
+/**
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ *  کلاس ریپازیتوری اطلاعات تماس ادمین
+ */
 @Repository
 public interface AdminUserContactRepository extends JpaRepository<AdminUserContact, Integer>, JpaSpecificationExecutorWithProjection<AdminUserContact> {
 

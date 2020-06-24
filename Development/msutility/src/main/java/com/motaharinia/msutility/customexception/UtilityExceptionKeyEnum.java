@@ -47,7 +47,7 @@ public enum UtilityExceptionKeyEnum implements  CustomExceptionKey{
     private final String value;
     private final String moduleName = "test";
 
-    private UtilityExceptionKeyEnum(String value) {
+    UtilityExceptionKeyEnum(String value) {
         this.value = value;
     }
 

@@ -6,6 +6,7 @@ import com.motaharinia.msutility.search.filter.*;
 import com.motaharinia.msutility.search.sample.SearchRowViewAdminUserBrief;
 import com.motaharinia.msutility.search.sample.SearchRowViewAdminUserBriefImpl;
 import org.junit.jupiter.api.*;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
@@ -33,7 +34,7 @@ public class SearchDataModelTests {
      */
     @BeforeEach
     void initUseCase() {
-        Locale.setDefault(Locale.US);
+        Locale.setDefault(new Locale("fa"));
     }
 
     /**
@@ -47,6 +48,7 @@ public class SearchDataModelTests {
     @Order(1)
     @Test
     void serializeTest() {
+        System.out.println("LocaleContextHolder.getLocale()"+ LocaleContextHolder.getLocale());
         try {
             Locale.setDefault(new Locale("fa"));
             List<SearchFilterRestrictionModel> searchFilterRestrictionModelList = new ArrayList<>();

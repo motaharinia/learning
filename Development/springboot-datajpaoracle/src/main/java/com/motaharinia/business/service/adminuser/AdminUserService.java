@@ -4,9 +4,15 @@ import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.SearchFilterModel;
 import com.motaharinia.presentation.adminuser.AdminUserModel;
+import org.jetbrains.annotations.NotNull;
+
 
 /**
- * کلاس سرویس مدیریت ادمین ها
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ *  اینترفیس مدیریت ادمین ها
  */
 public interface AdminUserService {
     /**
@@ -15,7 +21,8 @@ public interface AdminUserService {
      * @param adminUserModel مدل ثبت
      * @return خروجی: مدل ثبت حاوی شناسه
      */
-    AdminUserModel create(AdminUserModel adminUserModel) throws UtilityException;
+    @NotNull
+    AdminUserModel create(@NotNull  AdminUserModel adminUserModel) throws UtilityException;
 
     /**
      * متد جستجوی با شناسه
@@ -23,7 +30,8 @@ public interface AdminUserService {
      * @param id شناسه
      * @return خروجی: مدل جستجو شده
      */
-    AdminUserModel readById(Integer id) throws UtilityException;
+    @NotNull
+    AdminUserModel readById(@NotNull Integer id) throws UtilityException;
 
     /**
      * متد جستجو با مدل فیلتر جستجو
@@ -32,7 +40,8 @@ public interface AdminUserService {
      * @return خروجی: مدل داده جستجو
      * @throws UtilityException
      */
-    SearchDataModel readGrid(SearchFilterModel searchFilterModel) throws UtilityException;
+    @NotNull
+    SearchDataModel readGrid(@NotNull SearchFilterModel searchFilterModel) throws UtilityException;
 
     /**
      * متد ویرایش
@@ -40,7 +49,8 @@ public interface AdminUserService {
      * @param adminUserModel مدل ویرایش
      * @return خروجی: مدل ویرایش شده
      */
-    AdminUserModel update(AdminUserModel adminUserModel) throws UtilityException;
+    @NotNull
+    AdminUserModel update(@NotNull AdminUserModel adminUserModel) throws UtilityException;
 
     /**
      * متد حذف با شناسه
@@ -48,6 +58,7 @@ public interface AdminUserService {
      * @param id شناسه
      * @return خروجی: مدل حذف شده
      */
-    AdminUserModel delete(Integer id) throws UtilityException;
+    @NotNull
+    AdminUserModel delete(@NotNull Integer id) throws UtilityException;
 
 }

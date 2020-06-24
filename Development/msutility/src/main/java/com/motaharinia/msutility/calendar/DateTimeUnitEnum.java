@@ -41,7 +41,7 @@ public enum DateTimeUnitEnum {
     ;
     private final String value;
 
-    private DateTimeUnitEnum(String value) {
+    DateTimeUnitEnum(String value) {
         this.value = value;
     }
 

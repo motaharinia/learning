@@ -2,11 +2,17 @@ package com.motaharinia.business.service.adminuserskill;
 
 import com.motaharinia.persistence.orm.adminuser.AdminUser;
 import com.motaharinia.presentation.adminuserskill.AdminUserSkillModel;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+
 /**
- * کلاس سرویس مدیریت مهارتها
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ *  اینترفیس مدیریت مهارتها
  */
 public interface AdminUserSkillService {
     /**
@@ -16,7 +22,8 @@ public interface AdminUserSkillService {
      * @param adminUserSkillModelList لیست مدلهای ثبت
      * @return خروجی: انتیتی ادمین تکمیل شده
      */
-    AdminUser createByAdminUser(AdminUser adminUser, List<AdminUserSkillModel> adminUserSkillModelList);
+    @NotNull
+    AdminUser createByAdminUser(@NotNull AdminUser adminUser, @NotNull List<AdminUserSkillModel> adminUserSkillModelList);
 
     /**
      * متد جستجوی با شناسه
@@ -24,7 +31,8 @@ public interface AdminUserSkillService {
      * @param id شناسه
      * @return خروجی: مدل جستجو شده
      */
-    AdminUserSkillModel readById(Integer id);
+    @NotNull
+    AdminUserSkillModel readById(@NotNull Integer id);
 
 
     /**
@@ -34,15 +42,17 @@ public interface AdminUserSkillService {
      * @param adminUserSkillModelList لیست مدلهای ویرایش
      * @return خروجی: انتیتی ادمین تکمیل شده
      */
-    AdminUser updateByAdminUser(AdminUser adminUser, List<AdminUserSkillModel> adminUserSkillModelList);
+    @NotNull
+    AdminUser updateByAdminUser(@NotNull AdminUser adminUser,@NotNull  List<AdminUserSkillModel> adminUserSkillModelList);
 
 
     /**
-     * متد حذف با شناسه
+     * متد حذف مهارت برای ادمین
      *
-     * @param id شناسه
-     * @return خروجی: مدل حذف شده
+     * @param adminUser انتیتی ادمین
+     * @return خروجی: انتیتی ادمین که مهارتهای آن حذف شده
      */
-    AdminUser deleteByAdminUser(AdminUser adminUser) ;
+    @NotNull
+    AdminUser deleteByAdminUser(@NotNull AdminUser adminUser) ;
 
 }

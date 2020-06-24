@@ -5,6 +5,7 @@ import com.motaharinia.msutility.entity.GenericEntity;
 import com.motaharinia.msutility.entity.OracleUtility;
 import com.motaharinia.persistence.orm.adminusercontact.AdminUserContact;
 import com.motaharinia.persistence.orm.adminuserskill.AdminUserSkill;
+import com.motaharinia.persistence.orm.etcitem.EtcItem;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,6 +13,14 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+
+/**
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ *  کلاس انتیتی ادمین
+ */
 @Entity
 @Table(name = "admin_user", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"username"})})
@@ -55,6 +64,7 @@ public class AdminUser extends GenericEntity implements Serializable {
     @Column(name = "date_of_birth", columnDefinition = OracleUtility.COLUMN_DEFINITION_DATE)
     private Date dateOfBirth;
 
+
     /**
      * اطلاعات تماس پیش فرض
      */
@@ -62,6 +72,12 @@ public class AdminUser extends GenericEntity implements Serializable {
     @JoinColumn(name = "default_admin_user_contact_id", referencedColumnName = "id")
     private AdminUserContact defaultAdminUserContact;
 
+    /**
+     *جنسیت
+     */
+    @JoinColumn(name = "gender_id", referencedColumnName = "id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private EtcItem gender;
 
     /**
      * لیست مهارتها

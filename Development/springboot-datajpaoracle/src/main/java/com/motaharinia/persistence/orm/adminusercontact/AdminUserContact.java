@@ -6,6 +6,13 @@ import com.motaharinia.msutility.entity.GenericEntity;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ *  کلاس انتیتی اطلاعات تماس ادمین
+ */
 @Entity
 @Table(name = "admin_user_contact")
 public class AdminUserContact extends GenericEntity implements Serializable {

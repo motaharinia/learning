@@ -8,6 +8,14 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
 
+
+/**
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ * کلاس انتیتی مهارت ادمین
+ */
 @Entity
 @Table(name = "admin_user_skill")
 public class AdminUserSkill extends GenericEntity implements Serializable {
