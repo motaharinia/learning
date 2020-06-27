@@ -33,3 +33,6 @@ Ctrl+D            : Duplicate Code Line
 Shift+F6          : Rename
 Shift+Alt+Up/Down : Move Code Line
 Ctrl+Alt+O        : Remove Unused Import Lines
+
+
+10.IntelijIDEA right-click on pom.xml -> Maven -> Download Documentation to show popup javadoc

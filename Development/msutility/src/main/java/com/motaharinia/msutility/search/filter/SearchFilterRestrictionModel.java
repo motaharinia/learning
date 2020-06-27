@@ -26,6 +26,12 @@ public class SearchFilterRestrictionModel implements Serializable {
 
 
     /**
+     *  مقادیر ثابت and و or بر روی جستجوی پیشرفته
+     */
+    SearchFilterNextConditionOperatorEnum nextConditionOperator= SearchFilterNextConditionOperatorEnum.AND;
+
+
+    /**
      * متد سازنده پیش فرض
      */
     public SearchFilterRestrictionModel() {
@@ -38,10 +44,11 @@ public class SearchFilterRestrictionModel implements Serializable {
      * @param fieldOperation عملیات شرط برای فیلد مورد نظر در جستجو
      * @param fieldValue     مقدار شرط برای فیلد مورد نظر در جستجو
      */
-    public SearchFilterRestrictionModel(String fieldName, SearchFilterOperationEnum fieldOperation, Object fieldValue) {
+    public SearchFilterRestrictionModel(String fieldName, SearchFilterOperationEnum fieldOperation, Object fieldValue, SearchFilterNextConditionOperatorEnum nextConditionOperator) {
         this.fieldName = fieldName;
         this.fieldOperation = fieldOperation;
         this.fieldValue = fieldValue;
+        this.nextConditionOperator=nextConditionOperator;
     }
 
     @Override
@@ -50,6 +57,7 @@ public class SearchFilterRestrictionModel implements Serializable {
                 "fieldName='" + fieldName + '\'' +
                 ", fieldOperation=" + fieldOperation +
                 ", fieldValue=" + fieldValue +
+                ", nextConditionOperator=" + nextConditionOperator +
                 '}';
     }
 
@@ -78,4 +86,11 @@ public class SearchFilterRestrictionModel implements Serializable {
         this.fieldOperation = fieldOperation;
     }
 
+    public SearchFilterNextConditionOperatorEnum getNextConditionOperator() {
+        return nextConditionOperator;
+    }
+
+    public void setNextConditionOperator(SearchFilterNextConditionOperatorEnum nextConditionOperator) {
+        this.nextConditionOperator = nextConditionOperator;
+    }
 }

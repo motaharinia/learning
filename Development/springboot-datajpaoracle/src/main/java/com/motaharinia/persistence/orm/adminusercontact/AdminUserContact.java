@@ -11,16 +11,22 @@ import java.io.Serializable;
  * Date: 2020-06-12<br>
  * Time: 01:05:58<br>
  * Description:<br>
- *  کلاس انتیتی اطلاعات تماس ادمین
+ * کلاس انتیتی اطلاعات تماس ادمین
  */
 @Entity
 @Table(name = "admin_user_contact")
 public class AdminUserContact extends GenericEntity implements Serializable {
+    /**
+     * شناسه
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer  id;
+    private Integer id;
 
+    /**
+     * نشانی
+     */
     @Column(name = "address")
     private String address;
 
@@ -33,11 +39,11 @@ public class AdminUserContact extends GenericEntity implements Serializable {
     }
 
     //getter-setter:
-    public Integer  getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Integer  id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

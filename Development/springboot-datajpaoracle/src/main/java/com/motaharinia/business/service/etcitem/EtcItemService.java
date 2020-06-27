@@ -1,10 +1,13 @@
 package com.motaharinia.business.service.etcitem;
 
 
+import com.motaharinia.msutility.customexception.BusinessException;
+import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.persistence.orm.etcitem.EtcItem;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 /**
@@ -26,7 +29,7 @@ public interface EtcItemService  {
      * @return خروجی: مقدار ثابت
      */
     @NotNull
-    EtcItem findByIdAndCheckEntity(@NotNull Integer id,@NotNull  Class etcItemEnumClass, String checkTypeTag,@NotNull  Boolean checkInvalid);
+    EtcItem findByIdAndCheckEntity(@NotNull Integer id,@NotNull  Class etcItemEnumClass, String checkTypeTag,@NotNull  Boolean checkInvalid) throws UtilityException, InvocationTargetException, IllegalAccessException, BusinessException;
 
     /**
      * این متد یک مقدار ثابت را با استفاده از مقدار آن جستجو میکند و چک میکند آن مقدار ثابت غیرفعال نباشد

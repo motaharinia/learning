@@ -125,11 +125,11 @@ public class AdminUserControllerTest {
             dateOfBirthTo.setDay(6);
 
             List<SearchFilterRestrictionModel> searchFilterRestrictionModelList = new ArrayList<>();
-            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH, "mostafa"));
-            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("defaultAdminUserContact.address", SearchFilterOperationEnum.MATCH, "Shahrak Gharb"));
-            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("skillSet.title", SearchFilterOperationEnum.MATCH, random));
-            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("dateOfBirth", SearchFilterOperationEnum.GREATER_THAN_EQUAL, dateOfBirthFrom));
-            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("dateOfBirth", SearchFilterOperationEnum.LESS_THAN_EQUAL, dateOfBirthTo));
+            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH, "mostafa",SearchFilterNextConditionOperatorEnum.AND));
+            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("defaultAdminUserContact.address", SearchFilterOperationEnum.MATCH, "Shahrak Gharb",SearchFilterNextConditionOperatorEnum.AND));
+            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("skillSet.title", SearchFilterOperationEnum.MATCH, random,SearchFilterNextConditionOperatorEnum.AND));
+            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("dateOfBirth", SearchFilterOperationEnum.GREATER_THAN_EQUAL, dateOfBirthFrom,SearchFilterNextConditionOperatorEnum.AND));
+            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("dateOfBirth", SearchFilterOperationEnum.LESS_THAN_EQUAL, dateOfBirthTo,SearchFilterNextConditionOperatorEnum.AND));
             List<SearchFilterSortModel> searchFilterSortModelList = new ArrayList<>();
             searchFilterSortModelList.add(new SearchFilterSortModel("firstName", SearchFilterSortTypeEnum.ASC));
             searchFilterSortModelList.add(new SearchFilterSortModel("lastName", SearchFilterSortTypeEnum.DSC));

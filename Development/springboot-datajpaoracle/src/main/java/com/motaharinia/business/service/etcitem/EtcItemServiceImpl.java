@@ -1,13 +1,15 @@
 package com.motaharinia.business.service.etcitem;
 
 
+import com.motaharinia.msutility.customexception.BusinessException;
+import com.motaharinia.msutility.customexception.UtilityException;
+import com.motaharinia.msutility.customexception.UtilityExceptionKeyEnum;
+import com.motaharinia.msutility.entity.EntityTools;
 import com.motaharinia.persistence.orm.adminuser.AdminUser;
-import com.motaharinia.persistence.orm.adminuserskill.AdminUserSkill;
-import com.motaharinia.persistence.orm.adminuserskill.AdminUserSkillRepository;
 import com.motaharinia.persistence.orm.etcitem.EtcItem;
 import com.motaharinia.persistence.orm.etcitem.EtcItemRepository;
 import com.motaharinia.presentation.adminuser.AdminUserModel;
-import com.motaharinia.presentation.adminuserskill.AdminUserSkillModel;
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +17,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import javax.transaction.Transactional;
-import java.util.HashSet;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 //https://www.baeldung.com/spring-data-jpa-projections
 //https://walczak.it/blog/spring-data-jpa-projection-dynamic-queries
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  * Date: 2020-06-12<br>
  * Time: 01:05:58<br>
  * Description:<br>
- *   کلاس پیاده سازی اینترفیس مدیریت مقادیر ثابت
+ * کلاس پیاده سازی اینترفیس مدیریت مقادیر ثابت
  */
 @Service
 @Transactional
@@ -63,10 +63,6 @@ public class EtcItemServiceImpl implements EtcItemService {
     }
 
 
-
-
-
-
     /**
      * این متد یک مقدار ثابت را با استفاده از شناسه آن جستجو میکند و چک میکند آن مقدار ثابت غیرفعال نباشد
      *
@@ -77,8 +73,29 @@ public class EtcItemServiceImpl implements EtcItemService {
      * @return خروجی: مقدار ثابت
      */
     @Override
-    public @NotNull EtcItem findByIdAndCheckEntity(@NotNull Integer id, @NotNull Class etcItemEnumClass, String checkTypeTag, @NotNull Boolean checkInvalid) {
-        return null;
+    public @NotNull EtcItem findByIdAndCheckEntity(@NotNull Integer id, @NotNull Class etcItemEnumClass, String checkTypeTag, @NotNull Boolean checkInvalid) throws UtilityException, InvocationTargetException, IllegalAccessException, BusinessException {
+        if (ObjectUtils.isEmpty(id)) {
+            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "id");
+        }
+        if (ObjectUtils.isEmpty(etcItemEnumClass)) {
+            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "etcItemEnumClass");
+        }
+        if (ObjectUtils.isEmpty(checkInvalid)) {
+            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "checkInvalid");
+        }
+        EtcItem etcItem = etcItemRepository.findById(id).get();
+        EntityTools.checkEntity(etcItem, EtcItem.class, checkInvalid);
+
+        //تطبیق مقدار نوع ثابت جستجو شده با نوع کلاس ورودی
+        String type = etcItemEnumClass.getSimpleName().replace("Enum", "");
+        type = type.substring(0, 1).toLowerCase() + type.substring(1);
+        if (!type.equalsIgnoreCase(etcItem.getType())) {
+            throw new BusinessException(getClass(), EtcItemBusinessExceptionKeyEnum.ETC_ITEM_TYPE_NOT_MATCH, type + "!=" + etcItem.getType());
+        }
+        if ((!ObjectUtils.isEmpty(checkTypeTag)) && (!etcItem.getTypeTag().contains(checkTypeTag))) {
+            throw new BusinessException(getClass(), EtcItemBusinessExceptionKeyEnum.ETC_ITEM_TYPETAG_NOT_MATCH, checkTypeTag + " not contains " + etcItem.getTypeTag());
+        }
+        return etcItem;
     }
 
     /**

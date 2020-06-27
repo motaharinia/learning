@@ -47,7 +47,7 @@ public class SearchFilterModelTests {
             Locale.setDefault(new Locale("fa"));
 
             List<SearchFilterRestrictionModel> searchFilterRestrictionModelList = new ArrayList<>();
-            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH, "mostafa"));
+            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH, "mostafa",SearchFilterNextConditionOperatorEnum.AND));
             List<SearchFilterSortModel> searchFilterSortModelList = new ArrayList<>();
             searchFilterSortModelList.add(new SearchFilterSortModel("lastName", SearchFilterSortTypeEnum.ASC));
             SearchFilterModel searchFilterModel = new SearchFilterModel();

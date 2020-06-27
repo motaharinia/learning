@@ -26,8 +26,22 @@ public enum UtilityExceptionKeyEnum implements  CustomExceptionKey{
      *  تاریخ-زمان معتبر نمیباشد
      */
     DATE_TIME_VALIDATION_FAILED("DATE_TIME_VALIDATION_FAILED"),
-
-
+    /**
+     * مقدار انتیتی تهی میباشد
+     */
+    CHECK_ENTITY_IS_NULL("CHECK_ENTITY_IS_NULL"),
+    /**
+     *  انتیتی غیرفعال میباشد
+     */
+    CHECK_ENTITY_IS_INVALID("CHECK_ENTITY_IS_INVALID"),
+    /**
+     *رفلکشن: فیلد مورد نظر مطابق نام ورودی در کلاس وجود ندارد
+     */
+    REFLECTION_FIELD_IS_NOT_EXISTED("REFLECTION_FIELD_IS_NOT_EXISTED"),
+    /**
+     *رفلکشن: متد مورد نظر مطابق نام ورودی در کلاس وجود ندارد
+     */
+    REFLECTION_METHOD_IS_NOT_EXISTED("REFLECTION_METHOD_IS_NOT_EXISTED"),
 
 
     TOKEN_IS_INVALID("TOKEN_IS_INVALID"),
@@ -45,14 +59,13 @@ public enum UtilityExceptionKeyEnum implements  CustomExceptionKey{
     ORIGINAL_IMAGE_IS_NULL_OR_INCORRECT("ORIGINAL_IMAGE_IS_NULL_OR_INCORRECT");
 
     private final String value;
-    private final String moduleName = "test";
 
     UtilityExceptionKeyEnum(String value) {
         this.value = value;
     }
 
     public String getValue() {
-        return moduleName + "." + value;
+        return value;
     }
 
     public String toString() {

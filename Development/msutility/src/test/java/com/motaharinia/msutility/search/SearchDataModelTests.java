@@ -1,13 +1,11 @@
 package com.motaharinia.msutility.search;
 
 import com.motaharinia.msutility.customfield.CustomDate;
-import com.motaharinia.msutility.json.CustomObjectMapper;
 import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.*;
 import com.motaharinia.msutility.search.sample.SearchRowViewAdminUserBrief;
 import com.motaharinia.msutility.search.sample.SearchRowViewAdminUserBriefImpl;
 import org.junit.jupiter.api.*;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 
@@ -28,7 +26,7 @@ import static org.assertj.core.api.Assertions.fail;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SearchDataModelTests {
 
-    private final CustomObjectMapper mapper = new CustomObjectMapper();
+//    private final CustomObjectMapper mapper = new CustomObjectMapper();
 
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
@@ -49,7 +47,6 @@ public class SearchDataModelTests {
     @Order(1)
     @Test
     void serializeTest() {
-        System.out.println("LocaleContextHolder.getLocale()"+ LocaleContextHolder.getLocale());
         try {
             CustomDate dateOfBirth=new CustomDate();
             dateOfBirth.setYear(1399);
@@ -59,8 +56,8 @@ public class SearchDataModelTests {
 
             Locale.setDefault(new Locale("fa"));
             List<SearchFilterRestrictionModel> searchFilterRestrictionModelList = new ArrayList<>();
-            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH, "mostafa"));
-            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("dateOfBirth", SearchFilterOperationEnum.GREATER_THAN, dateOfBirth));
+            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH, "mostafa",SearchFilterNextConditionOperatorEnum.AND));
+            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("dateOfBirth", SearchFilterOperationEnum.GREATER_THAN, dateOfBirth,SearchFilterNextConditionOperatorEnum.AND));
             List<SearchFilterSortModel> searchFilterSortModelList = new ArrayList<>();
             searchFilterSortModelList.add(new SearchFilterSortModel("firstName", SearchFilterSortTypeEnum.ASC));
             searchFilterSortModelList.add(new SearchFilterSortModel("lastName", SearchFilterSortTypeEnum.DSC));

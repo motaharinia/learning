@@ -41,7 +41,7 @@ public interface CalendarTools {
     @NotNull
     static String fixOneDigit(@NotNull String inputDigit) throws UtilityException {
         if (ObjectUtils.isEmpty(inputDigit)) {
-            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "");
+            throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "inputDigit");
         }
         if (inputDigit.length() > 1) {
             return inputDigit;
