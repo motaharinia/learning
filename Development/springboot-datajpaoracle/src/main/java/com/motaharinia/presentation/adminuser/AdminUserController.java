@@ -3,6 +3,7 @@ package com.motaharinia.presentation.adminuser;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.motaharinia.business.service.adminuser.AdminUserService;
+import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.json.CustomObjectMapper;
 import com.motaharinia.msutility.search.data.SearchDataModel;
@@ -12,6 +13,7 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Optional;
 
 /**
@@ -39,7 +41,7 @@ public class AdminUserController {
      * @return خروجی: مدل ثبت حاوی شناسه
      */
     @PostMapping("/adminUser")
-    public AdminUserModel create(@RequestBody @Validated AdminUserModel adminUserModel) throws UtilityException {
+    public AdminUserModel create(@RequestBody @Validated AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException {
         return adminUserService.create(adminUserModel);
     }
 

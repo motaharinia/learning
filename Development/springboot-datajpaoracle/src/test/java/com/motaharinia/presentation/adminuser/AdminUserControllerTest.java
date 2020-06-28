@@ -2,6 +2,8 @@ package com.motaharinia.presentation.adminuser;
 
 
 import com.motaharinia.business.service.adminuser.SearchRowViewAdminUserBrief;
+import com.motaharinia.msutility.customexception.BusinessException;
+import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.customfield.CustomDate;
 import com.motaharinia.msutility.json.CustomObjectMapper;
 import com.motaharinia.msutility.search.data.SearchDataModel;
@@ -9,6 +11,7 @@ import com.motaharinia.msutility.search.filter.*;
 import com.motaharinia.msutility.string.RandomGenerationTypeEnum;
 import com.motaharinia.msutility.string.StringTools;
 import com.motaharinia.presentation.adminuserskill.AdminUserSkillModel;
+import com.motaharinia.business.service.etcitem.EtcItemInitialData;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.ObjectUtils;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -46,6 +50,8 @@ public class AdminUserControllerTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
+    @Autowired
+    private EtcItemInitialData etcItemInitialData;
 
     /**
      * شیی crud
@@ -53,13 +59,24 @@ public class AdminUserControllerTest {
     private static Integer crudId;
     private static String random;
 
+
+
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
      */
     @BeforeEach
-    void initUseCase() {
+    void initUseCase() throws InvocationTargetException, UtilityException, IllegalAccessException, BusinessException {
         Locale.setDefault(new Locale("fa"));
+        etcItemInitialData.checkEtcItems();
     }
+
+
+
+
+
+
+
+
 
     @Test
     @Order(1)
@@ -80,6 +97,7 @@ public class AdminUserControllerTest {
             adminUserModel.setPassword("123456789");
             adminUserModel.setUsername("eng.motahari_"+random+"@gmail.com");
             adminUserModel.setDateOfBirth(dateOfBirth);
+            adminUserModel.setGender_id(1);
             adminUserModel.setDefaultAdminUserContact_address("Shahrak Gharb " + random);
             adminUserModel.setSkillList(Arrays.asList(new AdminUserSkillModel[]{new AdminUserSkillModel(null,"skill-" + random),new AdminUserSkillModel(null,"skill-" + StringTools.generateRandomString(RandomGenerationTypeEnum.NUMBER,5,false))}));
 

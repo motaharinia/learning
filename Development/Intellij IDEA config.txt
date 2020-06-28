@@ -10,14 +10,14 @@
 
 5.IntelijIDEA: File -> Settings -> Editor -> Color Scheme -> Color Scheme Font -> Scheme: Default -> uncheck "Show only monospaced fonts" and set font to "Tahoma"
 
-6.IntelijIDEA: File -> New -> Edit File Templates... -> Class -> edit right box:
+6.IntelijIDEA: File -> New -> Edit File Templates... -> Class -> edit right box (source: https://www.jetbrains.com/help/idea/file-template-variables.html#predefined_template_variables):
 #if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
 #parse("File Header.java")
 
 /**
  * User: https://github.com/motaharinia<br>
- * Date: 2020-06-16<br>
- * Time: 23:27:46<br>
+ * Date: ${YEAR}-${MONTH}-${DAY}<br>
+ * Time: ${HOUR}:${MINUTE}:${SECOND}<br>
  * Description:<br>
  */
 public class ${NAME} {

@@ -1,9 +1,10 @@
 package com.motaharinia.persistence.orm.etcitem;
 
-import com.motaharinia.persistence.orm.adminuserskill.AdminUserSkill;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import th.co.geniustree.springdata.jpa.repository.JpaSpecificationExecutorWithProjection;
+
+import java.util.List;
 
 //https://docs.spring.io/spring-data/jpa/docs/1.5.0.RELEASE/reference/html/jpa.repositories.html
 //https://attacomsian.com/blog/spring-data-jpa-specifications
@@ -15,9 +16,11 @@ import th.co.geniustree.springdata.jpa.repository.JpaSpecificationExecutorWithPr
  * Date: 2020-06-12<br>
  * Time: 01:05:58<br>
  * Description:<br>
- *  کلاس ریپازیتوری مقادیر ثابت
+ * کلاس ریپازیتوری مقادیر ثابت
  */
 @Repository
 public interface EtcItemRepository extends JpaRepository<EtcItem, Integer>, JpaSpecificationExecutorWithProjection<EtcItem> {
-
+    EtcItem findByValueAndType(String value, String type);
+    EtcItem findByValueAndTypeAndTypeTag(String value, String type, String typeTag);
+    List<EtcItem> findAllByTypeTag(String typeTag);
 }

@@ -1,6 +1,7 @@
 package com.motaharinia.presentation.adminuser;
 
 import com.motaharinia.msutility.customfield.CustomDate;
+import com.motaharinia.msutility.customvalidation.required.Required;
 import com.motaharinia.presentation.adminuserskill.AdminUserSkillModel;
 
 import java.util.ArrayList;
@@ -45,6 +46,13 @@ public class AdminUserModel {
      */
     private CustomDate dateOfBirth;
 
+
+    /**
+     * جنسیت
+     */
+    @Required
+    private Integer gender_id;
+
     /**
      * نشانی اطلاعات تماس پیش فرض
      */
@@ -64,6 +72,7 @@ public class AdminUserModel {
                 ", password='" + password + '\'' +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
+                ", dateOfBirth='" + dateOfBirth + '\'' +
                 ", defaultAdminUserContact_address='" + defaultAdminUserContact_address + '\'' +
                 ", skillList=[" + skillList.stream().map(item -> item.toString()).collect(Collectors.joining(",")) + "]" +
                 '}';
@@ -135,5 +144,13 @@ public class AdminUserModel {
 
     public void setDateOfBirth(CustomDate dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
+    }
+
+    public Integer getGender_id() {
+        return gender_id;
+    }
+
+    public void setGender_id(Integer gender_id) {
+        this.gender_id = gender_id;
     }
 }

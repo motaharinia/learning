@@ -1,10 +1,13 @@
 package com.motaharinia.business.service.adminuser;
 
+import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.SearchFilterModel;
 import com.motaharinia.presentation.adminuser.AdminUserModel;
 import org.jetbrains.annotations.NotNull;
+
+import java.lang.reflect.InvocationTargetException;
 
 
 /**
@@ -22,7 +25,7 @@ public interface AdminUserService {
      * @return خروجی: مدل ثبت حاوی شناسه
      */
     @NotNull
-    AdminUserModel create(@NotNull  AdminUserModel adminUserModel) throws UtilityException;
+    AdminUserModel create(@NotNull  AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException;
 
     /**
      * متد جستجوی با شناسه

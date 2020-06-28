@@ -152,4 +152,12 @@ public class AdminUser extends GenericEntity implements Serializable {
     public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
+
+    public EtcItem getGender() {
+        return gender;
+    }
+
+    public void setGender(EtcItem gender) {
+        this.gender = gender;
+    }
 }

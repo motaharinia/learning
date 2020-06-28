@@ -39,7 +39,7 @@ public interface EtcItemService  {
      * @return خروجی: مقدار ثابت
      */
     @NotNull
-    EtcItem findByValueAndCheckEntity(@NotNull EtcItemEnum checkEtcItemEnum, String checkTypeTag,@NotNull  Boolean checkInvalid);
+    EtcItem findByValueAndCheckEntity(@NotNull EtcItemEnum checkEtcItemEnum, String checkTypeTag,@NotNull  Boolean checkInvalid) throws IllegalAccessException, UtilityException, InvocationTargetException;
     
 //     @Override
 //    CustomComboModel customCombo(CustomComboFilterModel model) throws Exception;

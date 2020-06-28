@@ -1,14 +1,17 @@
 
 package com.motaharinia.msutility.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
-
 import org.hibernate.search.annotations.Field;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+import java.io.Serializable;
+import java.util.Date;
+
+//https://vladmihalcea.com/prepersist-preupdate-embeddable-jpa-hibernate/
+//https://stackoverflow.com/questions/49954812/how-can-you-make-a-created-at-column-generate-the-creation-date-time-automatical/49954903
 
 /**
  * User: https://github.com/motaharinia<br>
@@ -79,6 +82,23 @@ public class GenericEntity implements Serializable {
      */
     @Column(name = "update_user_id")
     private Integer updateUserId;
+
+
+//    @PrePersist
+//    public void prePersist() {
+//        createAt = new Date();
+//        createUserId = LoggedUser.getId();
+//    }
+//
+//    @PreUpdate
+//    public void preUpdate() {
+//        updateAt = new Date();
+//        updateUserId = LoggedUser.getId();
+//    }
+//
+
+
+
 
     //getter-setter:
     public Boolean getHidden() {

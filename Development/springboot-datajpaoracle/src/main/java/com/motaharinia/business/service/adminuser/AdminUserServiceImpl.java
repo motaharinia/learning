@@ -2,7 +2,10 @@ package com.motaharinia.business.service.adminuser;
 
 
 import com.motaharinia.business.service.adminuserskill.AdminUserSkillService;
+import com.motaharinia.business.service.etcitem.EtcItemService;
+import com.motaharinia.business.service.etcitem.GenderEnum;
 import com.motaharinia.msutility.calendar.CalendarTools;
+import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.customfield.CustomDate;
 import com.motaharinia.msutility.search.data.SearchDataModel;
@@ -12,6 +15,7 @@ import com.motaharinia.persistence.orm.adminuser.AdminUserRepository;
 import com.motaharinia.persistence.orm.adminuser.AdminUserSpecification;
 import com.motaharinia.persistence.orm.adminusercontact.AdminUserContact;
 import com.motaharinia.persistence.orm.adminusercontact.AdminUserContactRepository;
+import com.motaharinia.persistence.orm.etcitem.EtcItem;
 import com.motaharinia.presentation.adminuser.AdminUserModel;
 import com.motaharinia.presentation.adminuserskill.AdminUserSkillModel;
 import org.jetbrains.annotations.NotNull;
@@ -22,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import javax.transaction.Transactional;
+import java.lang.reflect.InvocationTargetException;
 
 //https://www.baeldung.com/spring-data-jpa-projections
 //https://walczak.it/blog/spring-data-jpa-projection-dynamic-queries
@@ -52,6 +57,12 @@ public class AdminUserServiceImpl implements AdminUserService {
      * سرویس مهارتها
      */
     private AdminUserSkillService adminUserSkillService;
+
+    /**
+     * سرویس مقادیر ثابت
+     */
+    private EtcItemService etcItemService;
+
     /**
      * مشخصات جستجوی ادمین
      */
@@ -71,12 +82,13 @@ public class AdminUserServiceImpl implements AdminUserService {
      * متد سازنده
      */
     @Autowired
-    public AdminUserServiceImpl(AdminUserRepository adminUserRepository, AdminUserContactRepository adminUserContactRepository, AdminUserSkillService adminUserSkillService, AdminUserSpecification adminUserSpecification, ModelMapper modelMapper) {
+    public AdminUserServiceImpl(AdminUserRepository adminUserRepository, AdminUserContactRepository adminUserContactRepository, AdminUserSkillService adminUserSkillService,EtcItemService etcItemService, AdminUserSpecification adminUserSpecification, ModelMapper modelMapper) {
         this.adminUserRepository = adminUserRepository;
         this.adminUserContactRepository = adminUserContactRepository;
         this.adminUserSkillService = adminUserSkillService;
-        this.modelMapper = modelMapper;
+        this.etcItemService=etcItemService;
         this.adminUserSpecification = adminUserSpecification;
+        this.modelMapper = modelMapper;
     }
 
     /**
@@ -87,7 +99,7 @@ public class AdminUserServiceImpl implements AdminUserService {
      */
     @Override
     @NotNull
-    public AdminUserModel create(@NotNull AdminUserModel adminUserModel) throws UtilityException {
+    public AdminUserModel create(@NotNull AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException {
 
         //ثبت اطلاعات تماس ادمین
         AdminUserContact adminUserContact = new AdminUserContact();
@@ -101,6 +113,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         adminUser.setPassword(adminUserModel.getPassword());
         adminUser.setUsername(adminUserModel.getUsername());
         adminUser.setDateOfBirth(CalendarTools.getDateFromCustomDate(adminUserModel.getDateOfBirth()));
+        adminUser.setGender(etcItemService.findByIdAndCheckEntity(adminUserModel.getGender_id(), GenderEnum.class,null,true));
         //ثبت مهارتهای ادمین
         adminUser = adminUserSkillService.createByAdminUser(adminUser, adminUserModel.getSkillList());
 

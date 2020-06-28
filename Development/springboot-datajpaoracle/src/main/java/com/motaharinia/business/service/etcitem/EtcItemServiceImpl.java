@@ -9,7 +9,6 @@ import com.motaharinia.persistence.orm.adminuser.AdminUser;
 import com.motaharinia.persistence.orm.etcitem.EtcItem;
 import com.motaharinia.persistence.orm.etcitem.EtcItemRepository;
 import com.motaharinia.presentation.adminuser.AdminUserModel;
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import org.springframework.util.ObjectUtils;
 
 import javax.transaction.Transactional;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 //https://www.baeldung.com/spring-data-jpa-projections
@@ -93,7 +93,7 @@ public class EtcItemServiceImpl implements EtcItemService {
             throw new BusinessException(getClass(), EtcItemBusinessExceptionKeyEnum.ETC_ITEM_TYPE_NOT_MATCH, type + "!=" + etcItem.getType());
         }
         if ((!ObjectUtils.isEmpty(checkTypeTag)) && (!etcItem.getTypeTag().contains(checkTypeTag))) {
-            throw new BusinessException(getClass(), EtcItemBusinessExceptionKeyEnum.ETC_ITEM_TYPETAG_NOT_MATCH, checkTypeTag + " not contains " + etcItem.getTypeTag());
+            throw new BusinessException(getClass(), EtcItemBusinessExceptionKeyEnum.ETC_ITEM_TYPETAG_NOT_MATCH, etcItem.getTypeTag() + " not contains " + checkTypeTag);
         }
         return etcItem;
     }
@@ -107,8 +107,21 @@ public class EtcItemServiceImpl implements EtcItemService {
      * @return خروجی: مقدار ثابت
      */
     @Override
-    public @NotNull EtcItem findByValueAndCheckEntity(@NotNull EtcItemEnum checkEtcItemEnum, String checkTypeTag, @NotNull Boolean checkInvalid) {
-        return null;
+    public @NotNull EtcItem findByValueAndCheckEntity(@NotNull EtcItemEnum checkEtcItemEnum, String checkTypeTag, @NotNull Boolean checkInvalid) throws IllegalAccessException, UtilityException, InvocationTargetException {
+        if (ObjectUtils.isEmpty(checkEtcItemEnum)) {
+            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "checkEtcItemEnum");
+        }
+        if (ObjectUtils.isEmpty(checkInvalid)) {
+            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "checkInvalid");
+        }
+        EtcItem etcItem = null;
+        if (ObjectUtils.isEmpty(checkTypeTag)) {
+            etcItem = etcItemRepository.findByValueAndType(checkEtcItemEnum.getValue(), checkEtcItemEnum.getType());
+        } else {
+            etcItem = etcItemRepository.findByValueAndTypeAndTypeTag(checkEtcItemEnum.getValue(), checkEtcItemEnum.getType(), checkTypeTag);
+        }
+        EntityTools.checkEntity(etcItem, EtcItem.class, checkInvalid);
+        return etcItem;
     }
 
     /**
@@ -118,8 +131,12 @@ public class EtcItemServiceImpl implements EtcItemService {
      * @return خروجی: لیستی از مقادیر ثابت
      */
     @Override
-    public @NotNull List<EtcItem> findByTypeTag(@NotNull String typeTag) {
-        return null;
+    public @NotNull List<EtcItem> findByTypeTag(String typeTag) {
+        if (ObjectUtils.isEmpty(typeTag)) {
+            return new ArrayList<>();
+        } else {
+            return etcItemRepository.findAllByTypeTag(typeTag);
+        }
     }
 
     @NotNull
