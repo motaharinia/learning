@@ -4,6 +4,7 @@ import com.motaharinia.msutility.customfield.CustomDate;
 import com.motaharinia.msutility.customvalidation.required.Required;
 import com.motaharinia.presentation.adminuserskill.AdminUserSkillModel;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
  * Description:<br>
  *  کلاس مدل ادمین
  */
-public class AdminUserModel {
+public class AdminUserModel implements Serializable {
     /**
      * شناسه
      */

@@ -1,5 +1,7 @@
 package com.motaharinia.presentation.adminuserskill;
 
+import java.io.Serializable;
+
 /**
  * User: https://github.com/motaharinia<br>
  * Date: 2020-06-12<br>
@@ -7,7 +9,7 @@ package com.motaharinia.presentation.adminuserskill;
  * Description:<br>
  *  کلاس مدل مهارت ادمین
  */
-public class AdminUserSkillModel {
+public class AdminUserSkillModel implements Serializable {
     /**
      * شناسه
      */
