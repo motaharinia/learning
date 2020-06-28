@@ -15,7 +15,6 @@ import com.motaharinia.persistence.orm.adminuser.AdminUserRepository;
 import com.motaharinia.persistence.orm.adminuser.AdminUserSpecification;
 import com.motaharinia.persistence.orm.adminusercontact.AdminUserContact;
 import com.motaharinia.persistence.orm.adminusercontact.AdminUserContactRepository;
-import com.motaharinia.persistence.orm.etcitem.EtcItem;
 import com.motaharinia.presentation.adminuser.AdminUserModel;
 import com.motaharinia.presentation.adminuserskill.AdminUserSkillModel;
 import org.jetbrains.annotations.NotNull;
@@ -162,11 +161,11 @@ public class AdminUserServiceImpl implements AdminUserService {
     @Override
     @NotNull
     public SearchDataModel readGrid(@NotNull SearchFilterModel searchFilterModel) throws UtilityException {
-        if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
-            searchFilterModel.getRestrictionList().stream().forEach((item) -> {
-                System.out.println("AdminUserServiceImpl.readGrid searchFilterModel.getRestrictionList() loop item.getFieldValue():" + item.getFieldValue() + " item.getFieldValue().getClass():" + item.getFieldValue().getClass());
-            });
-        }
+//        if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
+//            searchFilterModel.getRestrictionList().stream().forEach((item) -> {
+//                System.out.println("AdminUserServiceImpl.readGrid searchFilterModel.getRestrictionList() loop item.getFieldValue():" + item.getFieldValue() + " item.getFieldValue().getClass():" + item.getFieldValue().getClass());
+//            });
+//        }
         adminUserSpecification = (AdminUserSpecification) searchFilterModel.makeSpecification(adminUserSpecification);
 //        if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
 //            searchFilterModel.getRestrictionList().stream().forEach((item) -> {

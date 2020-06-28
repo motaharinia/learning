@@ -83,7 +83,7 @@ public class AdminUserController {
      * @return خروجی: مدل ویرایش شده
      */
     @PutMapping("/adminUser")
-    public AdminUserModel update(@RequestBody @Validated AdminUserModel adminUserModel) throws UtilityException {
+    public AdminUserModel update(@RequestBody @Validated AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException {
         return adminUserService.update(adminUserModel);
     }
 
