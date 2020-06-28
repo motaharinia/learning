@@ -53,7 +53,7 @@ public interface AdminUserService {
      * @return خروجی: مدل ویرایش شده
      */
     @NotNull
-    AdminUserModel update(@NotNull AdminUserModel adminUserModel) throws UtilityException;
+    AdminUserModel update(@NotNull AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException;
 
     /**
      * متد حذف با شناسه

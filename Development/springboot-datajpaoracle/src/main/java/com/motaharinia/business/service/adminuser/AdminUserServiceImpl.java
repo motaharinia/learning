@@ -189,13 +189,14 @@ public class AdminUserServiceImpl implements AdminUserService {
      */
     @Override
     @NotNull
-    public AdminUserModel update(@NotNull AdminUserModel adminUserModel) throws UtilityException {
+    public AdminUserModel update(@NotNull AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException {
         AdminUser adminUser = adminUserRepository.findById(adminUserModel.getId()).get();
         adminUser.setFirstName(adminUserModel.getFirstName());
         adminUser.setLastName(adminUserModel.getLastName());
         adminUser.setPassword(adminUserModel.getPassword());
         adminUser.setUsername(adminUserModel.getUsername());
         adminUser.setDateOfBirth(CalendarTools.getDateFromCustomDate(adminUserModel.getDateOfBirth()));
+        adminUser.setGender(etcItemService.findByIdAndCheckEntity(adminUserModel.getGender_id(), GenderEnum.class,null,true));
         if (ObjectUtils.isEmpty(adminUser.getDefaultAdminUserContact())) {
             AdminUserContact adminUserContact = new AdminUserContact();
             adminUserContact.setAddress(adminUserModel.getDefaultAdminUserContact_address());
