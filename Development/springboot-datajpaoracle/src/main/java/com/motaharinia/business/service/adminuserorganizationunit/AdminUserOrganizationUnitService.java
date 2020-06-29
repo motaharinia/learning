@@ -32,7 +32,7 @@ public interface AdminUserOrganizationUnitService {
 
     /**
      * متد درخت
-     * @param parentId شناسه والد
+     * @param parentId  شناسه والد(برای دریافت درخت گره های روت عدد صفر ارسال شود)
      * @return خروجی: مدل درخت
      */
     @NotNull

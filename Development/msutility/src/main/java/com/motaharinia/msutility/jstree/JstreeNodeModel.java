@@ -1,6 +1,7 @@
 package com.motaharinia.msutility.jstree;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.util.ObjectUtils;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,13 +9,14 @@ import javax.persistence.Id;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * User: https://github.com/motaharinia<br>
  * Date: 2020-06-12<br>
  * Time: 01:05:58<br>
  * Description:<br>
- *     این کلاس مدل درخت jstree میباشد
+ * این کلاس مدل درخت jstree میباشد
  */
 public class JstreeNodeModel implements Serializable {
 
@@ -103,6 +105,7 @@ public class JstreeNodeModel implements Serializable {
 
     /**
      * متد سازنده که با دریافت مشخصات ورودی مدل درخت را میسازد
+     *
      * @param id
      * @param text
      * @param children
@@ -125,7 +128,26 @@ public class JstreeNodeModel implements Serializable {
 
     @Override
     public String toString() {
-        return "JstreeNode{" + "id_incr=" + id_incr + ", id=" + id + ", text=" + text + ", children=" + children + ", icon=" + icon + ", state=" + state + ", a_attr=" + a_attr + ", li_attr=" + li_attr + ", parent=" + parent + ", type=" + type + ", data=" + data + ", nodeContents=" + nodeContents + '}';
+
+        String childrenString = "[]";
+        if (!ObjectUtils.isEmpty(children)) {
+            childrenString = "[" + System.lineSeparator() + children.stream().map(item ->"      "+ item.toString()).collect(Collectors.joining("," + System.lineSeparator())) + System.lineSeparator() + "]";
+        }
+
+        return "JstreeNode{" +
+                ", id=" + id +
+                ", text=" + text +
+                ", children=" + childrenString +
+                ", icon=" + icon +
+                ", state=" + state +
+                ", a_attr=" + a_attr +
+                ", li_attr=" + li_attr +
+                ", parent=" + parent +
+                ", type=" + type +
+                ", data=" + data +
+                ", nodeContents=" + nodeContents +
+                "id_incr=" + id_incr +
+                '}';
     }
 
 

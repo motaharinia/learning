@@ -19,6 +19,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.ObjectUtils;
@@ -57,7 +59,7 @@ public class AdminUserControllerTest {
     /**
      * شیی crud
      */
-    private static Integer crudId;
+    private static Integer crudId=1;
     private static String random;
 
 
@@ -143,28 +145,37 @@ public class AdminUserControllerTest {
             dateOfBirthTo.setMonth(4);
             dateOfBirthTo.setDay(6);
 
+
+            List<String> usernameList = new ArrayList<>();
+            usernameList.add("eng.motahari_pxQti@gmail.com");
+            usernameList.add("eng.motahari_kqFkT@gmail.com");
+            usernameList.add("eng.motahari_cxgFw@gmail.com");
+
             List<SearchFilterRestrictionModel> searchFilterRestrictionModelList = new ArrayList<>();
             searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH, "mostafa",SearchFilterNextConditionOperatorEnum.AND));
             searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("defaultAdminUserContact.address", SearchFilterOperationEnum.MATCH, "Shahrak Gharb",SearchFilterNextConditionOperatorEnum.AND));
-            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("skillSet.title", SearchFilterOperationEnum.MATCH, random,SearchFilterNextConditionOperatorEnum.AND));
-            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("dateOfBirth", SearchFilterOperationEnum.GREATER_THAN_EQUAL, dateOfBirthFrom,SearchFilterNextConditionOperatorEnum.AND));
-            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("dateOfBirth", SearchFilterOperationEnum.LESS_THAN_EQUAL, dateOfBirthTo,SearchFilterNextConditionOperatorEnum.AND));
+            //searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("skillSet.title", SearchFilterOperationEnum.MATCH, random,SearchFilterNextConditionOperatorEnum.AND));
+//            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("dateOfBirth", SearchFilterOperationEnum.GREATER_THAN_EQUAL, dateOfBirthFrom,SearchFilterNextConditionOperatorEnum.AND));
+//            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("dateOfBirth", SearchFilterOperationEnum.LESS_THAN_EQUAL, dateOfBirthTo,SearchFilterNextConditionOperatorEnum.AND));
+//            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("username", SearchFilterOperationEnum.IN, usernameList,SearchFilterNextConditionOperatorEnum.AND));
+//            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("skillSet", SearchFilterOperationEnum.MEMBER_OF, 45,SearchFilterNextConditionOperatorEnum.AND));
             List<SearchFilterSortModel> searchFilterSortModelList = new ArrayList<>();
             searchFilterSortModelList.add(new SearchFilterSortModel("firstName", SearchFilterSortTypeEnum.ASC));
             searchFilterSortModelList.add(new SearchFilterSortModel("lastName", SearchFilterSortTypeEnum.DSC));
+            searchFilterSortModelList.add(new SearchFilterSortModel("defaultAdminUserContact.address", SearchFilterSortTypeEnum.DSC));
+            searchFilterSortModelList.add(new SearchFilterSortModel("gender.value", SearchFilterSortTypeEnum.DSC));
+            //searchFilterSortModelList.add(new SearchFilterSortModel("defaultAdminUserContact.type.value", SearchFilterSortTypeEnum.DSC));
             SearchFilterModel searchFilterModel = new SearchFilterModel();
             searchFilterModel.setSearchRowView(SearchRowViewAdminUserBrief.class);
             searchFilterModel.setPage(0);
-            searchFilterModel.setRows(10);
+            searchFilterModel.setRows(20);
             searchFilterModel.setRestrictionList(searchFilterRestrictionModelList);
             searchFilterModel.setSortList(searchFilterSortModelList);
 
             CustomObjectMapper customObjectMapper = new CustomObjectMapper();
             uri += "?searchFilterModel={searchFilterModel}";
 
-//            SearchDataModel searchDataModel = restTemplate.getForObject(uri, SearchDataModel.class, customObjectMapper.writeValueAsString(searchFilterModel));
-            ResponseEntity<SearchDataModel> responseEntity  = restTemplate.getForEntity(uri, SearchDataModel.class, customObjectMapper.writeValueAsString(searchFilterModel));
-            SearchDataModel searchDataModel = responseEntity.getBody();
+            SearchDataModel searchDataModel = restTemplate.getForObject(uri, SearchDataModel.class, customObjectMapper.writeValueAsString(searchFilterModel));
             System.out.println("searchDataModel:" + searchDataModel.toString());
             assertThat(searchDataModel.getPage()).isEqualTo(searchFilterModel.getPage());
         } catch (Exception ex) {
@@ -172,4 +183,47 @@ public class AdminUserControllerTest {
         }
     }
 
+
+
+//    @Test
+//    @Order(4)
+//    public void update() {
+//        try {
+//            String uri = "http://localhost:" + port + "/adminUser";
+//            Map<String, String> variableHashMap = new HashMap<String, String>();
+//
+//            //جستجوی ادمین جهت ویرایش
+//            AdminUserModel adminUserModel = restTemplate.getForObject(uri+ crudId, AdminUserModel.class);
+//
+//            random=StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL,5,false);
+//            CustomDate dateOfBirth=new CustomDate();
+//            dateOfBirth.setYear(1399);
+//            dateOfBirth.setMonth(12);
+//            dateOfBirth.setDay(22);
+//
+//            //ویرایش اطلاعات مدل
+//            adminUserModel.setFirstName(adminUserModel.getFirstName()+ "Updated");
+//            adminUserModel.setLastName(adminUserModel.getLastName()+ "Updated");
+//            adminUserModel.setPassword(adminUserModel.getPassword()+ "Updated");
+//            adminUserModel.setUsername("updated" + adminUserModel.getUsername());
+//            adminUserModel.setDateOfBirth(dateOfBirth);
+//            adminUserModel.setGender_id(2);
+//            adminUserModel.setDefaultAdminUserContact_address(adminUserModel.getDefaultAdminUserContact_address()+ "Updated");
+//            adminUserModel.getSkillList().add(new AdminUserSkillModel(null,"skill-added in update"));
+//            adminUserModel = restTemplate.put(uri, adminUserModel, variableHashMap);
+//
+//
+//
+//
+//            HttpEntity<AdminUserModel> requestUpdate = new HttpEntity<>(adminUserModel, variableHashMap);
+//            restTemplate.exchange(uri, HttpMethod.PUT, requestUpdate, Void.class);
+//
+//
+//
+//            crudId = adminUserModel.getId();
+//            assertThat(adminUserModel.getGender_id()).isEqualTo(2);
+//        } catch (Exception ex) {
+//            fail(ex.toString());
+//        }
+//    }
 }

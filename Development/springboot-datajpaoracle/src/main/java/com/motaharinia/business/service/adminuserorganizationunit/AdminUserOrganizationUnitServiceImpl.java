@@ -11,8 +11,10 @@ import com.motaharinia.presentation.adminuserorganizationunit.AdminUserOrganizat
 import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
+import javax.transaction.Transactional;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +27,8 @@ import java.util.List;
  * Description:<br>
  * کلاس پیاده سازی اینترفیس مدیریت واحدهای سازمانی ادمین ها
  */
+@Service
+@Transactional
 public class AdminUserOrganizationUnitServiceImpl implements AdminUserOrganizationUnitService {
 
     /**
@@ -76,14 +80,14 @@ public class AdminUserOrganizationUnitServiceImpl implements AdminUserOrganizati
     /**
      * متد درخت
      *
-     * @param parentId شناسه والد
+     * @param parentId شناسه والد(برای دریافت درخت گره های روت عدد صفر ارسال شود)
      * @return خروجی: لیست مدل درخت
      */
     @Override
-    public @NotNull List<JstreeNodeModel>  tree(Integer parentId) {
+    public @NotNull List<JstreeNodeModel>  tree(@NotNull Integer parentId) {
         List<JstreeNodeModel> jstreeNodeModelList=new ArrayList<>();
         AdminUserOrganizationUnit adminUserOrganizationUnitParent = null;
-        if (!ObjectUtils.isEmpty(parentId)) {
+        if (!ObjectUtils.isEmpty(parentId) && !parentId.equals(0)) {
             adminUserOrganizationUnitParent = adminUserOrganizationUnitRepository.findById(parentId).get();
         }
         //به دست آوردن لیست مدل فرزندان والد
