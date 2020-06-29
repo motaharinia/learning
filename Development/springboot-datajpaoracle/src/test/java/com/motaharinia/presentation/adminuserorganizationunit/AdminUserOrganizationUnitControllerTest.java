@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.fail;
  * Date: 2020-06-12<br>
  * Time: 01:05:58<br>
  * Description:<br>
- *  کلاس تست ماژول واحد سازمانی ادمین
+ * کلاس تست ماژول واحد سازمانی ادمین
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("dev")
@@ -54,7 +54,6 @@ public class AdminUserOrganizationUnitControllerTest {
     private static String random;
 
 
-
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
      */
@@ -64,8 +63,6 @@ public class AdminUserOrganizationUnitControllerTest {
     }
 
 
-
-
     @Test
     @Order(1)
     public void create() {
@@ -73,7 +70,7 @@ public class AdminUserOrganizationUnitControllerTest {
             String uri = "http://localhost:" + port + "/adminUserOrganizationUnit";
             Map<String, String> variableHashMap = new HashMap<String, String>();
 
-             random=StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL,5,false);
+            random = StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL, 5, false);
 
             AdminUserOrganizationUnitModel adminUserOrganizationUnitModel = new AdminUserOrganizationUnitModel();
             adminUserOrganizationUnitModel.setTitle("OrganizationUnitTitle " + random);
@@ -96,7 +93,7 @@ public class AdminUserOrganizationUnitControllerTest {
             String uri = "http://localhost:" + port + "/adminUserOrganizationUnit";
             Map<String, String> variableHashMap = new HashMap<String, String>();
 
-            random=StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL,5,false);
+            random = StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL, 5, false);
 
             AdminUserOrganizationUnitModel adminUserOrganizationUnitModel = new AdminUserOrganizationUnitModel();
             adminUserOrganizationUnitModel.setTitle("OrganizationUnitTitle " + random);
@@ -118,7 +115,7 @@ public class AdminUserOrganizationUnitControllerTest {
             String uri = "http://localhost:" + port + "/adminUserOrganizationUnit";
             Map<String, String> variableHashMap = new HashMap<String, String>();
 
-            random=StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL,5,false);
+            random = StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL, 5, false);
 
             AdminUserOrganizationUnitModel adminUserOrganizationUnitModel = new AdminUserOrganizationUnitModel();
             adminUserOrganizationUnitModel.setTitle("OrganizationUnitTitle " + random);
@@ -136,13 +133,13 @@ public class AdminUserOrganizationUnitControllerTest {
     @Test
     @Order(4)
     public void tree() {
-//        try {
-            String uri = "http://localhost:" + port + "/adminUserOrganizationUnit/0" ;
+        try {
+            String uri = "http://localhost:" + port + "/adminUserOrganizationUnit/0";
             JstreeNodeModel[] jstreeNodeModelArray = restTemplate.getForObject(uri, JstreeNodeModel[].class);
-        System.out.println("tree jstreeNodeModelArray:"+System.lineSeparator()+Arrays.stream(jstreeNodeModelArray).map(item-> item.toString()).collect(Collectors.joining("," + System.lineSeparator())) );
+            System.out.println("tree jstreeNodeModelArray:" + System.lineSeparator() + Arrays.stream(jstreeNodeModelArray).map(item -> item.toString()).collect(Collectors.joining("," + System.lineSeparator())));
             assertThat(jstreeNodeModelArray.length).isGreaterThan(0);
-//        } catch (Exception ex) {
-//            fail(ex.toString());
-//        }
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
     }
 }
