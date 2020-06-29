@@ -222,6 +222,8 @@ public class AdminUserServiceImpl implements AdminUserService {
     public AdminUserModel delete(@NotNull Integer id) throws UtilityException {
         AdminUserModel adminUserModel = this.readById(id);
         AdminUser adminUser = adminUserRepository.findById(adminUserModel.getId()).get();
+        //حذف اطلاعات تماس ادمین
+        adminUserContactRepository.deleteById(adminUser.getDefaultAdminUserContact().getId());
         //حذف مهارتهای ادمین
         adminUser = adminUserSkillService.deleteByAdminUser(adminUser);
         adminUserRepository.save(adminUser);

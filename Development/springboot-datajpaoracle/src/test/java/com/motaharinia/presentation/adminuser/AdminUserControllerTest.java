@@ -19,9 +19,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.util.ObjectUtils;
 
@@ -33,6 +31,7 @@ import static org.assertj.core.api.Assertions.fail;
 
 //https://reflectoring.io/unit-testing-spring-boot/
 //https://www.javaguides.net/2018/09/spring-boot-2-rest-apis-integration-testing.html
+//https://attacomsian.com/blog/http-requests-resttemplate-spring-boot#
 
 
 /**
@@ -104,7 +103,7 @@ public class AdminUserControllerTest {
             adminUserModel.setDefaultAdminUserContact_address("Shahrak Gharb " + random);
             adminUserModel.setSkillList(Arrays.asList(new AdminUserSkillModel[]{new AdminUserSkillModel(null,"skill-" + random),new AdminUserSkillModel(null,"skill-" + StringTools.generateRandomString(RandomGenerationTypeEnum.NUMBER,5,false))}));
 
-            adminUserModel = restTemplate.postForObject(uri, adminUserModel, AdminUserModel.class, variableHashMap);
+            adminUserModel = this.restTemplate.postForObject(uri, adminUserModel, AdminUserModel.class, variableHashMap);
             System.out.println("create userModel.toString():" + adminUserModel.toString());
             crudId = adminUserModel.getId();
             assertThat(adminUserModel.getId()).isNotEqualTo(null);
@@ -118,7 +117,7 @@ public class AdminUserControllerTest {
     public void readById() {
         try {
             String uri = "http://localhost:" + port + "/adminUser/" + crudId;
-            AdminUserModel resultModel = restTemplate.getForObject(uri, AdminUserModel.class);
+            AdminUserModel resultModel = this.restTemplate.getForObject(uri, AdminUserModel.class);
             assertThat(resultModel.getId()).isEqualTo(crudId);
         } catch (Exception ex) {
             fail(ex.toString());
@@ -175,7 +174,7 @@ public class AdminUserControllerTest {
             CustomObjectMapper customObjectMapper = new CustomObjectMapper();
             uri += "?searchFilterModel={searchFilterModel}";
 
-            SearchDataModel searchDataModel = restTemplate.getForObject(uri, SearchDataModel.class, customObjectMapper.writeValueAsString(searchFilterModel));
+            SearchDataModel searchDataModel = this.restTemplate.getForObject(uri, SearchDataModel.class, customObjectMapper.writeValueAsString(searchFilterModel));
             System.out.println("searchDataModel:" + searchDataModel.toString());
             assertThat(searchDataModel.getPage()).isEqualTo(searchFilterModel.getPage());
         } catch (Exception ex) {
@@ -185,45 +184,68 @@ public class AdminUserControllerTest {
 
 
 
-//    @Test
-//    @Order(4)
-//    public void update() {
-//        try {
-//            String uri = "http://localhost:" + port + "/adminUser";
-//            Map<String, String> variableHashMap = new HashMap<String, String>();
-//
-//            //جستجوی ادمین جهت ویرایش
-//            AdminUserModel adminUserModel = restTemplate.getForObject(uri+ crudId, AdminUserModel.class);
-//
-//            random=StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL,5,false);
-//            CustomDate dateOfBirth=new CustomDate();
-//            dateOfBirth.setYear(1399);
-//            dateOfBirth.setMonth(12);
-//            dateOfBirth.setDay(22);
-//
-//            //ویرایش اطلاعات مدل
-//            adminUserModel.setFirstName(adminUserModel.getFirstName()+ "Updated");
-//            adminUserModel.setLastName(adminUserModel.getLastName()+ "Updated");
-//            adminUserModel.setPassword(adminUserModel.getPassword()+ "Updated");
-//            adminUserModel.setUsername("updated" + adminUserModel.getUsername());
-//            adminUserModel.setDateOfBirth(dateOfBirth);
-//            adminUserModel.setGender_id(2);
-//            adminUserModel.setDefaultAdminUserContact_address(adminUserModel.getDefaultAdminUserContact_address()+ "Updated");
-//            adminUserModel.getSkillList().add(new AdminUserSkillModel(null,"skill-added in update"));
-//            adminUserModel = restTemplate.put(uri, adminUserModel, variableHashMap);
-//
-//
-//
-//
-//            HttpEntity<AdminUserModel> requestUpdate = new HttpEntity<>(adminUserModel, variableHashMap);
-//            restTemplate.exchange(uri, HttpMethod.PUT, requestUpdate, Void.class);
-//
-//
-//
-//            crudId = adminUserModel.getId();
-//            assertThat(adminUserModel.getGender_id()).isEqualTo(2);
-//        } catch (Exception ex) {
-//            fail(ex.toString());
-//        }
-//    }
+    @Test
+    @Order(4)
+    public void update() throws Exception {
+        try {
+            String uri = "http://localhost:" + port + "/adminUser";
+            Map<String, String> variableHashMap = new HashMap<String, String>();
+
+            //جستجوی ادمین جهت ویرایش
+            AdminUserModel adminUserModel = this.restTemplate.getForObject(uri+ "/"+crudId, AdminUserModel.class);
+
+            random=StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL,5,false);
+            CustomDate dateOfBirth=new CustomDate();
+            dateOfBirth.setYear(1399);
+            dateOfBirth.setMonth(12);
+            dateOfBirth.setDay(22);
+
+            //ویرایش اطلاعات مدل
+            adminUserModel.setFirstName(adminUserModel.getFirstName()+ "Updated");
+            adminUserModel.setLastName(adminUserModel.getLastName()+ "Updated");
+            adminUserModel.setPassword(adminUserModel.getPassword()+ "Updated");
+            adminUserModel.setUsername("updated" + adminUserModel.getUsername());
+            adminUserModel.setDateOfBirth(dateOfBirth);
+            adminUserModel.setGender_id(2);
+            adminUserModel.setDefaultAdminUserContact_address(adminUserModel.getDefaultAdminUserContact_address()+ "Updated");
+            adminUserModel.getSkillList().add(new AdminUserSkillModel(null,"skill-added in update"));
+
+            // build the request
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            HttpEntity<AdminUserModel> entity = new HttpEntity<>(adminUserModel, headers);
+            ResponseEntity<AdminUserModel> response = this.restTemplate.exchange(uri, HttpMethod.PUT, entity, AdminUserModel.class);
+            adminUserModel=response.getBody();
+
+
+            assertThat(adminUserModel.getGender_id()).isEqualTo(2);
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+    @Test
+    @Order(5)
+    public void delete() throws Exception {
+        try {
+            String uri = "http://localhost:" + port + "/adminUser/"+crudId;
+            Map<String, String> variableHashMap = new HashMap<String, String>();
+
+            AdminUserModel adminUserModel;
+
+            // build the request
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            HttpEntity entity = new HttpEntity(headers);
+            ResponseEntity<AdminUserModel> response = this.restTemplate.exchange(uri, HttpMethod.DELETE, entity, AdminUserModel.class);
+            adminUserModel=response.getBody();
+
+
+            assertThat(adminUserModel.getId()).isEqualTo(crudId);
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
 }
