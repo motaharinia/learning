@@ -9,9 +9,10 @@ import com.motaharinia.presentation.adminuserskill.AdminUserSkillModel;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import javax.transaction.Transactional;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,7 +30,7 @@ import java.util.stream.Collectors;
  *   کلاس پیاده سازی اینترفیس مدیریت مهارتها
  */
 @Service
-@Transactional(rollbackOn=Exception.class)
+@Transactional(rollbackFor=Exception.class)
 public class AdminUserSkillServiceImpl implements AdminUserSkillService {
 
 

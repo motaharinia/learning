@@ -22,9 +22,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import javax.transaction.Transactional;
+
 import java.lang.reflect.InvocationTargetException;
 
 //https://www.baeldung.com/spring-data-jpa-projections
@@ -39,7 +40,7 @@ import java.lang.reflect.InvocationTargetException;
  * کلاس پیاده سازی اینترفیس مدیریت ادمین ها
  */
 @Service
-@Transactional(rollbackOn=Exception.class)
+@Transactional(rollbackFor=Exception.class)
 public class AdminUserServiceImpl implements AdminUserService {
 
 

@@ -13,9 +13,9 @@ import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import javax.transaction.Transactional;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ import java.util.List;
  * کلاس پیاده سازی اینترفیس مدیریت مقادیر ثابت
  */
 @Service
-@Transactional(rollbackOn=Exception.class)
+@Transactional(rollbackFor=Exception.class)
 public class EtcItemServiceImpl implements EtcItemService {
 
 
