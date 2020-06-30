@@ -1,8 +1,8 @@
 package com.motaharinia.msutility.search.filter;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.motaharinia.msutility.json.deserializer.JsonDeserializerClass;
 import com.motaharinia.msutility.jparepository.GenericSpecification;
+import com.motaharinia.msutility.json.deserializer.JsonDeserializerClass;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

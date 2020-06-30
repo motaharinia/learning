@@ -39,7 +39,7 @@ import java.lang.reflect.InvocationTargetException;
  * کلاس پیاده سازی اینترفیس مدیریت ادمین ها
  */
 @Service
-@Transactional
+@Transactional(rollbackOn=Exception.class)
 public class AdminUserServiceImpl implements AdminUserService {
 
 

@@ -1,13 +1,12 @@
 package com.motaharinia.presentation.adminuserorganizationunit;
 
 
-import com.motaharinia.business.service.etcitem.EtcItemInitialData;
+import com.motaharinia.persistence.orm.etcitem.EtcItemInitialData;
 import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.jstree.JstreeNodeModel;
 import com.motaharinia.msutility.string.RandomGenerationTypeEnum;
 import com.motaharinia.msutility.string.StringTools;
-import com.motaharinia.presentation.adminuser.AdminUserModel;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

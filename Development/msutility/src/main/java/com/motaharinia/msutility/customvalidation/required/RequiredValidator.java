@@ -5,7 +5,6 @@ import com.motaharinia.msutility.customfield.CustomDateTime;
 import com.motaharinia.msutility.customfield.CustomHtmlString;
 import org.springframework.util.ObjectUtils;
 
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 

@@ -28,7 +28,7 @@ import java.util.List;
  * کلاس پیاده سازی اینترفیس مدیریت واحدهای سازمانی ادمین ها
  */
 @Service
-@Transactional
+@Transactional(rollbackOn=Exception.class)
 public class AdminUserOrganizationUnitServiceImpl implements AdminUserOrganizationUnitService {
 
     /**

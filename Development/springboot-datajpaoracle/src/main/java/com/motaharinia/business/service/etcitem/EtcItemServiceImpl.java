@@ -32,7 +32,7 @@ import java.util.List;
  * کلاس پیاده سازی اینترفیس مدیریت مقادیر ثابت
  */
 @Service
-@Transactional
+@Transactional(rollbackOn=Exception.class)
 public class EtcItemServiceImpl implements EtcItemService {
 
 

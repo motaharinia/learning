@@ -4,7 +4,6 @@ import com.motaharinia.business.service.adminuserorganizationunit.AdminUserOrgan
 import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.jstree.JstreeNodeModel;
-import com.motaharinia.presentation.adminuser.AdminUserModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;

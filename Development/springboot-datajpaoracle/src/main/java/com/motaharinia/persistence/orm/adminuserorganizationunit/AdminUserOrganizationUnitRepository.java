@@ -1,6 +1,5 @@
 package com.motaharinia.persistence.orm.adminuserorganizationunit;
 
-import com.motaharinia.persistence.orm.adminusercontact.AdminUserContact;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import th.co.geniustree.springdata.jpa.repository.JpaSpecificationExecutorWithProjection;

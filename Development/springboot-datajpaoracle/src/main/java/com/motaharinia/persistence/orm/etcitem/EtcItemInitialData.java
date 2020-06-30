@@ -1,11 +1,9 @@
-package com.motaharinia.business.service.etcitem;
+package com.motaharinia.persistence.orm.etcitem;
 
 import com.motaharinia.business.service.etcitem.EtcItemService;
 import com.motaharinia.business.service.etcitem.GenderEnum;
 import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.customexception.UtilityException;
-import com.motaharinia.persistence.orm.etcitem.EtcItem;
-import com.motaharinia.persistence.orm.etcitem.EtcItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

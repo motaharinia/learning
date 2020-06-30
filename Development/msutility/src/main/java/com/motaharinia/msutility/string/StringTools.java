@@ -6,7 +6,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jsoup.Jsoup;
 import org.springframework.util.ObjectUtils;
 
-
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.util.Random;

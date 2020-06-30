@@ -2,10 +2,10 @@ package com.motaharinia.business.service.adminuserskill;
 
 
 import com.motaharinia.persistence.orm.adminuser.AdminUser;
-import com.motaharinia.persistence.orm.adminusercontact.AdminUserContact;
+import com.motaharinia.persistence.orm.adminuserskill.AdminUserSkill;
+import com.motaharinia.persistence.orm.adminuserskill.AdminUserSkillRepository;
 import com.motaharinia.presentation.adminuser.AdminUserModel;
 import com.motaharinia.presentation.adminuserskill.AdminUserSkillModel;
-import com.motaharinia.persistence.orm.adminuserskill.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
  *   کلاس پیاده سازی اینترفیس مدیریت مهارتها
  */
 @Service
-@Transactional
+@Transactional(rollbackOn=Exception.class)
 public class AdminUserSkillServiceImpl implements AdminUserSkillService {
 
 
