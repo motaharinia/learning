@@ -36,3 +36,6 @@ Ctrl+Alt+O        : Remove Unused Import Lines
 
 
 10.IntelijIDEA right-click on pom.xml -> Maven -> Download Documentation to show popup javadoc
+
+11.IntelijIDEA: File -> Settings -> Plugins -> search "Protocol Buffer Editor" and install and restart IDE.
+Enable "Protocol Buffer Editor" to detect gRPC .proto files (https://plugins.jetbrains.com/plugin/14004-protocol-buffer-editor)

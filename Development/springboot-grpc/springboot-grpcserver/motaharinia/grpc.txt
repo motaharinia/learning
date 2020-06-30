@@ -21,7 +21,7 @@ on the client we have:
 
 tips:
 ----------------------
-**install "Protobuf Support" (https://plugins.jetbrains.com/plugin/8277-protobuf-support/versions) for intellij idea to detect .proto files
+**install "Protocol Buffer Editor" (https://plugins.jetbrains.com/plugin/14004-protocol-buffer-editor) for intellij idea to detect .proto files (IntelijIDEA: File -> Settings -> Plugins -> search "Protocol Buffer Editor" and install and restart IDE.)
 **in intellij idea for build stub files from proto file: view menu>tool windows>maven>start
 
 
@@ -48,6 +48,9 @@ https://github.com/uw-labs/bloomrpc/releases
 https://www.youtube.com/watch?v=eUu29SrGYTA
 
 7.source code:
-https://github.com/yrreddy0123/yrrhelp/tree/master/grpcDemo 
+https://github.com/yrreddy0123/yrrhelp/tree/master/grpcDemo
+
+8.gRPC Java - Build Modern API & Microservices:
+https://www.youtube.com/watch?v=XRXTsQwyZSU&list=PLt1SIbA8guusAJIBS8JgbSFKfQdVkWDbl
 
 
