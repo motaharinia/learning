@@ -1,7 +1,6 @@
 package com.motaharinia.presentation.adminuserorganizationunit;
 
 
-import com.motaharinia.persistence.orm.etcitem.EtcItemInitialData;
 import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.jstree.JstreeNodeModel;
@@ -15,7 +14,10 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -42,9 +44,6 @@ public class AdminUserOrganizationUnitControllerTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
-
-    @Autowired
-    private EtcItemInitialData etcItemInitialData;
 
     /**
      * شیی crud

@@ -1,6 +1,6 @@
 package com.motaharinia.business.service.etcitem;
 
-import com.motaharinia.persistence.orm.adminuser.AdminUser;
+import com.motaharinia.persistence.orm.etcitem.EtcItem;
 
 /**
  * User: https://github.com/motaharinia<br>
@@ -33,7 +33,7 @@ public enum GenderEnum implements EtcItemEnum {
 
     @Override
     public Class getEntityClass() {
-        return AdminUser.class;
+        return EtcItem.class;
     }
 
     @Override
