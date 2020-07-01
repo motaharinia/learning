@@ -29,6 +29,7 @@ movie training and sample source:
 ----------------------
 1.GRPC Project Setup in Java:
 https://www.youtube.com/watch?v=JFzAe9SvNaU
+https://medium.com/@akhaku/protobuf-definition-best-practices-87f281576f31
 
 2.How to create GRPC Proto files and Generate Java Stubs:
 https://www.youtube.com/watch?v=-nxoD-2Mx6I

@@ -62,6 +62,7 @@
     </dependencies>
 
     <build>
+        <!--        to generate stub from protobuf file-->
         <defaultGoal>clean generate-sources compile install</defaultGoal>
         <plugins>
             <plugin>
@@ -69,6 +70,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
 
+            <!--        to generate stub from protobuf file-->
             <!--        https://www.youtube.com/watch?v=JFzAe9SvNaU           https://github.com/yrreddy0123/yrrhelp/tree/master/grpcDemo    -->
             <!-- compile proto file into java files. -->
             <plugin>
@@ -85,7 +87,7 @@
                             <includeMavenTypes>direct</includeMavenTypes>
 
                             <inputDirectories>
-                                <include>src/main/resources</include>
+                                <include>src/main/resources/proto</include>
                             </inputDirectories>
 
                             <outputTargets>

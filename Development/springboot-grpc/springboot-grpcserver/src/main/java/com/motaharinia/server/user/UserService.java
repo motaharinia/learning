@@ -1,24 +1,25 @@
 package com.motaharinia.server.user;
 
-import com.motaharinia.server.user.stub.User;
-import com.motaharinia.server.user.stub.userGrpc;
+
+import com.motaharinia.server.user.stub.UserGrpc;
+import com.motaharinia.server.user.stub.UserMicro;
 import io.grpc.stub.StreamObserver;
 
-public class UserService extends userGrpc.userImplBase {
+public class UserService extends UserGrpc.UserImplBase {
     /**
      * @param request
      * @param responseObserver
      */
     @Override
-    public void login(User.LoginRequest request, StreamObserver<User.APIResponse> responseObserver) {
+    public void login(UserMicro.LoginRequest request, StreamObserver<UserMicro.APIResponse> responseObserver) {
         System.out.println("login username:" + request.getUsername() + " password:" + request.getPassword());
-        User.APIResponse.Builder response = User.APIResponse.newBuilder();
+        UserMicro.APIResponse.Builder response = UserMicro.APIResponse.newBuilder();
         if(request.getUsername().isEmpty() || request.getPassword().isEmpty()){
             response.setResponseCode(400);
-            response.setResponsemessage("Username or password is blank");
+            response.setResponseMessage("Username or password is blank");
         }else{
             response.setResponseCode(200);
-            response.setResponsemessage("Success");
+            response.setResponseMessage("Success");
         }
 
         responseObserver.onNext(response.build());
@@ -30,7 +31,7 @@ public class UserService extends userGrpc.userImplBase {
      * @param responseObserver
      */
     @Override
-    public void logout(User.Empty request, StreamObserver<User.APIResponse> responseObserver) {
+    public void logout(UserMicro.Empty request, StreamObserver<UserMicro.APIResponse> responseObserver) {
         super.logout(request, responseObserver);
     }
 }
