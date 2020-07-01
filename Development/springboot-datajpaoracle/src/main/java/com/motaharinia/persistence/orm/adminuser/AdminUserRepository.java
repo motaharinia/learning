@@ -33,14 +33,14 @@ public interface AdminUserRepository extends JpaRepository<AdminUser, Integer>, 
 
 
 //    @Query("select lo.startDate,count(*) from LoanOffer lo where lo.loan.fsp= :fsp and lo.startDate between :fromDate and :toDate Group by lo.startDate")
-//    public List<Object[]> getLastMonthLoans(@Param("fsp")Fsp fsp,@Param("fromDate")LocalDate fromDate,@Param("toDate") LocalDate toDate);
+//    public List<Object[]> arrayListLastMonthLoans(@Param("fsp")Fsp fsp,@Param("fromDate")LocalDate fromDate,@Param("toDate") LocalDate toDate);
 
 
 //    @Transactional(timeout = 10)
 
 
     @Query("select obj.id,obj.firstName,obj.lastName from AdminUser obj where obj.firstName= :firstName")
-    List<Object[]> listGrid(@Param("firstName")String firstName);
+    List<Object[]> arrayListGrid(@Param("firstName")String firstName);
 
     AdminUser findByLastNameLikeAndFirstNameStartingWith(String lastName, String firstName);
 

@@ -13,7 +13,7 @@ import java.util.HashMap;
  * Description:<br>
  * این کلاس سطر کاستوم کامبو در کلاینت است<br>
  */
-public class CustomComboDataRowModel{
+public class CustomComboDataRowModel {
 
     /**
      * شناسه
@@ -34,10 +34,17 @@ public class CustomComboDataRowModel{
     private HashMap<String, Object> extMap = new HashMap<>();
 
     /**
+     * متد سازنده پیش فرض
+     */
+    public CustomComboDataRowModel() {
+    }
+
+    /**
      * متد سازنده ای که با دریافت مشخصات ورودی مدل را میسازد
-     * @param value شناسه
-     * @param caption عنوان
-     * @param elementStr  اطلاعات اضافه
+     *
+     * @param value      شناسه
+     * @param caption    عنوان
+     * @param elementStr اطلاعات اضافه
      */
     public CustomComboDataRowModel(String value, String caption, String elementStr) {
         this.value = value;
@@ -47,7 +54,8 @@ public class CustomComboDataRowModel{
 
     /**
      * متد سازنده ای که با دریافت مشخصات ورودی مدل را میسازد
-     * @param value شناسه
+     *
+     * @param value   شناسه
      * @param caption عنوان
      */
     public CustomComboDataRowModel(String value, String caption) {
@@ -88,5 +96,5 @@ public class CustomComboDataRowModel{
         this.extMap = extMap;
     }
 
-    
+
 }

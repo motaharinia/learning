@@ -1,6 +1,9 @@
 package com.motaharinia.persistence.orm.etcitem;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import th.co.geniustree.springdata.jpa.repository.JpaSpecificationExecutorWithProjection;
 
@@ -21,6 +24,13 @@ import java.util.List;
 @Repository
 public interface EtcItemRepository extends JpaRepository<EtcItem, Integer>, JpaSpecificationExecutorWithProjection<EtcItem> {
     EtcItem findByValueAndType(String value, String type);
+
     EtcItem findByValueAndTypeAndTypeTag(String value, String type, String typeTag);
+
     List<EtcItem> findAllByTypeTag(String typeTag);
+
+    Long countByTypeEquals(String type);
+
+    @Query(value = "SELECT obj.id,obj.langKey,obj.value FROM EtcItem obj WHERE obj.type= :type and obj.invalid= :invalid and obj.hidden= :hidden")
+    List<Object[]> arrayListCustomCombo(@Param("type") String type, @Param("invalid") Boolean invalid, @Param("hidden") Boolean hidden, Pageable pageable);
 }

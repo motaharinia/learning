@@ -5,13 +5,18 @@ import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.customexception.UtilityExceptionKeyEnum;
 import com.motaharinia.msutility.entity.EntityTools;
+import com.motaharinia.msutility.genericmodel.CustomComboDataRowModel;
+import com.motaharinia.msutility.genericmodel.CustomComboModel;
 import com.motaharinia.persistence.orm.adminuser.AdminUser;
 import com.motaharinia.persistence.orm.etcitem.EtcItem;
 import com.motaharinia.persistence.orm.etcitem.EtcItemRepository;
 import com.motaharinia.presentation.adminuser.AdminUserModel;
+import com.motaharinia.presentation.generic.CustomComboFilterModel;
 import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
@@ -32,7 +37,7 @@ import java.util.List;
  * کلاس پیاده سازی اینترفیس مدیریت مقادیر ثابت
  */
 @Service
-@Transactional(rollbackFor=Exception.class)
+@Transactional(rollbackFor = Exception.class)
 public class EtcItemServiceImpl implements EtcItemService {
 
 
@@ -139,11 +144,47 @@ public class EtcItemServiceImpl implements EtcItemService {
         }
     }
 
-    @NotNull
-    private AdminUserModel convertToDto(@NotNull AdminUser adminUser) {
-        AdminUserModel adminUserModel = modelMapper.map(adminUser, AdminUserModel.class);
-//        userModel.setSubmissionDate(adminuser.getSubmissionDate(), userService.getCurrentUser().getPreference().getTimezone());
-        return adminUserModel;
-    }
+    /**
+     * این متد مدل فیلتر کاستوم کامبو را ورودی میگیرد و مدل داده کاستوم کامبو را خروجی میدهد
+     *
+     * @param customComboFilterModel مدل فیلتر کاستوم کامبو
+     * @return خروجی: مدل داده کاستوم کامبو
+     * @throws Exception
+     */
+    @Override
+    public CustomComboModel customCombo(CustomComboFilterModel customComboFilterModel) {
 
+        Long totalCount = 0l;
+        List<Object[]> listObject = new ArrayList();
+        List<CustomComboDataRowModel> dataRowModelList = new ArrayList<>();
+
+        switch (customComboFilterModel.getMode()) {
+            /**
+             * جنسیت
+             */
+            case ETC_ITEM__GENDER: {
+                //restriction = "(type = 'gender')";
+                totalCount = etcItemRepository.countByTypeEquals("gender");
+                if (totalCount > 0) {
+                    //listObject = etcItemDao.arrayListBy("id,langKey,value", restriction, null, model.getRows(), model.getPage(), false, false);
+
+                    Pageable pageable = PageRequest.of(customComboFilterModel.getPage(), customComboFilterModel.getRows());
+                    listObject = etcItemRepository.arrayListCustomCombo("gender", false, false, pageable);
+
+                }
+            }
+            break;
+        }
+
+        //پر کردن مدل داده
+        if (!ObjectUtils.isEmpty(listObject) && listObject.get(0).length >2) {
+            for (Object[] obj : listObject) {
+                CustomComboDataRowModel customComboDataRowModel = new CustomComboDataRowModel(obj[0].toString(), (String) obj[1]);
+                customComboDataRowModel.getExtMap().put("value", obj[2]);
+                dataRowModelList.add(customComboDataRowModel);
+            }
+        }
+
+        return new CustomComboModel(dataRowModelList, totalCount.intValue(), customComboFilterModel.getPage(), customComboFilterModel.getRows());
+    }
 }

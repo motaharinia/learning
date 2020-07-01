@@ -3,7 +3,9 @@ package com.motaharinia.business.service.etcitem;
 
 import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.customexception.UtilityException;
+import com.motaharinia.msutility.genericmodel.CustomComboModel;
 import com.motaharinia.persistence.orm.etcitem.EtcItem;
+import com.motaharinia.presentation.generic.CustomComboFilterModel;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.stereotype.Component;
 
@@ -51,4 +53,14 @@ public interface EtcItemService  {
      */
     @NotNull
     List<EtcItem> findByTypeTag(@NotNull String typeTag);
+
+
+    /**
+     *این متد مدل فیلتر کاستوم کامبو را ورودی میگیرد و مدل داده کاستوم کامبو را خروجی میدهد
+     * @param customComboFilterModel مدل فیلتر کاستوم کامبو
+     * @return خروجی: مدل داده کاستوم کامبو
+     * @throws Exception
+     */
+    @NotNull
+    CustomComboModel customCombo(@NotNull CustomComboFilterModel customComboFilterModel) ;
 }

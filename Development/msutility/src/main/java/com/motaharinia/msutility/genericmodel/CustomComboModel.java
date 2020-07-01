@@ -40,10 +40,11 @@ public class CustomComboModel {
 
     /**
      * متد سازنده ای که با دریافت مشخصات ورودی مدل را میسازد
-     * @param dataList  لیستی از سطرهای کاستوم کامبو
-     * @param totalCount  تعداد کل موارد
-     * @param page  شماره صفحه
-     * @param rows  تعداد موارد در هر صفحه
+     *
+     * @param dataList   لیستی از سطرهای کاستوم کامبو
+     * @param totalCount تعداد کل موارد
+     * @param page       شماره صفحه
+     * @param rows       تعداد موارد در هر صفحه
      */
     public CustomComboModel(List<CustomComboDataRowModel> dataList, Integer totalCount, Integer page, Integer rows) {
         this.dataList = dataList;
