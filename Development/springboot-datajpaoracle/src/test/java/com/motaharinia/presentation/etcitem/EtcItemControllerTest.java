@@ -47,9 +47,7 @@ public class EtcItemControllerTest {
     @Autowired
     private EtcItemInitialData etcItemInitialData;
 
-    /**
-     * شیی crud
-     */
+
     private static Integer crudId = 1;
     private static String random;
 
