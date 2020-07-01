@@ -55,3 +55,7 @@ https://github.com/yrreddy0123/yrrhelp/tree/master/grpcDemo
 https://www.youtube.com/watch?v=XRXTsQwyZSU&list=PLt1SIbA8guusAJIBS8JgbSFKfQdVkWDbl
 
 
+//messages and enum sample: https://medium.com/@akhaku/protobuf-definition-best-practices-87f281576f31
+//defining service method and message names standards: https://developers.google.com/protocol-buffers/docs/style
+//samples by google: https://github.com/protocolbuffers/protobuf/releases/tag/v3.12.3
+//variable types in proto: https://developers.google.com/protocol-buffers/docs/proto3#scalar
