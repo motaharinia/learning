@@ -1,6 +1,7 @@
 package com.motaharinia.business.service.etcitem;
 
 import com.motaharinia.persistence.orm.etcitem.EtcItem;
+import org.springframework.util.ObjectUtils;
 
 /**
  * User: https://github.com/motaharinia<br>
@@ -43,8 +44,20 @@ public enum GenderEnum implements EtcItemEnum {
         return type;
     }
 
+//    public static String getType2() {
+//        String type = EtcItemEnum.getEtcClassName().replace("Enum", "");
+//        type = type.substring(0, 1).toLowerCase() + type.substring(1);
+//        return type;
+//    }
+
+
+
     @Override
     public String toString() {
         return super.toString();
     }
+
+
+
+
 }

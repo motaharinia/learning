@@ -56,11 +56,23 @@ public interface EtcItemService  {
 
 
     /**
-     *این متد مدل فیلتر کاستوم کامبو را ورودی میگیرد و مدل داده کاستوم کامبو را خروجی میدهد
+     * این متد مدل فیلتر کاستوم کامبو را ورودی میگیرد و مدل داده کاستوم کامبو را خروجی میدهد<br>
+     * در کاستوم کامبو(نوع کامبو) قابلیت جستجو و صفحه بندی نداریم و تمام داده ها خروجی داده میشود<br>
+     * در کاستوم کامبو(نوع اتوکامپلیت) قابلیت جستجو و صفحه بندی داریم و داده ها متناسب با کلمه جستجو شده خروجی داده میشود
      * @param customComboFilterModel مدل فیلتر کاستوم کامبو
      * @return خروجی: مدل داده کاستوم کامبو
      * @throws Exception
      */
     @NotNull
-    CustomComboModel customCombo(@NotNull CustomComboFilterModel customComboFilterModel) ;
+    CustomComboModel customCombo(@NotNull CustomComboFilterModel customComboFilterModel);
+
+    /**
+     * این متد نوع و فعال/غیرفعال و نمایش/عدم نمایش را بعنوان ورودی میگیرد و لیستی از آرایه ستونهای داده مورد نظر را خروجی میدهد<br>
+     *این متد برای کامبوهای قدیمی بک اند هستند که اگر بک اند هم با ریکت زده شود این متد باید حذف گردد چون ریکت با کاستوم کامبو جدید کار میکند
+     * @param type نوع
+     * @param invalid فعال غیرفعال
+     * @param hidden نمایش عدم نمایش
+     * @return خروجی: لیستی از آرایه ستونهای داده مورد نظر
+     */
+    List<Object[]> combo(String type, Boolean invalid, Boolean hidden);
 }

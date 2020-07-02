@@ -7,10 +7,8 @@ import com.motaharinia.msutility.customexception.UtilityExceptionKeyEnum;
 import com.motaharinia.msutility.entity.EntityTools;
 import com.motaharinia.msutility.genericmodel.CustomComboDataRowModel;
 import com.motaharinia.msutility.genericmodel.CustomComboModel;
-import com.motaharinia.persistence.orm.adminuser.AdminUser;
 import com.motaharinia.persistence.orm.etcitem.EtcItem;
 import com.motaharinia.persistence.orm.etcitem.EtcItemRepository;
-import com.motaharinia.presentation.adminuser.AdminUserModel;
 import com.motaharinia.presentation.generic.CustomComboFilterModel;
 import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
@@ -145,8 +143,9 @@ public class EtcItemServiceImpl implements EtcItemService {
     }
 
     /**
-     * این متد مدل فیلتر کاستوم کامبو را ورودی میگیرد و مدل داده کاستوم کامبو را خروجی میدهد
-     *
+     * این متد مدل فیلتر کاستوم کامبو را ورودی میگیرد و مدل داده کاستوم کامبو را خروجی میدهد<br>
+     * در کاستوم کامبو(نوع کامبو) قابلیت جستجو و صفحه بندی نداریم و تمام داده ها خروجی داده میشود<br>
+     * در کاستوم کامبو(نوع اتوکامپلیت) قابلیت جستجو و صفحه بندی داریم و داده ها متناسب با کلمه جستجو شده خروجی داده میشود
      * @param customComboFilterModel مدل فیلتر کاستوم کامبو
      * @return خروجی: مدل داده کاستوم کامبو
      * @throws Exception
@@ -163,21 +162,25 @@ public class EtcItemServiceImpl implements EtcItemService {
              * جنسیت
              */
             case ETC_ITEM__GENDER: {
-                //restriction = "(type = 'gender')";
-                totalCount = etcItemRepository.countByTypeEquals("gender");
-                if (totalCount > 0) {
-                    //listObject = etcItemDao.arrayListBy("id,langKey,value", restriction, null, model.getRows(), model.getPage(), false, false);
-
-                    Pageable pageable = PageRequest.of(customComboFilterModel.getPage(), customComboFilterModel.getRows());
-                    listObject = etcItemRepository.arrayListCustomCombo("gender", false, false, pageable);
-
+                //if (totalCount > 0) {
+                switch (customComboFilterModel.getType()) {
+                    case COMBO:
+                        totalCount = etcItemRepository.countByTypeAndInvalidAndHidden("gender", false, false);
+                        listObject = etcItemRepository.arrayListByTypeAndInvalidAndHidden("gender", false, false);
+                        break;
+                    case AUTOCOMPLETE:
+                        totalCount = etcItemRepository.countByTypeAndValueAndInvalidAndHidden("gender",customComboFilterModel.getInput(), false, false);
+                        Pageable pageable = PageRequest.of(customComboFilterModel.getPage(), customComboFilterModel.getRows());
+                        listObject = etcItemRepository.arrayListByTypeAndValueAndInvalidAndHidden("gender",customComboFilterModel.getInput(), false, false, pageable);
+                        break;
                 }
+                //}
             }
             break;
         }
 
         //پر کردن مدل داده
-        if (!ObjectUtils.isEmpty(listObject) && listObject.get(0).length >2) {
+        if (!ObjectUtils.isEmpty(listObject) && listObject.get(0).length > 2) {
             for (Object[] obj : listObject) {
                 CustomComboDataRowModel customComboDataRowModel = new CustomComboDataRowModel(obj[0].toString(), (String) obj[1]);
                 customComboDataRowModel.getExtMap().put("value", obj[2]);
@@ -187,4 +190,18 @@ public class EtcItemServiceImpl implements EtcItemService {
 
         return new CustomComboModel(dataRowModelList, totalCount.intValue(), customComboFilterModel.getPage(), customComboFilterModel.getRows());
     }
+
+    /**
+     * این متد نوع و فعال/غیرفعال و نمایش/عدم نمایش را بعنوان ورودی میگیرد و لیستی از آرایه ستونهای داده مورد نظر را خروجی میدهد<br>
+     *این متد برای کامبوهای قدیمی بک اند هستند که اگر بک اند هم با ریکت زده شود این متد باید حذف گردد چون ریکت با کاستوم کامبو جدید کار میکند
+     * @param type نوع
+     * @param invalid فعال غیرفعال
+     * @param hidden نمایش عدم نمایش
+     * @return خروجی: لیستی از آرایه ستونهای داده مورد نظر
+     */
+    public List<Object[]> combo(String type, Boolean invalid, Boolean hidden){
+        List<Object[]> listObject = etcItemRepository.arrayListByTypeAndInvalidAndHidden(type, invalid, hidden);
+        return listObject;
+    }
+
 }

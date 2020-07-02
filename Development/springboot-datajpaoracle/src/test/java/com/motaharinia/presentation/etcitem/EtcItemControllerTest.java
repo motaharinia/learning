@@ -1,13 +1,11 @@
 package com.motaharinia.presentation.etcitem;
 
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.genericmodel.ComboTypeEnum;
 import com.motaharinia.msutility.genericmodel.CustomComboModel;
 import com.motaharinia.msutility.json.CustomObjectMapper;
-import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.persistence.orm.etcitem.EtcItemInitialData;
 import com.motaharinia.presentation.generic.CustomComboFilterModel;
 import com.motaharinia.presentation.generic.EntityEnum;
@@ -20,6 +18,7 @@ import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -62,19 +61,17 @@ public class EtcItemControllerTest {
     }
 
 
+
+
     @Test
     @Order(1)
     public void customComboTest() throws Exception {
         try {
-            HashMap<String, Object> extMap = new HashMap<>();
-            extMap.put("id", 1000);
             String uri = "http://localhost:" + port + "/etcItem";
             CustomComboFilterModel customComboFilterModel = new CustomComboFilterModel();
             customComboFilterModel.setMode(EntityParametersModeEnum.ETC_ITEM__GENDER);
             customComboFilterModel.setType(ComboTypeEnum.COMBO);
             customComboFilterModel.setEntity(EntityEnum.ETC_ITEM);
-            customComboFilterModel.setInput("م");
-            customComboFilterModel.setExtMap(extMap);
 
             CustomObjectMapper customObjectMapper = new CustomObjectMapper();
             uri += "?customComboFilterModel={customComboFilterModel}";
@@ -84,5 +81,51 @@ public class EtcItemControllerTest {
             fail(ex.toString());
         }
     }
+
+
+    @Test
+    @Order(2)
+    public void customComboAutoCompleteTest() throws Exception {
+        try {
+            String uri = "http://localhost:" + port + "/etcItem";
+            CustomComboFilterModel customComboFilterModel = new CustomComboFilterModel();
+            customComboFilterModel.setMode(EntityParametersModeEnum.ETC_ITEM__GENDER);
+            customComboFilterModel.setType(ComboTypeEnum.AUTOCOMPLETE);
+            customComboFilterModel.setEntity(EntityEnum.ETC_ITEM);
+            customComboFilterModel.setPage(0);
+            customComboFilterModel.setRows(1000000);
+            customComboFilterModel.setInput("F");
+
+            CustomObjectMapper customObjectMapper = new CustomObjectMapper();
+            uri += "?customComboFilterModel={customComboFilterModel}";
+            CustomComboModel customComboModel = this.restTemplate.getForObject(uri, CustomComboModel.class, customObjectMapper.writeValueAsString(customComboFilterModel));
+            assertThat(customComboModel).isNotEqualTo(null);
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+    @Test
+    @Order(3)
+    public void comboTest() throws Exception {
+        try {
+            String uri = "http://localhost:" + port + "/getCombo";
+            HashMap<String, HashMap<String, Object>> post = new HashMap<>();
+            HashMap<String, Object> innerPost = new HashMap<>();
+
+            innerPost.put("entity","etcItem");
+            innerPost.put("parametersMode","gender");
+            innerPost.put("value","1");
+            post.put("memberGender" , innerPost);
+
+            CustomObjectMapper customObjectMapper = new CustomObjectMapper();
+            uri += "?post={post}";
+            HashMap<String, ArrayList> result = this.restTemplate.getForObject(uri, HashMap.class, customObjectMapper.writeValueAsString(post));
+            assertThat(result).isNotEqualTo(null);
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
 
 }

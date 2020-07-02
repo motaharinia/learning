@@ -1,5 +1,7 @@
 package com.motaharinia.business.service.etcitem;
 
+import org.springframework.util.ObjectUtils;
+
 /**
  * User: https://github.com/motaharinia<br>
  * Date: 2020-06-11<br>
@@ -35,4 +37,23 @@ public interface EtcItemEnum {
      * @return
      */
     String getType();
+
+
+//    class CurrentClassGetter extends SecurityManager {
+//        public String getClassName() {
+//            return getClassContext()[1].getName();
+//        }
+//    }
+
+    static String getEtcClassName(){
+//        return new CurrentClassGetter().getClassName();
+        String className="";
+        if(!ObjectUtils.isEmpty(Thread.currentThread().getStackTrace()) && Thread.currentThread().getStackTrace().length>1){
+            className= Thread.currentThread().getStackTrace()[2].getClassName();
+        }
+        if(!ObjectUtils.isEmpty(className)){
+            className=className.split("\\.")[className.split("\\.").length-1];
+        }
+        return className;
+    }
 }

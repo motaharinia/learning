@@ -11,6 +11,7 @@ import com.motaharinia.msutility.search.filter.SearchFilterModel;
 import com.motaharinia.presentation.adminuserorganizationunit.AdminUserOrganizationUnitModel;
 import com.motaharinia.presentation.generic.CustomComboFilterModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,7 +48,15 @@ public class EtcItemController {
     public CustomComboModel customCombo(@RequestParam(name = "customComboFilterModel") Optional<String> customComboFilterModelJson) throws JsonProcessingException {
         CustomObjectMapper customObjectMapper = new CustomObjectMapper();
         CustomComboFilterModel customComboFilterModel = customObjectMapper.readValue(customComboFilterModelJson.get(), CustomComboFilterModel.class);
-        return etcItemService.customCombo(customComboFilterModel);
+
+        CustomComboModel customComboModel = etcItemService.customCombo(customComboFilterModel);
+        if (!ObjectUtils.isEmpty(customComboModel.getDataList())) {
+            customComboModel.getDataList().stream().forEach((item) -> {
+                System.out.println("EtcItemController.customCombo loop item.getValue():" + item.getValue()  + " , item.getCaption():"+ item.getCaption());
+            });
+        }
+
+        return customComboModel;
     }
 
 }
