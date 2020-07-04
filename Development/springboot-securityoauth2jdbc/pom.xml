@@ -100,6 +100,20 @@
             </exclusions>
         </dependency>
 
+        <!--==========Security Oauth2 Jdbc==========-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+            <version>2.2.8.RELEASE</version>
+        </dependency>
+        <!--        https://mvnrepository.com/artifact/org.springframework.security.oauth.boot/spring-security-oauth2-autoconfigure/2.2.8.RELEASE-->
+        <!--        spring-security-oauth2 2.3.8.RELEASE-->
+        <dependency>
+            <groupId>org.springframework.security.oauth.boot</groupId>
+            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+            <version>2.2.8.RELEASE</version>
+        </dependency>
+
         <!--==========Test==========-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -152,19 +166,7 @@
             <artifactId>MsUtility</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
-        <!-- SecurityOAuthDB-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
-            <version>2.2.8.RELEASE</version>
-        </dependency>
-<!--        https://mvnrepository.com/artifact/org.springframework.security.oauth.boot/spring-security-oauth2-autoconfigure/2.2.8.RELEASE-->
-<!--        spring-security-oauth2 2.3.8.RELEASE-->
-        <dependency>
-            <groupId>org.springframework.security.oauth.boot</groupId>
-            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
-            <version>2.2.8.RELEASE</version>
-        </dependency>
+
 
     </dependencies>
 
