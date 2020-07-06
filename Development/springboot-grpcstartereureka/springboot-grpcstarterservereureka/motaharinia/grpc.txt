@@ -1,0 +1,62 @@
+grpc = new technology for old rpc technologies like corba , dcom , rmi(not interuptable) , soap (xml based)
+grpc = 1.simple & idiomatic 2.performant & scalable 3.interoperable & extensible
+grpc = is on the top of IDL , HTTP/2 , Protobuffer 3
+HTTP/2 = http2demo.io for check performance with HTTP/1.1
+grpc = is binary based. more efficient on network , more efficient on cpu
+grpc = support multiple languages c++,Objective-c,PHP,python,Ruby,Node.js,Go,C#,Java
+grpc = define interface , define package and the payload. every field has a tag number
+Stubby = RPC framework by google for very high traffic on requests O(10^10)=10,000,000,000 RPC calls per second
+
+on the server we have:
+----------------------
+1.proto files = human readable interface files to generate java stubs by maven plugin
+2.java stubs = java abstract classes that will be used by us to implement our services
+3.java service implementation = our implementation code for java stubs
+4.grpc server = a server that let communicate client and server
+
+on the client we have:
+----------------------
+1.java stubs = interfaces that can 
+
+
+tips:
+----------------------
+**install "Protocol Buffer Editor" (https://plugins.jetbrains.com/plugin/14004-protocol-buffer-editor) for intellij idea to detect .proto files (IntelijIDEA: File -> Settings -> Plugins -> search "Protocol Buffer Editor" and install and restart IDE.)
+**in intellij idea for build stub files from proto file: view menu>tool windows>maven>start
+
+
+movie training and sample source:
+----------------------
+1.GRPC Project Setup in Java:
+https://www.youtube.com/watch?v=JFzAe9SvNaU
+https://medium.com/@akhaku/protobuf-definition-best-practices-87f281576f31
+
+2.How to create GRPC Proto files and Generate Java Stubs:
+https://www.youtube.com/watch?v=-nxoD-2Mx6I
+
+3.Implementing GRPC Service in Java:
+https://www.youtube.com/watch?v=2hjIn3kKXuo
+
+4.How to Start GRPC Server in Java:
+https://www.youtube.com/watch?v=EaD8SwgWlNU
+
+5.How To Test GRPC Services Using GUI client:
+https://www.youtube.com/watch?v=27HLPHLOwEQ&list=PLI5t0u6ye3FGXJMh5kU2RvN0xrul67p7R&index=5
+BloomRPC Download:
+https://github.com/uw-labs/bloomrpc/releases
+
+6.GRPC Client Implementation in Java:
+https://www.youtube.com/watch?v=eUu29SrGYTA
+
+7.source code:
+https://github.com/yrreddy0123/yrrhelp/tree/master/grpcDemo
+
+8.gRPC Java - Build Modern API & Microservices:
+https://www.youtube.com/watch?v=XRXTsQwyZSU&list=PLt1SIbA8guusAJIBS8JgbSFKfQdVkWDbl
+
+
+//messages and enum sample: https://medium.com/@akhaku/protobuf-definition-best-practices-87f281576f31
+//defining service method and message names standards: https://developers.google.com/protocol-buffers/docs/style
+//samples by google: https://github.com/protocolbuffers/protobuf/releases/tag/v3.12.3
+//variable types in proto: https://developers.google.com/protocol-buffers/docs/proto3#scalar
+//exception handling in gRPC: https://grpc.io/docs/guides/error/
