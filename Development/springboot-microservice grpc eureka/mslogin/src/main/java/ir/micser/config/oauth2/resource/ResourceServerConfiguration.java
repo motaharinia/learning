@@ -58,7 +58,7 @@ public class ResourceServerConfiguration extends ResourceServerConfigurerAdapter
     @Override
     public void configure(HttpSecurity http) throws Exception {
 //        String[] openAuthenticationUriArray = OpenUriConfig.getOpenUriAuthenticationArray();
-        String[] openAuthenticationUriArray = new String[]{"/v1/","/v1/error**", "/v1/captchaCode/**","/v1/adminUser**","/v1/adminUser/**","/v1/etcItem**","/v1/getCombo**","/v1/adminUserOrganizationUnit/**"};
+        String[] openAuthenticationUriArray = new String[]{"/","/error**","/actuator/**", "/v1/captchaCode/**","/v1/adminUser**","/v1/adminUser/**","/v1/etcItem**","/v1/getCombo**","/v1/adminUserOrganizationUnit/**"};
         http.cors().and()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.OPTIONS).permitAll()
