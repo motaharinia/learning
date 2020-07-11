@@ -7,7 +7,13 @@ import com.motaharinia.msutility.search.annotation.SearchDataColumn;
 import ir.micser.geo.persistence.orm.city.City;
 
 
-
+/**
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ *  اینترفیس گرید شهر ها
+ */
 @JsonDeserialize(as = City.class)
 public interface SearchRowViewCityBrief extends SearchRowView {
 

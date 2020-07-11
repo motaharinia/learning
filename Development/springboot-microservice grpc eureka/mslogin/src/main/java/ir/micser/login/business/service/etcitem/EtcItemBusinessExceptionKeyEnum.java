@@ -8,7 +8,7 @@ import com.motaharinia.msutility.customexception.CustomExceptionKey;
  * Date: 2020-06-11<br>
  * Time: 01:22:13<br>
  * Description:<br>
- *     مقادیر ثابت کلید اکسپشنهای یوتیلیتی که در کلاینت ساید پروژه ترجمه آنها طبق زبان انتخاب شده کاربر نمایش داده خواهد شد
+ *    کلید اکسپشنهای مقادیر ثابت که در کلاینت ساید پروژه ترجمه آنها طبق زبان انتخاب شده کاربر نمایش داده خواهد شد
  */
 public enum EtcItemBusinessExceptionKeyEnum implements CustomExceptionKey {
 

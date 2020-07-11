@@ -1,4 +1,4 @@
-package ir.micser.geo.presentation.city;
+package ir.micser.geo.presentation.cityplace;
 
 
 import com.motaharinia.msutility.customexception.BusinessException;
@@ -9,8 +9,9 @@ import com.motaharinia.msutility.search.filter.*;
 import com.motaharinia.msutility.string.RandomGenerationTypeEnum;
 import com.motaharinia.msutility.string.StringTools;
 import ir.micser.geo.business.service.city.SearchRowViewCityBrief;
+import ir.micser.geo.persistence.orm.cityplace.CityPlace;
 import ir.micser.geo.persistence.orm.etcitem.EtcItemInitialData;
-import ir.micser.geo.presentation.cityplace.CityPlaceModel;
+import ir.micser.geo.presentation.city.CityModel;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -31,13 +32,13 @@ import static org.assertj.core.api.Assertions.fail;
  * Date: 2020-06-12<br>
  * Time: 01:05:58<br>
  * Description:<br>
- *  کلاس تست ماژول شهر
+ *  کلاس تست ماژول لوکیشن شهری
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("dev")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class CityControllerTest {
+public class CityPlaceControllerTest {
     @LocalServerPort
     private int port;
 
@@ -76,27 +77,31 @@ public class CityControllerTest {
     @Order(1)
     public void create() throws Exception {
         try {
-            String uri = "http://localhost:" + port + "/v1/city";
+            String uri = "http://localhost:" + port + "/v1/cityPlace";
             Map<String, String> variableHashMap = new HashMap<String, String>();
 
              random=StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL,5,false);
 
-            CityModel cityModel = new CityModel();
-            cityModel.setTitle("Tehran "+random);
+            CityPlaceModel cityPlaceModel = new CityPlaceModel();
+            cityPlaceModel.setTitle("HomePosition "+random);
+            cityPlaceModel.setAdminUserId(1);
+            cityPlaceModel.setCity_id(1);
+            cityPlaceModel.setLatitude("35.791354");
+            cityPlaceModel.setLongitude("51.356406");
 
             // build the request
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-            HttpEntity<CityModel> entity = new HttpEntity<>(cityModel, headers);
-            ResponseEntity<CityModel> response = this.restTemplate.exchange(uri, HttpMethod.POST, entity, CityModel.class);
+            HttpEntity<CityPlaceModel> entity = new HttpEntity<>(cityPlaceModel, headers);
+            ResponseEntity<CityPlaceModel> response = this.restTemplate.exchange(uri, HttpMethod.POST, entity, CityPlaceModel.class);
 
             assertThat(response).isNotEqualTo(null);
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(response.getBody()).isNotEqualTo(null);
-            cityModel=response.getBody();
-            assertThat(cityModel.getTitle()).isEqualTo("Tehran "+random);
-            crudId = cityModel.getId();
+            cityPlaceModel=response.getBody();
+            assertThat(cityPlaceModel.getTitle()).isEqualTo("HomePosition "+random);
+            crudId = cityPlaceModel.getId();
 
 
         } catch (Exception ex) {
@@ -108,20 +113,20 @@ public class CityControllerTest {
     @Order(2)
     public void readById() {
         try {
-            String uri = "http://localhost:" + port + "/v1/city/" + crudId;
+            String uri = "http://localhost:" + port + "/v1/cityPlace/" + crudId;
 
             // build the request
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             HttpEntity entity = new HttpEntity(headers);
-            ResponseEntity<CityModel> response = this.restTemplate.exchange(uri,HttpMethod.GET,entity, CityModel.class);
+            ResponseEntity<CityPlaceModel> response = this.restTemplate.exchange(uri,HttpMethod.GET,entity, CityPlaceModel.class);
 
             assertThat(response).isNotEqualTo(null);
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(response.getBody()).isNotEqualTo(null);
-            CityModel cityModel=response.getBody();
-            assertThat(cityModel.getId()).isEqualTo(crudId);
+            CityPlaceModel cityPlaceModel=response.getBody();
+            assertThat(cityPlaceModel.getId()).isEqualTo(crudId);
 
         } catch (Exception ex) {
             fail(ex.toString());
@@ -132,19 +137,19 @@ public class CityControllerTest {
     @Order(3)
     public void readGrid() {
         try {
-            String uri = "http://localhost:" + port + "/v1/city";
+            String uri = "http://localhost:" + port + "/v1/cityPlace";
 
             if(ObjectUtils.isEmpty(random)){
                 random="skill";
             }
 
             List<String> titleList = new ArrayList<>();
-            titleList.add("Tehran");
-            titleList.add("Shiraz");
-            titleList.add("Kashan");
+            titleList.add("HomePosition");
+            titleList.add("WorkPosition");
+            titleList.add("ParkPosition");
 
             List<SearchFilterRestrictionModel> searchFilterRestrictionModelList = new ArrayList<>();
-            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("title", SearchFilterOperationEnum.MATCH, "tehran",SearchFilterNextConditionOperatorEnum.AND));
+            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("title", SearchFilterOperationEnum.MATCH, "HomePosition",SearchFilterNextConditionOperatorEnum.AND));
 //            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("title", SearchFilterOperationEnum.IN, titleList,SearchFilterNextConditionOperatorEnum.AND));
             List<SearchFilterSortModel> searchFilterSortModelList = new ArrayList<>();
             searchFilterSortModelList.add(new SearchFilterSortModel("title", SearchFilterSortTypeEnum.ASC));
@@ -182,33 +187,35 @@ public class CityControllerTest {
     @Order(4)
     public void update() throws Exception {
         try {
-            String uri = "http://localhost:" + port + "/v1/city";
-            //جستجوی شهر جهت ویرایش
+            String uri = "http://localhost:" + port + "/v1/cityPlace";
+            //جستجوی لوکیشن شهری  جهت ویرایش
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             HttpEntity entity = new HttpEntity(headers);
-            ResponseEntity<CityModel> response = this.restTemplate.exchange(uri+ "/"+crudId,HttpMethod.GET,entity, CityModel.class);
+            ResponseEntity<CityPlaceModel> response = this.restTemplate.exchange(uri+ "/"+crudId,HttpMethod.GET,entity, CityPlaceModel.class);
             assertThat(response).isNotEqualTo(null);
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(response.getBody()).isNotEqualTo(null);
-            CityModel cityModel=response.getBody();
-            assertThat(cityModel.getId()).isEqualTo(crudId);
+            CityPlaceModel cityPlaceModel=response.getBody();
+            assertThat(cityPlaceModel.getId()).isEqualTo(crudId);
 
             random=StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL,5,false);
 
             //ویرایش اطلاعات مدل
-            cityModel.setTitle( cityModel.getTitle() + " updated");
+            cityPlaceModel.setTitle( cityPlaceModel.getTitle() + " updated");
+            cityPlaceModel.setLongitude( cityPlaceModel.getLongitude() + " updated");
+            cityPlaceModel.setLatitude( cityPlaceModel.getLatitude() + " updated");
 
             // build the request
             headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-            entity = new HttpEntity<>(cityModel, headers);
-            response = this.restTemplate.exchange(uri, HttpMethod.PUT, entity, CityModel.class);
-            cityModel =response.getBody();
+            entity = new HttpEntity<>(cityPlaceModel, headers);
+            response = this.restTemplate.exchange(uri, HttpMethod.PUT, entity, CityPlaceModel.class);
+            cityPlaceModel =response.getBody();
 
-            assertThat(cityModel.getTitle()).contains("updated");
+            assertThat(cityPlaceModel.getTitle()).contains("updated");
         } catch (Exception ex) {
             fail(ex.toString());
         }
@@ -218,17 +225,17 @@ public class CityControllerTest {
     @Order(5)
     public void delete() throws Exception {
         try {
-            String uri = "http://localhost:" + port + "/v1/city/"+crudId;
+            String uri = "http://localhost:" + port + "/v1/cityPlace/"+crudId;
 
             // build the request
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             HttpEntity entity = new HttpEntity(headers);
-            ResponseEntity<CityModel> response = this.restTemplate.exchange(uri, HttpMethod.DELETE, entity, CityModel.class);
-            CityModel cityModel =response.getBody();
+            ResponseEntity<CityPlaceModel> response = this.restTemplate.exchange(uri, HttpMethod.DELETE, entity, CityPlaceModel.class);
+            CityPlaceModel cityPlaceModel =response.getBody();
 
-            assertThat(cityModel.getId()).isEqualTo(crudId);
+            assertThat(cityPlaceModel.getId()).isEqualTo(crudId);
         } catch (Exception ex) {
             fail(ex.toString());
         }

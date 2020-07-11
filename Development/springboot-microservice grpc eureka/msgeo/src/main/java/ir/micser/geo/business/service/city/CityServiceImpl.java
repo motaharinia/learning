@@ -3,12 +3,12 @@ package ir.micser.geo.business.service.city;
 
 import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.customexception.UtilityException;
+import com.motaharinia.msutility.grpc.GrpcExceptionHandler;
 import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.SearchFilterModel;
 import io.grpc.stub.StreamObserver;
 import ir.micser.geo.business.service.city.stub.CityGrpc.CityImplBase;
-import ir.micser.geo.business.service.city.stub.CityMicro.ReadOneRequestModel;
-import ir.micser.geo.business.service.city.stub.CityMicro.ReadOneResponseModel;
+import ir.micser.geo.business.service.city.stub.CityMicro.*;
 import ir.micser.geo.business.service.etcitem.EtcItemService;
 import ir.micser.geo.persistence.orm.city.City;
 import ir.micser.geo.persistence.orm.city.CityRepository;
@@ -25,9 +25,6 @@ import org.springframework.util.ObjectUtils;
 
 import java.lang.reflect.InvocationTargetException;
 
-//https://www.baeldung.com/spring-data-jpa-projections
-//https://walczak.it/blog/spring-data-jpa-projection-dynamic-queries
-
 
 /**
  * User: https://github.com/motaharinia<br>
@@ -36,7 +33,7 @@ import java.lang.reflect.InvocationTargetException;
  * Description:<br>
  * کلاس پیاده سازی اینترفیس مدیریت شهر ها
  */
-@GrpcService
+@GrpcService(interceptors = { GrpcExceptionHandler.class })
 @Service
 @Transactional(rollbackFor = Exception.class)
 public class CityServiceImpl extends CityImplBase implements CityService {
@@ -183,20 +180,25 @@ public class CityServiceImpl extends CityImplBase implements CityService {
     }
 
 
+    /**
+     * این متد gRPC یک مدل حاوی شناسه شهر را از ورودی دریافت میکند و مدل آن را خروجی میدهد
+     * @param readByIdRequestModel مدل شناسه
+     * @param responseObserver
+     */
     @Override
-    public void grpcReadOne(ReadOneRequestModel request, StreamObserver<ReadOneResponseModel> responseObserver) {
-        ReadOneResponseModel.Builder response = ReadOneResponseModel.newBuilder();
+    public void grpcReadById(ReadByIdRequestModel readByIdRequestModel, StreamObserver<ReadByIdResponseModel> responseObserver) {
+        ReadByIdResponseModel.Builder readByIdResponseModel = ReadByIdResponseModel.newBuilder();
         CityModel cityModel = null;
         try {
-            cityModel = this.readById(request.getId());
+            cityModel = this.readById(readByIdRequestModel.getId());
         } catch (UtilityException e) {
             e.printStackTrace();
         }
         if (!ObjectUtils.isEmpty(cityModel.getId())) {
-            response.setId(cityModel.getId());
-            response.setTitle(cityModel.getTitle());
+            readByIdResponseModel.setId(cityModel.getId());
+            readByIdResponseModel.setTitle(cityModel.getTitle());
         }
-        responseObserver.onNext(response.build());
+        responseObserver.onNext(readByIdResponseModel.build());
         responseObserver.onCompleted();
     }
 }

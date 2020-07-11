@@ -23,9 +23,6 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-//https://reflectoring.io/unit-testing-spring-boot/
-//https://www.javaguides.net/2018/09/spring-boot-2-rest-apis-integration-testing.html
-
 
 /**
  * User: https://github.com/motaharinia<br>
@@ -75,18 +72,12 @@ public class AdminUserOrganizationUnitControllerTest {
             adminUserOrganizationUnitModel.setCode("OrganizationUnitCode " + random);
             adminUserOrganizationUnitModel.setParent_id(null);
 
-            //adminUserOrganizationUnitModel = restTemplate.postForObject(uri, adminUserOrganizationUnitModel, AdminUserOrganizationUnitModel.class, variableHashMap);
-            //System.out.println("create adminUserOrganizationUnitModel.toString():" + adminUserOrganizationUnitModel.toString());
-            //crudId = adminUserOrganizationUnitModel.getId();
-            //assertThat(adminUserOrganizationUnitModel.getId()).isNotEqualTo(null);
-
             // build the request
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             HttpEntity<AdminUserOrganizationUnitModel> entity = new HttpEntity<>(adminUserOrganizationUnitModel, headers);
             ResponseEntity<AdminUserOrganizationUnitModel> response = this.restTemplate.exchange(uri, HttpMethod.POST, entity, AdminUserOrganizationUnitModel.class);
-
             assertThat(response).isNotEqualTo(null);
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(response.getBody()).isNotEqualTo(null);
@@ -113,17 +104,12 @@ public class AdminUserOrganizationUnitControllerTest {
             adminUserOrganizationUnitModel.setCode("OrganizationUnitCode " + random);
             adminUserOrganizationUnitModel.setParent_id(crudId);
 
-            //adminUserOrganizationUnitModel = restTemplate.postForObject(uri, adminUserOrganizationUnitModel, AdminUserOrganizationUnitModel.class, variableHashMap);
-            //System.out.println("create adminUserOrganizationUnitModel.toString():" + adminUserOrganizationUnitModel.toString());
-            //assertThat(adminUserOrganizationUnitModel.getId()).isNotEqualTo(null);
-
             // build the request
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             HttpEntity<AdminUserOrganizationUnitModel> entity = new HttpEntity<>(adminUserOrganizationUnitModel, headers);
             ResponseEntity<AdminUserOrganizationUnitModel> response = this.restTemplate.exchange(uri, HttpMethod.POST, entity, AdminUserOrganizationUnitModel.class);
-
             assertThat(response).isNotEqualTo(null);
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(response.getBody()).isNotEqualTo(null);
@@ -149,17 +135,12 @@ public class AdminUserOrganizationUnitControllerTest {
             adminUserOrganizationUnitModel.setCode("OrganizationUnitCode " + random);
             adminUserOrganizationUnitModel.setParent_id(crudId);
 
-            //adminUserOrganizationUnitModel = restTemplate.postForObject(uri, adminUserOrganizationUnitModel, AdminUserOrganizationUnitModel.class, variableHashMap);
-            //System.out.println("create adminUserOrganizationUnitModel.toString():" + adminUserOrganizationUnitModel.toString());
-            //assertThat(adminUserOrganizationUnitModel.getId()).isNotEqualTo(null);
-
             // build the request
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             HttpEntity<AdminUserOrganizationUnitModel> entity = new HttpEntity<>(adminUserOrganizationUnitModel, headers);
             ResponseEntity<AdminUserOrganizationUnitModel> response = this.restTemplate.exchange(uri, HttpMethod.POST, entity, AdminUserOrganizationUnitModel.class);
-
             assertThat(response).isNotEqualTo(null);
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(response.getBody()).isNotEqualTo(null);
@@ -183,16 +164,11 @@ public class AdminUserOrganizationUnitControllerTest {
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             HttpEntity entity = new HttpEntity(headers);
             ResponseEntity<JstreeNodeModel[]> response = this.restTemplate.exchange(uri,HttpMethod.GET,entity, JstreeNodeModel[].class);
-
             assertThat(response).isNotEqualTo(null);
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(response.getBody()).isNotEqualTo(null);
             JstreeNodeModel[] jstreeNodeModelArray=response.getBody();
             assertThat(jstreeNodeModelArray.length).isGreaterThan(0);
-
-            //JstreeNodeModel[] jstreeNodeModelArray = restTemplate.getForObject(uri, JstreeNodeModel[].class);
-            //System.out.println("tree jstreeNodeModelArray:" + System.lineSeparator() + Arrays.stream(jstreeNodeModelArray).map(item -> item.toString()).collect(Collectors.joining("," + System.lineSeparator())));
-            //assertThat(jstreeNodeModelArray.length).isGreaterThan(0);
         } catch (Exception ex) {
             fail(ex.toString());
         }

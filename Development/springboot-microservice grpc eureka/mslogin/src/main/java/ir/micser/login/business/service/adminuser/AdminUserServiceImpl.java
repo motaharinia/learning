@@ -8,8 +8,10 @@ import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.customfield.CustomDate;
 import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.SearchFilterModel;
-import ir.micser.geo.business.service.city.stub.CityGrpc;
-import ir.micser.geo.business.service.city.stub.CityMicro;
+import ir.micser.geo.business.service.city.stub.CityGrpc.*;
+import ir.micser.geo.business.service.city.stub.CityMicro.*;
+import ir.micser.geo.business.service.cityplace.stub.CityPlaceGrpc.*;
+import ir.micser.geo.business.service.cityplace.stub.CityPlaceMicro.*;
 import ir.micser.login.business.service.adminuserskill.AdminUserSkillService;
 import ir.micser.login.business.service.authentication.PasswordEncoderGenerator;
 import ir.micser.login.business.service.etcitem.EtcItemService;
@@ -75,7 +77,10 @@ public class AdminUserServiceImpl implements AdminUserService {
     private ModelMapper modelMapper;
 
     @GrpcClient("grpcClientCity")
-    private CityGrpc.CityBlockingStub cityStub;
+    private CityBlockingStub cityStub;
+
+    @GrpcClient("grpcClientCityPlace")
+    private CityPlaceBlockingStub cityPlaceStub;
 
     /**
      * متد سازنده پیش فرض
@@ -107,8 +112,8 @@ public class AdminUserServiceImpl implements AdminUserService {
     public AdminUserModel create(@NotNull AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException {
 
         //بررسی شناسه شهر
-        CityMicro.ReadOneRequestModel cityReadOneRequest =  CityMicro.ReadOneRequestModel.newBuilder().setId(adminUserModel.getDefaultAdminUserContact_city_id()).build();
-        final CityMicro.ReadOneResponseModel cityReadOneResponse= this.cityStub.grpcReadOne(cityReadOneRequest);
+        ReadByIdRequestModel readByIdRequestModel =  ReadByIdRequestModel.newBuilder().setId(adminUserModel.getDefaultAdminUserContact_city_id()).build();
+        final ReadByIdResponseModel cityReadOneResponse= this.cityStub.grpcReadById(readByIdRequestModel);
 
         //ثبت اطلاعات تماس ادمین
         AdminUserContact adminUserContact = new AdminUserContact();
@@ -129,6 +134,19 @@ public class AdminUserServiceImpl implements AdminUserService {
 
         adminUser = adminUserRepository.save(adminUser);
         adminUser.setDefaultAdminUserContact(adminUserContact);
+
+
+        //اضافه کردن لوکیشن شهری برای ادمین
+        CreateRequestModel createRequestModel =  CreateRequestModel.newBuilder()
+                .setAdminUserId(adminUser.getId())
+                .setCityId(cityReadOneResponse.getId())
+                .setLatitude("35.791354")
+                .setLongitude("51.356406")
+                .setTitle("OfficePlace")
+                .build();
+        final CreateResponseModel createResponseModel= this.cityPlaceStub.grpcCreate(createRequestModel);
+        System.out.println("AdminUserServiceImpl.create cityPlace.getId:" + createResponseModel.getId());
+
         adminUserModel.setId(adminUser.getId());
         return adminUserModel;
     }

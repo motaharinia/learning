@@ -1,10 +1,18 @@
 package ir.micser.geo.business.service.city.stub;
 
 import static io.grpc.MethodDescriptor.generateFullMethodName;
+import static io.grpc.stub.ClientCalls.asyncBidiStreamingCall;
+import static io.grpc.stub.ClientCalls.asyncClientStreamingCall;
+import static io.grpc.stub.ClientCalls.asyncServerStreamingCall;
 import static io.grpc.stub.ClientCalls.asyncUnaryCall;
+import static io.grpc.stub.ClientCalls.blockingServerStreamingCall;
 import static io.grpc.stub.ClientCalls.blockingUnaryCall;
 import static io.grpc.stub.ClientCalls.futureUnaryCall;
+import static io.grpc.stub.ServerCalls.asyncBidiStreamingCall;
+import static io.grpc.stub.ServerCalls.asyncClientStreamingCall;
+import static io.grpc.stub.ServerCalls.asyncServerStreamingCall;
 import static io.grpc.stub.ServerCalls.asyncUnaryCall;
+import static io.grpc.stub.ServerCalls.asyncUnimplementedStreamingCall;
 import static io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall;
 
 /**
@@ -19,36 +27,36 @@ public final class CityGrpc {
   public static final String SERVICE_NAME = "City";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<ir.micser.geo.business.service.city.stub.CityMicro.ReadOneRequestModel,
-      ir.micser.geo.business.service.city.stub.CityMicro.ReadOneResponseModel> getGrpcReadOneMethod;
+  private static volatile io.grpc.MethodDescriptor<ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdRequestModel,
+      ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdResponseModel> getGrpcReadByIdMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
-      fullMethodName = SERVICE_NAME + '/' + "grpcReadOne",
-      requestType = ir.micser.geo.business.service.city.stub.CityMicro.ReadOneRequestModel.class,
-      responseType = ir.micser.geo.business.service.city.stub.CityMicro.ReadOneResponseModel.class,
+      fullMethodName = SERVICE_NAME + '/' + "grpcReadById",
+      requestType = ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdRequestModel.class,
+      responseType = ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdResponseModel.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<ir.micser.geo.business.service.city.stub.CityMicro.ReadOneRequestModel,
-      ir.micser.geo.business.service.city.stub.CityMicro.ReadOneResponseModel> getGrpcReadOneMethod() {
-    io.grpc.MethodDescriptor<ir.micser.geo.business.service.city.stub.CityMicro.ReadOneRequestModel, ir.micser.geo.business.service.city.stub.CityMicro.ReadOneResponseModel> getGrpcReadOneMethod;
-    if ((getGrpcReadOneMethod = CityGrpc.getGrpcReadOneMethod) == null) {
+  public static io.grpc.MethodDescriptor<ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdRequestModel,
+      ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdResponseModel> getGrpcReadByIdMethod() {
+    io.grpc.MethodDescriptor<ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdRequestModel, ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdResponseModel> getGrpcReadByIdMethod;
+    if ((getGrpcReadByIdMethod = CityGrpc.getGrpcReadByIdMethod) == null) {
       synchronized (CityGrpc.class) {
-        if ((getGrpcReadOneMethod = CityGrpc.getGrpcReadOneMethod) == null) {
-          CityGrpc.getGrpcReadOneMethod = getGrpcReadOneMethod = 
-              io.grpc.MethodDescriptor.<ir.micser.geo.business.service.city.stub.CityMicro.ReadOneRequestModel, ir.micser.geo.business.service.city.stub.CityMicro.ReadOneResponseModel>newBuilder()
+        if ((getGrpcReadByIdMethod = CityGrpc.getGrpcReadByIdMethod) == null) {
+          CityGrpc.getGrpcReadByIdMethod = getGrpcReadByIdMethod = 
+              io.grpc.MethodDescriptor.<ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdRequestModel, ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdResponseModel>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(
-                  "City", "grpcReadOne"))
+                  "City", "grpcReadById"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  ir.micser.geo.business.service.city.stub.CityMicro.ReadOneRequestModel.getDefaultInstance()))
+                  ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdRequestModel.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  ir.micser.geo.business.service.city.stub.CityMicro.ReadOneResponseModel.getDefaultInstance()))
-                  .setSchemaDescriptor(new CityMethodDescriptorSupplier("grpcReadOne"))
+                  ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdResponseModel.getDefaultInstance()))
+                  .setSchemaDescriptor(new CityMethodDescriptorSupplier("grpcReadById"))
                   .build();
           }
         }
      }
-     return getGrpcReadOneMethod;
+     return getGrpcReadByIdMethod;
   }
 
   /**
@@ -80,20 +88,20 @@ public final class CityGrpc {
 
     /**
      */
-    public void grpcReadOne(ir.micser.geo.business.service.city.stub.CityMicro.ReadOneRequestModel request,
-        io.grpc.stub.StreamObserver<ir.micser.geo.business.service.city.stub.CityMicro.ReadOneResponseModel> responseObserver) {
-      asyncUnimplementedUnaryCall(getGrpcReadOneMethod(), responseObserver);
+    public void grpcReadById(ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdRequestModel request,
+        io.grpc.stub.StreamObserver<ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdResponseModel> responseObserver) {
+      asyncUnimplementedUnaryCall(getGrpcReadByIdMethod(), responseObserver);
     }
 
     @java.lang.Override public final io.grpc.ServerServiceDefinition bindService() {
       return io.grpc.ServerServiceDefinition.builder(getServiceDescriptor())
           .addMethod(
-            getGrpcReadOneMethod(),
+            getGrpcReadByIdMethod(),
             asyncUnaryCall(
               new MethodHandlers<
-                ir.micser.geo.business.service.city.stub.CityMicro.ReadOneRequestModel,
-                ir.micser.geo.business.service.city.stub.CityMicro.ReadOneResponseModel>(
-                  this, METHODID_GRPC_READ_ONE)))
+                ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdRequestModel,
+                ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdResponseModel>(
+                  this, METHODID_GRPC_READ_BY_ID)))
           .build();
     }
   }
@@ -118,10 +126,10 @@ public final class CityGrpc {
 
     /**
      */
-    public void grpcReadOne(ir.micser.geo.business.service.city.stub.CityMicro.ReadOneRequestModel request,
-        io.grpc.stub.StreamObserver<ir.micser.geo.business.service.city.stub.CityMicro.ReadOneResponseModel> responseObserver) {
+    public void grpcReadById(ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdRequestModel request,
+        io.grpc.stub.StreamObserver<ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdResponseModel> responseObserver) {
       asyncUnaryCall(
-          getChannel().newCall(getGrpcReadOneMethod(), getCallOptions()), request, responseObserver);
+          getChannel().newCall(getGrpcReadByIdMethod(), getCallOptions()), request, responseObserver);
     }
   }
 
@@ -145,9 +153,9 @@ public final class CityGrpc {
 
     /**
      */
-    public ir.micser.geo.business.service.city.stub.CityMicro.ReadOneResponseModel grpcReadOne(ir.micser.geo.business.service.city.stub.CityMicro.ReadOneRequestModel request) {
+    public ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdResponseModel grpcReadById(ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdRequestModel request) {
       return blockingUnaryCall(
-          getChannel(), getGrpcReadOneMethod(), getCallOptions(), request);
+          getChannel(), getGrpcReadByIdMethod(), getCallOptions(), request);
     }
   }
 
@@ -171,14 +179,14 @@ public final class CityGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<ir.micser.geo.business.service.city.stub.CityMicro.ReadOneResponseModel> grpcReadOne(
-        ir.micser.geo.business.service.city.stub.CityMicro.ReadOneRequestModel request) {
+    public com.google.common.util.concurrent.ListenableFuture<ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdResponseModel> grpcReadById(
+        ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdRequestModel request) {
       return futureUnaryCall(
-          getChannel().newCall(getGrpcReadOneMethod(), getCallOptions()), request);
+          getChannel().newCall(getGrpcReadByIdMethod(), getCallOptions()), request);
     }
   }
 
-  private static final int METHODID_GRPC_READ_ONE = 0;
+  private static final int METHODID_GRPC_READ_BY_ID = 0;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -197,9 +205,9 @@ public final class CityGrpc {
     @java.lang.SuppressWarnings("unchecked")
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
-        case METHODID_GRPC_READ_ONE:
-          serviceImpl.grpcReadOne((ir.micser.geo.business.service.city.stub.CityMicro.ReadOneRequestModel) request,
-              (io.grpc.stub.StreamObserver<ir.micser.geo.business.service.city.stub.CityMicro.ReadOneResponseModel>) responseObserver);
+        case METHODID_GRPC_READ_BY_ID:
+          serviceImpl.grpcReadById((ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdRequestModel) request,
+              (io.grpc.stub.StreamObserver<ir.micser.geo.business.service.city.stub.CityMicro.ReadByIdResponseModel>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -262,7 +270,7 @@ public final class CityGrpc {
         if (result == null) {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new CityFileDescriptorSupplier())
-              .addMethod(getGrpcReadOneMethod())
+              .addMethod(getGrpcReadByIdMethod())
               .build();
         }
       }

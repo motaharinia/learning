@@ -1,6 +1,8 @@
 package ir.micser.login.business.service.authorization;
 
 
+import com.motaharinia.msutility.customexception.BusinessException;
+import com.motaharinia.msutility.grpc.GrpcExceptionHandler;
 import io.grpc.stub.StreamObserver;
 import ir.micser.login.business.service.authorization.stub.AuthorizationGrpc;
 import ir.micser.login.business.service.authorization.stub.AuthorizationMicro.CheckAccessRequestModel;
@@ -15,15 +17,17 @@ import java.util.Date;
  * Time: 14:02:31<br>
  * Description:<br>
  */
-@GrpcService
+@GrpcService(interceptors = { GrpcExceptionHandler.class })
 public class AuthorizationServiceImpl extends AuthorizationGrpc.AuthorizationImplBase implements AuthorizationService {
     /**
-     * @param request
+     * @param checkAccessRequestModel
      * @param responseObserver
      */
     @Override
-    public void checkAccess(CheckAccessRequestModel request, StreamObserver<CheckAccessResponseModel> responseObserver) {
-
+    public void checkAccess(CheckAccessRequestModel checkAccessRequestModel, StreamObserver<CheckAccessResponseModel> responseObserver) {
+        if (checkAccessRequestModel.getUrl().isBlank()) {
+            throw new BusinessException(getClass(), AuthorizationBusinessExceptionKeyEnum.URL_IS_EMPTY, "url");
+        }
         CheckAccessResponseModel.Builder response = CheckAccessResponseModel.newBuilder();
         response.setCheckDate(new Date().getTime());
         response.setResultCode(1000);

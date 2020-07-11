@@ -1,5 +1,6 @@
 package com.motaharinia.msutility.customexception;
 
+import io.grpc.StatusRuntimeException;
 import org.jetbrains.annotations.NotNull;
 
 
@@ -10,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
  * Description:<br>
  * کلاس اکسپشن پدر پروژه که در دیتابیس لاگ میشود و انواع دیگر اکسپشنها از آن گسترش میابند
  */
-public class CustomException extends Exception {
+public class CustomException extends RuntimeException {
 
     /**
      * نوع اکسپشن
@@ -50,6 +51,25 @@ public class CustomException extends Exception {
         this.exceptionOccurredClass = exceptionOccurredClass;
         this.exceptionMessage = exceptionType.getValue().toUpperCase() + "." + exceptionOccurredClass.getSimpleName().toUpperCase() + "." + customExceptionKey.getValue().toUpperCase();
         this.exceptionDescription = exceptionDescription;
+    }
+
+
+    /**
+     * متد سازنده ای که از خطای runtime مربوط به فراخوانی مایکروسرویس این مدل را میسازد
+     *
+     * @param statusRuntimeException خطای دریافتی از grpc
+     */
+    public CustomException(@NotNull StatusRuntimeException statusRuntimeException) {
+        String description = statusRuntimeException.getStatus().getDescription();
+        String[] descriptionArray = description.split(":::");
+        if (descriptionArray.length > 1) {
+            if (descriptionArray[0].split("\\.").length > 0) {
+                this.exceptionType = CustomExceptionTypeEnum.valueOf(descriptionArray[0].split("\\.")[0]);
+            }
+            this.exceptionMessage = descriptionArray[0];
+            this.exceptionDescription = descriptionArray[1];
+            this.setStackTrace(statusRuntimeException.getStackTrace());
+        }
     }
 
     @Override

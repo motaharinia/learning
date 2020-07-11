@@ -2,18 +2,19 @@ syntax = "proto3";
 
 option java_package = "ir.micser.geo.business.service.city.stub";
 
-message ReadOneRequestModel{
+message ReadByIdRequestModel{
   int32 id = 1 ;
 }
 
-message ReadOneResponseModel{
-  int32  id = 1;
-  string title = 2;
+message ReadByIdResponseModel{
+  int32 transaction_id=1;
+  int32  id = 2;
+  string title = 3;
 }
 
 message Empty{
 }
 
 service City{
-  rpc grpcReadOne(ReadOneRequestModel)  returns (ReadOneResponseModel);
+  rpc grpcReadById(ReadByIdRequestModel)  returns (ReadByIdResponseModel);
 }

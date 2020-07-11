@@ -88,8 +88,13 @@
             </exclusions>
         </dependency>
 
-
-
+        <!-- ==========gRPC Protobuf==========-->
+        <!--  to enable @GrpcServer and @GrpcClient :      https://mvnrepository.com/artifact/net.devh/grpc-server-spring-boot-starter/2.9.0.RELEASE-->
+        <dependency>
+            <groupId>net.devh</groupId>
+            <artifactId>grpc-spring-boot-starter</artifactId>
+            <version>2.9.0.RELEASE</version>
+        </dependency>
 
         <!--==========Test==========-->
         <dependency>
