@@ -2,5 +2,5 @@ To set the password:
 1.Open Run Window by Winkey + R. Type services.msc. Search Redis service. Click stop
 2.edit your C:\Program Files\Redis\redis.windows.conf and C:\Program Files\Redis\redis.windows-service.conf file with administrator user, find this line
 # requirepass foobared
-Then uncomment it and change foobared to your password.
+Then uncomment it and change foobared to your password (Important: please check that requirepass doesnt have blank space before it).
 3.Open Run Window by Winkey + R. Type services.msc. Search Redis service. Click start
