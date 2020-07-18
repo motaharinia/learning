@@ -57,6 +57,8 @@ http://localhost:8080
 Click The Add button to add a Docker configuration and specify how to connect to the Docker daemon.
 -Name: MyDocker
 -Connect to Docker daemon with: select TCP socket on "tcp://localhost:2375"  (Path Mapping: For Windows and macOS: Specify the mappings for folders that can be shared between the host and the container volumes)
+**(be carefull of huge log file in c:\users\MyUser\.intellijidea2019.3\system\log\docker.log after apply this setting for intellij idea)
+
 
 9.in intellij "view menu/tool window/services" we can see docker and connect to it
 
