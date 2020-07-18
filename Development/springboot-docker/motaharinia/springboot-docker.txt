@@ -8,53 +8,60 @@ https://www.youtube.com/watch?v=FlSup_eelYE
 -click on docker tray icon and goto "setting/resources/advanced/disc image location" you can change image location
 
 2.create spring boot:
--Java: 8
+-Java: 13
 -Artifact: dockertest
 -Packaging: jar
 -Dependencies: "Spring web"
 
 3.add in application.properties with these lines:
-server.port=8085
+server.port=8080
 
 4.add this tag to pom.xml inside <build> tag and in Intellij in maven box select lifecycle/clean and lifecycle/install and run in maven box to create jar file in target:
 <finalName>dockertest</finalName>
 
 5.add "Dockerfile" file beside "pom.xml" with these lines:
-FROM openjdk:8
+FROM openjdk:13
 ADD target/dockertest.jar dockertest.jar
-EXPOSE 8085
+EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "dockertest.jar"]
 
 6.in Intellij terminal in project folder 
 
 **check current terminal path:
-pwd
+in linux: pwd
+in windows: cd
 
 **check docker version:
 docker -v
 
-**build docker image file from "Dockerfile" properties in project beside pom.xml with tag "dockertest" (it will download openjdk image file for the fisrt time):
+**build docker image file from "Dockerfile" properties in project beside pom.xml with tag "dockertest" (it will download openjdk image file for the first time):
 docker build -f Dockerfile -t dockertest .
 
 **check docker images after build:
 docker images
 
-**push and run docker image for test spring application with same port 8085 in spring(we can change docker port as we wish):
-docker run -p 8085:8085 dockertest
+**push and run docker image for test spring application with same port 8080 in spring(we can change docker port as we wish):
+docker run -p 8080:8080 dockertest
 
 **check terminal commands history:
 history
 
 **clear terminal
-clear
+in linux: clear
+in windows: cls
 
-7.test spring boot application on browser:
-http://localhost:8085
+7.test spring boot application on windows Browser:
+http://localhost:8080
 
-8.in intellij In the Settings/Preferences dialog Ctrl+Alt+S, select Build, Execution, Deployment | Docker. Click The Add button to add a Docker configuration and specify how to connect to the Docker daemon. select TCP socket on "tcp://localhost:2375"
+8.in intellij In the Settings/Preferences dialog Ctrl+Alt+S, select Build, Execution, Deployment | Docker.
+Click The Add button to add a Docker configuration and specify how to connect to the Docker daemon.
+-Name: MyDocker
+-Connect to Docker daemon with: select TCP socket on "tcp://localhost:2375"  (Path Mapping: For Windows and macOS: Specify the mappings for folders that can be shared between the host and the container volumes)
 
 9.in intellij "view menu/tool window/services" we can see docker and connect to it
 
+10. stop container by id: "docker exec <containerId> stop". copy docker image from "docker images" command. for example:
+docker exec db79a8e5fdae stop
 
 other links:
 ------------
