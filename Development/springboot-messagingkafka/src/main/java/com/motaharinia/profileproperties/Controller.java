@@ -1,6 +1,6 @@
 package com.motaharinia.profileproperties;
 
-import com.motaharinia.ProfilePropertiesApplication;
+import com.motaharinia.MessagingKafkaApplication;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +23,7 @@ public class Controller {
     }
 
     @RequestMapping(value = "/randomInt",method = RequestMethod.POST)
-    public Integer getRandomInt(@Validated ProfilePropertiesApplication profilePropertiesApplication) {
+    public Integer getRandomInt(@Validated MessagingKafkaApplication messagingKafkaApplication) {
         return appRandomInt;
     }
 
