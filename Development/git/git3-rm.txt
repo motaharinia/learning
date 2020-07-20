@@ -1,0 +1,13 @@
+-create branch linkingpages and checkout it and get status
+git branch linkingpages
+git checkout linkingpages
+git status
+-remove footer file from git and from storage:
+git rm footer.html
+-change index.html and link it to pages html
+-add index change and deletion of footer.html to stage and commmit it
+git add -A
+git commit -m "index change and remove footer"
+-after working with a branch finished we can delete that branch:
+git branch -d fixpages
+git branch -d linkingpages

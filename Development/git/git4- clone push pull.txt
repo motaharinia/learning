@@ -1,0 +1,21 @@
+-create new directory d:\project2 and cd to it
+d:
+cd d:\project2
+-clone from repository
+git clone http://gitlab.shc.ir/fardup/ctomsrepositories.git
+
+-cd to ctomsrepositories
+cd d:\project2\ctomsrepositories
+
+-create new file file1.txt and add and commit it and get status
+git add -A
+git commit -m "file1 created"
+git status
+
+-send comitted files to origin(gitlab / github) and enter username and password:
+git push origin master
+
+-change file1.txt in origin by github or gitlab website
+
+-pull changes from repository
+git pull origin master

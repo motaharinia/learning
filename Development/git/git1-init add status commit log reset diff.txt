@@ -1,0 +1,55 @@
+https://faradars.org/courses/fvgit9609-git-github-gitlab#faradars_demo_free
+-create d:\project directory open cmd window and cd to d:\project
+
+-init git and get status:
+git init
+git status
+
+-add new file index.html and get status and commit and get status:
+git add index.html
+git status
+git commit -m "file index.html created"
+git status
+
+-change index.html code 
+-add changed file index.html (by "git add -A" all modification added) and get status and commit and get status:
+git add -A
+git status
+git commit -m "file index.html changed"
+git status
+
+-check history:
+git log
+
+-add page1.html , page2.html , page3.html in project folder
+-add new files with starting "page" and get status and commit and get status:
+git add "page*"
+git status
+git commit -m "3 page file created"
+git status
+
+-add changed file index.html and page2.html and get status and commit and get status:
+git add -A
+git status
+git commit -m "file index.html adn page2.html changed again"
+git status
+
+-change index.html content and check current modifications by git HEAD:
+git diff HEAD
+
+-add changed file index.html and get status:
+git add -A
+git status
+
+-check git stage files modifications only:
+git diff --staged
+
+-unstage page2.html from stage:
+git reset page2.html
+
+-reverse modification in page2.html:
+git checkout -- page2.html
+
+-commit index.html changes and get status: 
+git commit -m "commit index.html changes"
+git status

@@ -1,0 +1,17 @@
+-check current branch:
+git branch
+-create new branch and check current branch:
+git branch fixpages
+git branch
+-go to a branch "fixpages" and check current branch:
+git checkout fixpages
+git branch
+-change page1.html and page2.html and page3.html content and add footer.html file
+-add all and commit
+git add -A
+git commit -m "add pages change and new footer"
+-check current branch and switch to master branch:
+git branch
+git checkout master
+-merge fixpages to master:
+git merge fixpages
