@@ -1,0 +1,52 @@
+https://faradars.org/courses/fvgit9609-git-github-gitlab#faradars_demo_free
+
+-check current remotes:
+git remote -v
+
+-add 2 new remote address to current git directory with origin name on branch master:
+git remote add origin https://github.com/test-repo/
+git remote add originlocal https://gitlab.company.com/test-repo/
+
+-push current git committed files to a remote:
+git push -u origin master
+
+-list git tags:
+git tag
+
+-add tag(software verion) to current git files and list tags:
+git tag -a v2.0 -m "this is version 2 of software"
+git tag
+
+-add tag(software verion) to last commit hashcode and list tags:
+git tag -a v1.8 -m "this is version 1.8 of software" d22658458c
+git tag
+
+-search on tag names. for example all tags with starting "v":
+git tag -l "v*"
+
+-show a commit modifications and information by commit hashcode:
+git show hhhhhhhhhhhhhhhhh
+
+-show a commit modifications and information by commit tag:
+git show v1.8
+
+-push tag to remote "origin" (because git push doesnt push tag names to remote):
+git push origin v1.8
+
+-push all tags to remote "origin" (because git push doesnt push tag names to remote):
+git push origin --tags
+
+-checkout to tag instead of branch(we cannot make modification in tag after checkout and only can checkout and view files in it. if we want to change and push we should work with branches):
+git checkout v1.8
+
+-read a git command help. for example blame:
+git help blame
+
+-check who write any lines in a file:
+git blame file1.txt
+
+-check who write line 8 in a file:
+git blame file1.txt -L8
+
+-check who write from line 8 to 10 in a file:
+git blame file1.txt -L8,10

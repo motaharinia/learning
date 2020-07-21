@@ -1,4 +1,5 @@
 https://faradars.org/courses/fvgit9609-git-github-gitlab#faradars_demo_free
+
 -create d:\project directory open cmd window and cd to d:\project
 
 -init git and get status:

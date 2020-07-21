@@ -1,3 +1,5 @@
+https://faradars.org/courses/fvgit9609-git-github-gitlab#faradars_demo_free
+
 -create new directory d:\project2 and cd to it
 d:
 cd d:\project2
