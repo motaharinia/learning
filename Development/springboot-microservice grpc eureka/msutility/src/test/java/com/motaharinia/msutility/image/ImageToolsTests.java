@@ -7,7 +7,6 @@ import org.junit.jupiter.api.*;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
@@ -67,13 +66,8 @@ public class ImageToolsTests {
     @Test
     void createThumbTest() {
         try {
-            //خواندن آرایه بایت فایل تصویر موجود
-            BufferedImage bImage = ImageIO.read(new File(parentDirPath + "/" + imageFileFullName));
-            ByteArrayOutputStream bos = new ByteArrayOutputStream();
-            ImageIO.write(bImage, "jpg", bos);
-            byte[] byteArray = bos.toByteArray();
             //تست ایجاد تصویر بندانگشتی از فایل تصویر موجود
-            ImageTools.createThumb(parentDirPath, imageFileFullName, byteArray, "jpg", FsoTools.THUMB_SIZE_ARRAY[0], FsoTools.THUMB_SIZE_ARRAY[0]);
+            ImageTools.createThumb(parentDirPath, imageFileFullName, FsoTools.THUMB_SIZE_ARRAY[0], FsoTools.THUMB_SIZE_ARRAY[0]);
             File file = new File(parentDirPath + "/" + imageFileFullName + "-" + FsoTools.THUMB_SIZE_ARRAY[0] + ".thumb");
             assertThat(file.exists()).isTrue();
         } catch (Exception ex) {

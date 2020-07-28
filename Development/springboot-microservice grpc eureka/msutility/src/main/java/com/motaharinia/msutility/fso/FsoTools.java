@@ -434,8 +434,9 @@ public interface FsoTools {
         File file = new File(directoryPath + fileFullName);
         FileUtils.writeByteArrayToFile(file, fileBytes);
         if (withThumbnail) {
-            ImageTools.createThumb(directoryPath, fileFullName, fileBytes, getFileExtension(fileFullName), 60, 60);
-            ImageTools.createThumb(directoryPath, fileFullName, fileBytes, getFileExtension(fileFullName), 120, 120);
+            for (Integer size : FsoTools.THUMB_SIZE_ARRAY) {
+                ImageTools.createThumb(directoryPath, fileFullName, size, size);
+            }
         }
         return EncodingTools.base64Encode(directoryPath + fileFullName);
     }

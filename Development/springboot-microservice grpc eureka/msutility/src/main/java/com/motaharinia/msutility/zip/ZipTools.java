@@ -4,11 +4,19 @@ package com.motaharinia.msutility.zip;
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.customexception.UtilityExceptionKeyEnum;
 import net.lingala.zip4j.ZipFile;
+import net.lingala.zip4j.exception.ZipException;
+import net.lingala.zip4j.model.ZipParameters;
+import net.lingala.zip4j.model.enums.AesKeyStrength;
+import net.lingala.zip4j.model.enums.CompressionLevel;
+import net.lingala.zip4j.model.enums.CompressionMethod;
+import net.lingala.zip4j.model.enums.EncryptionMethod;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.util.ObjectUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -20,6 +28,45 @@ import java.io.FileOutputStream;
  */
 public interface ZipTools {
 
+
+    static void zip(List<String> pathToAdd, String zipFileFullPath, CompressionMethod compressionMethod, CompressionLevel compressionLevel, String password, EncryptionMethod passwordEncryptionMethod, AesKeyStrength passwordAesKeyStrength) throws ZipException {
+
+        List<File> fileList = new ArrayList<>();
+        List<File> directoryList = new ArrayList<>();
+
+        File file;
+        for (String path : pathToAdd) {
+            file = new File(path);
+            if (file.exists()) {
+                if (file.isDirectory()) {
+                    directoryList.add(file);
+                } else {
+                    fileList.add(file);
+                }
+            }
+        }
+
+        ZipParameters parameters = new ZipParameters();
+        parameters.setCompressionMethod(compressionMethod);
+        parameters.setCompressionLevel(compressionLevel);
+
+        ZipFile zipFile;
+        if (ObjectUtils.isEmpty(password)) {
+            zipFile = new ZipFile(zipFileFullPath);
+        } else {
+            zipFile = new ZipFile(zipFileFullPath, password.toCharArray());
+            parameters.setEncryptFiles(true);
+            parameters.setEncryptionMethod(passwordEncryptionMethod);
+            parameters.setAesKeyStrength(passwordAesKeyStrength);
+        }
+        if (!ObjectUtils.isEmpty(fileList)) {
+            zipFile.addFiles(fileList, parameters);
+        }
+        for (File directory : directoryList) {
+            zipFile.addFolder(directory, parameters);
+        }
+
+    }
 
     /**
      * این متد آرایه بایت داده فایل زیپ و مسیری برای استخراج فایل زیپ و رمز استخراج فایل زیپ را از ورودی دریافت میکند و در مسیر آن را استخراج مینماید

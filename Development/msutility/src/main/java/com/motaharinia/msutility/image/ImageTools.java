@@ -3,15 +3,14 @@ package com.motaharinia.msutility.image;
 
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.customexception.UtilityExceptionKeyEnum;
+import com.motaharinia.msutility.fso.FsoTools;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.util.ObjectUtils;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.InputStream;
 
 
 /**
@@ -25,25 +24,20 @@ public interface ImageTools {
 
 
     /**
-     * این متد یک مسیر دایرکتوری و نام کامل فایل و آرایه بایت داده تصویر و پسوند فایل و ارتفاع و عرض تصویر را از ورودی دریافت میکند و تصویر بندانگشتی فایل تصویر را با طول و عرض داده شده ثبت مینماید
+     * این متد یک مسیر دایرکتوری و نام کامل فایل تصویر و ارتفاع و عرض تصویر را از ورودی دریافت میکند و تصویر بندانگشتی فایل تصویر را با طول و عرض داده شده ثبت مینماید
      *
      * @param directoryPath مسیر دایرکتوری
      * @param fileFullName  نام کامل فایل
-     * @param fileBytes     آرایه بایت داده فایل
-     * @param fileExtension پسوند فایل
      * @param height        ارتفاع تصویر
      * @param width         عرض تصویر
      * @throws Exception
      */
-    static void createThumb(@NotNull String directoryPath, @NotNull String fileFullName, @NotNull byte[] fileBytes, @NotNull String fileExtension, @NotNull Integer height, @NotNull Integer width) throws Exception {
+    static void createThumb(@NotNull String directoryPath, @NotNull String fileFullName, @NotNull Integer height, @NotNull Integer width) throws Exception {
         if (ObjectUtils.isEmpty(directoryPath)) {
             throw new UtilityException(ImageTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "directoryPath");
         }
         if (ObjectUtils.isEmpty(fileFullName)) {
             throw new UtilityException(ImageTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "fileFullName");
-        }
-        if (ObjectUtils.isEmpty(fileBytes)) {
-            throw new UtilityException(ImageTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "fileBytes");
         }
         if (ObjectUtils.isEmpty(height)) {
             throw new UtilityException(ImageTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "height");
@@ -60,8 +54,7 @@ public interface ImageTools {
         Float z = 0f;
         Integer newWidth = 0;
         Integer newHeight = 0;
-        InputStream inputStream = new ByteArrayInputStream(fileBytes);
-        BufferedImage originalImage = ImageIO.read(inputStream);
+        BufferedImage originalImage = ImageIO.read(new File(directoryPath + "/" + fileFullName));
         if (ObjectUtils.isEmpty(originalImage)) {
             throw new UtilityException(ImageTools.class, UtilityExceptionKeyEnum.IMAGE_ORGINAL_READ_PROBLEM, "originalImage is null");
         }
@@ -94,6 +87,6 @@ public interface ImageTools {
         g.drawImage(originalImage, 0, 0, width, height, null);
         g.dispose();
 
-        ImageIO.write(resizedImage, fileExtension, new File(directoryPath + "/"+ fileFullName + "-" + width + ".thumb"));
+        ImageIO.write(resizedImage, FsoTools.getFileExtension(fileFullName), new File(directoryPath + "/"+ fileFullName + "-" + width + ".thumb"));
     }
 }
