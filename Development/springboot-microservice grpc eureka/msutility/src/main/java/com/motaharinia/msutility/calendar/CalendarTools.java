@@ -20,7 +20,7 @@ import java.util.Locale;
  * Date: 2020-06-12<br>
  * Time: 01:05:58<br>
  * Description:<br>
- * این اینترفیس متدهای ابزاری تاریخ و زمان میلادی و جلالی را دارا میباشد
+ *  اینترفیس متدهای ابزاری تاریخ و زمان میلادی و جلالی
  */
 public interface CalendarTools {
 

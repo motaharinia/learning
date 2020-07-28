@@ -53,7 +53,6 @@ public class CustomException extends RuntimeException {
         this.exceptionDescription = exceptionDescription;
     }
 
-
     /**
      * متد سازنده ای که از خطای runtime مربوط به فراخوانی مایکروسرویس این مدل را میسازد
      *

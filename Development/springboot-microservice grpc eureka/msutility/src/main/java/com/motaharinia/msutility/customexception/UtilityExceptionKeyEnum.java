@@ -15,6 +15,10 @@ public enum UtilityExceptionKeyEnum implements  CustomExceptionKey{
      */
     METHOD_PARAMETER_IS_NULL_OR_EMPTY("METHOD_PARAMETER_IS_NULL_OR_EMPTY"),
     /**
+     * یکی از ورودی های متد مقدار صفر و یا منفی دارد
+     */
+    METHOD_PARAMETER_IS_ZERO_OR_NEGATIVE("METHOD_PARAMETER_IS_ZERO_OR_NEGATIVE"),
+    /**
      * فرمت تاریخ رشته ورودی صحیح نمیباشد
      */
     INCORRECT_STRING_DATE_FORMAT("INCORRECT_STRING_DATE_FORMAT"),
@@ -43,19 +47,33 @@ public enum UtilityExceptionKeyEnum implements  CustomExceptionKey{
      */
     REFLECTION_METHOD_IS_NOT_EXISTED("REFLECTION_METHOD_IS_NOT_EXISTED"),
 
+    /**
+     *ابزار فایل: فرمت نام فایل ورودی صحیح نمیباشد
+     */
+    FSO_FILE_NAME_FORMAT_IS_INVALID("FSO_FILE_NAME_FORMAT_IS_INVALID"),
+    /**
+     *ابزار فایل: مسیر داده شده در فایل سیستم وجود ندارد
+     */
+    FSO_PATH_IS_NOT_EXISTED("FSO_PATH_IS_NOT_EXISTED"),
+    /**
+     *ابزار فایل: مسیر داده شده در فایل سیستم از نوع دایرکتوری نیست
+     */
+    FSO_PATH_IS_NOT_DIRECTORY("FSO_PATH_IS_NOT_DIRECTORY"),
+    /**
+     *ابزار فایل: مسیر مقصد  از قبل در فایل سیستم وجود دارد
+     */
+    FSO_DESTINATION_PATH_EXISTED("FSO_DESTINATION_PATH_EXISTED"),
+    /**
+     *ابزار تصویر: تصویر ورودی قابل خواندن نیست
+     */
+    IMAGE_ORGINAL_READ_PROBLEM("IMAGE_ORGINAL_READ_PROBLEM"),
+
 
     TOKEN_IS_INVALID("TOKEN_IS_INVALID"),
     SMS_SEND_BATCH_FAILED("SMS_SEND_BATCH_FAILED"),
     SMS_SEND_CONNECTION_REFUSED("SMS_SEND_CONNECTION_REFUSED"),
-    FSO_PATH_IS_NOT_EXISTED("FSO_PATH_IS_NOT_EXISTED"),
-    FSO_PATH_IS_NOT_DIRECTORY("FSO_PATH_IS_NOT_DIRECTORY"),
     DATETIME_VALIDATION_FAILED("DATETIME_VALIDATION_FAILED"),
-    ORIGINAL_IMAGE_FILEBYTE_IS_NULL_OR_EMPTY("ORIGINAL_IMAGE_FILEBYTE_IS_NULL_OR_EMPTY"),
-    DIRECTORY_REAL_PATH_IS_NULL_OR_EMPTY("DIRECTORY_REAL_PATH_IS_NULL_OR_EMPTY"),
-    FILE_FULLNAME_IS_NULL_OR_EMPTY("FILE_FULLNAME_IS_NULL_OR_EMPTY"),
-    FILE_EXTENSION_IS_NULL_OR_EMPTY("FILE_EXTENSION_IS_NULL_OR_EMPTY"),
-    IMAGE_HEIGHT_IS_NULL_OR_POSITIVE_NUMBER("IMAGE_HEIGHT_IS_NULL_OR_POSITIVE_NUMBER"),
-    IMAGE_WIDTH_IS_NULL_OR_POSITIVE_NUMBER("IMAGE_WIDTH_IS_NULL_OR_POSITIVE_NUMBER"),
+
     ORIGINAL_IMAGE_IS_NULL_OR_INCORRECT("ORIGINAL_IMAGE_IS_NULL_OR_INCORRECT");
 
     private final String value;
