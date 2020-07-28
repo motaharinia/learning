@@ -9,6 +9,13 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.List;
 
+/**
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-06-12<br>
+ * Time: 01:05:58<br>
+ * Description:<br>
+ *  اینترفیس متدهای ابزاری انتیتی
+ */
 public interface EntityTools {
 
 
