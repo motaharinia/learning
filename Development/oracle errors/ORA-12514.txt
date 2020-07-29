@@ -1,0 +1,17 @@
+oracle error:
+Caused by: oracle.net.ns.NetException: Listener refused the connection with the following error:
+ORA-12514, TNS:listener does not currently know of service requested in connect descriptor
+
+
+
+solution:
+sqlplus "/ as sysdba"
+shutdown immediate;
+startup mount;
+select * from v$log;
+recover database until cancel;
+d:\oracle\database\oradata\ginesys\redo02.log
+alter system switch logfile;
+
+
+https://shoaib-dba.blogspot.com/2018/12/ora-00742-log-read-detects-lost-write.html
