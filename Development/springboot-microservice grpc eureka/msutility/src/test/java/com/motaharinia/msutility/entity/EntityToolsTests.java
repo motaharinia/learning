@@ -3,11 +3,13 @@ package com.motaharinia.msutility.entity;
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.customexception.UtilityExceptionKeyEnum;
 import com.motaharinia.msutility.entity.sample.SampleEntity;
+import com.motaharinia.msutility.entity.sample.entity.EntityB;
+import com.motaharinia.msutility.entity.sample.entity.EntityCity;
+import com.motaharinia.msutility.entity.sample.entity.EntityEparchy;
+import com.motaharinia.msutility.entity.sample.model.ModelB;
 import org.junit.jupiter.api.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -47,7 +49,7 @@ public class EntityToolsTests {
             EntityTools.checkEntity(sampleEntity, SampleEntity.class, true);
             fail("check null failed");
         } catch (Exception ex) {
-            UtilityException utilityException =new UtilityException(SampleEntity.class, UtilityExceptionKeyEnum.CHECK_ENTITY_IS_NULL, "entity");
+            UtilityException utilityException = new UtilityException(SampleEntity.class, UtilityExceptionKeyEnum.CHECK_ENTITY_IS_NULL, "entity");
             assertThat(ex)
                     .isInstanceOf(UtilityException.class)
                     .hasMessage(utilityException.getMessage());
@@ -62,7 +64,7 @@ public class EntityToolsTests {
             EntityTools.checkEntity(sampleEntityList, SampleEntity.class, true);
             fail("check null failed");
         } catch (Exception ex) {
-            UtilityException utilityException =new UtilityException(SampleEntity.class, UtilityExceptionKeyEnum.CHECK_ENTITY_IS_NULL, "entity");
+            UtilityException utilityException = new UtilityException(SampleEntity.class, UtilityExceptionKeyEnum.CHECK_ENTITY_IS_NULL, "entity");
             assertThat(ex)
                     .isInstanceOf(UtilityException.class)
                     .hasMessage(utilityException.getMessage());
@@ -73,14 +75,14 @@ public class EntityToolsTests {
     @Order(3)
     @Test
     void checkEntityNullListItemTest() {
-        List<SampleEntity> sampleEntityList =new ArrayList<>();
+        List<SampleEntity> sampleEntityList = new ArrayList<>();
         sampleEntityList.add(new SampleEntity(1));
         sampleEntityList.add(null);
         try {
             EntityTools.checkEntity(sampleEntityList, SampleEntity.class, true);
             fail("check null failed");
         } catch (Exception ex) {
-            UtilityException utilityException =new UtilityException(SampleEntity.class, UtilityExceptionKeyEnum.CHECK_ENTITY_IS_NULL, "entityOfCollection");
+            UtilityException utilityException = new UtilityException(SampleEntity.class, UtilityExceptionKeyEnum.CHECK_ENTITY_IS_NULL, "entityOfCollection");
             assertThat(ex)
                     .isInstanceOf(UtilityException.class)
                     .hasMessage(utilityException.getMessage());
@@ -109,16 +111,57 @@ public class EntityToolsTests {
         SampleEntity sampleEntity = new SampleEntity(1);
         sampleEntity.setInvalid(true);
 
-        List<SampleEntity> sampleEntityList =new ArrayList<>();
+        List<SampleEntity> sampleEntityList = new ArrayList<>();
         sampleEntityList.add(sampleEntity);
         try {
             EntityTools.checkEntity(sampleEntityList, SampleEntity.class, true);
             fail("check invalid failed");
         } catch (Exception ex) {
-            UtilityException utilityException =new UtilityException(SampleEntity.class, UtilityExceptionKeyEnum.CHECK_ENTITY_IS_INVALID, "entityOfCollection.id:" + sampleEntity.getId().toString());
+            UtilityException utilityException = new UtilityException(SampleEntity.class, UtilityExceptionKeyEnum.CHECK_ENTITY_IS_INVALID, "entityOfCollection.id:" + sampleEntity.getId().toString());
             assertThat(ex)
                     .isInstanceOf(UtilityException.class)
                     .hasMessage(utilityException.getMessage());
+        }
+    }
+
+    @Order(6)
+    @Test
+    void convertToModelTest() {
+        try {
+            EntityB entityB = new EntityB();
+            entityB.setId(20);
+            entityB.setStringA("test");
+            entityB.setDoubleB(10d);
+            entityB.setDateOfBorn(new Date());
+            entityB.setCustomHtmlString("<html><head></head><body><h1>hello</h1><body></html>");
+            EntityCity entityCity = new EntityCity();
+            entityCity.setId(80);
+            entityCity.setName("tehran");
+            EntityEparchy entityEparchy = new EntityEparchy();
+            entityEparchy.setId(75);
+            entityEparchy.seteName("ep");
+            entityCity.setEntityEparchy(entityEparchy);
+            entityB.setEntityCity(entityCity);
+
+            ModelB modelB = new ModelB();
+            modelB = (ModelB) EntityTools.convertToModel(modelB, entityB);
+
+
+            assertThat(modelB.getId()).isEqualTo(entityB.getId());
+            assertThat(modelB.getStringA()).isEqualTo(entityB.getStringA());
+            assertThat(modelB.getDoubleB()).isEqualTo(entityB.getDoubleB());
+            Calendar dateOfBornCalendar = Calendar.getInstance();
+            dateOfBornCalendar.setTime(entityB.getDateOfBorn());
+            assertThat(modelB.getDateOfBorn().getYear()).isEqualTo(dateOfBornCalendar.get(Calendar.YEAR));
+            assertThat(modelB.getDateOfBorn().getMonth()).isEqualTo(dateOfBornCalendar.get(Calendar.MONTH) + 1);
+            assertThat(modelB.getDateOfBorn().getDay()).isEqualTo(dateOfBornCalendar.get(Calendar.DAY_OF_MONTH));
+            assertThat(modelB.getCustomHtmlString()).isNotNull();
+            assertThat(modelB.getCustomHtmlString().getCustomHtmlString()).isEqualTo(entityB.getCustomHtmlString());
+            assertThat(modelB.getEntityCity_id()).isEqualTo(entityB.getEntityCity().getId());
+            assertThat(modelB.getEntityCity_entityEparchy_eName()).isEqualTo(entityB.getEntityCity().getEntityEparchy().geteName());
+
+        } catch (Exception ex) {
+            fail(ex.toString());
         }
     }
 

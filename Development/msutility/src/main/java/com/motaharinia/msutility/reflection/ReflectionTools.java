@@ -84,9 +84,6 @@ public class ReflectionTools {
         if (ObjectUtils.isEmpty(clazz)) {
             throw new UtilityException(ReflectionTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "clazz");
         }
-        if (ObjectUtils.isEmpty(fieldList)) {
-            throw new UtilityException(ReflectionTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "fieldList");
-        }
         fieldList.addAll(Arrays.asList(clazz.getDeclaredFields()));
         if (!ObjectUtils.isEmpty(clazz.getSuperclass())) {
             fieldList = getAllFields(clazz.getSuperclass(), fieldList);
