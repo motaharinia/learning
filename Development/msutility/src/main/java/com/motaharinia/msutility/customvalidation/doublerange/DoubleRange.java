@@ -26,13 +26,13 @@ public @interface DoubleRange {
 
     /**
      * ابتدای محدوده عددی
-     * @return
+     * @return خروجی:
      */
     double min() default 4.9E-324;
 
     /**
      * انتهای محدوده عددی
-     * @return
+     * @return خروجی:
      */
     double max() default 1.7976931348623157E308;
 

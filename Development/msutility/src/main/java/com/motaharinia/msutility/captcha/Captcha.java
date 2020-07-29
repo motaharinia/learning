@@ -128,8 +128,8 @@ public class Captcha {
      * @param code      کد اتفاقی
      * @param imageType BufferedImage.TYPE_INT_** (Default:BufferedImage.TYPE_INT_RGB)
      * @return خروجی: تصویر کپچا
-     * @throws Exception
-     */
+     * @throws Exception این متد ممکن است اکسپشن داشته باشد
+*/
     @NotNull
     public BufferedImage generateCaptcha(@NotNull String code, @NotNull Integer imageType) throws Exception {
         if (ObjectUtils.isEmpty(code)) {
@@ -233,7 +233,7 @@ public class Captcha {
      * @return خروجی: مختصات نقطه ای اتفاقی در لبه مورد نظر
      */
     @NotNull
-    public int[] getCoordinates(@NotNull Integer direction) throws Exception {
+    public int[] getCoordinates(@NotNull Integer direction)  {
         if (ObjectUtils.isEmpty(direction)) {
             throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "direction");
         }

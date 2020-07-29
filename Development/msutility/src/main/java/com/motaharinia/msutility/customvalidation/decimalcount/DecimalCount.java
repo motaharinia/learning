@@ -26,19 +26,19 @@ public @interface DecimalCount {
 
     /**
      * حداقل تعداد رقم اعشار
-     * @return
+     * @return خروجی:
      */
     int min() default 0;
 
     /**
      * حداکثر تعداد رقم اعشار
-     * @return
+     * @return خروجی:
      */
     int max() default 0;
 
     /**
      * تعداد رقم اعشار دقیق
-     * @return
+     * @return خروجی:
      */
     int exact() default 0;
     

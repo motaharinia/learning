@@ -17,7 +17,7 @@ import java.util.List;
  * Description:<br>
  * این اینترفیس متدهای ابزاری رفلکشن جاوا را دارا میباشد
  */
-public class ReflectionTools {
+public interface ReflectionTools {
 
     /**
      * این متد یک کلاس و یک نام فیلد را از ورودی دریافت میکند و فیلد منطبق با کلاس و نام فیلد ورودی را خروجی میدهد
@@ -28,7 +28,7 @@ public class ReflectionTools {
      * @return خروجی: فیلد منطبق با کلاس و نام فیلد ورودی
      */
     @NotNull
-    public static Field getField(@NotNull Class<?> clazz, @NotNull String fieldName) throws UtilityException {
+     static Field getField(@NotNull Class<?> clazz, @NotNull String fieldName) throws UtilityException {
         if (ObjectUtils.isEmpty(clazz)) {
             throw new UtilityException(ReflectionTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "clazz");
         }
@@ -54,7 +54,7 @@ public class ReflectionTools {
      * @return خروجی: متد Geter فیلد ورودی
      */
     @NotNull
-    public static String getFieldGetterMethodName(@NotNull Field field, @NotNull String fieldName) throws UtilityException {
+     static String getFieldGetterMethodName(@NotNull Field field, @NotNull String fieldName) throws UtilityException {
         if (ObjectUtils.isEmpty(field)) {
             throw new UtilityException(ReflectionTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "field");
         }
@@ -80,7 +80,7 @@ public class ReflectionTools {
      * @return خروجی: لیستی از فیلدهای کلاس و کلاسهای پدر
      */
     @NotNull
-    public static List getAllFields(@NotNull Class<?> clazz, @NotNull List<Field> fieldList) throws UtilityException {
+    static List getAllFields(@NotNull Class<?> clazz, @NotNull List<Field> fieldList) throws UtilityException {
         if (ObjectUtils.isEmpty(clazz)) {
             throw new UtilityException(ReflectionTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "clazz");
         }
@@ -98,10 +98,9 @@ public class ReflectionTools {
      * @param clazz      کلاس
      * @param methodName نام متد
      * @return خروجی: متد متناسب با نام آن در کلاس
-     * @throws UtilityException
      */
     @NotNull
-    public static Method getMethod(@NotNull Class<?> clazz, @NotNull String methodName) throws UtilityException {
+    static Method getMethod(@NotNull Class<?> clazz, @NotNull String methodName){
         if (ObjectUtils.isEmpty(clazz)) {
             throw new UtilityException(ReflectionTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "clazz");
         }
@@ -128,10 +127,9 @@ public class ReflectionTools {
      * @param methodName     نام متد
      * @param parameterTypes پارامترهای متد
      * @return خروجی: متد متناسب با نام و پارامترهای آن در کلاس
-     * @throws UtilityException
      */
     @NotNull
-    public static Method getMethod(@NotNull Class<?> clazz, @NotNull String methodName, Class<?>... parameterTypes) throws UtilityException {
+    static Method getMethod(@NotNull Class<?> clazz, @NotNull String methodName, Class<?>... parameterTypes) {
         if (ObjectUtils.isEmpty(clazz)) {
             throw new UtilityException(ReflectionTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "clazz");
         }

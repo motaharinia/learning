@@ -245,8 +245,8 @@ public interface CalendarTools {
      * @param sourceDateDelimiter      رشته جدا کننده تاریخ میلادی
      * @param destinationDateDelimiter رشته جدا کننده تاریخ جلالی
      * @return خروجی: رشته تاریخ جلالی
-     * @throws ParseException
-     */
+     * @throws ParseException این متد ممکن است اکسپشن داشته باشد
+*/
     @NotNull
     static String gregorianToJalaliDate(@NotNull String sourceDate, @NotNull String sourceDateDelimiter, @NotNull String destinationDateDelimiter) throws UtilityException, ParseException {
         if (ObjectUtils.isEmpty(sourceDate)) {
@@ -269,10 +269,9 @@ public interface CalendarTools {
      *
      * @param source پارامتر Date میلادی
      * @return خروجی: CustomDate جلالی
-     * @throws ParseException
-     */
+*/
     @NotNull
-    static CustomDate gregorianToJalaliDate(@NotNull Date source) throws UtilityException {
+    static CustomDate gregorianToJalaliDate(@NotNull Date source)  {
         if (ObjectUtils.isEmpty(source)) {
             throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "source");
         }
@@ -294,8 +293,8 @@ public interface CalendarTools {
      * @param sourceDateDelimiter      رشته جدا کننده تاریخ میلادی
      * @param destinationDateDelimiter رشته جدا کننده تاریخ جلالی
      * @return خروجی: رشته تاریخ-زمان جلالی
-     * @throws ParseException
-     */
+     * @throws ParseException این متد ممکن است اکسپشن داشته باشد
+*/
     @NotNull
     static String gregorianToJalaliDateTime(@NotNull String sourceDateTime, @NotNull String sourceDateDelimiter, @NotNull String destinationDateDelimiter) throws UtilityException, ParseException {
         if (ObjectUtils.isEmpty(sourceDateTime)) {
@@ -320,10 +319,9 @@ public interface CalendarTools {
      *
      * @param source پارامتر Date میلادی
      * @return خروجی: CustomDateTime جلالی
-     * @throws ParseException
-     */
+*/
     @NotNull
-    static CustomDateTime gregorianToJalaliDateTime(@NotNull Date source) throws UtilityException {
+    static CustomDateTime gregorianToJalaliDateTime(@NotNull Date source)  {
         if (ObjectUtils.isEmpty(source)) {
             throw new UtilityException(CalendarTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "source");
         }
@@ -350,8 +348,8 @@ public interface CalendarTools {
      * @param destinationDateDelimiter رشته جدا کننده تاریخ خروجی
      * @param locale                   زبان لوکال کلاینت
      * @return خروجی: رشته تاریخ متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی
-     * @throws ParseException
-     */
+     * @throws ParseException این متد ممکن است اکسپشن داشته باشد
+*/
     @NotNull
     static String fixToLocaleDate(@NotNull String sourceDate, @NotNull String destinationDateDelimiter, Locale locale) throws UtilityException, ParseException {
         if (ObjectUtils.isEmpty(sourceDate)) {
@@ -394,8 +392,8 @@ public interface CalendarTools {
      * @param destinationDateDelimiter رشته جدا کننده تاریخ خروجی
      * @param locale                   زبان لوکال کلاینت
      * @return خروجی: رشته تاریخ متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی
-     * @throws ParseException
-     */
+     * @throws ParseException این متد ممکن است اکسپشن داشته باشد
+*/
     @NotNull
     static String fixToLocaleDate(@NotNull Date source, @NotNull String destinationDateDelimiter, Locale locale) throws UtilityException, ParseException {
         if (ObjectUtils.isEmpty(source)) {
@@ -415,8 +413,8 @@ public interface CalendarTools {
      * @param destinationDateDelimiter رشته جدا کننده تاریخ خروجی
      * @param locale                   زبان لوکال کلاینت
      * @return خروجی: رشته تاریخ متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی
-     * @throws ParseException
-     */
+     * @throws ParseException این متد ممکن است اکسپشن داشته باشد
+*/
     @NotNull
     static String fixToLocaleDate(@NotNull CustomDate customDate, @NotNull String destinationDateDelimiter, Locale locale) throws UtilityException, ParseException {
         if (ObjectUtils.isEmpty(customDate)) {
@@ -435,8 +433,8 @@ public interface CalendarTools {
      * @param destinationDateDelimiter رشته جدا کننده تاریخ خروجی
      * @param locale                   زبان لوکال کلاینت
      * @return خروجی: رشته تاریخ-زمان متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی
-     * @throws ParseException
-     */
+     * @throws ParseException این متد ممکن است اکسپشن داشته باشد
+*/
     @NotNull
     static String fixToLocaleDateTime(@NotNull String sourceDateTime, @NotNull String destinationDateDelimiter, Locale locale) throws UtilityException, ParseException {
         if (ObjectUtils.isEmpty(sourceDateTime)) {
@@ -479,8 +477,8 @@ public interface CalendarTools {
      * @param destinationDateDelimiter رشته جدا کننده تاریخ خروجی
      * @param locale                   زبان لوکال کلاینت
      * @return خروجی: رشته تاریخ-زمان متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی
-     * @throws ParseException
-     */
+     * @throws ParseException این متد ممکن است اکسپشن داشته باشد
+*/
     @NotNull
     static String fixToLocaleDateTime(@NotNull Date source, @NotNull String destinationDateDelimiter, Locale locale) throws UtilityException, ParseException {
         if (ObjectUtils.isEmpty(source)) {
@@ -500,8 +498,8 @@ public interface CalendarTools {
      * @param destinationDateDelimiter رشته جدا کننده تاریخ خروجی
      * @param locale                   زبان لوکال کلاینت
      * @return خروجی: رشته تاریخ متناسب با زبان لوکال ورودی (اگر زبان فارسی است شمسی و در غیر این صورت میلادی) و رشته جدا کننده خروجی
-     * @throws ParseException
-     */
+     * @throws ParseException این متد ممکن است اکسپشن داشته باشد
+*/
     @NotNull
     static String fixToLocaleDateTime(@NotNull CustomDateTime customDateTime, @NotNull String destinationDateDelimiter, Locale locale) throws UtilityException, ParseException {
         if (ObjectUtils.isEmpty(customDateTime)) {

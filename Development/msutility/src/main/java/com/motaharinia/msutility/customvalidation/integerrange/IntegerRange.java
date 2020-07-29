@@ -26,13 +26,13 @@ public @interface IntegerRange {
 
     /**
      * ابتدای محدوده عددی
-     * @return
+     * @return خروجی:
      */
     int min() default -2147483648;
 
     /**
      * انتهای محدوده عددی
-     * @return
+     * @return خروجی:
      */
     int max() default 2147483647;
 

@@ -30,8 +30,8 @@ public interface ImageTools {
      * @param fileFullName  نام کامل فایل
      * @param height        ارتفاع تصویر
      * @param width         عرض تصویر
-     * @throws Exception
-     */
+     * @throws Exception این متد ممکن است اکسپشن داشته باشد
+*/
     static void createThumb(@NotNull String directoryPath, @NotNull String fileFullName, @NotNull Integer height, @NotNull Integer width) throws Exception {
         if (ObjectUtils.isEmpty(directoryPath)) {
             throw new UtilityException(ImageTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "directoryPath");

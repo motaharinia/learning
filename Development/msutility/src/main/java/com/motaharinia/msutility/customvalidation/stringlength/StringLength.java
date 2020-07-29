@@ -26,19 +26,19 @@ public @interface StringLength {
 
     /**
      * حداقل طول رشته. پیش فرض غیر فعال است
-     * @return
+     * @return خروجی:
      */
     int min() default 0;
 
     /**
      * حداکثر طول رشته. پیش فرض غیر فعال است
-     * @return
+     * @return خروجی:
      */
     int max() default 0;
 
     /**
      *  طول دقیق رشته. پیش فرض غیر فعال است
-     * @return
+     * @return خروجی:
      */
     int exact() default 0;
     

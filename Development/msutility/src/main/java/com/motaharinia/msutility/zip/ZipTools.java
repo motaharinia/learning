@@ -74,7 +74,7 @@ public interface ZipTools {
      * @param sourceByteArray              آرایه بایت داده فایل زیپ
      * @param destinationDirectoryForUnzip مسیری برای استخراج فایل زیپ
      * @param password                     رمز استخراج فایل زیپ
-     * @throws Exception
+     * @throws Exception این متد ممکن است اکسپشن داشته باشد
      */
     static void unzipFromByteArray(@NotNull byte[] sourceByteArray, @NotNull String destinationDirectoryForUnzip, String password) throws Exception {
         if (ObjectUtils.isEmpty(sourceByteArray)) {
@@ -99,7 +99,7 @@ public interface ZipTools {
      * @param sourceZipFilePath            مسیر فایل زیپ
      * @param destinationDirectoryForUnzip مسیری برای استخراج فایل زیپ
      * @param password                     رمز استخراج فایل زیپ
-     * @throws Exception
+     * @throws Exception این متد ممکن است اکسپشن داشته باشد
      */
     static void unzip(@NotNull String sourceZipFilePath, @NotNull String destinationDirectoryForUnzip, String password) throws Exception {
         if (ObjectUtils.isEmpty(sourceZipFilePath)) {

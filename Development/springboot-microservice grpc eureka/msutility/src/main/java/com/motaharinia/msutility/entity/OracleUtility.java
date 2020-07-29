@@ -75,8 +75,8 @@ public class OracleUtility {
      * @param jpqlFieldName نام فیلد مورد نظر برای کوئری
      * @param itemCsv مقادیر csv
      * @return خروجی: کوئری مناسب که مشکل محدودیت تعداد csv های دستور IN در اوراکل را نداشته باشد
-     * @throws Exception
-     */
+     * @throws Exception این متد ممکن است اکسپشن داشته باشد
+*/
     public static String fixQueryIN(String jpqlFieldName, String itemCsv) throws Exception {
         return fixQueryIN(jpqlFieldName, itemCsv, " IN ");
     }
@@ -86,8 +86,8 @@ public class OracleUtility {
      * @param jpqlFieldName نام فیلد مورد نظر برای کوئری
      * @param itemCsv مقادیر csv
      * @return خروجی: کوئری مناسب که مشکل محدودیت تعداد csv های دستور IN در اوراکل را نداشته باشد
-     * @throws Exception
-     */
+     * @throws Exception این متد ممکن است اکسپشن داشته باشد
+*/
     public static String fixQueryNOTIN(String jpqlFieldName, String itemCsv) throws Exception {
         return fixQueryIN(jpqlFieldName, itemCsv, " NOT IN ");
     }
@@ -98,8 +98,8 @@ public class OracleUtility {
      * @param itemCsv مقادیر csv
      * @param INOrNOTIN کلمه IN یا NOTIN
      * @return خروجی: کوئری مناسب که مشکل محدودیت تعداد csv های دستور IN در اوراکل را نداشته باشد
-     * @throws Exception
-     */
+     * @throws Exception این متد ممکن است اکسپشن داشته باشد
+*/
     private static String fixQueryIN(String jpqlFieldName, String itemCsv, String INOrNOTIN) throws Exception {
         String resultIN = "";
         String result = "";

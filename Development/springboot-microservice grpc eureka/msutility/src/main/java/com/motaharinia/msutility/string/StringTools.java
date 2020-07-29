@@ -27,8 +27,8 @@ public interface StringTools {
      * @param input        رشته ورودی جهت رمزنگاری
      * @param resultLength حداکثر طول رشته هش شده خروجی
      * @return خروجی: رشته هش شده بر مبنای الگوی رمزگذاری ام دی 5 با حداکثر طول درخواستی
-     * @throws Exception
-     */
+     * @throws Exception این متد ممکن است اکسپشن داشته باشد
+*/
     @NotNull
     static String generateMD5Hash(@NotNull String input, @NotNull Integer resultLength) throws Exception {
         if (ObjectUtils.isEmpty(input)) {

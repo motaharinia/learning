@@ -68,9 +68,8 @@ public class CustomDateTime implements Comparable, Serializable {
      * این متد تاریخ میلادی در ورودی دریافت میکند و یک کاستوم میلادی بر طبق آن تولید میکند
      *
      * @param date تاریخ میلادی
-     * @throws UtilityException
      */
-    public CustomDateTime(@NotNull Date date) throws UtilityException {
+    public CustomDateTime(@NotNull Date date)  {
         if (ObjectUtils.isEmpty(date)) {
             throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "date");
         }

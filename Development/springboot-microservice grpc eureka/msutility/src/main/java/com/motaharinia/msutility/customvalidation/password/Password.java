@@ -17,7 +17,7 @@ import java.lang.annotation.*;
 @Target({ElementType.METHOD, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Password {
-    
+
     String message() default "customValidation.password";
 
     Class<?>[] groups() default {};
@@ -26,14 +26,14 @@ public @interface Password {
 
     /**
      * حداقل طول رمز عبور
-     * @return
+     * @return خروجی:
      */
     int minLength();
 
     /**
      * بررسی رمز عبور پیچیده انجام شود؟
-     * @return
+     * @return خروجی:
      */
     boolean complicated() default false;
-    
+
 }

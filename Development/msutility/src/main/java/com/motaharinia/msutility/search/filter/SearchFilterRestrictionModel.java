@@ -43,6 +43,7 @@ public class SearchFilterRestrictionModel implements Serializable {
      * @param fieldName      نام فیلدی که روی آن شرط گذاشته میشود
      * @param fieldOperation عملیات شرط برای فیلد مورد نظر در جستجو
      * @param fieldValue     مقدار شرط برای فیلد مورد نظر در جستجو
+     * @param nextConditionOperator    مقادیر ثابت and و or بر روی جستجوی پیشرفته
      */
     public SearchFilterRestrictionModel(String fieldName, SearchFilterOperationEnum fieldOperation, Object fieldValue, SearchFilterNextConditionOperatorEnum nextConditionOperator) {
         this.fieldName = fieldName;

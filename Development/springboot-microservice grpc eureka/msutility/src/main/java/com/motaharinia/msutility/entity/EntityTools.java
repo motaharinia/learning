@@ -11,7 +11,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.util.ObjectUtils;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.util.*;
@@ -34,9 +33,9 @@ public interface EntityTools {
      * @param entity       آبجکت انتیتی مورد نظر جهت بررسی است
      * @param entityClass  کلاس انتیتی مورد نظر جهت بررسی است
      * @param checkInvalid آیا غیرفعال بودن آبجکت انتیتی را هم بررسی کند یا خیر
-     * @throws Exception
-     */
-    static void checkEntity(Object entity, Class entityClass, Boolean checkInvalid) throws UtilityException, InvocationTargetException, IllegalAccessException {
+     * @throws Exception این متد ممکن است اکسپشن داشته باشد
+*/
+    static void checkEntity(Object entity, Class entityClass, Boolean checkInvalid) throws Exception{
         Integer id = 0;
         Boolean isInvalid = true;
         if (ObjectUtils.isEmpty(entity)) {
@@ -169,8 +168,8 @@ public interface EntityTools {
      * @param entityField      شیی فیلد انتیتی
      * @param entityFieldValue مقدار داده
      * @return خروجی: شیی مدل که یکی از فیلدهای آن پر شده است
-     * @throws Exception
-     */
+     * @throws Exception این متد ممکن است اکسپشن داشته باشد
+*/
     @NotNull
     private static Object convertSetValue(@NotNull Object objectModel,@NotNull  Field modelField,@NotNull  Field entityField, Object entityFieldValue) throws Exception {
         if (Date.class.isAssignableFrom(entityField.getType())) {
@@ -203,8 +202,8 @@ public interface EntityTools {
      * @param modelField شیی فیلد مدل
      * @param objectEntity  شیی انتیتی
      * @return خروجی: مدلی حاوی انتیتی داخلی و فیلد متناظر ان
-     * @throws Exception
-     */
+     * @throws Exception این متد ممکن است اکسپشن داشته باشد
+*/
     @NotNull
     private static EntityModelerInnerEntityFieldModel getInnerEntityFieldModel(@NotNull Field modelField, @NotNull Object objectEntity) throws Exception {
         Field entityChildrenField = null;

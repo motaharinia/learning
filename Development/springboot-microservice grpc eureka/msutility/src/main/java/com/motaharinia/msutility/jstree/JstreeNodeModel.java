@@ -106,14 +106,14 @@ public class JstreeNodeModel implements Serializable {
     /**
      * متد سازنده که با دریافت مشخصات ورودی مدل درخت را میسازد
      *
-     * @param id
-     * @param text
-     * @param children
-     * @param icon
-     * @param state
-     * @param a_attr
-     * @param type
-     * @param data
+     * @param id شناسه
+     * @param text عنوان گره
+     * @param children  لیست گره های زیر مجوعه
+     * @param icon  آیکن گره
+     * @param state  وضعیت گره
+     * @param a_attr  لینک گره
+     * @param type  نوع گره
+     * @param data داده اضافی گره
      */
     public JstreeNodeModel(String id, String text, List<JstreeNodeModel> children, String icon, JstreeNodeStateModel state, JstreeNodeAAttrModel a_attr, String type, HashMap<String, Object> data) {
         this.id = id;
