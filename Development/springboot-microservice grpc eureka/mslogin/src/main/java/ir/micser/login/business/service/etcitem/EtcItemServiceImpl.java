@@ -73,7 +73,7 @@ public class EtcItemServiceImpl implements EtcItemService {
      * @return خروجی: مقدار ثابت
      */
     @Override
-    public @NotNull EtcItem findByIdAndCheckEntity(@NotNull Integer id, @NotNull Class etcItemEnumClass, String checkTypeTag, @NotNull Boolean checkInvalid) throws UtilityException, InvocationTargetException, IllegalAccessException, BusinessException {
+    public @NotNull EtcItem findByIdAndCheckEntity(@NotNull Integer id, @NotNull Class etcItemEnumClass, String checkTypeTag, @NotNull Boolean checkInvalid) throws UtilityException, InvocationTargetException, IllegalAccessException, BusinessException,Exception {
         if (ObjectUtils.isEmpty(id)) {
             throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "id");
         }
@@ -84,7 +84,7 @@ public class EtcItemServiceImpl implements EtcItemService {
             throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "checkInvalid");
         }
         EtcItem etcItem = etcItemRepository.findById(id).get();
-        EntityTools.checkEntity(etcItem, EtcItem.class, checkInvalid);
+        EntityTools .checkEntity(etcItem, EtcItem.class, checkInvalid);
 
         //تطبیق مقدار نوع ثابت جستجو شده با نوع کلاس ورودی
         String type = etcItemEnumClass.getSimpleName().replace("Enum", "");
@@ -107,7 +107,7 @@ public class EtcItemServiceImpl implements EtcItemService {
      * @return خروجی: مقدار ثابت
      */
     @Override
-    public @NotNull EtcItem findByValueAndCheckEntity(@NotNull EtcItemEnum checkEtcItemEnum, String checkTypeTag, @NotNull Boolean checkInvalid) throws IllegalAccessException, UtilityException, InvocationTargetException {
+    public @NotNull EtcItem findByValueAndCheckEntity(@NotNull EtcItemEnum checkEtcItemEnum, String checkTypeTag, @NotNull Boolean checkInvalid) throws IllegalAccessException, UtilityException, InvocationTargetException,Exception {
         if (ObjectUtils.isEmpty(checkEtcItemEnum)) {
             throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "checkEtcItemEnum");
         }

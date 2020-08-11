@@ -27,6 +27,8 @@ import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -109,7 +111,7 @@ public class AdminUserServiceImpl implements AdminUserService {
      */
     @Override
     @NotNull
-    public AdminUserModel create(@NotNull AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException {
+    public AdminUserModel create(@NotNull AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException,Exception {
 
         //بررسی شناسه شهر
         ReadByIdRequestModel readByIdRequestModel =  ReadByIdRequestModel.newBuilder().setId(adminUserModel.getDefaultAdminUserContact_city_id()).build();
@@ -132,6 +134,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         //ثبت مهارتهای ادمین
         adminUser = adminUserSkillService.createByAdminUser(adminUser, adminUserModel.getSkillList());
 
+
         adminUser = adminUserRepository.save(adminUser);
         adminUser.setDefaultAdminUserContact(adminUserContact);
 
@@ -147,6 +150,8 @@ public class AdminUserServiceImpl implements AdminUserService {
         final CreateResponseModel createResponseModel= this.cityPlaceStub.grpcCreate(createRequestModel);
         System.out.println("AdminUserServiceImpl.create cityPlace.getId:" + createResponseModel.getId());
 
+        //create state and stateDetail in new transaction
+
         adminUserModel.setId(adminUser.getId());
         return adminUserModel;
     }
@@ -157,6 +162,7 @@ public class AdminUserServiceImpl implements AdminUserService {
      * @param id شناسه
      * @return خروجی: مدل جستجو شده
      */
+    @Cacheable(value = "AdminUser", key = "#id")
     @Override
     @NotNull
     public AdminUserModel readById(@NotNull Integer id) throws UtilityException {
@@ -216,7 +222,7 @@ public class AdminUserServiceImpl implements AdminUserService {
      */
     @Override
     @NotNull
-    public AdminUserModel update(@NotNull AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException {
+    public AdminUserModel update(@NotNull AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException,Exception {
         AdminUser adminUser = adminUserRepository.findById(adminUserModel.getId()).get();
         adminUser.setFirstName(adminUserModel.getFirstName());
         adminUser.setLastName(adminUserModel.getLastName());
@@ -247,6 +253,7 @@ public class AdminUserServiceImpl implements AdminUserService {
      */
     @Override
     @NotNull
+    @CacheEvict(value = "AdminUser", key = "#id")
     public AdminUserModel delete(@NotNull Integer id) throws UtilityException {
         AdminUserModel adminUserModel = this.readById(id);
         AdminUser adminUser = adminUserRepository.findById(adminUserModel.getId()).get();

@@ -41,7 +41,7 @@ public class CityPlaceController {
      * @return خروجی: مدل ثبت حاوی شناسه
      */
     @PostMapping("/v1/cityPlace")
-    public CityPlaceModel create(@RequestBody @Validated CityPlaceModel cityPlaceModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException {
+    public CityPlaceModel create(@RequestBody @Validated CityPlaceModel cityPlaceModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException,Exception {
         return cityPlaceService.create(cityPlaceModel);
     }
 
@@ -83,7 +83,7 @@ public class CityPlaceController {
      * @return خروجی: مدل ویرایش شده
      */
     @PutMapping("/v1/cityPlace")
-    public CityPlaceModel update(@RequestBody @Validated CityPlaceModel cityPlaceModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException {
+    public CityPlaceModel update(@RequestBody @Validated CityPlaceModel cityPlaceModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException,Exception {
         return cityPlaceService.update(cityPlaceModel);
     }
 

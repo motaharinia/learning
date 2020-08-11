@@ -97,7 +97,7 @@ public class CityPlaceServiceImpl extends CityPlaceImplBase implements CityPlace
      */
     @Override
     @NotNull
-    public CityPlaceModel create(@NotNull CityPlaceModel cityPlaceModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException {
+    public CityPlaceModel create(@NotNull CityPlaceModel cityPlaceModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException,Exception {
         //ثبت لوکیشن شهری ادمین
         CityPlace cityPlace = new CityPlace();
         cityPlace.setAdminUserId(cityPlaceModel.getAdminUserId());
@@ -173,7 +173,7 @@ public class CityPlaceServiceImpl extends CityPlaceImplBase implements CityPlace
      */
     @Override
     @NotNull
-    public CityPlaceModel update(@NotNull CityPlaceModel cityPlaceModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException {
+    public CityPlaceModel update(@NotNull CityPlaceModel cityPlaceModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException,Exception {
         CityPlace cityPlace = cityPlaceRepository.findById(cityPlaceModel.getId()).get();
         cityPlace.setAdminUserId(cityPlaceModel.getAdminUserId());
         City city = cityRepository.findById(cityPlaceModel.getCity_id()).get();

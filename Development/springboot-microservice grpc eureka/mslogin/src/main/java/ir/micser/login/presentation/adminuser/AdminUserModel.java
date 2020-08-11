@@ -69,6 +69,7 @@ public class AdminUserModel implements Serializable {
      */
     private List<AdminUserSkillModel> skillList = new ArrayList<>();
 
+    private String referenceCode;
 
     @Override
     public String toString() {
@@ -166,5 +167,13 @@ public class AdminUserModel implements Serializable {
 
     public void setDefaultAdminUserContact_city_id(Integer defaultAdminUserContact_city_id) {
         this.defaultAdminUserContact_city_id = defaultAdminUserContact_city_id;
+    }
+
+    public String getReferenceCode() {
+        return referenceCode;
+    }
+
+    public void setReferenceCode(String referenceCode) {
+        this.referenceCode = referenceCode;
     }
 }

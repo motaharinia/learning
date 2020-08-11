@@ -29,7 +29,7 @@ public interface EtcItemService  {
      * @return خروجی: مقدار ثابت
      */
     @NotNull
-    EtcItem findByIdAndCheckEntity(@NotNull Integer id, @NotNull Class etcItemEnumClass, String checkTypeTag, @NotNull Boolean checkInvalid) throws UtilityException, InvocationTargetException, IllegalAccessException, BusinessException;
+    EtcItem findByIdAndCheckEntity(@NotNull Integer id, @NotNull Class etcItemEnumClass, String checkTypeTag, @NotNull Boolean checkInvalid) throws UtilityException, InvocationTargetException, IllegalAccessException, BusinessException,Exception;
 
     /**
      * این متد یک مقدار ثابت را با استفاده از مقدار آن جستجو میکند و چک میکند آن مقدار ثابت غیرفعال نباشد
@@ -39,7 +39,7 @@ public interface EtcItemService  {
      * @return خروجی: مقدار ثابت
      */
     @NotNull
-    EtcItem findByValueAndCheckEntity(@NotNull EtcItemEnum checkEtcItemEnum, String checkTypeTag, @NotNull Boolean checkInvalid) throws IllegalAccessException, UtilityException, InvocationTargetException;
+    EtcItem findByValueAndCheckEntity(@NotNull EtcItemEnum checkEtcItemEnum, String checkTypeTag, @NotNull Boolean checkInvalid) throws IllegalAccessException, UtilityException, InvocationTargetException,Exception;
     
 //     @Override
 //    CustomComboModel customCombo(CustomComboFilterModel model) throws Exception;

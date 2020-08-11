@@ -111,6 +111,7 @@ public class AdminUserControllerTest {
     @Order(2)
     public void readById() {
         try {
+            crudId = 8;
             String uri = "http://localhost:" + port + "/v1/adminUser/" + crudId;
 
             // build the request
@@ -248,6 +249,7 @@ public class AdminUserControllerTest {
     @Order(5)
     public void delete() throws Exception {
         try {
+            crudId = 8;
             String uri = "http://localhost:" + port + "/v1/adminUser/" + crudId;
 
             // build the request

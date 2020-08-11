@@ -25,7 +25,7 @@ public interface CityPlaceService {
      * @return خروجی: مدل ثبت حاوی شناسه
      */
     @NotNull
-    CityPlaceModel create(@NotNull CityPlaceModel cityPlaceModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException;
+    CityPlaceModel create(@NotNull CityPlaceModel cityPlaceModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException,Exception;
 
     /**
      * متد جستجوی با شناسه
@@ -53,7 +53,7 @@ public interface CityPlaceService {
      * @return خروجی: مدل ویرایش شده
      */
     @NotNull
-    CityPlaceModel update(@NotNull CityPlaceModel cityPlaceModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException;
+    CityPlaceModel update(@NotNull CityPlaceModel cityPlaceModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException,Exception;
 
     /**
      * متد حذف با شناسه
