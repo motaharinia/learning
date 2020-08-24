@@ -1,0 +1,6 @@
+1.check service "XEPDB1" has status "READY" with running command "C:\app\MyUser\product\18.0.0\dbhomeXE\bin\lsnrctl status"
+
+2.in file "C:\app\MyUser\product\18.0.0\dbhomeXE\network\admin\listener.ora" change:
+(SID_NAME = CLRExtProc)
+to:
+(SID_NAME = XEPDB1)
