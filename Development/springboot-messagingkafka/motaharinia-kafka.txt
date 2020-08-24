@@ -1,4 +1,4 @@
-https://www.javainuse.com/spring/spring-boot-apache-kafka-hello-world
+https://www.maestralsolutions.com/spring-boot-implementation-for-apache-kafka-with-kafka-tool/
 
 Kafka:
 In Kafka, producer will publish messages to topic, which is a stream of messages of a particular type. 
@@ -7,22 +7,35 @@ Consumer will subscribe to one or more topics of brokers by pulling the data.
 
 1.Got to the Apache Kafka downloads page(https://kafka.apache.org/downloads) and download the https://kafka.apache.org/download the Scala 2.12 kafka_2.12-0.10.2.1.tgz
 
-2.Next unzip it to a particular location (example: "D:\Program Files\kafka_2.12-2.5.0")
+2.Next unzip it to a particular location (example: "D:\projects\tools\kafka_2.12-2.5.0")
+**important: the directory path to kafka should be without empty space. so do not put kafka inside "program files"
 
 3.We will now start Apache Kafka. 
 This Kafka installation comes with an inbuilt zookeeper. 
 Zookeeper is mainly used to track status of nodes present in Kafka cluster and also to keep track of Kafka topics, messages, etc.
 Open a command prompt and start the Zookeeper:
-D:\Program Files\kafka_2.12-2.5.0\bin\windows\zookeeper-server-start.bat D:\Program Files\kafka_2.12-2.5.0\config\zookeeper.properties
+D:\projects\tools\kafka_2.12-2.5.0\bin\windows\zookeeper-server-start.bat D:\projects\tools\kafka_2.12-2.5.0\config\zookeeper.properties
 
 4.Open a new command prompt and start the Apache Kafka:
-D:\Program Files\kafka_2.12-2.5.0\bin\windows\kafka-server-start.bat D:\Program Files\kafka_2.12-2.5.0\config\server.properties
+D:\projects\tools\kafka_2.12-2.5.0\bin\windows\kafka-server-start.bat D:\projects\tools\kafka_2.12-2.5.0\config\server.properties
 
-5.Next start the Spring Boot Application by running it as a Java Application.
+5.Next start the Spring Boot Application "springboot-messagingkafkaconsumer" and then "springboot-messagingkafkaproducer" by running it as a Java Application.
 
-6.Also Start the consumer listening to the java_in_use_topic-:
-D:\Program Files\kafka_2.12-2.5.0\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic java_in_use_topic --from-beginning
+6.Finally hit the url as follows "http://localhost:8080/kafka/producer?message=test" to send a message through kafka to consumer and you should see the message in consumer console.
 
-7.Finally hit the url as follows- http://localhost:8080//javainuse-kafka/producer?message=test
+7.Also you can Start the kafka consumer listening to the motahariniaTopic-:
+D:\projects\tools\kafka_2.12-2.5.0\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic motahariniaTopic --from-beginning
 
-8.This will trigger the message to be sent to the java_in_use_topic. We can see in the consumer started the message is recieved.
+8.Kafka Tool:
+Kafka tool is a GUI application for managing Kafka clusters. You can download it from here: "https://www.kafkatool.com/download.html"
+Once it is downloaded, we first need to create a cluster as shown below:
+**cluster name: mylocal
+**kafka cluster version: 2.4
+**Zookeeper Host: localhost
+**Zookeeper Port: 2181
+**chroot path: /
+After adding the cluster, we will be able to see our broker, topic and consumer because we already ran our Spring Boot application and it created them.
+Click motahariniaTopic in the Topics folder and go to the Properties tab. We need to set types of Key and Message as String if we want to see the values in string format.
+Don’t forget to click the Update button after you set the types. Now we can go to the Data tab to see the messages that we sent.
+
+
