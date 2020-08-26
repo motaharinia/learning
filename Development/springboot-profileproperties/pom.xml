@@ -13,6 +13,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>ProfileProperties</name>
     <description>Motaharinia-Sample ProfileProperties</description>
+    <url>https://github.com/motaharinia</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

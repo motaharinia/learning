@@ -41,7 +41,7 @@ public class AdminUserController {
      * @return خروجی: مدل ثبت حاوی شناسه
      */
     @PostMapping("/adminUser")
-    public AdminUserModel create(@RequestBody @Validated AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException {
+    public AdminUserModel create(@RequestBody @Validated AdminUserModel adminUserModel) throws Exception {
         return adminUserService.create(adminUserModel);
     }
 
@@ -83,7 +83,7 @@ public class AdminUserController {
      * @return خروجی: مدل ویرایش شده
      */
     @PutMapping("/adminUser")
-    public AdminUserModel update(@RequestBody @Validated AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException {
+    public AdminUserModel update(@RequestBody @Validated AdminUserModel adminUserModel) throws Exception {
         return adminUserService.update(adminUserModel);
     }
 

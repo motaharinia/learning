@@ -99,7 +99,7 @@ public class AdminUserServiceImpl implements AdminUserService {
      */
     @Override
     @NotNull
-    public AdminUserModel create(@NotNull AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException {
+    public AdminUserModel create(@NotNull AdminUserModel adminUserModel) throws Exception {
 
         //ثبت اطلاعات تماس ادمین
         AdminUserContact adminUserContact = new AdminUserContact();
@@ -189,7 +189,7 @@ public class AdminUserServiceImpl implements AdminUserService {
      */
     @Override
     @NotNull
-    public AdminUserModel update(@NotNull AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException {
+    public AdminUserModel update(@NotNull AdminUserModel adminUserModel) throws Exception {
         AdminUser adminUser = adminUserRepository.findById(adminUserModel.getId()).get();
         adminUser.setFirstName(adminUserModel.getFirstName());
         adminUser.setLastName(adminUserModel.getLastName());
