@@ -80,7 +80,7 @@ public interface ReflectionTools {
      * @return خروجی: لیستی از فیلدهای کلاس و کلاسهای پدر
      */
     @NotNull
-    static List getAllFields(@NotNull Class<?> clazz, @NotNull List<Field> fieldList) throws UtilityException {
+    static List<Field> getAllFields(@NotNull Class<?> clazz, @NotNull List<Field> fieldList) throws UtilityException {
         if (ObjectUtils.isEmpty(clazz)) {
             throw new UtilityException(ReflectionTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "clazz");
         }
