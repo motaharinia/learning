@@ -53,7 +53,7 @@ public class EmployeeControllerTest {
 
     @Test()
     public void testAsyncBlock() throws ParseException {
-//        try {
+        try {
 
             //درخواست وب
             String uri = "http://localhost:" + port + "/v1/employee/async/block";
@@ -78,9 +78,9 @@ public class EmployeeControllerTest {
             assertThat(diffInMillies).isLessThan(3000L);
 
 
-//        } catch (Exception ex) {
-//            fail(ex.toString());
-//        }
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
     }
 
 

@@ -18,13 +18,11 @@ import static org.assertj.core.api.Assertions.fail;
  * Description:<br>
  * کلاس تست ماژول زمان بندی تخفیفها
  */
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 @ActiveProfiles("dev")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class DiscountScheduleTest {
-    @LocalServerPort
-    private int port;
 
     @Autowired
     DiscountSchedule discountSchedule;
@@ -40,8 +38,9 @@ public class DiscountScheduleTest {
     @Order(1)
     public void fixedDelayTest() {
         try {
-            Thread.sleep(100L);
-            assertThat(discountSchedule.fixedDelayCount).isNotEqualTo(null);
+            Thread.sleep(16L);
+            System.out.println("discountSchedule.fixedDelayCount:" + discountSchedule.fixedDelayCount);
+            assertThat(discountSchedule.fixedDelayCount).isEqualTo(3);
         } catch (Exception ex) {
             fail(ex.toString());
         }
