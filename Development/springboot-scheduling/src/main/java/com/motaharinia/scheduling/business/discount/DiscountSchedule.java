@@ -18,16 +18,39 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class DiscountSchedule {
 
     /**
-     * شمارنده متد زمانبندی ثابت هر 5 میلی ثانیه یک بار
+     * شمارنده متد زمانبندی ثابت هر 5  ثانیه یک بار
+     */
+    public AtomicInteger fixedRateCount = new AtomicInteger(0);
+
+
+    /**
+     * شمارنده متد زمانبندی ثابت هر 5  ثانیه یک بار همراه با تاخیر اولیه 10 ثانیه
      */
     public AtomicInteger fixedDelayCount = new AtomicInteger(0);
 
     /**
-     * متد زمان بندی ثابت هر 5 میلی ثانیه یک بار
+     * متد زمان بندی ثابت هر 5  ثانیه یک بار
      */
-    @Scheduled(fixedDelay = 5)
+    @Scheduled(fixedRate = 5000)
+    public void fixedRate() {
+        //به شمارنده اضافه میکنیم
+        this.fixedRateCount.incrementAndGet();
+
+        //نمایش نام نخ فعلی
+        System.out.println("fixedRate Thread.currentThread().getName():" + Thread.currentThread().getName() + " CurrentTime:" + new SimpleDateFormat("HH:mm:ss").format(new Date()));
+    }
+
+
+    /**
+     * متد زمان بندی ثابت هر 5  ثانیه یک بار همراه با تاخیر اولیه 10 ثانیه
+     */
+    @Scheduled(fixedDelay = 5000 , initialDelay = 10000)
     public void fixedDelay() {
+        //به شمارنده اضافه میکنیم
         this.fixedDelayCount.incrementAndGet();
+
+        //نمایش نام نخ فعلی
+        System.out.println("fixedDelay Thread.currentThread().getName():" + Thread.currentThread().getName()+ " CurrentTime:" + new SimpleDateFormat("HH:mm:ss").format(new Date()));
     }
 
     /**

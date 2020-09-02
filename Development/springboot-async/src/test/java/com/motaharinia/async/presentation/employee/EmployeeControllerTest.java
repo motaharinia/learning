@@ -77,6 +77,8 @@ public class EmployeeControllerTest {
             //چون در متدهای آسینک برای همه شان 2000میلی ثانیه sleep را ست کرده ایم بنابراین انتظار داریم که زیر 3000میلی ثانیه جواب را دریافت نماییم
             assertThat(diffInMillies).isLessThan(3000L);
 
+            //نمایش نام نخ فعلی
+            System.out.println("testAsyncBlock Thread.currentThread().getName():" + Thread.currentThread().getName());
 
         } catch (Exception ex) {
             fail(ex.toString());
