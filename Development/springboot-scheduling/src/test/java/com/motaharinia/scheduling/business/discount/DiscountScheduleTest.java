@@ -38,7 +38,7 @@ public class DiscountScheduleTest {
 
     @Test
     @Order(1)
-    public void create() {
+    public void fixedDelayTest() {
         try {
             Thread.sleep(100L);
             assertThat(discountSchedule.fixedDelayCount).isNotEqualTo(null);
