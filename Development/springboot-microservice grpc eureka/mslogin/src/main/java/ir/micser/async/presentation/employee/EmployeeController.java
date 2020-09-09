@@ -1,6 +1,7 @@
 package ir.micser.async.presentation.employee;
 
 
+import com.motaharinia.msutility.json.PrimitiveResponse;
 import ir.micser.async.business.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,8 +28,7 @@ public class EmployeeController {
     private EmployeeService service;
 
     @GetMapping(value = "/v1/employee/async/block")
-    public Boolean testAsyncBlock() throws InterruptedException, ExecutionException {
-
+    public PrimitiveResponse testAsyncBlock() throws InterruptedException, ExecutionException {
 
         //سرویس های آدرس و تلفن و کارمند به دلیل اینکه آسینک هستند هم زمان اجرا میشوند
         CompletableFuture<EmployeeModel> employeeCompletableFuture = service.getEmployee();
@@ -42,12 +42,12 @@ public class EmployeeController {
         completableFuture.get();
 
         //اگر ترد با موفقیت تمام شود true خروجی میدهد در غیر اینصورت fasle خروجی میدهد
-        return completableFuture.isDone();
+        return new PrimitiveResponse(completableFuture.isDone());
 
     }
 
     @GetMapping(value = "/v1/employee/async/thenApply")
-    public Boolean testAsyncThenApply() throws InterruptedException, ExecutionException {
+    public PrimitiveResponse testAsyncThenApply() throws InterruptedException, ExecutionException {
 
         //سرویس های آدرس و تلفن و کارمند به دلیل اینکه آسینک هستند هم زمان اجرا میشوند
         CompletableFuture<EmployeeModel> employeeCompletableFuture = service.getEmployee();
@@ -63,10 +63,10 @@ public class EmployeeController {
             EmployeeModel employeeModel= employeeCompletableFuture.join();
             EmployeeContactModel employeeContactModel= employeeContactCompletableFuture.join();
             EmployeeAccountModel employeeAccountModel= employeeAccountCompletableFuture.join();
-            return true;
+            return new PrimitiveResponse(true);
         });
 
-        return true;
+        return new PrimitiveResponse(true);
     }
 
 }

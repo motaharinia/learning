@@ -1,6 +1,7 @@
 package ir.micser.login.async.presentation.employee;
 
 
+import com.motaharinia.msutility.json.PrimitiveResponse;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -32,7 +33,7 @@ import static org.assertj.core.api.Assertions.fail;
  * کلاس تست کنترلر کارمند
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@ActiveProfiles("dev")
+@ActiveProfiles("com")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class EmployeeControllerTest {
@@ -65,7 +66,7 @@ public class EmployeeControllerTest {
             SimpleDateFormat sdf = new SimpleDateFormat("yyyyy-mm-dd hh:mm:ss");
             //زمان شروع
             Date firstDate = sdf.parse(sdf.format(new Date()));
-            ResponseEntity<Boolean> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, Boolean.class);
+            ResponseEntity<PrimitiveResponse> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, PrimitiveResponse.class);
             //زمان پایان
             Date secondDate = sdf.parse(sdf.format(new Date()));
 
@@ -94,7 +95,7 @@ public class EmployeeControllerTest {
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             HttpEntity entity = new HttpEntity(headers);
-            ResponseEntity<Boolean> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, Boolean.class);
+            ResponseEntity<PrimitiveResponse> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, PrimitiveResponse.class);
 
             //به دلیل اینکه ما با دستور join , get ترد جاری را بلوکه نکرده ایم ، متد کنترلر زودتر از متدهای Async تمام میشود و ترو ریترن میشود
             //برای اینکه تست کنیم که متدهای Async بصورت موازی اجرا میشوند باید در متد تست یک انتظار ایجاد کنیم
@@ -105,6 +106,7 @@ public class EmployeeControllerTest {
             //متد await به مدت 3000میلی ثانیه ترد جاری را بلوک میکند
             //چون در متدهای آسینک برای همه شان 2000میلی ثانیه sleep را ست کرده ایم بنابراین انتظار داریم که زیر 3000میلی ثانیه اجرای تردها تمام شوند
             countDownLatch.await(3000, TimeUnit.MILLISECONDS);
+            System.out.println("countDownLatch : " + countDownLatch.getCount());
 
             // Main thread has started
             //چک میکند که تعداد تردها صفر است یا نه
