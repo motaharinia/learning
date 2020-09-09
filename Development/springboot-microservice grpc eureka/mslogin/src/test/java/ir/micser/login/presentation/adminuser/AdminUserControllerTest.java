@@ -258,8 +258,66 @@ public class AdminUserControllerTest {
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             HttpEntity entity = new HttpEntity(headers);
             ResponseEntity<AdminUserModel> response = this.restTemplate.exchange(uri, HttpMethod.DELETE, entity, AdminUserModel.class);
+            assertThat(response).isNotEqualTo(null);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getBody()).isNotEqualTo(null);
             AdminUserModel adminUserModel = response.getBody();
             assertThat(adminUserModel.getId()).isEqualTo(crudId);
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+    @Test
+    @Order(6)
+    public void hchFindTest() {
+//        try {
+        String uri = "http://localhost:" + port + "/v1/adminUser/hchFindByName/" + "Mostafa";
+        // build the request
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+        HttpEntity entity = new HttpEntity(headers);
+        ResponseEntity<Integer[]> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, Integer[].class);
+        assertThat(response).isNotEqualTo(null);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(response.getBody()).isNotEqualTo(null);
+        assertThat(response.getBody().length).isGreaterThan(0);
+//        } catch (Exception ex) {
+//            fail(ex.toString());
+//        }
+    }
+
+    @Test
+    @Order(7)
+    public void hchFindByGenderTest() {
+        try {
+            String uri = "http://localhost:" + port + "/v1/adminUser/hchFindByGender/" + crudId;
+            // build the request
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            HttpEntity entity = new HttpEntity(headers);
+            ResponseEntity<Integer[]> resultModel = this.restTemplate.exchange(uri, HttpMethod.GET, entity, Integer[].class);
+            assertThat(resultModel.getBody().length).isGreaterThan(0);
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+    @Test
+    @Order(8)
+    public void hchFindBySkillTest() {
+        try {
+            String uri = "http://localhost:" + port + "/v1/adminUser/hchFindBySkill/" + "skill";
+            // build the request
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            HttpEntity entity = new HttpEntity(headers);
+            ResponseEntity<Integer[]> resultModel = this.restTemplate.exchange(uri, HttpMethod.GET, entity, Integer[].class);
+            System.out.println("result is : "+resultModel.getBody().length);
+            assertThat(resultModel.getBody().length).isGreaterThan(0);
         } catch (Exception ex) {
             fail(ex.toString());
         }

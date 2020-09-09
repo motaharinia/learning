@@ -64,6 +64,10 @@ public enum UtilityExceptionKeyEnum implements  CustomExceptionKey{
      */
     FSO_DESTINATION_PATH_EXISTED("FSO_DESTINATION_PATH_EXISTED"),
     /**
+     *ابزار فایل: مسیر فایل داده شده صحیح نمیباشد
+     */
+    FSO_MIMETYPE_NOT_VALID_FILE_PATH("FSO_MIMETYPE_NOT_VALID_FILE_PATH"),
+    /**
      *ابزار تصویر: تصویر ورودی قابل خواندن نیست
      */
     IMAGE_ORGINAL_READ_PROBLEM("IMAGE_ORGINAL_READ_PROBLEM"),

@@ -91,7 +91,7 @@ public class AdminUser extends GenericEntity implements Serializable {
     /**
      * لیست مهارتها
      */
-
+    @IndexedEmbedded(includeEmbeddedObjectId = true, includePaths = {"id","title"})
     @JoinTable(name = "admin_user_jt_admin_user_skill", joinColumns = {
             @JoinColumn(name = "admin_user_id", referencedColumnName = "id")}, inverseJoinColumns = {
             @JoinColumn(name = "admin_user_skill_id", referencedColumnName = "id")})

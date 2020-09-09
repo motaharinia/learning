@@ -3,6 +3,8 @@ package com.motaharinia.persistence.orm.adminuserskill;
 
 import com.motaharinia.msutility.entity.GenericEntity;
 import com.motaharinia.persistence.orm.adminuser.AdminUser;
+import org.hibernate.search.annotations.ContainedIn;
+import org.hibernate.search.annotations.Field;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -30,6 +32,7 @@ public class AdminUserSkill extends GenericEntity implements Serializable {
     /**
      * عنوان
      */
+    @Field
     @Column(name = "title")
     private String title;
 
@@ -37,6 +40,7 @@ public class AdminUserSkill extends GenericEntity implements Serializable {
     /**
      * ادمین های متصل به این مهارت
      */
+    @ContainedIn
     @ManyToMany(mappedBy = "skillSet", fetch = FetchType.LAZY)
     private Collection<AdminUser> userCollection;
 

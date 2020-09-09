@@ -14,6 +14,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -96,6 +98,38 @@ public class AdminUserController {
     @DeleteMapping("/v1/adminUser/{id}")
     public AdminUserModel delete(@PathVariable Integer id) throws UtilityException {
         return adminUserService.delete(id);
+    }
+
+    /**
+     *  این متد نام را از ورودی دریافت میکند ولیستی از شناسه های جستجو شده را برمی گرداند
+     * @param name نام
+     * @return خروجی: لیستی از شناسه های جستجو شده
+     * @throws Exception این متد ممکن است اکسپشن صادر کند
+     */
+    @GetMapping("/v1/adminUser/hchFindByName/{name}")
+    public List<Integer> hchFindByName(@PathVariable String name) throws Exception {
+        return adminUserService.hchFindByName(name);
+    }
+
+    /**
+     * این متد شناسه جنسیت را از ورودی دریافت میکند ولیستی از شناسه های جستجو شده را برمی گرداند
+     * @param genderId شناسه جنسیت
+     * @return خروجی: لیستی از شناسه های جستجو شده
+     * @throws Exception این متد ممکن است اکسپشن صادر کند
+     */
+    @GetMapping("/v1/adminUser/hchFindByGender/{genderId}")
+    public List<Integer> hchFindByGender(@PathVariable Integer genderId) throws Exception {
+        return adminUserService.hchFindByGender(genderId);
+    }
+    /**
+     * این متد عنوان مهارت را از ورودی دریافت میکند ولیستی از شناسه های جستجو شده را برمی گرداند
+     * @param skillTitle عنوان مهارت
+     * @return خروجی: لیستی از شناسه های جستجو شده
+     * @throws Exception این متد ممکن است اکسپشن صادر کند
+     */
+    @GetMapping("/v1/adminUser/hchFindBySkill/{skillTitle}")
+    public List<Integer> hchFindBySkill(@PathVariable String skillTitle) throws Exception {
+        return adminUserService.hchFindBySkill(skillTitle);
     }
 
 

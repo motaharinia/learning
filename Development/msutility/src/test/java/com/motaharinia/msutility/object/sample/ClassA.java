@@ -25,8 +25,6 @@ public class ClassA extends ClassFatherA {
         this.family = family;
     }
 
-
-
     public String getFatherName() {
         return fatherName;
     }

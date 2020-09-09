@@ -16,6 +16,7 @@ import ir.micser.login.business.service.adminuserskill.AdminUserSkillService;
 import ir.micser.login.business.service.authentication.PasswordEncoderGenerator;
 import ir.micser.login.business.service.etcitem.EtcItemService;
 import ir.micser.login.business.service.etcitem.GenderEnum;
+import ir.micser.login.business.service.hibernatesearch.HibernateSearchService;
 import ir.micser.login.persistence.orm.adminuser.AdminUser;
 import ir.micser.login.persistence.orm.adminuser.AdminUserRepository;
 import ir.micser.login.persistence.orm.adminuser.AdminUserSpecification;
@@ -24,6 +25,8 @@ import ir.micser.login.persistence.orm.adminusercontact.AdminUserContactReposito
 import ir.micser.login.presentation.adminuser.AdminUserModel;
 import ir.micser.login.presentation.adminuserskill.AdminUserSkillModel;
 import net.devh.boot.grpc.client.inject.GrpcClient;
+import org.apache.lucene.search.Query;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.jetbrains.annotations.NotNull;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +38,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.lang.reflect.InvocationTargetException;
-
+import java.util.List;
 
 
 /**
@@ -78,6 +81,11 @@ public class AdminUserServiceImpl implements AdminUserService {
      */
     private ModelMapper modelMapper;
 
+    /**
+     * سرویس Hibernate search
+     */
+    private HibernateSearchService hibernateSearchService;
+
     @GrpcClient("grpcClientCity")
     private CityBlockingStub cityStub;
 
@@ -94,13 +102,14 @@ public class AdminUserServiceImpl implements AdminUserService {
      * متد سازنده
      */
     @Autowired
-    public AdminUserServiceImpl(AdminUserRepository adminUserRepository, AdminUserContactRepository adminUserContactRepository, AdminUserSkillService adminUserSkillService,EtcItemService etcItemService, AdminUserSpecification adminUserSpecification, ModelMapper modelMapper) {
+    public AdminUserServiceImpl(AdminUserRepository adminUserRepository, AdminUserContactRepository adminUserContactRepository, AdminUserSkillService adminUserSkillService,EtcItemService etcItemService, AdminUserSpecification adminUserSpecification, ModelMapper modelMapper,HibernateSearchService hibernateSearchService) {
         this.adminUserRepository = adminUserRepository;
         this.adminUserContactRepository = adminUserContactRepository;
         this.adminUserSkillService = adminUserSkillService;
         this.etcItemService=etcItemService;
         this.adminUserSpecification = adminUserSpecification;
         this.modelMapper = modelMapper;
+        this.hibernateSearchService=hibernateSearchService;
     }
 
     /**
@@ -272,4 +281,61 @@ public class AdminUserServiceImpl implements AdminUserService {
 //        userModel.setSubmissionDate(adminuser.getSubmissionDate(), userService.getCurrentUser().getPreference().getTimezone());
         return adminUserModel;
     }
+
+    /**
+     *  این متد نام را از ورودی دریافت میکند ولیستی از شناسه های جستجو شده را برمی گرداند
+     * @param name نام
+     * @return خروجی: لیستی از شناسه های جستجو شده
+     * @throws Exception این متد ممکن است اکسپشن صادر کند
+     */
+    @Override
+    public List<Integer> hchFindByName(String name) throws Exception {
+        QueryBuilder queryBuilder = hibernateSearchService.getQueryBuilder(AdminUser.class);
+        Query query = queryBuilder.keyword().onField("firstName").matching(name).createQuery();
+        List<Integer> adminUserIdList = hibernateSearchService.indexIdListBy(AdminUser.class,query,"firstName DESC");
+        return adminUserIdList;
+    }
+
+    /**
+     * این متد شناسه جنسیت را از ورودی دریافت میکند ولیستی از شناسه های جستجو شده را برمی گرداند
+     * @param genderId شناسه جنسیت
+     * @return خروجی: لیستی از شناسه های جستجو شده
+     * @throws Exception این متد ممکن است اکسپشن صادر کند
+     */
+    @Override
+    public List<Integer> hchFindByGender(Integer genderId) throws Exception {
+
+        QueryBuilder queryBuilder = hibernateSearchService.getQueryBuilder(AdminUser.class);
+        Query query = queryBuilder.keyword().onField("gender.id").matching(genderId).createQuery();
+        List<Integer> adminUserIdList = hibernateSearchService.indexIdListBy(AdminUser.class,query,"");
+
+        return adminUserIdList;
+    }
+ @Override
+    public List<Integer> hchFindBySkill(String skillTitle) throws Exception {
+
+        QueryBuilder queryBuilder = hibernateSearchService.getQueryBuilder(AdminUser.class);
+        Query query = queryBuilder.keyword().onField("skillSet.title").matching(skillTitle).createQuery();
+        List<Integer> adminUserIdList = hibernateSearchService.indexIdListBy(AdminUser.class,query,"");
+
+        return adminUserIdList;
+    }
+
+    @Override
+    public Long hchCount() throws Exception {
+
+        QueryBuilder queryBuilder = hibernateSearchService.getQueryBuilder(AdminUser.class);
+        Query query = queryBuilder.all().createQuery();
+        List<Integer> adminUserIdList = hibernateSearchService.indexIdListBy(AdminUser.class,query,"");
+        if(ObjectUtils.isEmpty(adminUserIdList)){
+            return 0l;
+        }else  return (long) adminUserIdList.size();
+    }
+
+    @Override
+    public Long count(){
+        return adminUserRepository.count();
+    }
+
+
 }

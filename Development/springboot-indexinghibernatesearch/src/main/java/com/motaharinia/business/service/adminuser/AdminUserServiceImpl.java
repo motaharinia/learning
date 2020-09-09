@@ -269,7 +269,15 @@ public class AdminUserServiceImpl implements AdminUserService {
 
         return adminUserIdList;
     }
+    @Override
+    public List<Integer> hchFindBySkill(String skillTitle) throws Exception {
 
+        QueryBuilder queryBuilder = hibernateSearchService.getQueryBuilder(AdminUser.class);
+        Query query = queryBuilder.keyword().onField("skillSet.title").matching(skillTitle).createQuery();
+        List<Integer> adminUserIdList = hibernateSearchService.indexIdListBy(AdminUser.class,query,"");
+
+        return adminUserIdList;
+    }
     @Override
     public Long hchCount() throws Exception {
 

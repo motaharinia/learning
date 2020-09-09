@@ -6,6 +6,10 @@ import com.motaharinia.msutility.entity.OracleUtility;
 import ir.micser.login.persistence.orm.adminusercontact.AdminUserContact;
 import ir.micser.login.persistence.orm.adminuserskill.AdminUserSkill;
 import ir.micser.login.persistence.orm.etcitem.EtcItem;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.SortableField;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,6 +28,7 @@ import java.util.Set;
 @Entity
 @Table(name = "admin_user", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"username"})})
+@Indexed
 public class AdminUser extends GenericEntity implements Serializable {
     /**
      * شناسه
@@ -48,12 +53,15 @@ public class AdminUser extends GenericEntity implements Serializable {
     /**
      * نام
      */
+    @Field
+    @SortableField
     @Column(name = "first_name")
     private String firstName;
 
     /**
      * نام خانوادگی
      */
+    @Field
     @Column(name = "last_name")
     private String lastName;
 
@@ -75,6 +83,7 @@ public class AdminUser extends GenericEntity implements Serializable {
     /**
      *جنسیت
      */
+    @IndexedEmbedded(includeEmbeddedObjectId = true, includePaths = {"id"})
     @JoinColumn(name = "gender_id", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
     private EtcItem gender;
@@ -82,6 +91,7 @@ public class AdminUser extends GenericEntity implements Serializable {
     /**
      * لیست مهارتها
      */
+    @IndexedEmbedded(includeEmbeddedObjectId = true, includePaths = {"id","title"})
     @JoinTable(name = "admin_user_jt_admin_user_skill", joinColumns = {
             @JoinColumn(name = "admin_user_id", referencedColumnName = "id")}, inverseJoinColumns = {
             @JoinColumn(name = "admin_user_skill_id", referencedColumnName = "id")})

@@ -52,7 +52,11 @@ public class ObjectToolsTests {
             classB = (ClassB) ObjectTools.copy(classA, classB, new String[]{}, new String[]{});
 
 
-            assertThat(classB.getDefaultContact_mobile()).isEqualTo(classA.getMobile());
+            assertThat(classB.getId()).isEqualTo(classA.getId());
+            assertThat(classB.getName()).isEqualTo(classA.getName());
+            assertThat(classB.getUser_fatherName()).isNull();
+            assertThat(classB.getUser_test()).isNull();
+            assertThat(classB.getDefaultContact_mobile()).isNull();
         } catch (Exception ex) {
             fail(ex.toString());
         }
@@ -61,18 +65,23 @@ public class ObjectToolsTests {
     @Order(2)
     @Test
     void copyWithPrefixAddTest() {
-        try {
+//        try {
             ClassB classB = new ClassB();
             classB.setName("ali");
             classB.setUser_test("TTTTTTTTT");
             classB.setUser_fatherName("FFFFFF");
 
             ClassA classA = new ClassA();
-            classA = (ClassA) ObjectTools.copy(classB, classA, null, new String[]{"user_"});
+            classA = (ClassA) ObjectTools.copy(classB, classA, new String[]{},new String[]{"user_","defaultContact_"});
+            assertThat(classA.getId()).isEqualTo(classB.getId());
             assertThat(classA.getMobile()).isEqualTo(classB.getDefaultContact_mobile());
-        } catch (Exception ex) {
-            fail(ex.toString());
-        }
+            assertThat(classA.getName()).isEqualTo(classB.getName());
+            assertThat(classA.getFamily()).isNull();
+            assertThat(classA.getFatherName()).isEqualTo(classB.getUser_fatherName());
+            assertThat(classA.getTest()).isEqualTo(classB.getUser_test());
+//        } catch (Exception ex) {
+//            fail(ex.toString());
+//        }
     }
 
 }

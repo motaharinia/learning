@@ -121,6 +121,15 @@ public class AdminUserController {
         return adminUserService.hchFindByGender(genderId);
     }
 
-
+    /**
+     * این متد عنوان مهارت را از ورودی دریافت میکند ولیستی از شناسه های جستجو شده را برمی گرداند
+     * @param skillTitle عنوان مهارت
+     * @return خروجی: لیستی از شناسه های جستجو شده
+     * @throws Exception این متد ممکن است اکسپشن صادر کند
+     */
+    @GetMapping("/v1/adminUser/hchFindBySkill/{skillTitle}")
+    public List<Integer> hchFindBySkill(@PathVariable String skillTitle) throws Exception {
+        return adminUserService.hchFindBySkill(skillTitle);
+    }
 
 }

@@ -81,6 +81,8 @@ public interface AdminUserService {
      */
     List<Integer> hchFindByGender(Integer genderId) throws Exception;
 
+    List<Integer> hchFindBySkill(String skillTitle) throws Exception;
+
     Long hchCount() throws Exception;
 
     Long count();

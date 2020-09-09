@@ -270,5 +270,21 @@ public class AdminUserControllerTest {
         }
     }
 
-
+    @Test
+    @Order(8)
+    public void hchFindBySkillTest() {
+        try {
+            String uri = "http://localhost:" + port + "/v1/adminUser/hchFindBySkill/" + "skill";
+            // build the request
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            HttpEntity entity = new HttpEntity(headers);
+            ResponseEntity<Integer[]> resultModel = this.restTemplate.exchange(uri, HttpMethod.GET, entity, Integer[].class);
+            System.out.println("result is : "+resultModel.getBody().length);
+            assertThat(resultModel.getBody().length).isGreaterThan(0);
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
 }

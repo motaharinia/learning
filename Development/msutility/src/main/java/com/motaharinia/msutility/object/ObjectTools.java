@@ -43,23 +43,51 @@ public interface ObjectTools {
             objectToFieldName = objectToField.getName();
             try {
                 objectFromFieldName = objectToFieldName;
-                if (!ObjectUtils.isEmpty(objectDestinationFieldPrefixRemoveArray)) {
-                    objectFromFieldName = removePrefixFromFieldName(objectFromFieldName, objectDestinationFieldPrefixRemoveArray);
+
+                //ابتدا بررسی میکنیم آیا مشابه نام فیلد مقصد در مبدا وجود دارد یا خیر و اگر وجود نداشت از آرایه های داده شده پیشوند استفاده میکنیم
+                try {
+                    objectFromField = ReflectionTools.getField(objectFromClazz, objectFromFieldName);
+                } catch (Exception exception) {
+                    //بررسی و اضافه کردن اولین پیشوند مناسب در آرایه پیشوندها به نام فیلد شیی مبدا
+                    if (!ObjectUtils.isEmpty(objectDestinationFieldPrefixRemoveArray)) {
+                        objectFromField = null;
+                        for (String prefix : objectDestinationFieldPrefixAddArray) {
+                            try {
+                                if (ObjectUtils.isEmpty(objectFromField) && objectFromFieldName.startsWith(prefix)) {
+                                    objectFromFieldName = objectFromFieldName.replaceFirst(prefix, "");
+                                    objectFromField = ReflectionTools.getField(objectFromClazz, objectFromFieldName);
+                                }
+                            } catch (Exception e) {
+
+                            }
+                        }
+                    }
+                    //بررسی و حذف کردن اولین پیشوند مناسب در آرایه پیشوندها از نام فیلد شیی مبدا
+                    if (!ObjectUtils.isEmpty(objectDestinationFieldPrefixAddArray)) {
+                        objectFromField = null;
+                        for (String prefix : objectDestinationFieldPrefixAddArray) {
+                            try {
+                                if (ObjectUtils.isEmpty(objectFromField) && !objectFromFieldName.startsWith(prefix)) {
+                                    objectFromField = ReflectionTools.getField(objectFromClazz, prefix + objectFromFieldName);
+                                    objectFromFieldName = prefix + objectFromFieldName;
+                                }
+                            } catch (Exception e) {
+
+                            }
+                        }
+                    }
                 }
-                if (!ObjectUtils.isEmpty(objectDestinationFieldPrefixAddArray)) {
-                    objectFromFieldName = addPrefixToFieldName(objectFromFieldName, objectDestinationFieldPrefixAddArray);
-                }
-                objectFromField = ReflectionTools.getField(objectFromClazz, objectFromFieldName);
-                if (objectToField.getType() == objectFromField.getType()) {
+
+                if (objectToField.getType().equals(objectFromField.getType())) {
                     objectFromGetterName = ReflectionTools.getFieldGetterMethodName(objectFromField, objectFromFieldName);
                     Method objectFromGetterMethod = ReflectionTools.getMethod(objectFromClazz, objectFromGetterName);
                     objectFromGetterMethod.setAccessible(true);
-                    value = objectFromGetterMethod.invoke(objectSource, null);
+                    value = objectFromGetterMethod.invoke(objectSource);
                     objectToField.setAccessible(true);
                     objectToField.set(objectDestination, value);
                 }
             } catch (Exception ex) {
-                System.out.println(ex.getMessage());
+
             }
         }
         return objectDestination;
@@ -67,7 +95,8 @@ public interface ObjectTools {
 
     /**
      * این متد یک نام فیلد و یک آرایه از پیشوندها را از ورودی دریافت میکند و رشته های داخل آرایه پیشوند را از نام فیلد حذف میکند
-     * @param fieldName نام فیلد
+     *
+     * @param fieldName   نام فیلد
      * @param prefixArray رشته پیشوند جهت حذف از نام فیلد
      * @return خروجی: نام فیلد اصلاح شده
      */
@@ -90,7 +119,8 @@ public interface ObjectTools {
 
     /**
      * این متد یک نام فیلد و یک آرایه از پیشوندها را از ورودی دریافت میکند و رشته های داخل آرایه پیشوند را به نام فیلد اضافه میکند
-     * @param fieldName نام فیلد
+     *
+     * @param fieldName   نام فیلد
      * @param prefixArray رشته پیشوند جهت اضافه به نام فیلد
      * @return خروجی: نام فیلد اصلاح شده
      */

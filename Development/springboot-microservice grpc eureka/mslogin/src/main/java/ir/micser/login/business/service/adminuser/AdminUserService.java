@@ -8,6 +8,7 @@ import ir.micser.login.presentation.adminuser.AdminUserModel;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 
 /**
@@ -63,5 +64,27 @@ public interface AdminUserService {
      */
     @NotNull
     AdminUserModel delete(@NotNull Integer id) throws UtilityException;
+
+    /**
+     *  این متد نام را از ورودی دریافت میکند ولیستی از شناسه های جستجو شده را برمی گرداند
+     * @param name نام
+     * @return خروجی: لیستی از شناسه های جستجو شده
+     * @throws Exception این متد ممکن است اکسپشن صادر کند
+     */
+    List<Integer> hchFindByName(String name) throws Exception;
+
+    /**
+     * این متد شناسه جنسیت را از ورودی دریافت میکند ولیستی از شناسه های جستجو شده را برمی گرداند
+     * @param genderId شناسه جنسیت
+     * @return خروجی: لیستی از شناسه های جستجو شده
+     * @throws Exception این متد ممکن است اکسپشن صادر کند
+     */
+    List<Integer> hchFindByGender(Integer genderId) throws Exception;
+
+    List<Integer> hchFindBySkill(String skillTitle) throws Exception;
+
+    Long hchCount() throws Exception;
+
+    Long count();
 
 }

@@ -4,6 +4,8 @@ package com.motaharinia.msutility.fso;
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.customexception.UtilityExceptionKeyEnum;
 import com.motaharinia.msutility.encoding.EncodingTools;
+import com.motaharinia.msutility.fso.mimetype.FsoMimeTypeEnum;
+import com.motaharinia.msutility.fso.mimetype.FsoMimeTypeModel;
 import com.motaharinia.msutility.image.ImageTools;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -14,6 +16,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -70,9 +74,9 @@ public interface FsoTools {
     /**
      * این متد یک مسیر و نوع آن و یک سوال که در صورت وجود مسیر در مقصد یک نام جدید با -copy بسازد را از ورودی دریافت میکند و در صورت تغییر مسیر آن را خروجی میدهد
      *
-     * @param path مسیر
+     * @param path                 مسیر
      * @param fsoPathCheckTypeEnum نوع مسیر دایرکتوری یا فایل
-     * @param withRenameOnExist در صورت وجود مسیر در مقصد یک نام جدید با -copy بسازد
+     * @param withRenameOnExist    در صورت وجود مسیر در مقصد یک نام جدید با -copy بسازد
      * @return خروجی: مسیر نهایی
      */
     @NotNull
@@ -198,7 +202,7 @@ public interface FsoTools {
      *
      * @param directoryPath مسیر ورودی
      * @throws Exception این متد ممکن است اکسپشن داشته باشد
-*/
+     */
     static void createDirectoryIfNotExist(@NotNull String directoryPath) throws Exception {
         if (ObjectUtils.isEmpty(directoryPath)) {
             throw new UtilityException(FsoTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "directoryPath");
@@ -319,7 +323,7 @@ public interface FsoTools {
      * @param pathTo                مسیر مقصد که اگر مسیر مبدا فایل بوده باید این مسیر نیز مسیر کامل فایل باشد
      * @param withThumbnail         مسیر مبدا حاوی تصویر بندانگشتی
      * @param withDirectoryCreation در صورت عدم وجود مسیر مقصد آن را ایجاد کند؟
-     * @param withRenameOnExist در صورت وجود مسیر در مقصد یک نام جدید با -copy بسازد
+     * @param withRenameOnExist     در صورت وجود مسیر در مقصد یک نام جدید با -copy بسازد
      * @throws Exception این متد ممکن است اکسپشن داشته باشد
      */
     static void copy(@NotNull String pathFrom, @NotNull String pathTo, @NotNull Boolean withThumbnail, @NotNull Boolean withDirectoryCreation, @NotNull Boolean withRenameOnExist) throws Exception {
@@ -391,7 +395,7 @@ public interface FsoTools {
      * @param url نشانی وب
      * @return خروجی:  آرایه ای از بایت نشانی وب داده شده
      * @throws Exception این متد ممکن است اکسپشن داشته باشد
-*/
+     */
     @NotNull
     static byte[] downloadUrlAndRead(@NotNull String url) throws Exception {
         if (ObjectUtils.isEmpty(url)) {
@@ -408,7 +412,7 @@ public interface FsoTools {
      * @param fileFullPath مسیر فایل
      * @return خروجی: آرایه ای از بایت مسیر فایل داده شده
      * @throws Exception این متد ممکن است اکسپشن داشته باشد
-*/
+     */
     @NotNull
     static byte[] downloadPathAndRead(@NotNull String fileFullPath) throws Exception {
         if (ObjectUtils.isEmpty(fileFullPath)) {
@@ -431,7 +435,7 @@ public interface FsoTools {
      * @param withThumbnail مسیر مبدا حاوی تصویر بندانگشتی
      * @return خروجی: مسیر رمزگذاری شده فایل ثبت شده
      * @throws Exception این متد ممکن است اکسپشن داشته باشد
-*/
+     */
     static String uploadWriteToPath(@NotNull String directoryPath, @NotNull String fileFullName, byte[] fileBytes, @NotNull Boolean withThumbnail) throws Exception {
         File file = new File(directoryPath + fileFullName);
         FileUtils.writeByteArrayToFile(file, fileBytes);
@@ -557,5 +561,31 @@ public interface FsoTools {
         }
     }
 
+
+    /**
+     * این متد مسیر یا نام یک فایل را از ورودی دریافت میکند و مدل mimeType آن را خروجی میدهد
+     * @param filePath مسیر یا نام کامل فایل
+     * @return خروجی: مدل mimeType فایل ورودی
+     */
+    @NotNull
+    static FsoMimeTypeModel getMimeTypeModel(@NotNull String filePath) {
+        if (ObjectUtils.isEmpty(filePath)) {
+            throw new UtilityException(FsoTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "filePath");
+        }
+        try {
+            String mimeType = Files.probeContentType(Paths.get(filePath));
+            String[] mimeTypeArray = mimeType.split("/");
+            switch (String.valueOf(mimeTypeArray[0]).toLowerCase()) {
+                case "image":
+                    return new FsoMimeTypeModel(mimeType, FsoMimeTypeEnum.IMAGE, getFileExtension(filePath));
+                case "application":
+                    return new FsoMimeTypeModel(mimeType, FsoMimeTypeEnum.APPLICATION, getFileExtension(filePath));
+                default:
+                    return new FsoMimeTypeModel(mimeType, FsoMimeTypeEnum.GENERAL, getFileExtension(filePath));
+            }
+        } catch (IOException e) {
+            throw new UtilityException(FsoTools.class, UtilityExceptionKeyEnum.FSO_MIMETYPE_NOT_VALID_FILE_PATH, "filePath:" + filePath);
+        }
+    }
 
 }
