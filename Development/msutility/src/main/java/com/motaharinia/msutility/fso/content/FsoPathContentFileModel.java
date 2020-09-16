@@ -1,4 +1,4 @@
-package com.motaharinia.msutility.fso;
+package com.motaharinia.msutility.fso.content;
 
 import java.util.Date;
 
@@ -45,6 +45,11 @@ public class FsoPathContentFileModel {
      * حجم فایل
      */
     private Long size;
+    /**
+     * نوع mimeType فایل
+     * example:"image/png"
+     */
+    private String mimeType;
 
     /**
      * متد سازنده پیش فرض
@@ -55,16 +60,17 @@ public class FsoPathContentFileModel {
     /**
      * متد سازنده که با دریافت مشخصات مدل را میسازد
      *
-     * @param name               نام فایل
-     * @param extension          پسوند فایل
-     * @param fullName           نام کامل فایل با پسوند
-     * @param directoryPath      مسیر دایرکتوری والد
-     * @param fullPath  مسیر کامل دایرکتوری به همراه نام فایل
+     * @param name                   نام فایل
+     * @param extension              پسوند فایل
+     * @param fullName               نام کامل فایل با پسوند
+     * @param directoryPath          مسیر دایرکتوری والد
+     * @param fullPath               مسیر کامل دایرکتوری به همراه نام فایل
      * @param lastModifiedDate       تاریخ آخرین تغییر
      * @param lastModifiedDateString رشته تاریخ آخرین تغییر
-     * @param size               حجم دایرکتوری
+     * @param size                   حجم دایرکتوری
+     * @param mimeType               نوع mimeType فایل
      */
-    public FsoPathContentFileModel(String name, String extension, String fullName, String directoryPath, String fullPath, Date lastModifiedDate, String lastModifiedDateString, Long size) {
+    public FsoPathContentFileModel(String name, String extension, String fullName, String directoryPath, String fullPath, Date lastModifiedDate, String lastModifiedDateString, Long size, String mimeType) {
         this.name = name;
         this.extension = extension;
         this.fullName = fullName;
@@ -73,6 +79,7 @@ public class FsoPathContentFileModel {
         this.lastModifiedDate = lastModifiedDate;
         this.lastModifiedDateString = lastModifiedDateString;
         this.size = size;
+        this.mimeType = mimeType;
     }
 
     @Override
@@ -152,5 +159,13 @@ public class FsoPathContentFileModel {
 
     public void setSize(Long size) {
         this.size = size;
+    }
+
+    public String getMimeType() {
+        return mimeType;
+    }
+
+    public void setMimeType(String mimeType) {
+        this.mimeType = mimeType;
     }
 }

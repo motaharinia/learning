@@ -1,6 +1,6 @@
 package com.motaharinia.msutility.image;
 
-import com.motaharinia.msutility.fso.FsoTools;
+import com.motaharinia.msutility.fso.FsoConfigModel;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.*;
 
@@ -26,6 +26,8 @@ public class ImageToolsTests {
 
     String parentDirPath = "/MsUtilityTests";
     String imageFileFullName = "imageTools.jpg";
+
+    FsoConfigModel fsoConfigModel = new FsoConfigModel(new Integer[]{60, 120}, "thumb", 100);
 
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
@@ -67,8 +69,22 @@ public class ImageToolsTests {
     void createThumbTest() {
         try {
             //تست ایجاد تصویر بندانگشتی از فایل تصویر موجود
-            ImageTools.createThumb(parentDirPath, imageFileFullName, FsoTools.THUMB_SIZE_ARRAY[0], FsoTools.THUMB_SIZE_ARRAY[0]);
-            File file = new File(parentDirPath + "/" + imageFileFullName + "-" + FsoTools.THUMB_SIZE_ARRAY[0] + ".thumb");
+            ImageTools.createThumb(parentDirPath, imageFileFullName, fsoConfigModel.getThumbSizeArray()[0],  fsoConfigModel.getThumbSizeArray()[0]);
+            File file = new File(parentDirPath + "/" + imageFileFullName + "-" +  fsoConfigModel.getThumbSizeArray()[0] + ".thumb");
+            assertThat(file.exists()).isTrue();
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
+
+    @Order(2)
+    @Test
+    void imageResizeTest() {
+        try {
+            File sourceFile = new File(parentDirPath + "/" + imageFileFullName);
+           byte[] resizedByteArray=  ImageTools.imageResize(FileUtils.readFileToByteArray(sourceFile),"jpg",100,100,true);
+            FileUtils.writeByteArrayToFile(new File(parentDirPath + "/imgaeToolsResized.jpg"), resizedByteArray);
+            File file = new File(parentDirPath + "/imgaeToolsResized.jpg");
             assertThat(file.exists()).isTrue();
         } catch (Exception ex) {
             fail(ex.toString());

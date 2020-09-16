@@ -4,8 +4,11 @@ package com.motaharinia.msutility.fso;
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.customexception.UtilityExceptionKeyEnum;
 import com.motaharinia.msutility.encoding.EncodingTools;
+import com.motaharinia.msutility.fso.check.FsoPathCheckModel;
+import com.motaharinia.msutility.fso.check.FsoPathCheckTypeEnum;
 import com.motaharinia.msutility.fso.mimetype.FsoMimeTypeEnum;
 import com.motaharinia.msutility.fso.mimetype.FsoMimeTypeModel;
+import com.motaharinia.msutility.fso.content.*;
 import com.motaharinia.msutility.image.ImageTools;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -33,17 +36,6 @@ import java.util.stream.Collectors;
  * اینترفیس متد های ابزاری فایل سیستم
  */
 public interface FsoTools {
-
-    /**
-     * ابعاد فایلهای بندانگشتی تصاویر
-     */
-    Integer[] THUMB_SIZE_ARRAY = new Integer[]{60, 120};
-    /**
-     * پسوند فایلهای بندانگشتی تصاویر
-     */
-    String THUMB_NAME = ".thumb";
-
-    Integer FOLDER_LIMIT = 100;
 
     /**
      * این متد یک مسیر کامل فایل یا دایرکتوری ورودی دریافت میکند و چک میکند آن مسیر وجود داشته باشد و مدل حاوی نوع مسیر (فایل یا دایرکتوری) و مرجع فایل را خروجی میدهد
@@ -158,7 +150,7 @@ public interface FsoTools {
                     fsoPathContentModel.getDirectoryModelList().add(new FsoPathContentDirectoryModel(subFile.getName(), directoryPath, directoryPath + "/" + subFile.getName(), new Date(subFile.lastModified()), String.valueOf(sdf.format(subFile.lastModified())), directorySize));
                 } else {
                     //اگر فایل است
-                    fsoPathContentModel.getFileModelList().add(new FsoPathContentFileModel(getFileNameWithoutExtension(subFile.getName()), getFileExtension(subFile.getName()), subFile.getName(), directoryPath, directoryPath + "/" + subFile.getName(), new Date(subFile.lastModified()), String.valueOf(sdf.format(subFile.lastModified())), subFile.length()));
+                    fsoPathContentModel.getFileModelList().add(new FsoPathContentFileModel(getFileNameWithoutExtension(subFile.getName()), getFileExtension(subFile.getName()), subFile.getName(), directoryPath, directoryPath + "/" + subFile.getName(), new Date(subFile.lastModified()), String.valueOf(sdf.format(subFile.lastModified())), subFile.length(), getMimeTypeModel(directoryPath + "/" + subFile.getName()).getMimeType()));
                 }
             }
         }
@@ -239,10 +231,11 @@ public interface FsoTools {
     /**
      * این متد یک مسیر ورودی و یک سوال که آیا مسیر ورودی تصویر بندانگشتی دارد یا خیر را از ورودی دریافت میکند و در صورت وجود مسیر ورودی، آن را حذف مینماید
      *
-     * @param path          مسیر ورودی
-     * @param withThumbnail مسیر مبدا حاوی تصویر بندانگشتی
+     * @param path           مسیر ورودی
+     * @param withThumbnail  مسیر مبدا حاوی تصویر بندانگشتی
+     * @param fsoConfigModel مدل تنظیمات ابزار فایل
      */
-    static void delete(@NotNull String path, @NotNull Boolean withThumbnail) {
+    static void delete(@NotNull String path, @NotNull Boolean withThumbnail, FsoConfigModel fsoConfigModel) {
         if (ObjectUtils.isEmpty(path)) {
             throw new UtilityException(FsoTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "path");
         }
@@ -254,9 +247,9 @@ public interface FsoTools {
         if ((file.exists())) {
             FileUtils.deleteQuietly(file);
             if (withThumbnail) {
-                for (Integer size : THUMB_SIZE_ARRAY) {
-                    thumbPath = path + "-" + size + THUMB_NAME;
-                    delete(thumbPath, false);
+                for (Integer size : fsoConfigModel.getThumbSizeArray()) {
+                    thumbPath = path + "-" + size + "." + fsoConfigModel.getThumbExtension();
+                    delete(thumbPath, false, fsoConfigModel);
                 }
             }
         }
@@ -269,9 +262,10 @@ public interface FsoTools {
      * @param pathFrom              مسیر مبدا
      * @param pathTo                مسیر مقصد
      * @param withThumbnail         مسیر مبدا حاوی تصویر بندانگشتی
+     * @param fsoConfigModel        مدل تنظیمات ابزار فایل
      * @param withDirectoryCreation در صورت عدم وجود مسیر مقصد آن را ایجاد کند؟
      */
-    static void move(@NotNull String pathFrom, @NotNull String pathTo, @NotNull Boolean withThumbnail, @NotNull Boolean withDirectoryCreation) {
+    static void move(@NotNull String pathFrom, @NotNull String pathTo, @NotNull Boolean withThumbnail, FsoConfigModel fsoConfigModel, @NotNull Boolean withDirectoryCreation) {
         if (ObjectUtils.isEmpty(pathFrom)) {
             throw new UtilityException(FsoTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "pathFrom");
         }
@@ -305,10 +299,10 @@ public interface FsoTools {
 
             if (fileFrom.renameTo(fileTo)) {
                 if (withThumbnail) {
-                    for (Integer size : THUMB_SIZE_ARRAY) {
-                        thumbPathFrom = pathFrom + "-" + size + THUMB_NAME;
-                        thumbPathTo = pathTo + "-" + size + THUMB_NAME;
-                        move(thumbPathFrom, thumbPathTo, false, false);
+                    for (Integer size : fsoConfigModel.getThumbSizeArray()) {
+                        thumbPathFrom = pathFrom + "-" + size + "." + fsoConfigModel.getThumbExtension();
+                        thumbPathTo = pathTo + "-" + size + "." + fsoConfigModel.getThumbExtension();
+                        move(thumbPathFrom, thumbPathTo, false, fsoConfigModel, false);
                     }
                 }
             }
@@ -322,11 +316,12 @@ public interface FsoTools {
      * @param pathFrom              مسیر مبدا که میتواند دایرکتوری یا فایل باشد
      * @param pathTo                مسیر مقصد که اگر مسیر مبدا فایل بوده باید این مسیر نیز مسیر کامل فایل باشد
      * @param withThumbnail         مسیر مبدا حاوی تصویر بندانگشتی
+     * @param fsoConfigModel        مدل تنظیمات ابزار فایل
      * @param withDirectoryCreation در صورت عدم وجود مسیر مقصد آن را ایجاد کند؟
      * @param withRenameOnExist     در صورت وجود مسیر در مقصد یک نام جدید با -copy بسازد
      * @throws Exception این متد ممکن است اکسپشن داشته باشد
      */
-    static void copy(@NotNull String pathFrom, @NotNull String pathTo, @NotNull Boolean withThumbnail, @NotNull Boolean withDirectoryCreation, @NotNull Boolean withRenameOnExist) throws Exception {
+    static void copy(@NotNull String pathFrom, @NotNull String pathTo, @NotNull Boolean withThumbnail,FsoConfigModel fsoConfigModel, @NotNull Boolean withDirectoryCreation, @NotNull Boolean withRenameOnExist) throws Exception {
         if (ObjectUtils.isEmpty(pathFrom)) {
             throw new UtilityException(FsoTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "pathFrom");
         }
@@ -377,11 +372,11 @@ public interface FsoTools {
                 String pathFromFileName = pathFromDirectoryArray[pathFromDirectoryArray.length - 1];
                 pathToDirectoryArray = pathTo.split("/");
                 String pathToFileName = pathToDirectoryArray[pathToDirectoryArray.length - 1];
-                for (Integer size : THUMB_SIZE_ARRAY) {
-                    fileFrom = new File(pathFromParentDirectory + "/" + pathFromFileName + "-" + size + THUMB_NAME);
-                    fileTo = new File(pathToParentDirectory + "/" + pathToFileName + "-" + size + THUMB_NAME);
+                for (Integer size : fsoConfigModel.getThumbSizeArray()) {
+                    fileFrom = new File(pathFromParentDirectory + "/" + pathFromFileName + "-" + size + "." + fsoConfigModel.getThumbExtension());
+                    fileTo = new File(pathToParentDirectory + "/" + pathToFileName + "-" + size + "." +  fsoConfigModel.getThumbExtension());
                     if (fileTo.exists()) {
-                        delete(pathToParentDirectory + "/" + pathToFileName + "-" + size + THUMB_NAME, false);
+                        delete(pathToParentDirectory + "/" + pathToFileName + "-" + size + "." +  fsoConfigModel.getThumbExtension(), false , fsoConfigModel);
                     }
                     FileUtils.copyFile(fileFrom, fileTo);
                 }
@@ -433,14 +428,15 @@ public interface FsoTools {
      * @param fileFullName  نام کامل فایل
      * @param fileBytes     آرایه بایت داده فایل
      * @param withThumbnail مسیر مبدا حاوی تصویر بندانگشتی
+     * @param fsoConfigModel        مدل تنظیمات ابزار فایل
      * @return خروجی: مسیر رمزگذاری شده فایل ثبت شده
      * @throws Exception این متد ممکن است اکسپشن داشته باشد
      */
-    static String uploadWriteToPath(@NotNull String directoryPath, @NotNull String fileFullName, byte[] fileBytes, @NotNull Boolean withThumbnail) throws Exception {
+    static String uploadWriteToPath(@NotNull String directoryPath, @NotNull String fileFullName, byte[] fileBytes, @NotNull Boolean withThumbnail,FsoConfigModel fsoConfigModel) throws Exception {
         File file = new File(directoryPath + fileFullName);
         FileUtils.writeByteArrayToFile(file, fileBytes);
         if (withThumbnail) {
-            for (Integer size : FsoTools.THUMB_SIZE_ARRAY) {
+            for (Integer size : fsoConfigModel.getThumbSizeArray()) {
                 ImageTools.createThumb(directoryPath, fileFullName, size, size);
             }
         }
@@ -487,14 +483,15 @@ public interface FsoTools {
      * این متد شناسه فایل را از ورودی دریافت میکند و بر اساس محدودیت پوشه عدد متناسب را خروجی میدهد
      *
      * @param fileId شناسه فایل
+     * @param folderLimit  حداکثر تعداد مجاز فایل در یک دایرکتوری
      * @return خروجی: عدد متناسب
      */
     @NotNull
-    static int getRightLocationForSave(@NotNull Integer fileId) {
+    static int getRightLocationForSave(@NotNull Integer fileId,Integer folderLimit) {
         if (ObjectUtils.isEmpty(fileId)) {
             throw new UtilityException(FsoTools.class, UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "fileId");
         }
-        return (((fileId - 1) / FOLDER_LIMIT) + 1);
+        return (((fileId - 1) / folderLimit) + 1);
     }
 
 
@@ -564,6 +561,7 @@ public interface FsoTools {
 
     /**
      * این متد مسیر یا نام یک فایل را از ورودی دریافت میکند و مدل mimeType آن را خروجی میدهد
+     *
      * @param filePath مسیر یا نام کامل فایل
      * @return خروجی: مدل mimeType فایل ورودی
      */
