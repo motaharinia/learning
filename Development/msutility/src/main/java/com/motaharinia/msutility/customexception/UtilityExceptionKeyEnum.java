@@ -72,10 +72,6 @@ public enum UtilityExceptionKeyEnum implements  CustomExceptionKey{
      */
     FSO_MIMETYPE_NOT_VALID_FILE_PATH("FSO_MIMETYPE_NOT_VALID_FILE_PATH"),
     /**
-     *ابزار تصویر: فایلی از قبل در مسیر مشابه وجود دارد و نمیتوان روی آن انتقال/کپی کرد
-     */
-    FSO_FILE_OVERRIDE_ERROR("FSO_FILE_OVERRIDE_ERROR"),
-    /**
      *ابزار تصویر: تصویر ورودی قابل خواندن نیست
      */
     IMAGE_ORGINAL_READ_PROBLEM("IMAGE_ORGINAL_READ_PROBLEM"),
