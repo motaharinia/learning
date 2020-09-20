@@ -7,6 +7,9 @@ import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.json.CustomObjectMapper;
 import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.SearchFilterModel;
+import io.leangen.graphql.annotations.GraphQLMutation;
+import io.leangen.graphql.annotations.GraphQLQuery;
+import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import ir.micser.login.business.service.adminuser.AdminUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
@@ -26,6 +29,7 @@ import java.util.Optional;
  *  کلاس کنترلر ادمین
  */
 @RestController
+@GraphQLApi
 public class AdminUserController {
 
     private final AdminUserService adminUserService;
@@ -42,6 +46,7 @@ public class AdminUserController {
      * @param adminUserModel مدل ثبت
      * @return خروجی: مدل ثبت حاوی شناسه
      */
+    @GraphQLMutation(name = "create")
     @PostMapping("/v1/adminUser")
     public AdminUserModel create(@RequestBody @Validated AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException,Exception {
         return adminUserService.create(adminUserModel);
@@ -53,6 +58,7 @@ public class AdminUserController {
      * @param id شناسه
      * @return خروجی: مدل جستجو شده
      */
+    @GraphQLQuery(name = "readById")
     @GetMapping("/v1/adminUser/{id}")
     public AdminUserModel readById(@PathVariable Integer id) throws UtilityException {
         return adminUserService.readById(id);
@@ -65,6 +71,7 @@ public class AdminUserController {
      * @return خروجی: مدل داده جستجو
      * @throws UtilityException
      */
+    @GraphQLQuery(name = "readGrid")
     @GetMapping("/v1/adminUser")
     public SearchDataModel readGrid(@RequestParam(name = "searchFilterModel") Optional<String> searchFilterModelJson) throws JsonProcessingException, UtilityException {
         CustomObjectMapper customObjectMapper = new CustomObjectMapper();
@@ -84,6 +91,7 @@ public class AdminUserController {
      * @param adminUserModel مدل ویرایش
      * @return خروجی: مدل ویرایش شده
      */
+    @GraphQLMutation(name = "update")
     @PutMapping("/v1/adminUser")
     public AdminUserModel update(@RequestBody @Validated AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException,Exception {
         return adminUserService.update(adminUserModel);
@@ -95,6 +103,7 @@ public class AdminUserController {
      * @param id شناسه
      * @return خروجی: مدل حذف شده
      */
+    @GraphQLMutation(name = "delete")
     @DeleteMapping("/v1/adminUser/{id}")
     public AdminUserModel delete(@PathVariable Integer id) throws UtilityException {
         return adminUserService.delete(id);
@@ -106,6 +115,7 @@ public class AdminUserController {
      * @return خروجی: لیستی از شناسه های جستجو شده
      * @throws Exception این متد ممکن است اکسپشن صادر کند
      */
+    @GraphQLQuery(name = "hchFindByName")
     @GetMapping("/v1/adminUser/hchFindByName/{name}")
     public List<Integer> hchFindByName(@PathVariable String name) throws Exception {
         return adminUserService.hchFindByName(name);
@@ -117,6 +127,7 @@ public class AdminUserController {
      * @return خروجی: لیستی از شناسه های جستجو شده
      * @throws Exception این متد ممکن است اکسپشن صادر کند
      */
+    @GraphQLQuery(name = "hchFindByGender")
     @GetMapping("/v1/adminUser/hchFindByGender/{genderId}")
     public List<Integer> hchFindByGender(@PathVariable Integer genderId) throws Exception {
         return adminUserService.hchFindByGender(genderId);
@@ -127,6 +138,7 @@ public class AdminUserController {
      * @return خروجی: لیستی از شناسه های جستجو شده
      * @throws Exception این متد ممکن است اکسپشن صادر کند
      */
+    @GraphQLQuery(name = "hchFindBySkill")
     @GetMapping("/v1/adminUser/hchFindBySkill/{skillTitle}")
     public List<Integer> hchFindBySkill(@PathVariable String skillTitle) throws Exception {
         return adminUserService.hchFindBySkill(skillTitle);

@@ -6,7 +6,13 @@ import java.io.File;
 import java.io.FileFilter;
 import java.util.Arrays;
 
-
+/**
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-07-22<br>
+ * Time: 12:43:42<br>
+ * Description:<br>
+ * کلاس فیلتر فایل و دایرکتوری
+ */
 class FsoFileListFilter implements FileFilter {
 
     /**

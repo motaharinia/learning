@@ -42,7 +42,7 @@ public class DiscountSchedule {
         this.fixedRateCount.incrementAndGet();
 
         //نمایش نام نخ فعلی
-        System.out.println("fixedRate Thread.currentThread().getName():" + Thread.currentThread().getName() + " CurrentTime:" + new SimpleDateFormat("HH:mm:ss").format(new Date()));
+        System.out.println("fixedRate Thread.currentThread().getName():" + Thread.currentThread().getName() + " CurrentTime:" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date()));
     }
 
 
@@ -55,7 +55,7 @@ public class DiscountSchedule {
         this.fixedDelayCount.incrementAndGet();
 
         //نمایش نام نخ فعلی
-        System.out.println("fixedDelay Thread.currentThread().getName():" + Thread.currentThread().getName()+ " CurrentTime:" + new SimpleDateFormat("HH:mm:ss").format(new Date()));
+        System.out.println("fixedDelay Thread.currentThread().getName():" + Thread.currentThread().getName()+ " CurrentTime:" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS").format(new Date()));
     }
 
     /**

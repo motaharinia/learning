@@ -1,6 +1,6 @@
 package com.motaharinia.msutility.zip;
 
-import com.motaharinia.msutility.fso.FsoTools;
+import com.motaharinia.msutility.fso.FsoConfigModel;
 import com.motaharinia.msutility.image.ImageTools;
 import net.lingala.zip4j.model.enums.AesKeyStrength;
 import net.lingala.zip4j.model.enums.CompressionLevel;
@@ -45,6 +45,8 @@ public class ZipToolsTests {
     String content1 = "this is first test";
     String password = "123456";
 
+    FsoConfigModel fsoConfigModel = new FsoConfigModel(new Integer[]{60, 120}, "thumb", 100);
+
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
      */
@@ -69,7 +71,7 @@ public class ZipToolsTests {
         FileUtils.forceMkdir(new File(dir1Path));
         FileUtils.writeStringToFile(new File(dir1File1Path), content1, StandardCharsets.UTF_8);
         ImageIO.write(image, "JPG", new File(dir1File2Path));
-        for (Integer size : FsoTools.THUMB_SIZE_ARRAY) {
+        for (Integer size : fsoConfigModel.getThumbSizeArray()) {
             ImageTools.createThumb(dir1Path, "dir1file2.jpg", size, size);
         }
 

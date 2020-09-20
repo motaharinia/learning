@@ -1,4 +1,4 @@
-package com.motaharinia.msutility.fso;
+package com.motaharinia.msutility.fso.content;
 
 import java.util.Date;
 
@@ -12,14 +12,17 @@ import java.util.Date;
 public class FsoPathContentFileModel {
     /**
      * نام فایل
+     * example:"2019-06-12_10-39-29_dsa - Copy (2)"
      */
     private String name;
     /**
      * پسوند فایل
+     * example:"png"
      */
     private String extension;
     /**
      * نام کامل فایل با پسوند
+     * example:"2019-06-12_10-39-29_dsa - Copy (2).png"
      */
     private String fullName;
     /**
@@ -33,15 +36,20 @@ public class FsoPathContentFileModel {
     /**
      * تاریخ آخرین تغییر
      */
-    private Date lastModified;
+    private Date lastModifiedDate;
     /**
      * رشته تاریخ آخرین تغییر
      */
-    private String lastModifiedString;
+    private String lastModifiedDateString;
     /**
-     * حجم دایرکتوری
+     * حجم فایل
      */
     private Long size;
+    /**
+     * نوع mimeType فایل
+     * example:"image/png"
+     */
+    private String mimeType;
 
     /**
      * متد سازنده پیش فرض
@@ -52,24 +60,26 @@ public class FsoPathContentFileModel {
     /**
      * متد سازنده که با دریافت مشخصات مدل را میسازد
      *
-     * @param name               نام فایل
-     * @param extension          پسوند فایل
-     * @param fullName           نام کامل فایل با پسوند
-     * @param directoryPath      مسیر دایرکتوری والد
-     * @param fullPath  مسیر کامل دایرکتوری به همراه نام فایل
-     * @param lastModified       تاریخ آخرین تغییر
-     * @param lastModifiedString رشته تاریخ آخرین تغییر
-     * @param size               حجم دایرکتوری
+     * @param name                   نام فایل
+     * @param extension              پسوند فایل
+     * @param fullName               نام کامل فایل با پسوند
+     * @param directoryPath          مسیر دایرکتوری والد
+     * @param fullPath               مسیر کامل دایرکتوری به همراه نام فایل
+     * @param lastModifiedDate       تاریخ آخرین تغییر
+     * @param lastModifiedDateString رشته تاریخ آخرین تغییر
+     * @param size                   حجم دایرکتوری
+     * @param mimeType               نوع mimeType فایل
      */
-    public FsoPathContentFileModel(String name, String extension, String fullName, String directoryPath, String fullPath, Date lastModified, String lastModifiedString, Long size) {
+    public FsoPathContentFileModel(String name, String extension, String fullName, String directoryPath, String fullPath, Date lastModifiedDate, String lastModifiedDateString, Long size, String mimeType) {
         this.name = name;
         this.extension = extension;
         this.fullName = fullName;
         this.directoryPath = directoryPath;
         this.fullPath = fullPath;
-        this.lastModified = lastModified;
-        this.lastModifiedString = lastModifiedString;
+        this.lastModifiedDate = lastModifiedDate;
+        this.lastModifiedDateString = lastModifiedDateString;
         this.size = size;
+        this.mimeType = mimeType;
     }
 
     @Override
@@ -80,8 +90,8 @@ public class FsoPathContentFileModel {
                 ", fullName='" + fullName + '\'' +
                 ", directoryPath='" + directoryPath + '\'' +
                 ", fullPath='" + fullPath + '\'' +
-                ", lastModified=" + lastModified +
-                ", lastModifiedString='" + lastModifiedString + '\'' +
+                ", lastModified=" + lastModifiedDate +
+                ", lastModifiedString='" + lastModifiedDateString + '\'' +
                 ", size=" + size +
                 '}';
     }
@@ -127,20 +137,20 @@ public class FsoPathContentFileModel {
         this.fullPath = fullPath;
     }
 
-    public Date getLastModified() {
-        return lastModified;
+    public Date getLastModifiedDate() {
+        return lastModifiedDate;
     }
 
-    public void setLastModified(Date lastModified) {
-        this.lastModified = lastModified;
+    public void setLastModifiedDate(Date lastModifiedDate) {
+        this.lastModifiedDate = lastModifiedDate;
     }
 
-    public String getLastModifiedString() {
-        return lastModifiedString;
+    public String getLastModifiedDateString() {
+        return lastModifiedDateString;
     }
 
-    public void setLastModifiedString(String lastModifiedString) {
-        this.lastModifiedString = lastModifiedString;
+    public void setLastModifiedDateString(String lastModifiedDateString) {
+        this.lastModifiedDateString = lastModifiedDateString;
     }
 
     public Long getSize() {
@@ -149,5 +159,13 @@ public class FsoPathContentFileModel {
 
     public void setSize(Long size) {
         this.size = size;
+    }
+
+    public String getMimeType() {
+        return mimeType;
+    }
+
+    public void setMimeType(String mimeType) {
+        this.mimeType = mimeType;
     }
 }

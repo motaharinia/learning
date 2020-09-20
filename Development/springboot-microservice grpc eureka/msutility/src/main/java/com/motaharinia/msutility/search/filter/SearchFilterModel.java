@@ -46,6 +46,16 @@ public class SearchFilterModel implements Serializable {
 
 
     /**
+     * پارامتر نوع جستجو
+     */
+    private String parameterMode;
+
+    /**
+     * لیست مقادیر مورد نیاز نوع جستجو
+     */
+    private List<Object> parameterValueList;
+
+    /**
      * متد سازنده پیش فرض
      */
     public SearchFilterModel() {
@@ -146,5 +156,21 @@ public class SearchFilterModel implements Serializable {
     @JsonDeserialize(using = JsonDeserializerClass.class)
     public void setSearchRowView(Class searchRowView) {
         this.searchRowView = searchRowView;
+    }
+
+    public String getParameterMode() {
+        return parameterMode;
+    }
+
+    public void setParameterMode(String parameterMode) {
+        this.parameterMode = parameterMode;
+    }
+
+    public List<Object> getParameterValueList() {
+        return parameterValueList;
+    }
+
+    public void setParameterValueList(List<Object> parameterValueList) {
+        this.parameterValueList = parameterValueList;
     }
 }

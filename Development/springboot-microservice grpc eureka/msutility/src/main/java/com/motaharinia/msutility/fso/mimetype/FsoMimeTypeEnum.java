@@ -1,4 +1,4 @@
-package com.motaharinia.msutility.fso;
+package com.motaharinia.msutility.fso.mimetype;
 
 
 /**
@@ -6,22 +6,26 @@ package com.motaharinia.msutility.fso;
  * Date: 2020-06-11<br>
  * Time: 01:22:13<br>
  * Description:<br>
- *     مقادیر ثابت نوع مسیر فایل یا دایرکتوری
+ *     مقادیر ثابت نوع فایل
  */
-public enum FsoPathCheckTypeEnum {
+public enum FsoMimeTypeEnum {
 
     /**
-     * مسیر داده شده یک فایل است
+     *فایلهای عمومی
      */
-    FILE("FILE"),
+    GENERAL("GENERAL"),
     /**
-     * مسیر داده شده یک دایرکتوری است
+     *فایلهای آفیس
      */
-    DIRECTORY("DIRECTORY");
+    APPLICATION("APPLICATION"),
+    /**
+     *فایلهای تصویری
+     */
+    IMAGE("IMAGE");
 
     private final String value;
 
-    private FsoPathCheckTypeEnum(String value) {
+    FsoMimeTypeEnum(String value) {
         this.value = value;
     }
 

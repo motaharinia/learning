@@ -116,7 +116,7 @@ public interface EntityTools {
                 modelFieldGetterName = ReflectionTools.getFieldGetterMethodName(modelField, modelFieldName);
                 modelFieldGetterMethod = ReflectionTools.getMethod(modelClass, modelFieldGetterName);
                 modelFieldGetterMethod.setAccessible(true);
-                modelFieldValue = modelFieldGetterMethod.invoke(objectModel, null);
+                modelFieldValue = modelFieldGetterMethod.invoke(objectModel);
 
                 EntityModelerInnerEntityFieldModel entityModelerInnerEntityFieldModel = getInnerEntityFieldModel(modelField, objectEntity);
                 Object innerEntityObject = entityModelerInnerEntityFieldModel.getInnerEntity();
@@ -126,7 +126,7 @@ public interface EntityTools {
                 entityFieldGetterName = ReflectionTools.getFieldGetterMethodName(entityField, entityFieldName);
                 entityFieldGetterMethod = ReflectionTools.getMethod(innerEntityObject.getClass(), entityFieldGetterName);
                 entityFieldGetterMethod.setAccessible(true);
-                entityFieldValue = entityFieldGetterMethod.invoke(innerEntityObject, null);
+                entityFieldValue = entityFieldGetterMethod.invoke(innerEntityObject);
 
                 if ((modelFieldClassName.startsWith("java.") || BeanUtils.isSimpleValueType(modelField.getType()) || (isCustomField(modelField))) && (!Collection.class.isAssignableFrom(modelField.getType()))) {
                     objectModel = convertSetValue(objectModel, modelField, entityField, entityFieldValue);
@@ -138,14 +138,14 @@ public interface EntityTools {
                         Collection<Object> entityFieldCollection = (Collection<Object>) entityFieldValue;
                         List<Object> modelFieldCollection = new ArrayList<>();
                         for (Object entityFieldCollectionObj : entityFieldCollection) {
-                            Object modelFieldCollectionObj = modelFieldCollectionClass.newInstance();
+                            Object modelFieldCollectionObj = modelFieldCollectionClass.getDeclaredConstructor().newInstance();
                             modelFieldCollectionObj = convertToModel(modelFieldCollectionObj, entityFieldCollectionObj);
                             modelFieldCollection.add(modelFieldCollectionObj);
                         }
                         objectModel = convertSetValue(objectModel, modelField, entityField, modelFieldCollection);
                     } else {
                         if (modelFieldValue == null) {
-                            modelFieldValue = modelField.getType().newInstance();
+                            modelFieldValue = modelField.getType().getDeclaredConstructor().newInstance();
                         }
                         modelFieldValue = convertToModel(modelFieldValue, entityFieldValue);
                         objectModel = convertSetValue(objectModel, modelField, entityField, modelFieldValue);
@@ -226,7 +226,7 @@ public interface EntityTools {
                 entityChildrenFieldGetterName = ReflectionTools.getFieldGetterMethodName(entityChildrenField, entityChildrenFieldName);
                 entityChildrenGetterMethod = ReflectionTools.getMethod(entityChildrenClass, entityChildrenFieldGetterName);
                 entityChildrenGetterMethod.setAccessible(true);
-                entityChildrenObject = entityChildrenGetterMethod.invoke(entityChildrenObject, null);
+                entityChildrenObject = entityChildrenGetterMethod.invoke(entityChildrenObject);
             }
             entityChildrenFieldName = artmp.get(artmp.size() - 1);
         }

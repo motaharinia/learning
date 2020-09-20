@@ -1,5 +1,7 @@
 package com.motaharinia.msutility.fso;
 
+import com.motaharinia.msutility.fso.check.FsoPathCheckTypeEnum;
+import com.motaharinia.msutility.fso.content.FsoPathContentModel;
 import com.motaharinia.msutility.image.ImageTools;
 import org.apache.commons.io.FileUtils;
 import org.junit.jupiter.api.*;
@@ -42,6 +44,8 @@ public class FsoToolsTests {
     String content1 = "this is first test";
     String content2 = "this is second test";
 
+    FsoConfigModel fsoConfigModel = new FsoConfigModel(new Integer[]{60, 120}, "thumb", 100);
+
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
      */
@@ -68,7 +72,7 @@ public class FsoToolsTests {
         FileUtils.forceMkdir(new File(dir1Path));
         FileUtils.writeStringToFile(new File(dir1File1Path), content1, StandardCharsets.UTF_8);
         ImageIO.write(image, "JPG", new File(dir1File2Path));
-        for (Integer size : FsoTools.THUMB_SIZE_ARRAY) {
+        for (Integer size : fsoConfigModel.getThumbSizeArray()) {
             ImageTools.createThumb(dir1Path, "dir1file2.jpg", size, size);
         }
 
@@ -76,7 +80,7 @@ public class FsoToolsTests {
         FileUtils.forceMkdir(new File(dir2Path));
         FileUtils.writeStringToFile(new File(dir2File1Path), content1, StandardCharsets.UTF_8);
         ImageIO.write(image, "JPG", new File(dir2File2Path));
-        for (Integer size : FsoTools.THUMB_SIZE_ARRAY) {
+        for (Integer size : fsoConfigModel.getThumbSizeArray()) {
             ImageTools.createThumb(dir2Path, "dir2file2.jpg", size, size);
         }
 
@@ -184,21 +188,21 @@ public class FsoToolsTests {
             File file;
 
             //تست حذف فایل معمولی بدون تصویر بندانگشتی
-            FsoTools.delete(dir1File1Path, false);
+            FsoTools.delete(dir1File1Path, false, fsoConfigModel);
             file = new File(dir1File1Path);
             assertThat(file.exists()).isFalse();
 
             //تست حذف فایل معمولی با تصویر بندانگشتی
-            FsoTools.delete(dir1File2Path, true);
+            FsoTools.delete(dir1File2Path, true, fsoConfigModel);
             file = new File(dir1File2Path);
             assertThat(file.exists()).isFalse();
-            for (Integer size : FsoTools.THUMB_SIZE_ARRAY) {
-                file = new File(dir1File2Path + "-" + size + FsoTools.THUMB_NAME);
+            for (Integer size : fsoConfigModel.getThumbSizeArray()) {
+                file = new File(dir1File2Path + "-" + size + "." + fsoConfigModel.getThumbExtension());
                 assertThat(file.exists()).isFalse();
             }
 
             //تست حذف دایرکتوری
-            FsoTools.delete(dir2Path, false);
+            FsoTools.delete(dir2Path, false, fsoConfigModel);
             file = new File(dir2Path);
             assertThat(file.exists()).isFalse();
 
@@ -214,26 +218,26 @@ public class FsoToolsTests {
             File file;
 
             //تست انتقال/تغییرنام  فایل معمولی بدون تصویر بندانگشتی و بدون ساخت خودکار دایرکتوری های مسیر مقصد
-            FsoTools.move(dir1File1Path, parentDirPath + "/dir1file1Renamed.txt", false, false);
+            FsoTools.move(dir1File1Path, parentDirPath + "/dir1file1Renamed.txt", false, fsoConfigModel, false);
             file = new File(parentDirPath + "/dir1file1Renamed.txt");
             assertThat(file.exists()).isTrue();
 
             //تست انتقال/تغییرنام فایل با تصویر بندانگشتی و بدون ساخت خودکار دایرکتوری های مسیر مقصد
-            FsoTools.move(dir1File2Path, parentDirPath + "/dir1file2Renamed.txt", true, false);
+            FsoTools.move(dir1File2Path, parentDirPath + "/dir1file2Renamed.txt", true, fsoConfigModel, false);
             file = new File(parentDirPath + "/dir1file2Renamed.txt");
             assertThat(file.exists()).isTrue();
-            for (Integer size : FsoTools.THUMB_SIZE_ARRAY) {
-                file = new File(parentDirPath + "/dir1file2Renamed.txt" + "-" + size + FsoTools.THUMB_NAME);
+            for (Integer size : fsoConfigModel.getThumbSizeArray()) {
+                file = new File(parentDirPath + "/dir1file2Renamed.txt" + "-" + size + "." + fsoConfigModel.getThumbExtension());
                 assertThat(file.exists()).isTrue();
             }
 
             //تست انتقال/تغییرنام  دایرکتوری و بدون ساخت خودکار دایرکتوری های مسیر مقصد
-            FsoTools.move(dir2Path, dir1Path + "/dir2Renamed", false, false);
+            FsoTools.move(dir2Path, dir1Path + "/dir2Renamed", false, fsoConfigModel, false);
             file = new File(dir1Path + "/dir2Renamed");
             assertThat(file.exists()).isTrue();
 
             //تست انتقال/تغییرنام  فایل معمولی بدون تصویر بندانگشتی و همراه با ساخت خودکار دایرکتوری های مسیر مقصد
-            FsoTools.move(parentDirFile1Path, dir1Path + "/dircreation1/parentFile1Renamed.txt", false, true);
+            FsoTools.move(parentDirFile1Path, dir1Path + "/dircreation1/parentFile1Renamed.txt", false, fsoConfigModel, true);
             file = new File(dir1Path + "/dircreation1/parentFile1Renamed.txt");
             assertThat(file.exists()).isTrue();
 
@@ -249,59 +253,59 @@ public class FsoToolsTests {
             File file;
 
             //تست کپی فایل معمولی بدون تصویر بندانگشتی و بدون ساخت خودکار دایرکتوری های مسیر مقصد
-            FsoTools.copy(dir1File1Path, parentDirPath + "/dir1file1Copied.txt", false, false, false);
+            FsoTools.copy(dir1File1Path, parentDirPath + "/dir1file1Copied.txt", false, fsoConfigModel, false, false);
             file = new File(parentDirPath + "/dir1file1Copied.txt");
             assertThat(file.exists()).isTrue();
 
             //تست کپی فایل با تصویر بندانگشتی و بدون ساخت خودکار دایرکتوری های مسیر مقصد
-            FsoTools.copy(dir1File2Path, parentDirPath + "/dir1file2Copied.txt", true, false, false);
+            FsoTools.copy(dir1File2Path, parentDirPath + "/dir1file2Copied.txt", true, fsoConfigModel, false, false);
             file = new File(parentDirPath + "/dir1file2Copied.txt");
             assertThat(file.exists()).isTrue();
-            for (Integer size : FsoTools.THUMB_SIZE_ARRAY) {
-                file = new File(parentDirPath + "/dir1file2Copied.txt-" + size + FsoTools.THUMB_NAME);
+            for (Integer size : fsoConfigModel.getThumbSizeArray()) {
+                file = new File(parentDirPath + "/dir1file2Copied.txt-" + size + "." + fsoConfigModel.getThumbExtension());
                 assertThat(file.exists()).isTrue();
             }
 
             //تست کپی فایل معمولی بدون تصویر بندانگشتی و همراه با ساخت خودکار دایرکتوری های مسیر مقصد
-            FsoTools.copy(dir1File1Path, parentDirPath + "/dircreation1/dir1file1Copied.txt", false, true, false);
+            FsoTools.copy(dir1File1Path, parentDirPath + "/dircreation1/dir1file1Copied.txt", false, fsoConfigModel, true, false);
             file = new File(parentDirPath + "/dircreation1/dir1file1Copied.txt");
             assertThat(file.exists()).isTrue();
 
             //تست کپی فایل با تصویر بندانگشتی و همراه با ساخت خودکار دایرکتوری های مسیر مقصد
-            FsoTools.copy(dir1File2Path, parentDirPath + "/dircreation2/dir1file2Copied.txt", true, true, false);
+            FsoTools.copy(dir1File2Path, parentDirPath + "/dircreation2/dir1file2Copied.txt", true, fsoConfigModel, true, false);
             file = new File(parentDirPath + "/dircreation2/dir1file2Copied.txt");
             assertThat(file.exists()).isTrue();
-            for (Integer size : FsoTools.THUMB_SIZE_ARRAY) {
-                file = new File(parentDirPath + "/dircreation2/dir1file2Copied.txt-" + size + FsoTools.THUMB_NAME);
+            for (Integer size :fsoConfigModel.getThumbSizeArray()) {
+                file = new File(parentDirPath + "/dircreation2/dir1file2Copied.txt-" + size + "." + fsoConfigModel.getThumbExtension());
                 assertThat(file.exists()).isTrue();
             }
 
             //تست کپی دایرکتوری بدون ساخت خودکار دایرکتوری های مسیر مقصد
-            FsoTools.copy(dir1Path, dir2Path, false, false, false);
+            FsoTools.copy(dir1Path, dir2Path, false, fsoConfigModel, false, false);
             file = new File(dir2Path + "/dir1");
             assertThat(file.exists()).isTrue();
 
             //تست کپی دایرکتوری با ساخت خودکار دایرکتوری های  مسیر مقصد
-            FsoTools.copy(dir1Path, dir2Path + "/dircreation", false, true, false);
+            FsoTools.copy(dir1Path, dir2Path + "/dircreation", false, fsoConfigModel, true, false);
             file = new File(dir2Path + "/dircreation/dir1");
             assertThat(file.exists()).isTrue();
 
             //تست کپی دایرکتوری بدون ساخت خودکار دایرکتوری های مسیر مقصد و تغییرنام در صورت وجود دایرکتوری همنام در مقصد
-            FsoTools.copy(dir1Path, dir2Path, false, false, true);
+            FsoTools.copy(dir1Path, dir2Path, false, fsoConfigModel, false, true);
             file = new File(dir2Path + "/dir1 - Copy");
             assertThat(file.exists()).isTrue();
 
             //تست کپی فایل معمولی بدون تصویر بندانگشتی و بدون ساخت خودکار دایرکتوری های مسیر مقصد و تغییرنام در صورت وجود فایل همنام در مقصد
-            FsoTools.copy(dir1File1Path, parentDirPath + "/dir1file1Copied.txt", false, false, true);
+            FsoTools.copy(dir1File1Path, parentDirPath + "/dir1file1Copied.txt", false, fsoConfigModel, false, true);
             file = new File(parentDirPath + "/dir1file1Copied - Copy.txt");
             assertThat(file.exists()).isTrue();
 
             //تست کپی فایل با تصویر بندانگشتی و بدون ساخت خودکار دایرکتوری های مسیر مقصد و تغییرنام در صورت وجود فایل همنام در مقصد
-            FsoTools.copy(dir2File2Path, parentDirPath + "/dir1file2Copied.txt", true, false, true);
+            FsoTools.copy(dir2File2Path, parentDirPath + "/dir1file2Copied.txt", true, fsoConfigModel, false, true);
             file = new File(parentDirPath + "/dir1file2Copied - Copy.txt");
             assertThat(file.exists()).isTrue();
-            for (Integer size : FsoTools.THUMB_SIZE_ARRAY) {
-                file = new File(parentDirPath + "/dir1file2Copied - Copy.txt-" + size + FsoTools.THUMB_NAME);
+            for (Integer size : fsoConfigModel.getThumbSizeArray()) {
+                file = new File(parentDirPath + "/dir1file2Copied - Copy.txt-" + size + "." + fsoConfigModel.getThumbExtension());
                 assertThat(file.exists()).isTrue();
             }
 
@@ -338,7 +342,7 @@ public class FsoToolsTests {
     @Test
     void uploadWriteToPathTest() {
         try {
-            String hashedPath=FsoTools.uploadWriteToPath(dir1Path,"uploadWriteToPath.txt",new String("uploadWriteToPath").getBytes(StandardCharsets.UTF_8),false);
+            String hashedPath = FsoTools.uploadWriteToPath(dir1Path, "uploadWriteToPath.txt", new String("uploadWriteToPath").getBytes(StandardCharsets.UTF_8), false, fsoConfigModel);
             assertThat(hashedPath).isNotEmpty();
         } catch (Exception ex) {
             fail(ex.toString());
@@ -371,7 +375,7 @@ public class FsoToolsTests {
     void getRightLocationForSaveTest() {
         try {
             //فایل با شناسه بیشتر از محدودیت دایرکتوری در دایرکتوری دوم باید ذخیره شود
-            assertThat(FsoTools.getRightLocationForSave(FsoTools.FOLDER_LIMIT+1)).isEqualTo(2);
+            assertThat(FsoTools.getRightLocationForSave(fsoConfigModel.getDirectoryFileLimit() + 1, fsoConfigModel.getDirectoryFileLimit())).isEqualTo(2);
         } catch (Exception ex) {
             fail(ex.toString());
         }
@@ -383,9 +387,9 @@ public class FsoToolsTests {
     void recursiveCreateNameTest() {
         try {
             //تست نام دایرکتوری تکراری
-            assertThat(FsoTools.recursiveCreateName(dir1Path,0)).isEqualTo(dir1Path+ " - Copy");
+            assertThat(FsoTools.recursiveCreateName(dir1Path, 0)).isEqualTo(dir1Path + " - Copy");
             //تست نام فایل تکراری
-            assertThat(FsoTools.recursiveCreateName(dir1Path,"dir1file1","txt",0)).isEqualTo(dir1Path + "/dir1file1 - Copy.txt");
+            assertThat(FsoTools.recursiveCreateName(dir1Path, "dir1file1", "txt", 0)).isEqualTo(dir1Path + "/dir1file1 - Copy.txt");
         } catch (Exception ex) {
             fail(ex.toString());
         }
