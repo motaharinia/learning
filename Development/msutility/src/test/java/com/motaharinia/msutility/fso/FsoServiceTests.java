@@ -9,8 +9,6 @@ import org.springframework.test.context.ActiveProfiles;
 import java.io.IOException;
 import java.util.Locale;
 
-import static org.assertj.core.api.Assertions.fail;
-
 /**
  * User: https://github.com/motaharinia<br>
  * Date: 2020-09-19<br>
@@ -98,16 +96,15 @@ public class FsoServiceTests {
 //        }
     }
 
-    @Order(1)
-    @Test
-    void pathExistCheckTest() {
-        try {
-            System.out.println("vvvvvvvvvvvvvvvvvvvvvvvv " +    fsoService.getFSO_CONFIG_MODEL().getThumbExtension());
-//            assertThat(FsoTools.pathExistCheck(parentDirPath).getTypeEnum()).isEqualTo(FsoPathCheckTypeEnum.DIRECTORY);
-        } catch (Exception ex) {
-            fail(ex.toString());
-        }
-    }
+//    @Order(1)
+//    @Test
+//    void pathExistCheckTest() {
+//        try {
+////            assertThat(FsoTools.pathExistCheck(parentDirPath).getTypeEnum()).isEqualTo(FsoPathCheckTypeEnum.DIRECTORY);
+//        } catch (Exception ex) {
+//            fail(ex.toString());
+//        }
+//    }
 
 
 }

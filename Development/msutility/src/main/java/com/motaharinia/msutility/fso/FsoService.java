@@ -171,7 +171,7 @@ public class FsoService {
      * @param withThumbnail         مسیر مبدا حاوی تصویر بندانگشتی
      * @param withDirectoryCreation در صورت عدم وجود مسیر مقصد آن را ایجاد کند؟
      */
-    public void move(@NotNull String pathFrom, @NotNull String pathTo, @NotNull Boolean withThumbnail, @NotNull Boolean withDirectoryCreation) throws Exception {
+    public void move(@NotNull String pathFrom, @NotNull String pathTo, @NotNull Boolean withThumbnail, @NotNull Boolean withDirectoryCreation){
         pathTo = FSO_PATH_MODULE + pathTo;
         pathFrom = FSO_PATH_MODULE + pathFrom;
         FsoTools.move(pathFrom, pathTo, withThumbnail, FSO_CONFIG_MODEL, withDirectoryCreation);
@@ -299,7 +299,7 @@ public class FsoService {
      * @param path مسیر کامل فایل یا دایرکتوری ورودی
      * @return خروجی: مدل حاوی نوع مسیر (فایل یا دایرکتوری) و مرجع فایل
      */
-    public FsoPathCheckModel pathExistCheck(String path) throws Exception {
+    public FsoPathCheckModel pathExistCheck(String path)  {
         return FsoTools.pathExistCheck(FSO_PATH_MODULE + path);
     }
 
