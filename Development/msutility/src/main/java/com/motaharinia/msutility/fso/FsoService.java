@@ -17,6 +17,7 @@ import com.motaharinia.msutility.zip.ZipTools;
 import org.apache.commons.io.FileUtils;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
 import java.io.File;
@@ -33,6 +34,7 @@ import java.util.List;
  * Description:<br>
  * سرویس فایل سیستم
  */
+@Service
 public class FsoService {
 
     /**
@@ -44,17 +46,17 @@ public class FsoService {
      * ابعاد فایلهای بندانگشتی کوچک تصاویر
      */
     @Value("${fso.image.thumb.size.small}")
-    Integer FSO_THUMB_SIZE_SMALL = 60;
+    private Integer FSO_THUMB_SIZE_SMALL = 60;
     /**
      * ابعاد فایلهای بندانگشتی بزرگ تصاویر
      */
     @Value("${fso.image.thumb.size.large}")
-    Integer FSO_THUMB_SIZE_LARGE = 120;
+    private Integer FSO_THUMB_SIZE_LARGE = 120;
     /**
      * حداکثر تعداد مجاز فایل در یک دایرکتوری
      */
     @Value("${fso.directory.file.limit}")
-    Integer FSO_DIRECTORY_FILE_LIMIT = 100;
+    private Integer FSO_DIRECTORY_FILE_LIMIT = 100;
     /**
      * مسیر فایلهای ماژولهای پروزه
      */
@@ -67,7 +69,7 @@ public class FsoService {
     private String FSO_PATH_UPLOAD_DIRECTORY = "/mbazardata/uploadedfile";
 
 
-    FsoConfigModel FSO_CONFIG_MODEL = new FsoConfigModel(new Integer[]{FSO_THUMB_SIZE_SMALL, FSO_THUMB_SIZE_LARGE}, FSO_IMAGE_THUMB_EXTENSION, FSO_DIRECTORY_FILE_LIMIT);
+    private FsoConfigModel FSO_CONFIG_MODEL = new FsoConfigModel(new Integer[]{FSO_THUMB_SIZE_SMALL, FSO_THUMB_SIZE_LARGE}, FSO_IMAGE_THUMB_EXTENSION, FSO_DIRECTORY_FILE_LIMIT);
 
     /**
      * این مند یک مسیر اصلی و فرعی را دریافت میکند و لیست مدل نمایش تمام فایلهای داخل آن را خروجی میدهد
@@ -325,4 +327,16 @@ public class FsoService {
         return FileUtils.readFileToByteArray(file);
     }
 
+
+    public String getFSO_PATH_MODULE() {
+        return FSO_PATH_MODULE;
+    }
+
+    public String getFSO_PATH_UPLOAD_DIRECTORY() {
+        return FSO_PATH_UPLOAD_DIRECTORY;
+    }
+
+    public FsoConfigModel getFSO_CONFIG_MODEL() {
+        return FSO_CONFIG_MODEL;
+    }
 }
