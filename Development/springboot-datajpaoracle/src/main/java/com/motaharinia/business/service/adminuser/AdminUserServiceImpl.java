@@ -167,7 +167,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 //                System.out.println("AdminUserServiceImpl.readGrid searchFilterModel.getRestrictionList() loop item.getFieldValue():" + item.getFieldValue() + " item.getFieldValue().getClass():" + item.getFieldValue().getClass());
 //            });
 //        }
-        adminUserSpecification = (AdminUserSpecification) searchFilterModel.makeSpecification(adminUserSpecification);
+        adminUserSpecification = (AdminUserSpecification) searchFilterModel.makeSpecification(new AdminUserSpecification());
 //        if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
 //            searchFilterModel.getRestrictionList().stream().forEach((item) -> {
 //                adminUserSpecification.add(item);

@@ -3,6 +3,7 @@ package com.motaharinia.presentation.adminuser;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.motaharinia.business.service.adminuser.AdminUserService;
+import com.motaharinia.business.service.adminuser.SearchRowViewAdminUserBrief;
 import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.json.CustomObjectMapper;
@@ -71,6 +72,15 @@ public class AdminUserController {
             searchFilterModel.getRestrictionList().stream().forEach((item) -> {
                 System.out.println("AdminUserController.readGrid searchFilterModel.getRestrictionList() loop item.getFieldValue():" + item.getFieldValue() + " item.getFieldValue().getClass():" + item.getFieldValue().getClass());
             });
+        }
+
+        switch (searchFilterModel.getParameterMode()) {
+            case "ADMIN_USER_BRIEF":
+                searchFilterModel.setParameterMode(SearchRowViewAdminUserBrief.class.getName());
+                break;
+            default:
+                searchFilterModel.setParameterMode(SearchRowViewAdminUserBrief.class.getName());
+                break;
         }
         SearchDataModel searchDataModel = adminUserService.readGrid(searchFilterModel);
         return searchDataModel;

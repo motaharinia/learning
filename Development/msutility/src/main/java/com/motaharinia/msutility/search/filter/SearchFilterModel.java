@@ -41,12 +41,12 @@ public class SearchFilterModel implements Serializable {
      * Front-end sends: ADMIN_USER_BRIEF
      * Back-end convert it to com.motaharinia.business.service.adminuser.SearchRowViewAdminUserBrief
      */
-    private String parameterMode;
+    private String parameterMode="";
     /**
      * لیست مقادیر مورد نیاز نوع جستجو
      * مثلا میخواهیم گرید خلاصه اطلاعات ادمین یوزر را بگیریم که جنسیت آنها زن باشد و اهل تهران باشند. مقدار جنسیت و شناسه شهر به صورت هماهنگ شده بین سرور و کلاینت در این لیست از کلاینت به سرور ارسال میشود
      */
-    private List<Object> parameterValueList;
+    private List<Object> parameterValueList = new ArrayList<>();
 
     /**
      * متد سازنده پیش فرض

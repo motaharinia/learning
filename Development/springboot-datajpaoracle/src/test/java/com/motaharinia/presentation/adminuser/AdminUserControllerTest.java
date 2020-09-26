@@ -164,7 +164,7 @@ public class AdminUserControllerTest {
             searchFilterSortModelList.add(new SearchFilterSortModel("gender.value", SearchFilterSortTypeEnum.DSC));
             //searchFilterSortModelList.add(new SearchFilterSortModel("defaultAdminUserContact.type.value", SearchFilterSortTypeEnum.DSC));
             SearchFilterModel searchFilterModel = new SearchFilterModel();
-            searchFilterModel.setSearchRowView(SearchRowViewAdminUserBrief.class);
+            searchFilterModel.setParameterMode("ADMIN_USER_BRIEF");
             searchFilterModel.setPage(0);
             searchFilterModel.setRows(20);
             searchFilterModel.setRestrictionList(searchFilterRestrictionModelList);

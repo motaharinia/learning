@@ -557,7 +557,7 @@ public interface CalendarTools {
     //--------------------------------------------------متدهای تبدیلی CustomDate و CustomDateTime به Date--------------------------------------------------
 
     /**
-     * این متد مطابق با CustomDate جلالی ورودی ، Date میلادی متناسب را خروجی میدهد
+     * این متد مطابق با CustomDate میلادی ورودی ، Date میلادی متناسب را خروجی میدهد
      *
      * @param customDate پارامتر CustomDate میلادی
      * @return خروجی: Date میلادی
@@ -579,7 +579,7 @@ public interface CalendarTools {
     }
 
     /**
-     * این متد مطابق با CustomDateTime جلالی ورودی ، Date میلادی متناسب را خروجی میدهد
+     * این متد مطابق با CustomDateTime میلادی ورودی ، Date میلادی متناسب را خروجی میدهد
      *
      * @param customDateTime پارامتر CustomDateTime میلادی
      * @return خروجی: Date میلادی
