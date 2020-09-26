@@ -31,11 +31,11 @@ public class SearchFilterModel implements Serializable {
     /**
      * صفحه مورد نظر برای دریافت در حالت صفحه بندی و اسمارت رندرینگ
      */
-    private Integer page;
+    private Integer page=0;
     /**
      * تعداد سطر مورد نیاز در هر صفحه
      */
-    private Integer rows;
+    private Integer rows=Integer.MAX_VALUE;
     /**
      * پارامتر نوع جستجو که کلمه ای هماهنگ شده بین بک اند و فرانت اند است و بعد از دریافت توسط کنترلر در بک اند توسط توسعه دهندگان به مسیر اینترفیس جستجو تبدیل میشود
      * Front-end sends: ADMIN_USER_BRIEF
