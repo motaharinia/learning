@@ -1,6 +1,8 @@
 package com.motaharinia.presentation.adminuser;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.motaharinia.business.service.adminuser.SearchFilterParameterModeEnum;
 import com.motaharinia.business.service.adminuser.SearchRowViewAdminUserBrief;
 import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.customexception.UtilityException;
@@ -38,7 +40,7 @@ import static org.assertj.core.api.Assertions.fail;
  * Date: 2020-06-12<br>
  * Time: 01:05:58<br>
  * Description:<br>
- *  کلاس تست ماژول ادمین
+ * کلاس تست ماژول ادمین
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("dev")
@@ -57,9 +59,8 @@ public class AdminUserControllerTest {
     /**
      * شیی crud
      */
-    private static Integer crudId=1;
+    private static Integer crudId = 1;
     private static String random;
-
 
 
     /**
@@ -72,13 +73,6 @@ public class AdminUserControllerTest {
     }
 
 
-
-
-
-
-
-
-
     @Test
     @Order(1)
     public void create() {
@@ -86,8 +80,8 @@ public class AdminUserControllerTest {
             String uri = "http://localhost:" + port + "/adminUser";
             Map<String, String> variableHashMap = new HashMap<String, String>();
 
-             random=StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL,5,false);
-            CustomDate dateOfBirth=new CustomDate();
+            random = StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL, 5, false);
+            CustomDate dateOfBirth = new CustomDate();
             dateOfBirth.setYear(1399);
             dateOfBirth.setMonth(4);
             dateOfBirth.setDay(3);
@@ -96,11 +90,11 @@ public class AdminUserControllerTest {
             adminUserModel.setFirstName("Mostafa " + random);
             adminUserModel.setLastName("Motaharinia " + random);
             adminUserModel.setPassword("123456789");
-            adminUserModel.setUsername("eng.motahari_"+random+"@gmail.com");
+            adminUserModel.setUsername("eng.motahari_" + random + "@gmail.com");
             adminUserModel.setDateOfBirth(dateOfBirth);
             adminUserModel.setGender_id(1);
             adminUserModel.setDefaultAdminUserContact_address("Shahrak Gharb " + random);
-            adminUserModel.setSkillList(Arrays.asList(new AdminUserSkillModel[]{new AdminUserSkillModel(null,"skill-" + random),new AdminUserSkillModel(null,"skill-" + StringTools.generateRandomString(RandomGenerationTypeEnum.NUMBER,5,false))}));
+            adminUserModel.setSkillList(Arrays.asList(new AdminUserSkillModel[]{new AdminUserSkillModel(null, "skill-" + random), new AdminUserSkillModel(null, "skill-" + StringTools.generateRandomString(RandomGenerationTypeEnum.NUMBER, 5, false))}));
 
             adminUserModel = this.restTemplate.postForObject(uri, adminUserModel, AdminUserModel.class, variableHashMap);
             System.out.println("create userModel.toString():" + adminUserModel.toString());
@@ -125,20 +119,20 @@ public class AdminUserControllerTest {
 
     @Test
     @Order(3)
-    public void readGrid() {
-        System.out.println("LocaleContextHolder.getLocale()"+ LocaleContextHolder.getLocale());
+    public void readGrid() throws JsonProcessingException {
+        System.out.println("LocaleContextHolder.getLocale()" + LocaleContextHolder.getLocale());
         try {
             String uri = "http://localhost:" + port + "/adminUser";
 
-            if(ObjectUtils.isEmpty(random)){
-                random="skill";
+            if (ObjectUtils.isEmpty(random)) {
+                random = "skill";
             }
-            CustomDate dateOfBirthFrom=new CustomDate();
+            CustomDate dateOfBirthFrom = new CustomDate();
             dateOfBirthFrom.setYear(1399);
             dateOfBirthFrom.setMonth(4);
             dateOfBirthFrom.setDay(3);
 
-            CustomDate dateOfBirthTo=new CustomDate();
+            CustomDate dateOfBirthTo = new CustomDate();
             dateOfBirthTo.setYear(1399);
             dateOfBirthTo.setMonth(4);
             dateOfBirthTo.setDay(6);
@@ -150,8 +144,8 @@ public class AdminUserControllerTest {
             usernameList.add("eng.motahari_cxgFw@gmail.com");
 
             List<SearchFilterRestrictionModel> searchFilterRestrictionModelList = new ArrayList<>();
-            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH, "mostafa",SearchFilterNextConditionOperatorEnum.AND));
-            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("defaultAdminUserContact.address", SearchFilterOperationEnum.MATCH, "Shahrak Gharb",SearchFilterNextConditionOperatorEnum.AND));
+            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH, "mostafa", SearchFilterNextConditionOperatorEnum.AND));
+            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("defaultAdminUserContact.address", SearchFilterOperationEnum.MATCH, "Shahrak Gharb", SearchFilterNextConditionOperatorEnum.AND));
             //searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("skillSet.title", SearchFilterOperationEnum.MATCH, random,SearchFilterNextConditionOperatorEnum.AND));
 //            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("dateOfBirth", SearchFilterOperationEnum.GREATER_THAN_EQUAL, dateOfBirthFrom,SearchFilterNextConditionOperatorEnum.AND));
 //            searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("dateOfBirth", SearchFilterOperationEnum.LESS_THAN_EQUAL, dateOfBirthTo,SearchFilterNextConditionOperatorEnum.AND));
@@ -164,23 +158,21 @@ public class AdminUserControllerTest {
             searchFilterSortModelList.add(new SearchFilterSortModel("gender.value", SearchFilterSortTypeEnum.DSC));
             //searchFilterSortModelList.add(new SearchFilterSortModel("defaultAdminUserContact.type.value", SearchFilterSortTypeEnum.DSC));
             SearchFilterModel searchFilterModel = new SearchFilterModel();
-            searchFilterModel.setParameterMode("ADMIN_USER_BRIEF");
             searchFilterModel.setPage(0);
             searchFilterModel.setRows(20);
             searchFilterModel.setRestrictionList(searchFilterRestrictionModelList);
             searchFilterModel.setSortList(searchFilterSortModelList);
 
             CustomObjectMapper customObjectMapper = new CustomObjectMapper();
-            uri += "?searchFilterModel={searchFilterModel}";
+            uri += "?searchFilterModel={searchFilterModel}&parameterModeEnum={parameterModeEnum}&parameterValueList={parameterValueList}";
 
-            SearchDataModel searchDataModel = this.restTemplate.getForObject(uri, SearchDataModel.class, customObjectMapper.writeValueAsString(searchFilterModel));
+            SearchDataModel searchDataModel = this.restTemplate.getForObject(uri, SearchDataModel.class, customObjectMapper.writeValueAsString(searchFilterModel), SearchFilterParameterModeEnum.ADMIN_USER_BRIEF.toString(), new String[]{});
             System.out.println("searchDataModel:" + searchDataModel.toString());
             assertThat(searchDataModel.getPage()).isEqualTo(searchFilterModel.getPage());
         } catch (Exception ex) {
             fail(ex.toString());
         }
     }
-
 
 
     @Test
@@ -191,23 +183,23 @@ public class AdminUserControllerTest {
             Map<String, String> variableHashMap = new HashMap<String, String>();
 
             //جستجوی ادمین جهت ویرایش
-            AdminUserModel adminUserModel = this.restTemplate.getForObject(uri+ "/"+crudId, AdminUserModel.class);
+            AdminUserModel adminUserModel = this.restTemplate.getForObject(uri + "/" + crudId, AdminUserModel.class);
 
-            random=StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL,5,false);
-            CustomDate dateOfBirth=new CustomDate();
+            random = StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL, 5, false);
+            CustomDate dateOfBirth = new CustomDate();
             dateOfBirth.setYear(1399);
             dateOfBirth.setMonth(12);
             dateOfBirth.setDay(22);
 
             //ویرایش اطلاعات مدل
-            adminUserModel.setFirstName(adminUserModel.getFirstName()+ "Updated");
-            adminUserModel.setLastName(adminUserModel.getLastName()+ "Updated");
-            adminUserModel.setPassword(adminUserModel.getPassword()+ "Updated");
+            adminUserModel.setFirstName(adminUserModel.getFirstName() + "Updated");
+            adminUserModel.setLastName(adminUserModel.getLastName() + "Updated");
+            adminUserModel.setPassword(adminUserModel.getPassword() + "Updated");
             adminUserModel.setUsername("updated" + adminUserModel.getUsername());
             adminUserModel.setDateOfBirth(dateOfBirth);
             adminUserModel.setGender_id(2);
-            adminUserModel.setDefaultAdminUserContact_address(adminUserModel.getDefaultAdminUserContact_address()+ "Updated");
-            adminUserModel.getSkillList().add(new AdminUserSkillModel(null,"skill-added in update"));
+            adminUserModel.setDefaultAdminUserContact_address(adminUserModel.getDefaultAdminUserContact_address() + "Updated");
+            adminUserModel.getSkillList().add(new AdminUserSkillModel(null, "skill-added in update"));
 
             // build the request
             HttpHeaders headers = new HttpHeaders();
@@ -215,7 +207,7 @@ public class AdminUserControllerTest {
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             HttpEntity<AdminUserModel> entity = new HttpEntity<>(adminUserModel, headers);
             ResponseEntity<AdminUserModel> response = this.restTemplate.exchange(uri, HttpMethod.PUT, entity, AdminUserModel.class);
-            adminUserModel=response.getBody();
+            adminUserModel = response.getBody();
 
 
             assertThat(adminUserModel.getGender_id()).isEqualTo(2);
@@ -228,7 +220,7 @@ public class AdminUserControllerTest {
     @Order(5)
     public void delete() throws Exception {
         try {
-            String uri = "http://localhost:" + port + "/adminUser/"+crudId;
+            String uri = "http://localhost:" + port + "/adminUser/" + crudId;
             Map<String, String> variableHashMap = new HashMap<String, String>();
 
             AdminUserModel adminUserModel;
@@ -239,7 +231,7 @@ public class AdminUserControllerTest {
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             HttpEntity entity = new HttpEntity(headers);
             ResponseEntity<AdminUserModel> response = this.restTemplate.exchange(uri, HttpMethod.DELETE, entity, AdminUserModel.class);
-            adminUserModel=response.getBody();
+            adminUserModel = response.getBody();
 
 
             assertThat(adminUserModel.getId()).isEqualTo(crudId);

@@ -36,17 +36,17 @@ public class SearchFilterModel implements Serializable {
      * تعداد سطر مورد نیاز در هر صفحه
      */
     private Integer rows=Integer.MAX_VALUE;
-    /**
-     * پارامتر نوع جستجو که کلمه ای هماهنگ شده بین بک اند و فرانت اند است و بعد از دریافت توسط کنترلر در بک اند توسط توسعه دهندگان به مسیر اینترفیس جستجو تبدیل میشود
-     * Front-end sends: ADMIN_USER_BRIEF
-     * Back-end convert it to com.motaharinia.business.service.adminuser.SearchRowViewAdminUserBrief
-     */
-    private String parameterMode="";
-    /**
-     * لیست مقادیر مورد نیاز نوع جستجو
-     * مثلا میخواهیم گرید خلاصه اطلاعات ادمین یوزر را بگیریم که جنسیت آنها زن باشد و اهل تهران باشند. مقدار جنسیت و شناسه شهر به صورت هماهنگ شده بین سرور و کلاینت در این لیست از کلاینت به سرور ارسال میشود
-     */
-    private List<Object> parameterValueList = new ArrayList<>();
+//    /**
+//     * پارامتر نوع جستجو که کلمه ای هماهنگ شده بین بک اند و فرانت اند است و بعد از دریافت توسط کنترلر در بک اند توسط توسعه دهندگان به مسیر اینترفیس جستجو تبدیل میشود
+//     * Front-end sends: ADMIN_USER_BRIEF
+//     * Back-end convert it to com.motaharinia.business.service.adminuser.SearchRowViewAdminUserBrief
+//     */
+//    private String parameterMode="";
+//    /**
+//     * لیست مقادیر مورد نیاز نوع جستجو
+//     * مثلا میخواهیم گرید خلاصه اطلاعات ادمین یوزر را بگیریم که جنسیت آنها زن باشد و اهل تهران باشند. مقدار جنسیت و شناسه شهر به صورت هماهنگ شده بین سرور و کلاینت در این لیست از کلاینت به سرور ارسال میشود
+//     */
+//    private List<Object> parameterValueList = new ArrayList<>();
 
     /**
      * متد سازنده پیش فرض
@@ -104,8 +104,6 @@ public class SearchFilterModel implements Serializable {
                 ", sortList=" + sortList.stream().map(item -> item.toString()).collect(Collectors.joining("\n")) +
                 ", page=" + page +
                 ", rows=" + rows +
-                ", parameterMode='" + parameterMode + '\'' +
-                ", parameterValueList=" + parameterValueList +
                 '}';
     }
 
@@ -143,19 +141,4 @@ public class SearchFilterModel implements Serializable {
         this.rows = rows;
     }
 
-    public String getParameterMode() {
-        return parameterMode;
-    }
-
-    public void setParameterMode(String parameterMode) {
-        this.parameterMode = parameterMode;
-    }
-
-    public List<Object> getParameterValueList() {
-        return parameterValueList;
-    }
-
-    public void setParameterValueList(List<Object> parameterValueList) {
-        this.parameterValueList = parameterValueList;
-    }
 }

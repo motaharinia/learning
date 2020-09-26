@@ -40,7 +40,7 @@ import java.lang.reflect.InvocationTargetException;
  * کلاس پیاده سازی اینترفیس مدیریت ادمین ها
  */
 @Service
-@Transactional(rollbackFor=Exception.class)
+@Transactional(rollbackFor = Exception.class)
 public class AdminUserServiceImpl implements AdminUserService {
 
 
@@ -82,11 +82,11 @@ public class AdminUserServiceImpl implements AdminUserService {
      * متد سازنده
      */
     @Autowired
-    public AdminUserServiceImpl(AdminUserRepository adminUserRepository, AdminUserContactRepository adminUserContactRepository, AdminUserSkillService adminUserSkillService,EtcItemService etcItemService, AdminUserSpecification adminUserSpecification, ModelMapper modelMapper) {
+    public AdminUserServiceImpl(AdminUserRepository adminUserRepository, AdminUserContactRepository adminUserContactRepository, AdminUserSkillService adminUserSkillService, EtcItemService etcItemService, AdminUserSpecification adminUserSpecification, ModelMapper modelMapper) {
         this.adminUserRepository = adminUserRepository;
         this.adminUserContactRepository = adminUserContactRepository;
         this.adminUserSkillService = adminUserSkillService;
-        this.etcItemService=etcItemService;
+        this.etcItemService = etcItemService;
         this.adminUserSpecification = adminUserSpecification;
         this.modelMapper = modelMapper;
     }
@@ -113,7 +113,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         adminUser.setPassword(adminUserModel.getPassword());
         adminUser.setUsername(adminUserModel.getUsername());
         adminUser.setDateOfBirth(CalendarTools.getDateFromCustomDate(adminUserModel.getDateOfBirth()));
-        adminUser.setGender(etcItemService.findByIdAndCheckEntity(adminUserModel.getGender_id(), GenderEnum.class,null,true));
+        adminUser.setGender(etcItemService.findByIdAndCheckEntity(adminUserModel.getGender_id(), GenderEnum.class, null, true));
         //ثبت مهارتهای ادمین
         adminUser = adminUserSkillService.createByAdminUser(adminUser, adminUserModel.getSkillList());
 
@@ -161,7 +161,7 @@ public class AdminUserServiceImpl implements AdminUserService {
      */
     @Override
     @NotNull
-    public SearchDataModel readGrid(@NotNull SearchFilterModel searchFilterModel) throws UtilityException {
+    public SearchDataModel readGrid(@NotNull SearchFilterModel searchFilterModel, Class viewInterface) throws UtilityException {
 //        if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
 //            searchFilterModel.getRestrictionList().stream().forEach((item) -> {
 //                System.out.println("AdminUserServiceImpl.readGrid searchFilterModel.getRestrictionList() loop item.getFieldValue():" + item.getFieldValue() + " item.getFieldValue().getClass():" + item.getFieldValue().getClass());
@@ -177,7 +177,7 @@ public class AdminUserServiceImpl implements AdminUserService {
 
         Page<SearchRowViewAdminUserBrief> viewPage = adminUserRepository.findAll(adminUserSpecification, SearchRowViewAdminUserBrief.class, searchFilterModel.makePageable());
         viewPage.getContent().stream().forEach(item -> System.out.println(item.getDefaultAdminUserContact()));
-        SearchDataModel searchDataModel = new SearchDataModel(viewPage, searchFilterModel, "");
+        SearchDataModel searchDataModel = new SearchDataModel(viewPage, searchFilterModel, viewInterface, "");
         return searchDataModel;
     }
 
@@ -196,7 +196,7 @@ public class AdminUserServiceImpl implements AdminUserService {
         adminUser.setPassword(adminUserModel.getPassword());
         adminUser.setUsername(adminUserModel.getUsername());
         adminUser.setDateOfBirth(CalendarTools.getDateFromCustomDate(adminUserModel.getDateOfBirth()));
-        adminUser.setGender(etcItemService.findByIdAndCheckEntity(adminUserModel.getGender_id(), GenderEnum.class,null,true));
+        adminUser.setGender(etcItemService.findByIdAndCheckEntity(adminUserModel.getGender_id(), GenderEnum.class, null, true));
         if (ObjectUtils.isEmpty(adminUser.getDefaultAdminUserContact())) {
             AdminUserContact adminUserContact = new AdminUserContact();
             adminUserContact.setAddress(adminUserModel.getDefaultAdminUserContact_address());

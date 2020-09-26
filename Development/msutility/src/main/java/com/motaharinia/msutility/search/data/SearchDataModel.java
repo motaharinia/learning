@@ -78,9 +78,10 @@ public class SearchDataModel implements Serializable {
      *
      * @param viewPage          صفحه ای از اینتیرفیس ریپازیتوری دریافت شده از دیتابیس
      * @param searchFilterModel مدل جستجو
+     * @param viewInterface    کلاس اینترفیسی که ستونهای خروجی ستونهای داده داخل آن تعریف شده است
      * @param userData          خروجی: مدل جستجوی داده برای ارسال به کلاینت
      */
-    public SearchDataModel(@NotNull Page<?> viewPage, @NotNull SearchFilterModel searchFilterModel, @NotNull Object userData) throws UtilityException {
+    public SearchDataModel(@NotNull Page<?> viewPage, @NotNull SearchFilterModel searchFilterModel,@NotNull Class viewInterface, @NotNull Object userData) throws UtilityException {
         if (ObjectUtils.isEmpty(viewPage)) {
             throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "viewPage");
         }
@@ -99,14 +100,8 @@ public class SearchDataModel implements Serializable {
         //searchDataColModelList:
         HashMap<Integer, SearchDataColumn> indexAnnotationHashMap = new HashMap<>();
         List<SearchDataColModel> searchDataColModelList = new ArrayList<>();
-        Class searchRowViewInterface;
-        try{
-             searchRowViewInterface = Class.forName(searchFilterModel.getParameterMode());
-        }catch(Exception ex){
-            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.SEARCH_DATA_MODEL_PARAMETER_MODE_SHOULD_BE_CLASS_PATH, "parameterMode");
-        }
 
-        Set<Method> getterMethodSet1 = ReflectionUtils.getAllMethods(searchRowViewInterface, ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
+        Set<Method> getterMethodSet1 = ReflectionUtils.getAllMethods(viewInterface, ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
         getterMethodSet1.stream().forEach(getterMethod -> {
             if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(SearchDataColumn.class))) {
                 indexAnnotationHashMap.put(getterMethod.getAnnotation(SearchDataColumn.class).index(), getterMethod.getAnnotation(SearchDataColumn.class));

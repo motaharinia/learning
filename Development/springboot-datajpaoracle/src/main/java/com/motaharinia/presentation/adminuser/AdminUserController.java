@@ -3,6 +3,7 @@ package com.motaharinia.presentation.adminuser;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.motaharinia.business.service.adminuser.AdminUserService;
+import com.motaharinia.business.service.adminuser.SearchFilterParameterModeEnum;
 import com.motaharinia.business.service.adminuser.SearchRowViewAdminUserBrief;
 import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.customexception.UtilityException;
@@ -15,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -22,7 +24,7 @@ import java.util.Optional;
  * Date: 2020-06-12<br>
  * Time: 01:05:58<br>
  * Description:<br>
- *  کلاس کنترلر ادمین
+ * کلاس کنترلر ادمین
  */
 @RestController
 public class AdminUserController {
@@ -65,7 +67,7 @@ public class AdminUserController {
      * @throws UtilityException
      */
     @GetMapping("/adminUser")
-    public SearchDataModel readGrid(@RequestParam(name = "searchFilterModel") Optional<String> searchFilterModelJson) throws JsonProcessingException, UtilityException {
+    public SearchDataModel readGrid(@RequestParam(name = "searchFilterModel") Optional<String> searchFilterModelJson, @RequestParam(name = "parameterModeEnum") SearchFilterParameterModeEnum parameterModeEnum,@RequestParam(name = "parameterValueList")  List<Object> parameterValueList) throws JsonProcessingException, UtilityException, ClassNotFoundException {
         CustomObjectMapper customObjectMapper = new CustomObjectMapper();
         SearchFilterModel searchFilterModel = customObjectMapper.readValue(searchFilterModelJson.get(), SearchFilterModel.class);
         if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
@@ -74,15 +76,12 @@ public class AdminUserController {
             });
         }
 
-        switch (searchFilterModel.getParameterMode()) {
-            case "ADMIN_USER_BRIEF":
-                searchFilterModel.setParameterMode(SearchRowViewAdminUserBrief.class.getName());
-                break;
-            default:
-                searchFilterModel.setParameterMode(SearchRowViewAdminUserBrief.class.getName());
-                break;
+
+        Class viewInterface = SearchRowViewAdminUserBrief.class;
+        if (!ObjectUtils.isEmpty(parameterModeEnum)) {
+            viewInterface = Class.forName(parameterModeEnum.getValue());
         }
-        SearchDataModel searchDataModel = adminUserService.readGrid(searchFilterModel);
+        SearchDataModel searchDataModel = adminUserService.readGrid(searchFilterModel, viewInterface);
         return searchDataModel;
     }
 

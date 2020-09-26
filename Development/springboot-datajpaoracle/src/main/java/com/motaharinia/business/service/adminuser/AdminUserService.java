@@ -41,7 +41,7 @@ public interface AdminUserService {
      * @throws UtilityException
      */
     @NotNull
-    SearchDataModel readGrid(@NotNull SearchFilterModel searchFilterModel) throws UtilityException;
+    SearchDataModel readGrid(@NotNull SearchFilterModel searchFilterModel,Class viewInterface) throws UtilityException;
 
     /**
      * متد ویرایش

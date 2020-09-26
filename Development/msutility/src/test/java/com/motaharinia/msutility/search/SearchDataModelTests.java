@@ -66,7 +66,6 @@ public class SearchDataModelTests {
             searchFilterModel.setRows(10);
             searchFilterModel.setRestrictionList(searchFilterRestrictionModelList);
             searchFilterModel.setSortList(searchFilterSortModelList);
-            searchFilterModel.setParameterMode(SearchRowViewAdminUserBrief.class.getName());
 
             SearchRowViewAdminUserBriefImpl searchRowViewTest = null;
             List<SearchRowViewAdminUserBrief> viewList = new ArrayList<>();
@@ -75,7 +74,7 @@ public class SearchDataModelTests {
             Page<SearchRowViewAdminUserBrief> viewPage = new PageImpl<>(viewList);
 
 
-            SearchDataModel searchDataModel = new SearchDataModel(viewPage, searchFilterModel, "");
+            SearchDataModel searchDataModel = new SearchDataModel(viewPage, searchFilterModel,SearchRowViewAdminUserBrief.class, "");
             System.out.println("searchDataModel.toString():" + searchDataModel.toString());
 
 //            String json = mapper.writeValueAsString(searchDataModel);
