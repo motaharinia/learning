@@ -99,7 +99,14 @@ public class SearchDataModel implements Serializable {
         //searchDataColModelList:
         HashMap<Integer, SearchDataColumn> indexAnnotationHashMap = new HashMap<>();
         List<SearchDataColModel> searchDataColModelList = new ArrayList<>();
-        Set<Method> getterMethodSet1 = ReflectionUtils.getAllMethods(searchFilterModel.getSearchRowView(), ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
+        Class searchRowViewInterface;
+        try{
+             searchRowViewInterface = Class.forName(searchFilterModel.getParameterMode());
+        }catch(Exception ex){
+            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.SEARCH_DATA_MODEL_PARAMETER_MODE_SHOULD_BE_CLASS_PATH, "parameterMode");
+        }
+
+        Set<Method> getterMethodSet1 = ReflectionUtils.getAllMethods(searchRowViewInterface, ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
         getterMethodSet1.stream().forEach(getterMethod -> {
             if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(SearchDataColumn.class))) {
                 indexAnnotationHashMap.put(getterMethod.getAnnotation(SearchDataColumn.class).index(), getterMethod.getAnnotation(SearchDataColumn.class));

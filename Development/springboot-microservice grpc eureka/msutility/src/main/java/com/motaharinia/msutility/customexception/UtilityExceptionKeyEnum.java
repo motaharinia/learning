@@ -75,7 +75,10 @@ public enum UtilityExceptionKeyEnum implements  CustomExceptionKey{
      *ابزار تصویر: تصویر ورودی قابل خواندن نیست
      */
     IMAGE_ORGINAL_READ_PROBLEM("IMAGE_ORGINAL_READ_PROBLEM"),
-
+    /**
+     *مقدار داخل پارامتر مد در سرچ دیتا مدل باید مسیر یک کلاس اینترفیس ستونهای داده باشد
+     */
+    SEARCH_DATA_MODEL_PARAMETER_MODE_SHOULD_BE_CLASS_PATH("SEARCH_DATA_MODEL_PARAMETER_MODE_SHOULD_BE_CLASS_PATH"),
 
 
 

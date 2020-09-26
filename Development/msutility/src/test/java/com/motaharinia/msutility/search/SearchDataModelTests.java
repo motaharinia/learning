@@ -46,7 +46,7 @@ public class SearchDataModelTests {
 
     @Order(1)
     @Test
-    void serializeTest() {
+    void serializeTest() throws ClassNotFoundException {
         try {
             CustomDate dateOfBirth=new CustomDate();
             dateOfBirth.setYear(1399);
@@ -62,11 +62,11 @@ public class SearchDataModelTests {
             searchFilterSortModelList.add(new SearchFilterSortModel("firstName", SearchFilterSortTypeEnum.ASC));
             searchFilterSortModelList.add(new SearchFilterSortModel("lastName", SearchFilterSortTypeEnum.DSC));
             SearchFilterModel searchFilterModel = new SearchFilterModel();
-            searchFilterModel.setSearchRowView(SearchRowViewAdminUserBrief.class);
             searchFilterModel.setPage(1);
             searchFilterModel.setRows(10);
             searchFilterModel.setRestrictionList(searchFilterRestrictionModelList);
             searchFilterModel.setSortList(searchFilterSortModelList);
+            searchFilterModel.setParameterMode(SearchRowViewAdminUserBrief.class.getName());
 
             SearchRowViewAdminUserBriefImpl searchRowViewTest = null;
             List<SearchRowViewAdminUserBrief> viewList = new ArrayList<>();

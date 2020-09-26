@@ -1,8 +1,6 @@
 package com.motaharinia.msutility.search.filter;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.motaharinia.msutility.jparepository.GenericSpecification;
-import com.motaharinia.msutility.json.deserializer.JsonDeserializerClass;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -21,20 +19,15 @@ import java.util.stream.Collectors;
  * این کلاس برای جستجوی پیشرفته داده ها از کلاینت به سرور استفاده میگردد
  */
 public class SearchFilterModel implements Serializable {
-    /**
-     * نام نمای جستجو
-     */
-    private Class searchRowView;
+
     /**
      * لیستی از شرطهای جستجو
      */
     private List<SearchFilterRestrictionModel> restrictionList = new ArrayList<>();
-    ;
     /**
      * لیستی از ترتیبهای صعودی/نزولی دلخواه
      */
     private List<SearchFilterSortModel> sortList = new ArrayList<>();
-    ;
     /**
      * صفحه مورد نظر برای دریافت در حالت صفحه بندی و اسمارت رندرینگ
      */
@@ -43,15 +36,15 @@ public class SearchFilterModel implements Serializable {
      * تعداد سطر مورد نیاز در هر صفحه
      */
     private Integer rows;
-
-
     /**
-     * پارامتر نوع جستجو
+     * پارامتر نوع جستجو که کلمه ای هماهنگ شده بین بک اند و فرانت اند است و بعد از دریافت توسط کنترلر در بک اند توسط توسعه دهندگان به مسیر اینترفیس جستجو تبدیل میشود
+     * Front-end sends: ADMIN_USER_BRIEF
+     * Back-end convert it to com.motaharinia.business.service.adminuser.SearchRowViewAdminUserBrief
      */
     private String parameterMode;
-
     /**
      * لیست مقادیر مورد نیاز نوع جستجو
+     * مثلا میخواهیم گرید خلاصه اطلاعات ادمین یوزر را بگیریم که جنسیت آنها زن باشد و اهل تهران باشند. مقدار جنسیت و شناسه شهر به صورت هماهنگ شده بین سرور و کلاینت در این لیست از کلاینت به سرور ارسال میشود
      */
     private List<Object> parameterValueList;
 
@@ -107,13 +100,15 @@ public class SearchFilterModel implements Serializable {
     @Override
     public String toString() {
         return "SearchFilterModel{" +
-                "searchRowView=" + searchRowView.toString() +
                 ", restrictionList=" + restrictionList.stream().map(item -> item.toString()).collect(Collectors.joining("\n")) +
                 ", sortList=" + sortList.stream().map(item -> item.toString()).collect(Collectors.joining("\n")) +
                 ", page=" + page +
                 ", rows=" + rows +
+                ", parameterMode='" + parameterMode + '\'' +
+                ", parameterValueList=" + parameterValueList +
                 '}';
     }
+
 
     //getter-setter:
     public List<SearchFilterRestrictionModel> getRestrictionList() {
@@ -146,16 +141,6 @@ public class SearchFilterModel implements Serializable {
 
     public void setRows(Integer rows) {
         this.rows = rows;
-    }
-
-    public Class getSearchRowView() {
-        return searchRowView;
-    }
-
-    //    @JsonDeserialize(as = SearchRowView.class)
-    @JsonDeserialize(using = JsonDeserializerClass.class)
-    public void setSearchRowView(Class searchRowView) {
-        this.searchRowView = searchRowView;
     }
 
     public String getParameterMode() {
