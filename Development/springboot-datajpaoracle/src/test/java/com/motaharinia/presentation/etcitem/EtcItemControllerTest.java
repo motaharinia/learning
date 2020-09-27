@@ -15,12 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Locale;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
@@ -46,10 +45,7 @@ public class EtcItemControllerTest {
     @Autowired
     private EtcItemInitialData etcItemInitialData;
 
-
-    private static Integer crudId = 1;
-    private static String random;
-
+    private CustomObjectMapper customObjectMapper = new CustomObjectMapper();
 
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
@@ -68,15 +64,25 @@ public class EtcItemControllerTest {
     public void customComboTest() throws Exception {
         try {
             String uri = "http://localhost:" + port + "/etcItem";
+
             CustomComboFilterModel customComboFilterModel = new CustomComboFilterModel();
             customComboFilterModel.setMode(EntityParametersModeEnum.ETC_ITEM__GENDER);
             customComboFilterModel.setType(ComboTypeEnum.COMBO);
             customComboFilterModel.setEntity(EntityEnum.ETC_ITEM);
 
-            CustomObjectMapper customObjectMapper = new CustomObjectMapper();
             uri += "?customComboFilterModel={customComboFilterModel}";
-            CustomComboModel customComboModel = this.restTemplate.getForObject(uri, CustomComboModel.class, customObjectMapper.writeValueAsString(customComboFilterModel));
-            assertThat(customComboModel).isNotEqualTo(null);
+
+            // build the request
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            HttpEntity<CustomComboFilterModel> entity = new HttpEntity<>(customComboFilterModel, headers);
+            ResponseEntity<CustomComboModel> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, CustomComboModel.class, this.customObjectMapper.writeValueAsString(customComboFilterModel));
+            assertThat(response).isNotEqualTo(null);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getBody()).isNotEqualTo(null);
+            CustomComboModel customComboModel = response.getBody();
+            assertThat(customComboModel.getTotalCount()).isGreaterThan(0);
         } catch (Exception ex) {
             fail(ex.toString());
         }
@@ -88,6 +94,7 @@ public class EtcItemControllerTest {
     public void customComboAutoCompleteTest() throws Exception {
         try {
             String uri = "http://localhost:" + port + "/etcItem";
+
             CustomComboFilterModel customComboFilterModel = new CustomComboFilterModel();
             customComboFilterModel.setMode(EntityParametersModeEnum.ETC_ITEM__GENDER);
             customComboFilterModel.setType(ComboTypeEnum.AUTOCOMPLETE);
@@ -96,10 +103,19 @@ public class EtcItemControllerTest {
             customComboFilterModel.setRows(1000000);
             customComboFilterModel.setInput("F");
 
-            CustomObjectMapper customObjectMapper = new CustomObjectMapper();
             uri += "?customComboFilterModel={customComboFilterModel}";
-            CustomComboModel customComboModel = this.restTemplate.getForObject(uri, CustomComboModel.class, customObjectMapper.writeValueAsString(customComboFilterModel));
-            assertThat(customComboModel).isNotEqualTo(null);
+
+            // build the request
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            HttpEntity<CustomComboFilterModel> entity = new HttpEntity<>(customComboFilterModel, headers);
+            ResponseEntity<CustomComboModel> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, CustomComboModel.class, this.customObjectMapper.writeValueAsString(customComboFilterModel));
+            assertThat(response).isNotEqualTo(null);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getBody()).isNotEqualTo(null);
+            CustomComboModel customComboModel = response.getBody();
+            assertThat(customComboModel.getTotalCount()).isGreaterThan(0);
         } catch (Exception ex) {
             fail(ex.toString());
         }
@@ -110,6 +126,7 @@ public class EtcItemControllerTest {
     public void comboTest() throws Exception {
         try {
             String uri = "http://localhost:" + port + "/getCombo";
+
             HashMap<String, HashMap<String, Object>> post = new HashMap<>();
             HashMap<String, Object> innerPost = new HashMap<>();
 
@@ -118,10 +135,19 @@ public class EtcItemControllerTest {
             innerPost.put("value","1");
             post.put("memberGender" , innerPost);
 
-            CustomObjectMapper customObjectMapper = new CustomObjectMapper();
             uri += "?post={post}";
-            HashMap<String, ArrayList> result = this.restTemplate.getForObject(uri, HashMap.class, customObjectMapper.writeValueAsString(post));
-            assertThat(result).isNotEqualTo(null);
+
+            // build the request
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            HttpEntity entity = new HttpEntity(headers);
+            ResponseEntity<HashMap> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, HashMap.class, this.customObjectMapper.writeValueAsString(post));
+            assertThat(response).isNotEqualTo(null);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getBody()).isNotEqualTo(null);
+             HashMap<String, List<Object[]>> returnHashmap = response.getBody();
+            assertThat(returnHashmap.size()).isGreaterThan(0);
         } catch (Exception ex) {
             fail(ex.toString());
         }

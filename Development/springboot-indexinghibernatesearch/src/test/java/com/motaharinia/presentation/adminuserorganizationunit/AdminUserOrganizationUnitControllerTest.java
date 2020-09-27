@@ -11,13 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.*;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -75,10 +73,18 @@ public class AdminUserOrganizationUnitControllerTest {
             adminUserOrganizationUnitModel.setCode("OrganizationUnitCode " + random);
             adminUserOrganizationUnitModel.setParent_id(null);
 
-            adminUserOrganizationUnitModel = restTemplate.postForObject(uri, adminUserOrganizationUnitModel, AdminUserOrganizationUnitModel.class, variableHashMap);
-            System.out.println("create adminUserOrganizationUnitModel.toString():" + adminUserOrganizationUnitModel.toString());
-            crudId = adminUserOrganizationUnitModel.getId();
+            // build the request
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            HttpEntity<AdminUserOrganizationUnitModel> entity = new HttpEntity<>(adminUserOrganizationUnitModel, headers);
+            ResponseEntity<AdminUserOrganizationUnitModel> response = this.restTemplate.exchange(uri, HttpMethod.POST, entity, AdminUserOrganizationUnitModel.class);
+            assertThat(response).isNotEqualTo(null);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getBody()).isNotEqualTo(null);
+            adminUserOrganizationUnitModel=response.getBody();
             assertThat(adminUserOrganizationUnitModel.getId()).isNotEqualTo(null);
+            crudId = adminUserOrganizationUnitModel.getId();
         } catch (Exception ex) {
             fail(ex.toString());
         }
@@ -89,7 +95,6 @@ public class AdminUserOrganizationUnitControllerTest {
     public void createChild1() {
         try {
             String uri = "http://localhost:" + port + "/adminUserOrganizationUnit";
-            Map<String, String> variableHashMap = new HashMap<String, String>();
 
             random = StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL, 5, false);
 
@@ -98,8 +103,16 @@ public class AdminUserOrganizationUnitControllerTest {
             adminUserOrganizationUnitModel.setCode("OrganizationUnitCode " + random);
             adminUserOrganizationUnitModel.setParent_id(crudId);
 
-            adminUserOrganizationUnitModel = restTemplate.postForObject(uri, adminUserOrganizationUnitModel, AdminUserOrganizationUnitModel.class, variableHashMap);
-            System.out.println("create adminUserOrganizationUnitModel.toString():" + adminUserOrganizationUnitModel.toString());
+            // build the request
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            HttpEntity<AdminUserOrganizationUnitModel> entity = new HttpEntity<>(adminUserOrganizationUnitModel, headers);
+            ResponseEntity<AdminUserOrganizationUnitModel> response = this.restTemplate.exchange(uri, HttpMethod.POST, entity, AdminUserOrganizationUnitModel.class);
+            assertThat(response).isNotEqualTo(null);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getBody()).isNotEqualTo(null);
+            adminUserOrganizationUnitModel=response.getBody();
             assertThat(adminUserOrganizationUnitModel.getId()).isNotEqualTo(null);
         } catch (Exception ex) {
             fail(ex.toString());
@@ -111,7 +124,6 @@ public class AdminUserOrganizationUnitControllerTest {
     public void createChild2() {
         try {
             String uri = "http://localhost:" + port + "/adminUserOrganizationUnit";
-            Map<String, String> variableHashMap = new HashMap<String, String>();
 
             random = StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL, 5, false);
 
@@ -120,8 +132,16 @@ public class AdminUserOrganizationUnitControllerTest {
             adminUserOrganizationUnitModel.setCode("OrganizationUnitCode " + random);
             adminUserOrganizationUnitModel.setParent_id(crudId);
 
-            adminUserOrganizationUnitModel = restTemplate.postForObject(uri, adminUserOrganizationUnitModel, AdminUserOrganizationUnitModel.class, variableHashMap);
-            System.out.println("create adminUserOrganizationUnitModel.toString():" + adminUserOrganizationUnitModel.toString());
+            // build the request
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            HttpEntity<AdminUserOrganizationUnitModel> entity = new HttpEntity<>(adminUserOrganizationUnitModel, headers);
+            ResponseEntity<AdminUserOrganizationUnitModel> response = this.restTemplate.exchange(uri, HttpMethod.POST, entity, AdminUserOrganizationUnitModel.class);
+            assertThat(response).isNotEqualTo(null);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getBody()).isNotEqualTo(null);
+            adminUserOrganizationUnitModel=response.getBody();
             assertThat(adminUserOrganizationUnitModel.getId()).isNotEqualTo(null);
         } catch (Exception ex) {
             fail(ex.toString());
@@ -133,8 +153,17 @@ public class AdminUserOrganizationUnitControllerTest {
     public void tree() {
         try {
             String uri = "http://localhost:" + port + "/adminUserOrganizationUnit/0";
-            JstreeNodeModel[] jstreeNodeModelArray = restTemplate.getForObject(uri, JstreeNodeModel[].class);
-            System.out.println("tree jstreeNodeModelArray:" + System.lineSeparator() + Arrays.stream(jstreeNodeModelArray).map(item -> item.toString()).collect(Collectors.joining("," + System.lineSeparator())));
+
+            // build the request
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+            headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
+            HttpEntity entity = new HttpEntity(headers);
+            ResponseEntity<JstreeNodeModel[]> response = this.restTemplate.exchange(uri,HttpMethod.GET,entity, JstreeNodeModel[].class);
+            assertThat(response).isNotEqualTo(null);
+            assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+            assertThat(response.getBody()).isNotEqualTo(null);
+            JstreeNodeModel[] jstreeNodeModelArray=response.getBody();
             assertThat(jstreeNodeModelArray.length).isGreaterThan(0);
         } catch (Exception ex) {
             fail(ex.toString());
