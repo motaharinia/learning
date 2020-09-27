@@ -10,14 +10,15 @@ import com.motaharinia.msutility.search.filter.SearchFilterModel;
 import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
+import ir.micser.login.business.service.adminuser.AdminUserSearchViewTypeEnum;
 import ir.micser.login.business.service.adminuser.AdminUserService;
+import ir.micser.login.business.service.adminuser.AdminUserSearchViewTypeBrief;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +27,7 @@ import java.util.Optional;
  * Date: 2020-06-12<br>
  * Time: 01:05:58<br>
  * Description:<br>
- *  کلاس کنترلر ادمین
+ * کلاس کنترلر ادمین
  */
 @RestController
 @GraphQLApi
@@ -48,7 +49,7 @@ public class AdminUserController {
      */
     @GraphQLMutation(name = "create")
     @PostMapping("/v1/adminUser")
-    public AdminUserModel create(@RequestBody @Validated AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException,Exception {
+    public AdminUserModel create(@RequestBody @Validated AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException, Exception {
         return adminUserService.create(adminUserModel);
     }
 
@@ -65,23 +66,46 @@ public class AdminUserController {
     }
 
     /**
-     * متد جستجو با مدل فیلتر جستجو
+     * متد جستجو با رشته مدل فیلتر جستجو
      *
      * @param searchFilterModelJson رشته جیسون مدل فیلتر جستجو
+     * @param searchViewTypeEnum    نوع نمایش خروجی که ستونهای(فیلدهای) خروجی داخل آن تعریف شده است
+     * @param searchValueList       لیست مقادیر مورد نیاز جهت جستجو
      * @return خروجی: مدل داده جستجو
      * @throws UtilityException
      */
     @GraphQLQuery(name = "readGrid")
     @GetMapping("/v1/adminUser")
-    public SearchDataModel readGrid(@RequestParam(name = "searchFilterModel") Optional<String> searchFilterModelJson) throws JsonProcessingException, UtilityException {
+    public SearchDataModel readGrid(@RequestParam(name = "searchFilterModel") Optional<String> searchFilterModelJson, @RequestParam(name = "searchViewTypeEnum") AdminUserSearchViewTypeEnum searchViewTypeEnum, @RequestParam(name = "searchValueList") List<Object> searchValueList) throws JsonProcessingException, UtilityException, ClassNotFoundException {
         CustomObjectMapper customObjectMapper = new CustomObjectMapper();
         SearchFilterModel searchFilterModel = customObjectMapper.readValue(searchFilterModelJson.get(), SearchFilterModel.class);
-        if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
-            searchFilterModel.getRestrictionList().stream().forEach((item) -> {
-                System.out.println("AdminUserController.readGrid searchFilterModel.getRestrictionList() loop item.getFieldValue():" + item.getFieldValue() + " item.getFieldValue().getClass():" + item.getFieldValue().getClass());
-            });
+        //تعیین اینترفیس ستونهای(فیلدهای خروجی) داده
+        Class searchViewTypeInterface = AdminUserSearchViewTypeBrief.class;
+        if (!ObjectUtils.isEmpty(searchViewTypeEnum)) {
+            searchViewTypeInterface = Class.forName(searchViewTypeEnum.getValue());
         }
-        SearchDataModel searchDataModel = adminUserService.readGrid(searchFilterModel);
+        SearchDataModel searchDataModel = adminUserService.readGrid(searchFilterModel, searchViewTypeInterface, searchValueList);
+        return searchDataModel;
+    }
+
+    /**
+     * متد جستجو با مدل فیلتر جستجو
+     *
+     * @param searchFilterModel  مدل فیلتر جستجو
+     * @param searchViewTypeEnum    نوع نمایش خروجی که ستونهای(فیلدهای) خروجی داخل آن تعریف شده است
+     * @param searchValueList       لیست مقادیر مورد نیاز جهت جستجو
+     * @return خروجی: مدل داده جستجو
+     * @throws JsonProcessingException
+     * @throws UtilityException
+     */
+    @GraphQLQuery(name = "readGridByModel")
+    public SearchDataModel readGridByModel(@RequestBody @Validated SearchFilterModel searchFilterModel, @RequestParam(name = "searchViewTypeEnum") AdminUserSearchViewTypeEnum searchViewTypeEnum, @RequestParam(name = "searchValueList") List<Object> searchValueList) throws JsonProcessingException, UtilityException, ClassNotFoundException {
+        //تعیین اینترفیس ستونهای(فیلدهای خروجی) داده
+        Class searchViewTypeInterface = AdminUserSearchViewTypeBrief.class;
+        if (!ObjectUtils.isEmpty(searchViewTypeEnum)) {
+            searchViewTypeInterface = Class.forName(searchViewTypeEnum.getValue());
+        }
+        SearchDataModel searchDataModel = adminUserService.readGrid(searchFilterModel, searchViewTypeInterface, searchValueList);
         return searchDataModel;
     }
 
@@ -93,7 +117,7 @@ public class AdminUserController {
      */
     @GraphQLMutation(name = "update")
     @PutMapping("/v1/adminUser")
-    public AdminUserModel update(@RequestBody @Validated AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException,Exception {
+    public AdminUserModel update(@RequestBody @Validated AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException, Exception {
         return adminUserService.update(adminUserModel);
     }
 
@@ -110,7 +134,8 @@ public class AdminUserController {
     }
 
     /**
-     *  این متد نام را از ورودی دریافت میکند ولیستی از شناسه های جستجو شده را برمی گرداند
+     * این متد نام را از ورودی دریافت میکند ولیستی از شناسه های جستجو شده را برمی گرداند
+     *
      * @param name نام
      * @return خروجی: لیستی از شناسه های جستجو شده
      * @throws Exception این متد ممکن است اکسپشن صادر کند
@@ -123,6 +148,7 @@ public class AdminUserController {
 
     /**
      * این متد شناسه جنسیت را از ورودی دریافت میکند ولیستی از شناسه های جستجو شده را برمی گرداند
+     *
      * @param genderId شناسه جنسیت
      * @return خروجی: لیستی از شناسه های جستجو شده
      * @throws Exception این متد ممکن است اکسپشن صادر کند
@@ -132,8 +158,10 @@ public class AdminUserController {
     public List<Integer> hchFindByGender(@PathVariable Integer genderId) throws Exception {
         return adminUserService.hchFindByGender(genderId);
     }
+
     /**
      * این متد عنوان مهارت را از ورودی دریافت میکند ولیستی از شناسه های جستجو شده را برمی گرداند
+     *
      * @param skillTitle عنوان مهارت
      * @return خروجی: لیستی از شناسه های جستجو شده
      * @throws Exception این متد ممکن است اکسپشن صادر کند

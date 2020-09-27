@@ -8,6 +8,7 @@ import ir.micser.geo.presentation.cityplace.CityPlaceModel;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 
 /**
@@ -39,12 +40,14 @@ public interface CityPlaceService {
     /**
      * متد جستجو با مدل فیلتر جستجو
      *
-     * @param searchFilterModel مدل فیلتر جستجو
+     * @param searchFilterModel        مدل فیلتر جستجو
+     * @param searchViewTypeInterface        کلاس اینترفیس نوع نمایش خروجی که ستونهای(فیلدهای) خروجی داخل آن تعریف شده است
+     * @param searchValueList لیست مقادیر مورد نیاز جهت جستجو
      * @return خروجی: مدل داده جستجو
      * @throws UtilityException
      */
     @NotNull
-    SearchDataModel readGrid(@NotNull SearchFilterModel searchFilterModel) throws UtilityException;
+    SearchDataModel readGrid(@NotNull SearchFilterModel searchFilterModel, @NotNull Class searchViewTypeInterface, @NotNull List<Object> searchValueList) throws UtilityException;
 
     /**
      * متد ویرایش

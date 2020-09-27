@@ -9,7 +9,7 @@ import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.*;
 import com.motaharinia.msutility.string.RandomGenerationTypeEnum;
 import com.motaharinia.msutility.string.StringTools;
-import ir.micser.login.business.service.adminuser.SearchRowViewAdminUserBrief;
+import ir.micser.login.business.service.adminuser.AdminUserSearchViewTypeEnum;
 import ir.micser.login.persistence.orm.etcitem.EtcItemInitialData;
 import ir.micser.login.presentation.adminuserskill.AdminUserSkillModel;
 import org.junit.jupiter.api.*;
@@ -41,7 +41,7 @@ import static org.assertj.core.api.Assertions.fail;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class AdminUserControllerTest {
-    private CustomObjectMapper customObjectMapper = new CustomObjectMapper();
+
     @LocalServerPort
     private int port;
     @Autowired
@@ -52,9 +52,10 @@ public class AdminUserControllerTest {
     /**
      * شیی crud
      */
-    private static Integer crudId = 1;
+    private static Integer crudId = 8;
     private static String random;
 
+    private CustomObjectMapper customObjectMapper = new CustomObjectMapper();
 
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
@@ -111,7 +112,6 @@ public class AdminUserControllerTest {
     @Order(2)
     public void readById() {
         try {
-            crudId = 8;
             String uri = "http://localhost:" + port + "/v1/adminUser/" + crudId;
 
             // build the request
@@ -170,20 +170,19 @@ public class AdminUserControllerTest {
             searchFilterSortModelList.add(new SearchFilterSortModel("gender.value", SearchFilterSortTypeEnum.DSC));
             //searchFilterSortModelList.add(new SearchFilterSortModel("defaultAdminUserContact.type.value", SearchFilterSortTypeEnum.DSC));
             SearchFilterModel searchFilterModel = new SearchFilterModel();
-            searchFilterModel.setSearchRowView(SearchRowViewAdminUserBrief.class);
             searchFilterModel.setPage(0);
             searchFilterModel.setRows(20);
             searchFilterModel.setRestrictionList(searchFilterRestrictionModelList);
             searchFilterModel.setSortList(searchFilterSortModelList);
 
-            uri += "?searchFilterModel={searchFilterModel}";
+            uri += "?searchFilterModel={searchFilterModel}&searchViewTypeEnum={searchViewTypeEnum}&searchValueList={searchValueList}";
 
             // build the request
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             HttpEntity<SearchFilterModel> entity = new HttpEntity<>(searchFilterModel, headers);
-            ResponseEntity<SearchDataModel> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, SearchDataModel.class, this.customObjectMapper.writeValueAsString(searchFilterModel));
+            ResponseEntity<SearchDataModel> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, SearchDataModel.class, this.customObjectMapper.writeValueAsString(searchFilterModel), AdminUserSearchViewTypeEnum.ADMIN_USER_BRIEF.toString(), new String[]{});
             assertThat(response).isNotEqualTo(null);
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(response.getBody()).isNotEqualTo(null);
@@ -249,7 +248,6 @@ public class AdminUserControllerTest {
     @Order(5)
     public void delete() throws Exception {
         try {
-            crudId = 8;
             String uri = "http://localhost:" + port + "/v1/adminUser/" + crudId;
 
             // build the request

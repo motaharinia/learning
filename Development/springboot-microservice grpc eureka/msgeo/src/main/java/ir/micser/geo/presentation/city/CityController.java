@@ -8,12 +8,15 @@ import com.motaharinia.msutility.json.CustomObjectMapper;
 import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.SearchFilterModel;
 import ir.micser.geo.business.service.city.CityService;
+import ir.micser.geo.business.service.city.CitySearchViewTypeEnum;
+import ir.micser.geo.business.service.city.CitySearchViewTypeBrief;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -56,25 +59,52 @@ public class CityController {
         return cityService.readById(id);
     }
 
+
+
     /**
-     * متد جستجو با مدل فیلتر جستجو
+     * متد جستجو با رشته مدل فیلتر جستجو
      *
      * @param searchFilterModelJson رشته جیسون مدل فیلتر جستجو
+     * @param searchViewTypeEnum    نوع نمایش خروجی که ستونهای(فیلدهای) خروجی داخل آن تعریف شده است
+     * @param searchValueList       لیست مقادیر مورد نیاز جهت جستجو
      * @return خروجی: مدل داده جستجو
      * @throws UtilityException
      */
     @GetMapping("/v1/city")
-    public SearchDataModel readGrid(@RequestParam(name = "searchFilterModel") Optional<String> searchFilterModelJson) throws JsonProcessingException, UtilityException {
+    public SearchDataModel readGrid(@RequestParam(name = "searchFilterModel") Optional<String> searchFilterModelJson, @RequestParam(name = "searchViewTypeEnum") CitySearchViewTypeEnum searchViewTypeEnum, @RequestParam(name = "searchValueList") List<Object> searchValueList) throws JsonProcessingException, UtilityException, ClassNotFoundException {
         CustomObjectMapper customObjectMapper = new CustomObjectMapper();
         SearchFilterModel searchFilterModel = customObjectMapper.readValue(searchFilterModelJson.get(), SearchFilterModel.class);
-        if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
-            searchFilterModel.getRestrictionList().stream().forEach((item) -> {
-                System.out.println("CityController.readGrid searchFilterModel.getRestrictionList() loop item.getFieldValue():" + item.getFieldValue() + " item.getFieldValue().getClass():" + item.getFieldValue().getClass());
-            });
+        //تعیین اینترفیس ستونهای(فیلدهای خروجی) داده
+        Class searchViewTypeInterface = CitySearchViewTypeBrief.class;
+        if (!ObjectUtils.isEmpty(searchViewTypeEnum)) {
+            searchViewTypeInterface = Class.forName(searchViewTypeEnum.getValue());
         }
-        SearchDataModel searchDataModel = cityService.readGrid(searchFilterModel);
+        SearchDataModel searchDataModel = cityService.readGrid(searchFilterModel, searchViewTypeInterface, searchValueList);
         return searchDataModel;
     }
+
+
+    /**
+     * متد جستجو با مدل فیلتر جستجو
+     *
+     * @param searchFilterModel  مدل فیلتر جستجو
+     * @param searchViewTypeEnum    نوع نمایش خروجی که ستونهای(فیلدهای) خروجی داخل آن تعریف شده است
+     * @param searchValueList       لیست مقادیر مورد نیاز جهت جستجو
+     * @return خروجی: مدل داده جستجو
+     * @throws JsonProcessingException
+     * @throws UtilityException
+     */
+    @GetMapping("/v1/cityByModel")
+    public SearchDataModel readGridByModel(@RequestBody @Validated SearchFilterModel searchFilterModel, @RequestParam(name = "searchViewTypeEnum") CitySearchViewTypeEnum searchViewTypeEnum, @RequestParam(name = "searchValueList") List<Object> searchValueList) throws JsonProcessingException, UtilityException, ClassNotFoundException {
+        //تعیین اینترفیس ستونهای(فیلدهای خروجی) داده
+        Class searchViewTypeInterface = CitySearchViewTypeBrief.class;
+        if (!ObjectUtils.isEmpty(searchViewTypeEnum)) {
+            searchViewTypeInterface = Class.forName(searchViewTypeEnum.getValue());
+        }
+        SearchDataModel searchDataModel = cityService.readGrid(searchFilterModel, searchViewTypeInterface, searchValueList);
+        return searchDataModel;
+    }
+
 
     /**
      * متد ویرایش

@@ -63,7 +63,6 @@ public class AdminUserOrganizationUnitControllerTest {
     public void create() {
         try {
             String uri = "http://localhost:" + port + "/v1/adminUserOrganizationUnit";
-            Map<String, String> variableHashMap = new HashMap<String, String>();
 
             random = StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL, 5, false);
 
@@ -95,7 +94,6 @@ public class AdminUserOrganizationUnitControllerTest {
     public void createChild1() {
         try {
             String uri = "http://localhost:" + port + "/v1/adminUserOrganizationUnit";
-            Map<String, String> variableHashMap = new HashMap<String, String>();
 
             random = StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL, 5, false);
 
@@ -126,7 +124,6 @@ public class AdminUserOrganizationUnitControllerTest {
     public void createChild2() {
         try {
             String uri = "http://localhost:" + port + "/v1/adminUserOrganizationUnit";
-            Map<String, String> variableHashMap = new HashMap<String, String>();
 
             random = StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_ALL, 5, false);
 
@@ -146,7 +143,6 @@ public class AdminUserOrganizationUnitControllerTest {
             assertThat(response.getBody()).isNotEqualTo(null);
             adminUserOrganizationUnitModel=response.getBody();
             assertThat(adminUserOrganizationUnitModel.getId()).isNotEqualTo(null);
-
         } catch (Exception ex) {
             fail(ex.toString());
         }

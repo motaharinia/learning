@@ -15,7 +15,7 @@ import ir.micser.geo.persistence.orm.cityplace.CityPlace;
  *  اینترفیس گرید لوکیشن شهری
  */
 @JsonDeserialize(as = CityPlace.class)
-public interface SearchRowViewCityPlaceBrief extends SearchRowView {
+public interface CityPlaceSearchViewTypeBrief extends SearchRowView {
 
     @SearchDataColumn(index = 1, name = "id")
     Integer getId();

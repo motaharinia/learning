@@ -8,10 +8,8 @@ import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.*;
 import com.motaharinia.msutility.string.RandomGenerationTypeEnum;
 import com.motaharinia.msutility.string.StringTools;
-import ir.micser.geo.business.service.city.SearchRowViewCityBrief;
-import ir.micser.geo.persistence.orm.cityplace.CityPlace;
+import ir.micser.geo.business.service.cityplace.CityPlaceSearchViewTypeEnum;
 import ir.micser.geo.persistence.orm.etcitem.EtcItemInitialData;
-import ir.micser.geo.presentation.city.CityModel;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -54,7 +52,7 @@ public class CityPlaceControllerTest {
     private static Integer crudId=1;
     private static String random;
 
-
+    CustomObjectMapper customObjectMapper = new CustomObjectMapper();
 
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
@@ -64,11 +62,6 @@ public class CityPlaceControllerTest {
         Locale.setDefault(new Locale("fa"));
         etcItemInitialData.checkEtcItems();
     }
-
-
-
-
-
 
 
 
@@ -154,21 +147,21 @@ public class CityPlaceControllerTest {
             List<SearchFilterSortModel> searchFilterSortModelList = new ArrayList<>();
             searchFilterSortModelList.add(new SearchFilterSortModel("title", SearchFilterSortTypeEnum.ASC));
             SearchFilterModel searchFilterModel = new SearchFilterModel();
-            searchFilterModel.setSearchRowView(SearchRowViewCityBrief.class);
+
             searchFilterModel.setPage(0);
             searchFilterModel.setRows(20);
             searchFilterModel.setRestrictionList(searchFilterRestrictionModelList);
             searchFilterModel.setSortList(searchFilterSortModelList);
 
-            CustomObjectMapper customObjectMapper = new CustomObjectMapper();
-            uri += "?searchFilterModel={searchFilterModel}";
+
+            uri += "?searchFilterModel={searchFilterModel}&searchViewTypeEnum={searchViewTypeEnum}&searchValueList={searchValueList}";
 
             // build the request
             HttpHeaders headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             HttpEntity<SearchFilterModel> entity = new HttpEntity<>(searchFilterModel, headers);
-            ResponseEntity<SearchDataModel> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, SearchDataModel.class,customObjectMapper.writeValueAsString(searchFilterModel));
+            ResponseEntity<SearchDataModel> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, SearchDataModel.class,customObjectMapper.writeValueAsString(searchFilterModel), CityPlaceSearchViewTypeEnum.CITY_PLACE_BRIEF.toString(), new String[]{});
 
             assertThat(response).isNotEqualTo(null);
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);

@@ -2,6 +2,7 @@ package ir.micser.login.presentation.adminuser;
 
 import com.motaharinia.msutility.customfield.CustomDate;
 import com.motaharinia.msutility.customvalidation.required.Required;
+import io.leangen.graphql.annotations.GraphQLQuery;
 import ir.micser.login.presentation.adminuserskill.AdminUserSkillModel;
 
 import java.io.Serializable;
@@ -20,53 +21,62 @@ public class AdminUserModel implements Serializable {
     /**
      * شناسه
      */
+    @GraphQLQuery(name = "id", description = "شناسه")
     private Integer id;
 
     /**
      * نام کاربری
      */
+    @GraphQLQuery(name = "username", description = "نام کاربری")
     private String username;
 
     /**
      * رمز عبور
      */
+    @GraphQLQuery(name = "password", description = "رمز عبور")
     private String password;
 
     /**
      * نام
      */
+    @GraphQLQuery(name = "firstName", description = "نام")
     private String firstName;
 
     /**
      * نام خانوادگی
      */
+    @GraphQLQuery(name = "lastName", description = "نام خانوادگی")
     private String lastName;
 
     /**
      * تاریخ تولد
      */
+    @GraphQLQuery(name = "dateOfBirth", description = "نام خانوادگی")
     private CustomDate dateOfBirth;
 
 
     /**
      * جنسیت
      */
+    @GraphQLQuery(name = "gender_id", description = "جنسیت- الزامی است")
     @Required
     private Integer gender_id;
 
     /**
      * شناسه شهر اطلاعات تماس پیش فرض
      */
+    @GraphQLQuery(name = "defaultAdminUserContact_city_id", description = " شناسه شهر اطلاعات تماس پیش فرض")
     private Integer defaultAdminUserContact_city_id;
 
     /**
      * نشانی اطلاعات تماس پیش فرض
      */
+    @GraphQLQuery(name = "defaultAdminUserContact_address", description = "نشانی اطلاعات تماس پیش فرض")
     private String defaultAdminUserContact_address;
-
     /**
      * لیست مهارتها
      */
+    @GraphQLQuery(name = "skillList", description = " لیست مهارتها")
     private List<AdminUserSkillModel> skillList = new ArrayList<>();
 
     private String referenceCode;

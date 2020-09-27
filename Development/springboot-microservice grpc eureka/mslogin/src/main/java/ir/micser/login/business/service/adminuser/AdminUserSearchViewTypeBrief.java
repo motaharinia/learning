@@ -10,7 +10,7 @@ import java.util.Date;
 
 
 @JsonDeserialize(as= AdminUser.class)
-public interface SearchRowViewAdminUserBrief extends SearchRowView {
+public interface AdminUserSearchViewTypeBrief extends SearchRowView {
 
     @SearchDataColumn(index = 1,name = "id")
     Integer getId();

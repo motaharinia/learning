@@ -7,11 +7,12 @@ import com.motaharinia.msutility.entity.EntityTools;
 import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.SearchFilterModel;
 import io.grpc.stub.StreamObserver;
-import ir.micser.geo.business.service.city.SearchRowViewCityBrief;
+import ir.micser.geo.business.service.city.CitySearchViewTypeBrief;
 import ir.micser.geo.business.service.cityplace.stub.CityPlaceGrpc.*;
 import ir.micser.geo.business.service.cityplace.stub.CityPlaceMicro.*;
 import ir.micser.geo.persistence.orm.city.City;
 import ir.micser.geo.persistence.orm.city.CityRepository;
+import ir.micser.geo.persistence.orm.city.CitySpecification;
 import ir.micser.geo.persistence.orm.cityplace.CityPlace;
 import ir.micser.geo.persistence.orm.cityplace.CityPlaceRepository;
 import ir.micser.geo.persistence.orm.cityplace.CityPlaceSpecification;
@@ -31,7 +32,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.ObjectUtils;
 
 import java.lang.reflect.InvocationTargetException;
-import java.sql.Connection;
+import java.util.List;
 
 
 /**
@@ -137,33 +138,29 @@ public class CityPlaceServiceImpl extends CityPlaceImplBase implements CityPlace
         return cityPlaceModel;
     }
 
+
+
     /**
      * متد جستجو با مدل فیلتر جستجو
      *
-     * @param searchFilterModel مدل فیلتر جستجو
+     * @param searchFilterModel        مدل فیلتر جستجو
+     * @param searchViewTypeInterface        کلاس اینترفیس نوع نمایش خروجی که ستونهای(فیلدهای) خروجی داخل آن تعریف شده است
+     * @param searchValueList لیست مقادیر مورد نیاز جهت جستجو
      * @return خروجی: مدل داده جستجو
      * @throws UtilityException
      */
     @Override
     @NotNull
-    public SearchDataModel readGrid(@NotNull SearchFilterModel searchFilterModel) throws UtilityException {
-//        if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
-//            searchFilterModel.getRestrictionList().stream().forEach((item) -> {
-//                System.out.println("CityServiceImpl.readGrid searchFilterModel.getRestrictionList() loop item.getFieldValue():" + item.getFieldValue() + " item.getFieldValue().getClass():" + item.getFieldValue().getClass());
-//            });
-//        }
-        cityPlaceSpecification = (CityPlaceSpecification) searchFilterModel.makeSpecification(cityPlaceSpecification);
-//        if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
-//            searchFilterModel.getRestrictionList().stream().forEach((item) -> {
-//                citySpecification.add(item);
-//            });
-//        }
-
-
-        Page<SearchRowViewCityBrief> viewPage = cityPlaceRepository.findAll(cityPlaceSpecification, SearchRowViewCityBrief.class, searchFilterModel.makePageable());
-        SearchDataModel searchDataModel = new SearchDataModel(viewPage, searchFilterModel, "");
+    public SearchDataModel readGrid(@NotNull SearchFilterModel searchFilterModel, @NotNull Class searchViewTypeInterface, @NotNull List<Object> searchValueList) throws UtilityException {
+        //تعریف فیلترهای جستجو
+        cityPlaceSpecification = (CityPlaceSpecification) searchFilterModel.makeSpecification(new CityPlaceSpecification());
+        //جستجو بر طبق فیلترهای جستجو و کلاس اینترفیس نوع نمایش و صفحه بندی دلخواه کلاینت ساید
+        Page<CitySearchViewTypeBrief> viewPage = cityPlaceRepository.findAll(cityPlaceSpecification, searchViewTypeInterface, searchFilterModel.makePageable());
+        //تعریف خروجی بر اساس جستجو
+        SearchDataModel searchDataModel = new SearchDataModel(viewPage, searchFilterModel, searchViewTypeInterface, "");
         return searchDataModel;
     }
+
 
     /**
      * متد ویرایش
@@ -228,16 +225,7 @@ public class CityPlaceServiceImpl extends CityPlaceImplBase implements CityPlace
 
         CityPlace cityPlace = new CityPlace();
 
-
-
-
-
          TransactionTemplate transactionTemplate = new TransactionTemplate(transactionManager);
-
-
-
-
-
 
         DefaultTransactionDefinition definition = new DefaultTransactionDefinition();
         definition.setIsolationLevel(TransactionDefinition.ISOLATION_REPEATABLE_READ);
@@ -246,8 +234,6 @@ public class CityPlaceServiceImpl extends CityPlaceImplBase implements CityPlace
         TransactionStatus status = transactionManager.getTransaction(definition);
 
         try {
-
-
             cityPlace.setAdminUserId(cityPlaceModel.getAdminUserId());
             City city = cityRepository.findById(cityPlaceModel.getCity_id()).get();
             EntityTools.checkEntity(city, City.class, true);
@@ -257,14 +243,11 @@ public class CityPlaceServiceImpl extends CityPlaceImplBase implements CityPlace
             cityPlace.setTitle(cityPlaceModel.getTitle());
             cityPlace = cityPlaceRepository.save(cityPlace);
 
-
 //            entityManager.persist(payment);
 //            transactionManager.commit(status);
         } catch (Exception ex) {
             transactionManager.rollback(status);
         }
-
-
 
 //        try {
 //            cityPlaceModel = this.create(cityPlaceModel);

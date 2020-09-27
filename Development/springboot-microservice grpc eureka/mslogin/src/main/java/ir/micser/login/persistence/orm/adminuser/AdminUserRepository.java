@@ -1,7 +1,7 @@
 package ir.micser.login.persistence.orm.adminuser;
 
 
-import ir.micser.login.business.service.adminuser.SearchRowViewAdminUserBrief;
+import ir.micser.login.business.service.adminuser.AdminUserSearchViewTypeBrief;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,7 +25,7 @@ import java.util.List;
 @Repository
 public interface AdminUserRepository extends JpaRepository<AdminUser, Integer>, JpaSpecificationExecutorWithProjection<AdminUser> {
 
-    List<SearchRowViewAdminUserBrief> findAllUserByFirstName(String firstName);
+    List<AdminUserSearchViewTypeBrief> findAllUserByFirstName(String firstName);
 //    List<GridDataRowUserBriefView> readBriefView(String firstName);
 
     AdminUser findUserByUsername(String username);

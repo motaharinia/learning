@@ -21,6 +21,7 @@ import org.springframework.test.context.ActiveProfiles;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,7 +39,7 @@ import static org.assertj.core.api.Assertions.fail;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class EtcItemControllerTest {
-    private CustomObjectMapper customObjectMapper = new CustomObjectMapper();
+
     @LocalServerPort
     private int port;
     @Autowired
@@ -49,6 +50,7 @@ public class EtcItemControllerTest {
     private static Integer crudId = 1;
     private static String random;
 
+    private CustomObjectMapper customObjectMapper = new CustomObjectMapper();
 
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
@@ -65,6 +67,7 @@ public class EtcItemControllerTest {
     public void customComboTest() throws Exception {
         try {
             String uri = "http://localhost:" + port + "/v1/etcItem";
+
             CustomComboFilterModel customComboFilterModel = new CustomComboFilterModel();
             customComboFilterModel.setMode(EntityParametersModeEnum.ETC_ITEM__GENDER);
             customComboFilterModel.setType(ComboTypeEnum.COMBO);
@@ -83,7 +86,6 @@ public class EtcItemControllerTest {
             assertThat(response.getBody()).isNotEqualTo(null);
             CustomComboModel customComboModel = response.getBody();
             assertThat(customComboModel.getTotalCount()).isGreaterThan(0);
-
         } catch (Exception ex) {
             fail(ex.toString());
         }
@@ -95,6 +97,7 @@ public class EtcItemControllerTest {
     public void customComboAutoCompleteTest() throws Exception {
         try {
             String uri = "http://localhost:" + port + "/v1/etcItem";
+
             CustomComboFilterModel customComboFilterModel = new CustomComboFilterModel();
             customComboFilterModel.setMode(EntityParametersModeEnum.ETC_ITEM__GENDER);
             customComboFilterModel.setType(ComboTypeEnum.AUTOCOMPLETE);
@@ -102,6 +105,7 @@ public class EtcItemControllerTest {
             customComboFilterModel.setPage(0);
             customComboFilterModel.setRows(1000000);
             customComboFilterModel.setInput("F");
+
             uri += "?customComboFilterModel={customComboFilterModel}";
 
             // build the request
@@ -115,7 +119,6 @@ public class EtcItemControllerTest {
             assertThat(response.getBody()).isNotEqualTo(null);
             CustomComboModel customComboModel = response.getBody();
             assertThat(customComboModel.getTotalCount()).isGreaterThan(0);
-
         } catch (Exception ex) {
             fail(ex.toString());
         }
@@ -141,12 +144,12 @@ public class EtcItemControllerTest {
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
             HttpEntity entity = new HttpEntity(headers);
-            ResponseEntity<Object[]> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, Object[].class, this.customObjectMapper.writeValueAsString(post));
+            ResponseEntity<HashMap> response = this.restTemplate.exchange(uri, HttpMethod.GET, entity, HashMap.class, this.customObjectMapper.writeValueAsString(post));
             assertThat(response).isNotEqualTo(null);
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(response.getBody()).isNotEqualTo(null);
-            Object[] listArray = response.getBody();
-            assertThat(listArray.length).isGreaterThan(0);
+            HashMap<String, List<Object[]>> returnHashmap = response.getBody();
+            assertThat(returnHashmap.size()).isGreaterThan(0);
         } catch (Exception ex) {
             fail(ex.toString());
         }

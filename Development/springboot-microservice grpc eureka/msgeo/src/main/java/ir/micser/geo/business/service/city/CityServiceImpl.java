@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.List;
 
 
 /**
@@ -113,31 +114,25 @@ public class CityServiceImpl extends CityImplBase implements CityService {
         return cityModel;
     }
 
+
     /**
      * متد جستجو با مدل فیلتر جستجو
      *
-     * @param searchFilterModel مدل فیلتر جستجو
+     * @param searchFilterModel        مدل فیلتر جستجو
+     * @param searchViewTypeInterface        کلاس اینترفیس نوع نمایش خروجی که ستونهای(فیلدهای) خروجی داخل آن تعریف شده است
+     * @param searchValueList لیست مقادیر مورد نیاز جهت جستجو
      * @return خروجی: مدل داده جستجو
      * @throws UtilityException
      */
     @Override
     @NotNull
-    public SearchDataModel readGrid(@NotNull SearchFilterModel searchFilterModel) throws UtilityException {
-//        if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
-//            searchFilterModel.getRestrictionList().stream().forEach((item) -> {
-//                System.out.println("CityServiceImpl.readGrid searchFilterModel.getRestrictionList() loop item.getFieldValue():" + item.getFieldValue() + " item.getFieldValue().getClass():" + item.getFieldValue().getClass());
-//            });
-//        }
-        citySpecification = (CitySpecification) searchFilterModel.makeSpecification(citySpecification);
-//        if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
-//            searchFilterModel.getRestrictionList().stream().forEach((item) -> {
-//                citySpecification.add(item);
-//            });
-//        }
-
-
-        Page<SearchRowViewCityBrief> viewPage = cityRepository.findAll(citySpecification, SearchRowViewCityBrief.class, searchFilterModel.makePageable());
-        SearchDataModel searchDataModel = new SearchDataModel(viewPage, searchFilterModel, "");
+    public SearchDataModel readGrid(@NotNull SearchFilterModel searchFilterModel, @NotNull Class searchViewTypeInterface, @NotNull List<Object> searchValueList) throws UtilityException {
+        //تعریف فیلترهای جستجو
+        citySpecification = (CitySpecification) searchFilterModel.makeSpecification(new CitySpecification());
+        //جستجو بر طبق فیلترهای جستجو و کلاس اینترفیس نوع نمایش و صفحه بندی دلخواه کلاینت ساید
+        Page<CitySearchViewTypeBrief> viewPage = cityRepository.findAll(citySpecification, searchViewTypeInterface, searchFilterModel.makePageable());
+        //تعریف خروجی بر اساس جستجو
+        SearchDataModel searchDataModel = new SearchDataModel(viewPage, searchFilterModel, searchViewTypeInterface, "");
         return searchDataModel;
     }
 

@@ -198,28 +198,21 @@ public class AdminUserServiceImpl implements AdminUserService {
     /**
      * متد جستجو با مدل فیلتر جستجو
      *
-     * @param searchFilterModel مدل فیلتر جستجو
+     * @param searchFilterModel        مدل فیلتر جستجو
+     * @param searchViewTypeInterface        کلاس اینترفیس نوع نمایش خروجی که ستونهای(فیلدهای) خروجی داخل آن تعریف شده است
+     * @param searchValueList لیست مقادیر مورد نیاز جهت جستجو
      * @return خروجی: مدل داده جستجو
      * @throws UtilityException
      */
     @Override
     @NotNull
-    public SearchDataModel readGrid(@NotNull SearchFilterModel searchFilterModel) throws UtilityException {
-//        if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
-//            searchFilterModel.getRestrictionList().stream().forEach((item) -> {
-//                System.out.println("AdminUserServiceImpl.readGrid searchFilterModel.getRestrictionList() loop item.getFieldValue():" + item.getFieldValue() + " item.getFieldValue().getClass():" + item.getFieldValue().getClass());
-//            });
-//        }
-        adminUserSpecification = (AdminUserSpecification) searchFilterModel.makeSpecification(adminUserSpecification);
-//        if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
-//            searchFilterModel.getRestrictionList().stream().forEach((item) -> {
-//                adminUserSpecification.add(item);
-//            });
-//        }
-
-
-        Page<SearchRowViewAdminUserBrief> viewPage = adminUserRepository.findAll(adminUserSpecification, SearchRowViewAdminUserBrief.class, searchFilterModel.makePageable());
-        SearchDataModel searchDataModel = new SearchDataModel(viewPage, searchFilterModel, "");
+    public SearchDataModel readGrid(@NotNull SearchFilterModel searchFilterModel, @NotNull Class searchViewTypeInterface, @NotNull List<Object> searchValueList) throws UtilityException {
+        //تعریف فیلترهای جستجو
+        adminUserSpecification = (AdminUserSpecification) searchFilterModel.makeSpecification(new AdminUserSpecification());
+        //جستجو بر طبق فیلترهای جستجو و کلاس اینترفیس نوع نمایش و صفحه بندی دلخواه کلاینت ساید
+        Page<AdminUserSearchViewTypeBrief> viewPage = adminUserRepository.findAll(adminUserSpecification, searchViewTypeInterface, searchFilterModel.makePageable());
+        //تعریف خروجی بر اساس جستجو
+        SearchDataModel searchDataModel = new SearchDataModel(viewPage, searchFilterModel, searchViewTypeInterface, "");
         return searchDataModel;
     }
 

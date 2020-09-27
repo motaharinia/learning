@@ -76,12 +76,12 @@ public class SearchDataModel implements Serializable {
     /**
      * متد سازنده مدل جستجوی داده که صفحه ای از اینتیرفیس ریپازیتوری دریافت شده از دیتابیس و مدل جستجو و اطلاعات اضافی را از ورودی دریافت میکند و مدل جستجوی داده را طبق آنها برای ارسال به کلاینت می سازد
      *
-     * @param viewPage          صفحه ای از اینتیرفیس ریپازیتوری دریافت شده از دیتابیس
-     * @param searchFilterModel مدل جستجو
-     * @param viewInterface    کلاس اینترفیسی که ستونهای خروجی ستونهای داده داخل آن تعریف شده است
-     * @param userData          خروجی: مدل جستجوی داده برای ارسال به کلاینت
+     * @param viewPage                صفحه ای از اینتیرفیس ریپازیتوری دریافت شده از دیتابیس
+     * @param searchFilterModel       مدل جستجو
+     * @param searchViewTypeInterface کلاس اینترفیس نوع نمایش خروجی که ستونهای(فیلدهای) خروجی داخل آن تعریف شده است
+     * @param userData                خروجی: مدل جستجوی داده برای ارسال به کلاینت
      */
-    public SearchDataModel(@NotNull Page<?> viewPage, @NotNull SearchFilterModel searchFilterModel,@NotNull Class viewInterface, @NotNull Object userData) throws UtilityException {
+    public SearchDataModel(@NotNull Page<?> viewPage, @NotNull SearchFilterModel searchFilterModel, @NotNull Class searchViewTypeInterface, @NotNull Object userData) throws UtilityException {
         if (ObjectUtils.isEmpty(viewPage)) {
             throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "viewPage");
         }
@@ -101,7 +101,7 @@ public class SearchDataModel implements Serializable {
         HashMap<Integer, SearchDataColumn> indexAnnotationHashMap = new HashMap<>();
         List<SearchDataColModel> searchDataColModelList = new ArrayList<>();
 
-        Set<Method> getterMethodSet1 = ReflectionUtils.getAllMethods(viewInterface, ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
+        Set<Method> getterMethodSet1 = ReflectionUtils.getAllMethods(searchViewTypeInterface, ReflectionUtils.withModifier(Modifier.PUBLIC), ReflectionUtils.withPrefix("get"));
         getterMethodSet1.stream().forEach(getterMethod -> {
             if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(SearchDataColumn.class))) {
                 indexAnnotationHashMap.put(getterMethod.getAnnotation(SearchDataColumn.class).index(), getterMethod.getAnnotation(SearchDataColumn.class));
@@ -171,7 +171,7 @@ public class SearchDataModel implements Serializable {
         getterMethodSet.stream().forEach(getterMethod -> {
             try {
                 if (!ObjectUtils.isEmpty(getterMethod.getAnnotation(SearchDataColumn.class))) {
-                    if (getterMethod.getReturnType().getName().startsWith("java.lang")||getterMethod.getReturnType().getName().startsWith("java.util.Date")) {
+                    if (getterMethod.getReturnType().getName().startsWith("java.lang") || getterMethod.getReturnType().getName().startsWith("java.util.Date")) {
                         indexMethodHashMap.put(getterMethod.getAnnotation(SearchDataColumn.class).index(), getterMethod);
                         indexObjectHashMap.put(getterMethod.getAnnotation(SearchDataColumn.class).index(), object);
                     } else {
@@ -191,9 +191,9 @@ public class SearchDataModel implements Serializable {
         indexMethodHashMap.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(entry -> {
             try {
                 entry.getValue().setAccessible(true);
-                if(ObjectUtils.isEmpty(indexObjectHashMap.get(entry.getKey()))){
+                if (ObjectUtils.isEmpty(indexObjectHashMap.get(entry.getKey()))) {
                     rowCellList.add("");
-                }else{
+                } else {
                     rowCellList.add(entry.getValue().invoke(indexObjectHashMap.get(entry.getKey())));
                 }
 
@@ -299,7 +299,7 @@ public class SearchDataModel implements Serializable {
         return "SearchDataModel{" +
                 "page=" + page +
                 ", records=" + records +
-                ", searchDataRowModelList=[" +System.lineSeparator()+ searchDataRowModelList.stream().map(item ->item.toString() ).collect(Collectors.joining("," + System.lineSeparator() )) +System.lineSeparator()+"]" +
+                ", searchDataRowModelList=[" + System.lineSeparator() + searchDataRowModelList.stream().map(item -> item.toString()).collect(Collectors.joining("," + System.lineSeparator())) + System.lineSeparator() + "]" +
                 ", total=" + total +
                 ", userData=" + userData +
                 '}';

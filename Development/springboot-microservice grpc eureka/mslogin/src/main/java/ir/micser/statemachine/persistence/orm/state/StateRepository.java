@@ -1,15 +1,9 @@
 package ir.micser.statemachine.persistence.orm.state;
 
 
-import ir.micser.login.business.service.adminuser.SearchRowViewAdminUserBrief;
-import ir.micser.login.persistence.orm.adminuser.AdminUser;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import th.co.geniustree.springdata.jpa.repository.JpaSpecificationExecutorWithProjection;
-
-import java.util.List;
 
 //https://docs.spring.io/spring-data/jpa/docs/1.5.0.RELEASE/reference/html/jpa.repositories.html
 //https://attacomsian.com/blog/spring-data-jpa-specifications
