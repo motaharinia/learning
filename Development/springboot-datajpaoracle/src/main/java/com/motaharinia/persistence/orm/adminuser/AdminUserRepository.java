@@ -1,6 +1,6 @@
 package com.motaharinia.persistence.orm.adminuser;
 
-import com.motaharinia.business.service.adminuser.SearchRowViewAdminUserBrief;
+import com.motaharinia.business.service.adminuser.AdminUserSearchViewTypeBrief;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -24,7 +24,7 @@ import java.util.List;
 @Repository
 public interface AdminUserRepository extends JpaRepository<AdminUser, Integer>, JpaSpecificationExecutorWithProjection<AdminUser> {
 
-    List<SearchRowViewAdminUserBrief> findAllUserByFirstName(String firstName);
+    List<AdminUserSearchViewTypeBrief> findAllUserByFirstName(String firstName);
 //    List<GridDataRowUserBriefView> readBriefView(String firstName);
 
 //    User findUserByUsername(String username);

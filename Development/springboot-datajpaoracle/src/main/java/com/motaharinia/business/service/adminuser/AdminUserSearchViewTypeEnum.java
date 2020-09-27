@@ -8,16 +8,16 @@ package com.motaharinia.business.service.adminuser;
  *     مقادیر ثابت نوع جستجو<br>
  * مقادیر ثابت نوع جستجوی ماژولهای دیگر از این کلاس اکستند میشوند
  */
-public enum SearchFilterParameterModeEnum {
+public enum AdminUserSearchViewTypeEnum {
     /**
-     *نوع جستجوی عمومی<br>
+     *نوع جستجوی خلاصه<br>
      */
-    ADMIN_USER_BRIEF(SearchRowViewAdminUserBrief.class.getName()),
+    ADMIN_USER_BRIEF(AdminUserSearchViewTypeBrief.class.getName()),
     ;
 
     private final String value;
 
-     SearchFilterParameterModeEnum(String value) {
+     AdminUserSearchViewTypeEnum(String value) {
         this.value = value;
     }
 

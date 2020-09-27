@@ -1,7 +1,7 @@
 package com.motaharinia.presentation.adminuser;
 
 
-import com.motaharinia.business.service.adminuser.SearchRowViewAdminUserBrief;
+import com.motaharinia.business.service.adminuser.AdminUserSearchViewTypeBrief;
 import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.customfield.CustomDate;
@@ -164,7 +164,7 @@ public class AdminUserControllerTest {
             searchFilterSortModelList.add(new SearchFilterSortModel("gender.value", SearchFilterSortTypeEnum.DSC));
             //searchFilterSortModelList.add(new SearchFilterSortModel("defaultAdminUserContact.type.value", SearchFilterSortTypeEnum.DSC));
             SearchFilterModel searchFilterModel = new SearchFilterModel();
-            searchFilterModel.setSearchRowView(SearchRowViewAdminUserBrief.class);
+            searchFilterModel.setSearchRowView(AdminUserSearchViewTypeBrief.class);
             searchFilterModel.setPage(0);
             searchFilterModel.setRows(20);
             searchFilterModel.setRestrictionList(searchFilterRestrictionModelList);

@@ -2,8 +2,7 @@ package com.motaharinia.presentation.adminuser;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.motaharinia.business.service.adminuser.SearchFilterParameterModeEnum;
-import com.motaharinia.business.service.adminuser.SearchRowViewAdminUserBrief;
+import com.motaharinia.business.service.adminuser.AdminUserSearchViewTypeEnum;
 import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.customfield.CustomDate;
@@ -164,9 +163,9 @@ public class AdminUserControllerTest {
             searchFilterModel.setSortList(searchFilterSortModelList);
 
             CustomObjectMapper customObjectMapper = new CustomObjectMapper();
-            uri += "?searchFilterModel={searchFilterModel}&parameterModeEnum={parameterModeEnum}&parameterValueList={parameterValueList}";
+            uri += "?searchFilterModel={searchFilterModel}&searchViewTypeEnum={searchViewTypeEnum}&searchValueList={searchValueList}";
 
-            SearchDataModel searchDataModel = this.restTemplate.getForObject(uri, SearchDataModel.class, customObjectMapper.writeValueAsString(searchFilterModel), SearchFilterParameterModeEnum.ADMIN_USER_BRIEF.toString(), new String[]{});
+            SearchDataModel searchDataModel = this.restTemplate.getForObject(uri, SearchDataModel.class, customObjectMapper.writeValueAsString(searchFilterModel), AdminUserSearchViewTypeEnum.ADMIN_USER_BRIEF.toString(), new String[]{});
             System.out.println("searchDataModel:" + searchDataModel.toString());
             assertThat(searchDataModel.getPage()).isEqualTo(searchFilterModel.getPage());
         } catch (Exception ex) {

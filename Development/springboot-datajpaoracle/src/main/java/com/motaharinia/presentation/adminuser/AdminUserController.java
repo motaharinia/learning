@@ -3,9 +3,8 @@ package com.motaharinia.presentation.adminuser;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.motaharinia.business.service.adminuser.AdminUserService;
-import com.motaharinia.business.service.adminuser.SearchFilterParameterModeEnum;
-import com.motaharinia.business.service.adminuser.SearchRowViewAdminUserBrief;
-import com.motaharinia.msutility.customexception.BusinessException;
+import com.motaharinia.business.service.adminuser.AdminUserSearchViewTypeEnum;
+import com.motaharinia.business.service.adminuser.AdminUserSearchViewTypeBrief;
 import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.json.CustomObjectMapper;
 import com.motaharinia.msutility.search.data.SearchDataModel;
@@ -15,7 +14,6 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,25 +61,21 @@ public class AdminUserController {
      * متد جستجو با مدل فیلتر جستجو
      *
      * @param searchFilterModelJson رشته جیسون مدل فیلتر جستجو
+     * @param searchViewTypeEnum     نوع نمایش خروجی که ستونهای(فیلدهای) خروجی داخل آن تعریف شده است
+     * @param searchValueList     لیست مقادیر مورد نیاز جهت جستجو
      * @return خروجی: مدل داده جستجو
      * @throws UtilityException
      */
     @GetMapping("/adminUser")
-    public SearchDataModel readGrid(@RequestParam(name = "searchFilterModel") Optional<String> searchFilterModelJson, @RequestParam(name = "parameterModeEnum") SearchFilterParameterModeEnum parameterModeEnum,@RequestParam(name = "parameterValueList")  List<Object> parameterValueList) throws JsonProcessingException, UtilityException, ClassNotFoundException {
+    public SearchDataModel readGrid(@RequestParam(name = "searchFilterModel") Optional<String> searchFilterModelJson, @RequestParam(name = "searchViewTypeEnum") AdminUserSearchViewTypeEnum searchViewTypeEnum, @RequestParam(name = "searchValueList") List<Object> searchValueList) throws JsonProcessingException, UtilityException, ClassNotFoundException {
         CustomObjectMapper customObjectMapper = new CustomObjectMapper();
         SearchFilterModel searchFilterModel = customObjectMapper.readValue(searchFilterModelJson.get(), SearchFilterModel.class);
-        if (!ObjectUtils.isEmpty(searchFilterModel.getRestrictionList())) {
-            searchFilterModel.getRestrictionList().stream().forEach((item) -> {
-                System.out.println("AdminUserController.readGrid searchFilterModel.getRestrictionList() loop item.getFieldValue():" + item.getFieldValue() + " item.getFieldValue().getClass():" + item.getFieldValue().getClass());
-            });
+        //تعیین اینترفیس ستونهای(فیلدهای خروجی) داده
+        Class searchViewTypeInterface = AdminUserSearchViewTypeBrief.class;
+        if (!ObjectUtils.isEmpty(searchViewTypeEnum)) {
+            searchViewTypeInterface = Class.forName(searchViewTypeEnum.getValue());
         }
-
-
-        Class viewInterface = SearchRowViewAdminUserBrief.class;
-        if (!ObjectUtils.isEmpty(parameterModeEnum)) {
-            viewInterface = Class.forName(parameterModeEnum.getValue());
-        }
-        SearchDataModel searchDataModel = adminUserService.readGrid(searchFilterModel, viewInterface);
+        SearchDataModel searchDataModel = adminUserService.readGrid(searchFilterModel, searchViewTypeInterface, searchValueList);
         return searchDataModel;
     }
 
