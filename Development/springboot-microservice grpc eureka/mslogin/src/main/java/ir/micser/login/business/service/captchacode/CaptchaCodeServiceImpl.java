@@ -1,12 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ir.micser.login.business.service.captchacode;
 
-
-import com.motaharinia.msutility.captcha.Captcha;
+import com.motaharinia.msutility.captcha.CaptchaConfigModel;
+import com.motaharinia.msutility.captcha.CaptchaTools;
 import com.motaharinia.msutility.customexception.BusinessException;
 import com.motaharinia.msutility.string.RandomGenerationTypeEnum;
 import com.motaharinia.msutility.string.StringTools;
@@ -58,14 +53,13 @@ public class CaptchaCodeServiceImpl implements CaptchaCodeService {
             throw new BusinessException(CaptchaCode.class, CaptchaCodeBusinessExceptionKeyEnum.CAPTCHA_CODE_REFERENCE_IS_NULL, "referenceId and referenceUsername is empty");
         }
 
-        Captcha captcha = new Captcha();
         CaptchaCodeModel captchaCodeModel = new CaptchaCodeModel();
         //ساخت کلید و مقدار کپچا
         captchaCodeModel.setCaptchaKey(StringTools.generateRandomString(RandomGenerationTypeEnum.NUMBER, 6, false));
         captchaCodeModel.setCaptchaValue(StringTools.generateRandomString(RandomGenerationTypeEnum.CHARACTER_NUMBER, 6, false));
 
         //ساخت تصویر کپچا
-        BufferedImage bufferedImage = captcha.generateCaptcha(captchaCodeModel.getCaptchaValue(), BufferedImage.TYPE_INT_RGB);
+        BufferedImage bufferedImage = CaptchaTools.generateCaptcha(new CaptchaConfigModel(), captchaCodeModel.getCaptchaValue(), BufferedImage.TYPE_INT_RGB);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(bufferedImage, "JPG", baos);
         baos.flush();
