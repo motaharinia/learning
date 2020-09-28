@@ -7,6 +7,7 @@ import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.json.CustomObjectMapper;
 import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.SearchFilterModel;
+import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
@@ -19,6 +20,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -84,6 +86,11 @@ public class AdminUserController {
         if (!ObjectUtils.isEmpty(searchViewTypeEnum)) {
             searchViewTypeInterface = Class.forName(searchViewTypeEnum.getValue());
         }
+        //در صورت نال بودن باید new شود
+        if(ObjectUtils.isEmpty(searchValueList)){
+            searchValueList = new ArrayList<>();
+        }
+
         SearchDataModel searchDataModel = adminUserService.readGrid(searchFilterModel, searchViewTypeInterface, searchValueList);
         return searchDataModel;
     }
@@ -99,12 +106,19 @@ public class AdminUserController {
      * @throws UtilityException
      */
     @GraphQLQuery(name = "readGridByModel")
-    public SearchDataModel readGridByModel(@RequestBody @Validated SearchFilterModel searchFilterModel, @RequestParam(name = "searchViewTypeEnum") AdminUserSearchViewTypeEnum searchViewTypeEnum, @RequestParam(name = "searchValueList") List<Object> searchValueList) throws JsonProcessingException, UtilityException, ClassNotFoundException {
+    public SearchDataModel readGridByModel(@Validated @RequestParam(name = "searchFilterModel") SearchFilterModel searchFilterModel,
+                                           @RequestParam(name = "searchViewTypeEnum") AdminUserSearchViewTypeEnum searchViewTypeEnum,
+                                           @RequestParam(name = "searchValueList" , defaultValue =""  , required = false) List<Object> searchValueList) throws JsonProcessingException, UtilityException, ClassNotFoundException {
         //تعیین اینترفیس ستونهای(فیلدهای خروجی) داده
         Class searchViewTypeInterface = AdminUserSearchViewTypeBrief.class;
         if (!ObjectUtils.isEmpty(searchViewTypeEnum)) {
             searchViewTypeInterface = Class.forName(searchViewTypeEnum.getValue());
         }
+        //در صورت نال بودن باید new شود
+        if(ObjectUtils.isEmpty(searchValueList)){
+            searchValueList = new ArrayList<>();
+        }
+
         SearchDataModel searchDataModel = adminUserService.readGrid(searchFilterModel, searchViewTypeInterface, searchValueList);
         return searchDataModel;
     }

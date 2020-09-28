@@ -16,6 +16,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -79,6 +80,11 @@ public class CityController {
         if (!ObjectUtils.isEmpty(searchViewTypeEnum)) {
             searchViewTypeInterface = Class.forName(searchViewTypeEnum.getValue());
         }
+        //در صورت نال بودن باید new شود
+        if(ObjectUtils.isEmpty(searchValueList)){
+            searchValueList = new ArrayList<>();
+        }
+
         SearchDataModel searchDataModel = cityService.readGrid(searchFilterModel, searchViewTypeInterface, searchValueList);
         return searchDataModel;
     }
@@ -101,6 +107,11 @@ public class CityController {
         if (!ObjectUtils.isEmpty(searchViewTypeEnum)) {
             searchViewTypeInterface = Class.forName(searchViewTypeEnum.getValue());
         }
+        //در صورت نال بودن باید new شود
+        if(ObjectUtils.isEmpty(searchValueList)){
+            searchValueList = new ArrayList<>();
+        }
+
         SearchDataModel searchDataModel = cityService.readGrid(searchFilterModel, searchViewTypeInterface, searchValueList);
         return searchDataModel;
     }
