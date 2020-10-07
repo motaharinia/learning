@@ -26,8 +26,6 @@ import static org.assertj.core.api.Assertions.fail;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SearchDataModelTests {
 
-//    private final CustomObjectMapper mapper = new CustomObjectMapper();
-
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
      */
