@@ -8,10 +8,12 @@ import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.customfield.CustomDate;
 import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.SearchFilterModel;
+import ir.micser.config.graphql.GraphQLCustomException;
 import ir.micser.geo.business.service.city.stub.CityGrpc.*;
 import ir.micser.geo.business.service.city.stub.CityMicro.*;
 import ir.micser.geo.business.service.cityplace.stub.CityPlaceGrpc.*;
 import ir.micser.geo.business.service.cityplace.stub.CityPlaceMicro.*;
+import ir.micser.login.business.service.BusinessExceptionEnum;
 import ir.micser.login.business.service.adminuserskill.AdminUserSkillService;
 import ir.micser.login.business.service.authentication.PasswordEncoderGenerator;
 import ir.micser.login.business.service.etcitem.EtcItemService;
@@ -122,6 +124,10 @@ public class AdminUserServiceImpl implements AdminUserService {
     @NotNull
     public AdminUserModel create(@NotNull AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException,Exception {
 
+        if(adminUserModel.getUsername().equalsIgnoreCase("eng.motahari@gmail.com")){
+            throw new GraphQLCustomException(BusinessExceptionEnum.DUPLICATE_EMAIL, "sample description");
+        }
+
         //بررسی شناسه شهر
         ReadByIdRequestModel readByIdRequestModel =  ReadByIdRequestModel.newBuilder().setId(adminUserModel.getDefaultAdminUserContact_city_id()).build();
         final ReadByIdResponseModel cityReadOneResponse= this.cityStub.grpcReadById(readByIdRequestModel);
@@ -138,7 +144,9 @@ public class AdminUserServiceImpl implements AdminUserService {
         adminUser.setLastName(adminUserModel.getLastName());
         adminUser.setPassword(PasswordEncoderGenerator.generate(adminUserModel.getPassword()));
         adminUser.setUsername(adminUserModel.getUsername());
-        adminUser.setDateOfBirth(CalendarTools.getDateFromCustomDate(adminUserModel.getDateOfBirth()));
+        if (!ObjectUtils.isEmpty(adminUserModel.getDateOfBirth())) {
+            adminUser.setDateOfBirth(CalendarTools.getDateFromCustomDate(adminUserModel.getDateOfBirth()));
+        }
         adminUser.setGender(etcItemService.findByIdAndCheckEntity(adminUserModel.getGender_id(), GenderEnum.class,null,true));
         //ثبت مهارتهای ادمین
         adminUser = adminUserSkillService.createByAdminUser(adminUser, adminUserModel.getSkillList());
@@ -166,6 +174,40 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     /**
+     * متد ویرایش
+     *
+     * @param adminUserModel مدل ویرایش
+     * @return خروجی: مدل ویرایش شده
+     */
+    @CacheEvict(value = "AdminUser", key = "#adminUserModel.id")
+    @Override
+    @NotNull
+    public AdminUserModel update(@NotNull AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException,Exception {
+        AdminUser adminUser = adminUserRepository.findById(adminUserModel.getId()).get();
+        adminUser.setFirstName(adminUserModel.getFirstName());
+        adminUser.setLastName(adminUserModel.getLastName());
+        adminUser.setPassword(PasswordEncoderGenerator.generate(adminUserModel.getPassword()));
+        adminUser.setUsername(adminUserModel.getUsername());
+        if (!ObjectUtils.isEmpty(adminUserModel.getDateOfBirth())) {
+            adminUser.setDateOfBirth(CalendarTools.getDateFromCustomDate(adminUserModel.getDateOfBirth()));
+        }
+        adminUser.setGender(etcItemService.findByIdAndCheckEntity(adminUserModel.getGender_id(), GenderEnum.class,null,true));
+        if (ObjectUtils.isEmpty(adminUser.getDefaultAdminUserContact())) {
+            AdminUserContact adminUserContact = new AdminUserContact();
+            adminUserContact.setAddress(adminUserModel.getDefaultAdminUserContact_address());
+            adminUserContact = adminUserContactRepository.save(adminUserContact);
+            adminUser.setDefaultAdminUserContact(adminUserContact);
+        } else {
+            adminUser.getDefaultAdminUserContact().setAddress(adminUserModel.getDefaultAdminUserContact_address());
+        }
+
+        //ویرایش مهارتهای ادمین
+        adminUser = adminUserSkillService.updateByAdminUser(adminUser, adminUserModel.getSkillList());
+        adminUserRepository.save(adminUser);
+        return adminUserModel;
+    }
+
+    /**
      * متد جستجوی با شناسه
      *
      * @param id شناسه
@@ -182,7 +224,9 @@ public class AdminUserServiceImpl implements AdminUserService {
         adminUserModel.setFirstName(adminUser.getFirstName());
         adminUserModel.setLastName(adminUser.getLastName());
         adminUserModel.setPassword(adminUser.getPassword());
-        adminUserModel.setDateOfBirth(new CustomDate(adminUser.getDateOfBirth()));
+        if (!ObjectUtils.isEmpty(adminUser.getDateOfBirth())) {
+            adminUserModel.setDateOfBirth(new CustomDate(adminUser.getDateOfBirth()));
+        }
         if (!ObjectUtils.isEmpty(adminUser.getDefaultAdminUserContact())) {
             adminUserModel.setDefaultAdminUserContact_address(adminUser.getDefaultAdminUserContact().getAddress());
         }
@@ -214,37 +258,6 @@ public class AdminUserServiceImpl implements AdminUserService {
         //تعریف خروجی بر اساس جستجو
         SearchDataModel searchDataModel = new SearchDataModel(viewPage, searchFilterModel, searchViewTypeInterface, "");
         return searchDataModel;
-    }
-
-    /**
-     * متد ویرایش
-     *
-     * @param adminUserModel مدل ویرایش
-     * @return خروجی: مدل ویرایش شده
-     */
-    @Override
-    @NotNull
-    public AdminUserModel update(@NotNull AdminUserModel adminUserModel) throws UtilityException, IllegalAccessException, BusinessException, InvocationTargetException,Exception {
-        AdminUser adminUser = adminUserRepository.findById(adminUserModel.getId()).get();
-        adminUser.setFirstName(adminUserModel.getFirstName());
-        adminUser.setLastName(adminUserModel.getLastName());
-        adminUser.setPassword(PasswordEncoderGenerator.generate(adminUserModel.getPassword()));
-        adminUser.setUsername(adminUserModel.getUsername());
-        adminUser.setDateOfBirth(CalendarTools.getDateFromCustomDate(adminUserModel.getDateOfBirth()));
-        adminUser.setGender(etcItemService.findByIdAndCheckEntity(adminUserModel.getGender_id(), GenderEnum.class,null,true));
-        if (ObjectUtils.isEmpty(adminUser.getDefaultAdminUserContact())) {
-            AdminUserContact adminUserContact = new AdminUserContact();
-            adminUserContact.setAddress(adminUserModel.getDefaultAdminUserContact_address());
-            adminUserContact = adminUserContactRepository.save(adminUserContact);
-            adminUser.setDefaultAdminUserContact(adminUserContact);
-        } else {
-            adminUser.getDefaultAdminUserContact().setAddress(adminUserModel.getDefaultAdminUserContact_address());
-        }
-
-        //ویرایش مهارتهای ادمین
-        adminUser = adminUserSkillService.updateByAdminUser(adminUser, adminUserModel.getSkillList());
-        adminUserRepository.save(adminUser);
-        return adminUserModel;
     }
 
     /**

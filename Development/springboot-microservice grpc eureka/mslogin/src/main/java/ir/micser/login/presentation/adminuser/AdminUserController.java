@@ -7,10 +7,11 @@ import com.motaharinia.msutility.customexception.UtilityException;
 import com.motaharinia.msutility.json.CustomObjectMapper;
 import com.motaharinia.msutility.search.data.SearchDataModel;
 import com.motaharinia.msutility.search.filter.SearchFilterModel;
-import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
+import ir.micser.config.graphql.GraphQLCustomException;
+import ir.micser.login.business.service.BusinessExceptionEnum;
 import ir.micser.login.business.service.adminuser.AdminUserSearchViewTypeEnum;
 import ir.micser.login.business.service.adminuser.AdminUserService;
 import ir.micser.login.business.service.adminuser.AdminUserSearchViewTypeBrief;
@@ -64,6 +65,9 @@ public class AdminUserController {
     @GraphQLQuery(name = "readById")
     @GetMapping("/v1/adminUser/{id}")
     public AdminUserModel readById(@PathVariable Integer id) throws UtilityException {
+        if(id.equals(0)){
+            throw new GraphQLCustomException(BusinessExceptionEnum.ID_NOT_FOUND, "sample description");
+        }
         return adminUserService.readById(id);
     }
 

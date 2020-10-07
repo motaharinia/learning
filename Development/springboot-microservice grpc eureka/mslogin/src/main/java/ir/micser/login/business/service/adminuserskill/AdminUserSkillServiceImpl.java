@@ -65,16 +65,18 @@ public class AdminUserSkillServiceImpl implements AdminUserSkillService {
      */
     @Override
     public AdminUser createByAdminUser(AdminUser adminUser, List<AdminUserSkillModel> adminUserSkillModelList) {
-        for (AdminUserSkillModel adminUserSkillModel : adminUserSkillModelList) {
-            //بررسی و در صورت نیاز ثبت مهارت جدید
-            AdminUserSkill adminUserSkill = adminUserSkillRepository.findByTitle(adminUserSkillModel.getTitle());
-            if (ObjectUtils.isEmpty(adminUserSkill)) {
-                adminUserSkill = new AdminUserSkill();
-                adminUserSkill.setTitle(adminUserSkillModel.getTitle());
-                adminUserSkill = adminUserSkillRepository.save(adminUserSkill);
+        if(!ObjectUtils.isEmpty(adminUserSkillModelList)) {
+            for (AdminUserSkillModel adminUserSkillModel : adminUserSkillModelList) {
+                //بررسی و در صورت نیاز ثبت مهارت جدید
+                AdminUserSkill adminUserSkill = adminUserSkillRepository.findByTitle(adminUserSkillModel.getTitle());
+                if (ObjectUtils.isEmpty(adminUserSkill)) {
+                    adminUserSkill = new AdminUserSkill();
+                    adminUserSkill.setTitle(adminUserSkillModel.getTitle());
+                    adminUserSkill = adminUserSkillRepository.save(adminUserSkill);
+                }
+                // اضافه کردن به کالکشن
+                adminUser.getSkillSet().add(adminUserSkill);
             }
-            // اضافه کردن به کالکشن
-            adminUser.getSkillSet().add(adminUserSkill);
         }
         return adminUser;
     }
@@ -106,29 +108,31 @@ public class AdminUserSkillServiceImpl implements AdminUserSkillService {
     @Override
     public AdminUser updateByAdminUser(AdminUser adminUser, List<AdminUserSkillModel> adminUserSkillModelList) {
         AdminUserSkill adminUserSkill = null;
-        Set<Integer> dbIdList = adminUser.getSkillSet().stream().map(item -> item.getId()).collect(Collectors.toSet());
+        if(!ObjectUtils.isEmpty(adminUserSkillModelList)) {
+            Set<Integer> dbIdList = adminUser.getSkillSet().stream().map(item -> item.getId()).collect(Collectors.toSet());
 
-        //حذف مواردی که در لیست مدل نیست
-        //آی دی هایی که باید از کالکشن حذف شوند
-        Set<Integer> idForRemoveList = new HashSet<>();
-        idForRemoveList.addAll(dbIdList);
-        idForRemoveList.removeAll(adminUserSkillModelList.stream().map(item -> item.getId()).collect(Collectors.toSet()));
-        for (Integer idForRemove : idForRemoveList) {
-            adminUserSkill = adminUserSkillRepository.findById(idForRemove).get();
-            adminUser.getSkillSet().remove(adminUserSkill);
-        }
+            //حذف مواردی که در لیست مدل نیست
+            //آی دی هایی که باید از کالکشن حذف شوند
+            Set<Integer> idForRemoveList = new HashSet<>();
+            idForRemoveList.addAll(dbIdList);
+            idForRemoveList.removeAll(adminUserSkillModelList.stream().map(item -> item.getId()).collect(Collectors.toSet()));
+            for (Integer idForRemove : idForRemoveList) {
+                adminUserSkill = adminUserSkillRepository.findById(idForRemove).get();
+                adminUser.getSkillSet().remove(adminUserSkill);
+            }
 
-        //ثبت موارد جدید و اضافه کردن به کالکشن
-        for (AdminUserSkillModel adminUserSkillModel : adminUserSkillModelList) {
-            if (ObjectUtils.isEmpty(adminUserSkillModel.getId())) {
-                adminUserSkill = new AdminUserSkill();
-                adminUserSkill.setTitle(adminUserSkillModel.getTitle());
-                adminUserSkill = adminUserSkillRepository.save(adminUserSkill);
-                adminUser.getSkillSet().add(adminUserSkill);
-            } else {
-                if (!dbIdList.contains(adminUserSkillModel.getId())) {
-                    adminUserSkill = adminUserSkillRepository.findById(adminUserSkillModel.getId()).get();
+            //ثبت موارد جدید و اضافه کردن به کالکشن
+            for (AdminUserSkillModel adminUserSkillModel : adminUserSkillModelList) {
+                if (ObjectUtils.isEmpty(adminUserSkillModel.getId())) {
+                    adminUserSkill = new AdminUserSkill();
+                    adminUserSkill.setTitle(adminUserSkillModel.getTitle());
+                    adminUserSkill = adminUserSkillRepository.save(adminUserSkill);
                     adminUser.getSkillSet().add(adminUserSkill);
+                } else {
+                    if (!dbIdList.contains(adminUserSkillModel.getId())) {
+                        adminUserSkill = adminUserSkillRepository.findById(adminUserSkillModel.getId()).get();
+                        adminUser.getSkillSet().add(adminUserSkill);
+                    }
                 }
             }
         }

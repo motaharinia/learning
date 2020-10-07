@@ -15,7 +15,7 @@ import java.util.List;
  * User: https://github.com/motaharinia<br>
  * Date: 2020-07-01<br>
  * Time: 16:49:12<br>
- * Description:<br>
+ * Description:کلاس تنظیمات مایکروسرویس
  */
 
 @Configuration
@@ -25,7 +25,7 @@ public class GrpcConfiguration {
         return new GlobalServerInterceptorConfigurer() {
             @Override
             public void addServerInterceptors(GlobalServerInterceptorRegistry registry) {
-                registry.addServerInterceptors(new LogGrpcInterceptor());
+                registry.addServerInterceptors(new GrpcInterceptor());
             }
         };
     }

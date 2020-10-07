@@ -204,6 +204,12 @@
             <artifactId>reflections</artifactId>
             <version>0.9.12</version>
         </dependency>
+        <!-- MvcConfiguration Multipart-->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version>
+        </dependency>
         <!--MsUtility-->
         <dependency>
             <groupId>com.motaharinia</groupId>

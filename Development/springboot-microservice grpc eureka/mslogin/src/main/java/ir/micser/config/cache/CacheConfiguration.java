@@ -21,9 +21,16 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+/**
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-07-01<br>
+ * Time: 16:49:12<br>
+ * Description:کلاس تنظیمات کشینگ
+ */
+
 @Configuration
 @EnableCaching
-public class CacheConfig {
+public class CacheConfiguration {
     @Bean
     public RedisTemplate<Object, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
         RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();

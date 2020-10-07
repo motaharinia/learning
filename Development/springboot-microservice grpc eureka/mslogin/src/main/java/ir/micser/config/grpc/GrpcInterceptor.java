@@ -12,11 +12,11 @@ import org.slf4j.LoggerFactory;
  * User: https://github.com/motaharinia<br>
  * Date: 2020-07-01<br>
  * Time: 16:47:12<br>
- * Description:<br>
+ * Description: بازبینی کننده فعالیتهای مایکروسرویس
  */
-public class LogGrpcInterceptor implements ServerInterceptor {
+public class GrpcInterceptor implements ServerInterceptor {
 
-    private static final Logger log = LoggerFactory.getLogger(LogGrpcInterceptor.class);
+    private static final Logger log = LoggerFactory.getLogger(GrpcInterceptor.class);
 
     @Override
     public <ReqT, RespT> ServerCall.Listener<ReqT> interceptCall(ServerCall<ReqT, RespT> serverCall, Metadata metadata, ServerCallHandler<ReqT, RespT> serverCallHandler) {

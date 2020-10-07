@@ -9,6 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 
+/**
+ * User: https://github.com/motaharinia<br>
+ * Date: 2020-07-01<br>
+ * Time: 16:49:12<br>
+ * Description:کلاس تنظیمات ایندکسینگ هایبرنیت سرچ
+ */
+
 @Configuration
 @Transactional
 public class IndexingConfiguration {
