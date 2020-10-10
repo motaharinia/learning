@@ -25,7 +25,7 @@ public class EncodingToolsTests {
      */
     @BeforeEach
     void initUseCase() throws IOException {
-        Locale.setDefault(new Locale("fa"));
+        Locale.setDefault(new Locale("fa", "IR"));
     }
 
     /**

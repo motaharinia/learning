@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.motaharinia.msutility.calendar.CalendarTools;
+import com.motaharinia.msutility.customfield.CustomDate;
 import com.motaharinia.msutility.customfield.CustomDateTime;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.util.ObjectUtils;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -25,6 +27,9 @@ public class JsonSerializerCustomDateTime extends JsonSerializer<CustomDateTime>
     @Override
     public void serialize(CustomDateTime customDateTime, JsonGenerator jg, SerializerProvider sp)  {
         try {
+            if(ObjectUtils.isEmpty(customDateTime)){
+                customDateTime=new CustomDateTime();
+            }
             Locale currentLocale = LocaleContextHolder.getLocale();
             if (currentLocale.getLanguage().equals("fa")) {
                 Date date= CalendarTools.getDateFromCustomDateTime(customDateTime);

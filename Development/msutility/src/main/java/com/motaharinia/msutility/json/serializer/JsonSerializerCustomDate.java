@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.motaharinia.msutility.calendar.CalendarTools;
 import com.motaharinia.msutility.customfield.CustomDate;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.util.ObjectUtils;
 
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -25,6 +26,9 @@ public class JsonSerializerCustomDate extends JsonSerializer<CustomDate> {
     @Override
     public void serialize(CustomDate customDate, JsonGenerator jg, SerializerProvider sp) {
         try {
+            if(ObjectUtils.isEmpty(customDate)){
+                customDate=new CustomDate();
+            }
             Locale currentLocale = LocaleContextHolder.getLocale();
             if (currentLocale.getLanguage().equals("fa")) {
                 Date date= CalendarTools.getDateFromCustomDate(customDate);

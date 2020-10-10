@@ -49,7 +49,7 @@ public class ImageToolsTests {
         graphics2D.dispose();
         ImageIO.write(image, "JPEG", new File(parentDirPath + "/" + imageFileFullName));
 
-        Locale.setDefault(new Locale("fa"));
+        Locale.setDefault(new Locale("fa", "IR"));
     }
 
     /**

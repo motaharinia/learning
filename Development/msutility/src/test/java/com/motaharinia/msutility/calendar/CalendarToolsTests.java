@@ -206,7 +206,7 @@ public class CalendarToolsTests {
     @Test
     void fixToLocaleDateTest() {
         try {
-            assertThat(CalendarTools.fixToLocaleDate("2021/03/20", "-", new Locale("fa"))).isEqualTo("1399-12-30");
+            assertThat(CalendarTools.fixToLocaleDate("2021/03/20", "-", new Locale("fa", "IR"))).isEqualTo("1399-12-30");
         } catch (Exception ex) {
             fail(ex.toString());
         }
@@ -215,7 +215,7 @@ public class CalendarToolsTests {
     @Order(16)
     @Test
     void fixToLocaleDateTimeTest() throws ParseException, UtilityException {
-        assertThat(CalendarTools.fixToLocaleDateTime("2021/03/20 00:00:00", "-", new Locale("fa"))).isEqualTo("1399-12-30 00:00:00");
+        assertThat(CalendarTools.fixToLocaleDateTime("2021/03/20 00:00:00", "-", new Locale("fa", "IR"))).isEqualTo("1399-12-30 00:00:00");
     }
 
     @Order(17)

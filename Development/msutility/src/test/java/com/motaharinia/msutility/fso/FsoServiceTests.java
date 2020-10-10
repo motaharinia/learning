@@ -81,7 +81,7 @@ public class FsoServiceTests {
 //            ImageTools.createThumb(dir2Path, "dir2file2.jpg", size, size);
 //        }
 
-        Locale.setDefault(new Locale("fa"));
+        Locale.setDefault(new Locale("fa", "IR"));
     }
 
     /**

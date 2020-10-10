@@ -1,6 +1,7 @@
 package com.motaharinia.msutility.customfield;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.motaharinia.msutility.json.CustomObjectMapper;
 import org.junit.jupiter.api.*;
 
 import java.text.SimpleDateFormat;
@@ -20,14 +21,14 @@ import static org.assertj.core.api.Assertions.fail;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class CustomDateTimeTests {
 
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final CustomObjectMapper mapper = new CustomObjectMapper();
 
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
      */
     @BeforeEach
     void initUseCase() {
-        Locale.setDefault(Locale.US);
+        Locale.setDefault(new Locale("fa", "IR"));
     }
 
     /**
@@ -40,9 +41,8 @@ public class CustomDateTimeTests {
 
     @Order(1)
     @Test
-    void constructor1Test() {
+    void constructorByJsonTest() {
         try {
-            Locale.setDefault(new Locale("fa"));
             String json = "{\"year\":1399,\"month\":12,\"day\":30,\"hour\":0,\"minute\":0,\"second\":0}";
             CustomDateTime customDateTime = mapper.readValue(json, CustomDateTime.class);
             assertThat(customDateTime.toString()).isEqualTo("CustomDateTime{2021-03-20 00:00:00}");
@@ -54,13 +54,16 @@ public class CustomDateTimeTests {
 
     @Order(2)
     @Test
-    void constructor2Test() {
+    void constructorByDateTest() {
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
             Calendar cal = Calendar.getInstance();
             cal.setTime(simpleDateFormat.parse("2021-03-20 00:00:00"));
             CustomDateTime customDateTime = new CustomDateTime(cal.getTime());
             assertThat(customDateTime.toString()).isEqualTo("CustomDateTime{2021-03-20 00:00:00}");
+            //اگر در دیتابیس فیلد تاریخ null بود به سمت کلاینت customDateTime با فیلدهای خالی برود
+            customDateTime = new CustomDateTime(null);
+            assertThat(customDateTime.toString()).isEqualTo("CustomDateTime{null-null-null null:null:null}");
         } catch (Exception ex) {
             fail(ex.toString());
         }
