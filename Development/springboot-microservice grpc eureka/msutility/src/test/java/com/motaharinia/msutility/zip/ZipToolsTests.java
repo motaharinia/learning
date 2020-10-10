@@ -78,7 +78,7 @@ public class ZipToolsTests {
         //ایجاد پوشه دوم بدون فایل
         FileUtils.forceMkdir(new File(dir2Path));
 
-        Locale.setDefault(new Locale("fa"));
+        Locale.setDefault(new Locale("fa", "IR"));
     }
 
     /**

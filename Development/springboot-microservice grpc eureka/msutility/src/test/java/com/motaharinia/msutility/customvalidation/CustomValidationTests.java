@@ -49,7 +49,7 @@ public class CustomValidationTests {
     @Test
     void customValidationTest() {
         try {
-            Locale.setDefault(new Locale("fa"));
+            Locale.setDefault(new Locale("fa", "IR"));
             CustomValidationTestModel model = new CustomValidationTestModel();
             model.setCompanyPhoneNo("22555");
             model.setDateRange1(new CustomDate(new Date()));

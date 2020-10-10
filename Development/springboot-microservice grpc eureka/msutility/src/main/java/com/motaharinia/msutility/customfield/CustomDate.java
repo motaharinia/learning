@@ -52,15 +52,14 @@ public class CustomDate implements Comparable, Serializable {
      *این متد تاریخ میلادی در ورودی دریافت میکند و یک کاستوم میلادی بر طبق آن تولید میکند
      * @param date تاریخ میلادی
      */
-    public CustomDate(@NotNull Date date) {
-        if (ObjectUtils.isEmpty(date)) {
-            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "date");
+    public CustomDate( Date date) {
+        if (!ObjectUtils.isEmpty(date)) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            this.setYear(calendar.get(Calendar.YEAR));
+            this.setMonth(calendar.get(Calendar.MONTH) + 1);
+            this.setDay(calendar.get(Calendar.DAY_OF_MONTH));
         }
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        this.setYear(calendar.get(Calendar.YEAR));
-        this.setMonth(calendar.get(Calendar.MONTH) + 1);
-        this.setDay(calendar.get(Calendar.DAY_OF_MONTH));
     }
 
     private void deserializeDate() throws Exception {
@@ -136,7 +135,7 @@ public class CustomDate implements Comparable, Serializable {
         if (!CustomDate.isEmpty(this)) {
             return year + dateDelimiter + CalendarTools.fixOneDigit(month.toString()) + dateDelimiter + CalendarTools.fixOneDigit(day.toString());
         } else {
-            return "Empty";
+            return year + dateDelimiter + month + dateDelimiter + day;
         }
     }
 

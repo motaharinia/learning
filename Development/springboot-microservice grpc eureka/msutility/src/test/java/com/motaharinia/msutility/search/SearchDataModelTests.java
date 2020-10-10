@@ -31,7 +31,7 @@ public class SearchDataModelTests {
      */
     @BeforeEach
     void initUseCase() {
-        Locale.setDefault(new Locale("fa"));
+        Locale.setDefault(new Locale("fa", "IR"));
     }
 
     /**
@@ -52,7 +52,7 @@ public class SearchDataModelTests {
             dateOfBirth.setDay(3);
 
 
-            Locale.setDefault(new Locale("fa"));
+            Locale.setDefault(new Locale("fa", "IR"));
             List<SearchFilterRestrictionModel> searchFilterRestrictionModelList = new ArrayList<>();
             searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH, "mostafa",SearchFilterNextConditionOperatorEnum.AND));
             searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("dateOfBirth", SearchFilterOperationEnum.GREATER_THAN, dateOfBirth,SearchFilterNextConditionOperatorEnum.AND));

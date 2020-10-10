@@ -28,7 +28,7 @@ public class JsonTests {
      */
     @BeforeEach
     void initUseCase() {
-        Locale.setDefault(new Locale("fa"));
+        Locale.setDefault(new Locale("fa", "IR"));
 
     }
 

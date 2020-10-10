@@ -25,7 +25,7 @@ public class ObjectToolsTests {
      */
     @BeforeEach
     void initUseCase() throws Exception {
-        Locale.setDefault(new Locale("fa"));
+        Locale.setDefault(new Locale("fa", "IR"));
     }
 
     /**

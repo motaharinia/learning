@@ -69,18 +69,17 @@ public class CustomDateTime implements Comparable, Serializable {
      *
      * @param date تاریخ میلادی
      */
-    public CustomDateTime(@NotNull Date date)  {
-        if (ObjectUtils.isEmpty(date)) {
-            throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "date");
+    public CustomDateTime(Date date) {
+        if (!ObjectUtils.isEmpty(date)) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            this.setYear(calendar.get(Calendar.YEAR));
+            this.setMonth(calendar.get(Calendar.MONTH) + 1);
+            this.setDay(calendar.get(Calendar.DAY_OF_MONTH));
+            this.setHour(calendar.get(Calendar.HOUR_OF_DAY));
+            this.setMinute(calendar.get(Calendar.MINUTE));
+            this.setSecond(calendar.get(Calendar.SECOND));
         }
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        this.setYear(calendar.get(Calendar.YEAR));
-        this.setMonth(calendar.get(Calendar.MONTH) + 1);
-        this.setDay(calendar.get(Calendar.DAY_OF_MONTH));
-        this.setHour(calendar.get(Calendar.HOUR_OF_DAY));
-        this.setMinute(calendar.get(Calendar.MINUTE));
-        this.setSecond(calendar.get(Calendar.SECOND));
     }
 
     private void deserializeDateTime() throws UtilityException {
@@ -118,7 +117,8 @@ public class CustomDateTime implements Comparable, Serializable {
 
     /**
      * این متد بررسی میکند که آیا متناسب با لوکال فعلی تاریخ کلاس معتبر است یا خیر
-     * @param locale  لوکال فعلی
+     *
+     * @param locale لوکال فعلی
      * @return خروجی: نتیجه بررسی
      * @throws UtilityException
      */
@@ -160,14 +160,14 @@ public class CustomDateTime implements Comparable, Serializable {
      * @return خروجی: رشته تاریخ-زمان
      */
     @NotNull
-    public String getFormattedString(@NotNull String dateDelimiter) throws UtilityException{
+    public String getFormattedString(@NotNull String dateDelimiter) throws UtilityException {
         if (ObjectUtils.isEmpty(dateDelimiter)) {
             throw new UtilityException(getClass(), UtilityExceptionKeyEnum.METHOD_PARAMETER_IS_NULL_OR_EMPTY, "dateDelimiter");
         }
         if (!CustomDateTime.isEmpty(this)) {
             return year + dateDelimiter + CalendarTools.fixOneDigit(month.toString()) + dateDelimiter + CalendarTools.fixOneDigit(day.toString()) + " " + CalendarTools.fixOneDigit(hour.toString()) + ":" + CalendarTools.fixOneDigit(minute.toString()) + ":" + CalendarTools.fixOneDigit(second.toString());
         } else {
-            return "Empty";
+            return year + dateDelimiter + month + dateDelimiter + day + " " + hour+ ":" + minute+ ":" + second;
         }
     }
 

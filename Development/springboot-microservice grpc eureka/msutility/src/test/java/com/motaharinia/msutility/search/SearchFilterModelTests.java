@@ -1,6 +1,7 @@
 package com.motaharinia.msutility.search;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.motaharinia.msutility.json.CustomObjectMapper;
 import com.motaharinia.msutility.search.filter.*;
 import org.junit.jupiter.api.*;
 
@@ -21,7 +22,7 @@ import static org.assertj.core.api.Assertions.fail;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class SearchFilterModelTests {
 
-    private final ObjectMapper mapper = new ObjectMapper();
+    private final CustomObjectMapper mapper = new CustomObjectMapper();
 
     /**
      * این متد مقادیر پیش فرض قبل از هر تست این کلاس تست را مقداردهی اولیه میکند
@@ -43,7 +44,7 @@ public class SearchFilterModelTests {
     @Test
     void serializeDeserializeTest() {
         try {
-            Locale.setDefault(new Locale("fa"));
+            Locale.setDefault(new Locale("fa", "IR"));
 
             List<SearchFilterRestrictionModel> searchFilterRestrictionModelList = new ArrayList<>();
             searchFilterRestrictionModelList.add(new SearchFilterRestrictionModel("firstName", SearchFilterOperationEnum.MATCH, "mostafa",SearchFilterNextConditionOperatorEnum.AND));
