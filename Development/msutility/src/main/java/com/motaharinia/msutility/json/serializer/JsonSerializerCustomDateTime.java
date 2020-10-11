@@ -27,22 +27,29 @@ public class JsonSerializerCustomDateTime extends JsonSerializer<CustomDateTime>
     @Override
     public void serialize(CustomDateTime customDateTime, JsonGenerator jg, SerializerProvider sp)  {
         try {
-            if(ObjectUtils.isEmpty(customDateTime)){
-                customDateTime=new CustomDateTime();
-            }
-            Locale currentLocale = LocaleContextHolder.getLocale();
-            if (currentLocale.getLanguage().equals("fa")) {
-                Date date= CalendarTools.getDateFromCustomDateTime(customDateTime);
-                customDateTime = CalendarTools.gregorianToJalaliDateTime(date);
-            }
             //برای حفظ ترتیب درج بجای هشمپ از لینکدهشمپ استفاده میکنیم
             LinkedHashMap<String, String> output = new LinkedHashMap<>();
-            output.put("year", customDateTime.getYear().toString());
-            output.put("month", CalendarTools.fixOneDigit(customDateTime.getMonth().toString()));
-            output.put("day", CalendarTools.fixOneDigit(customDateTime.getDay().toString()));
-            output.put("hour", CalendarTools.fixOneDigit(customDateTime.getHour().toString()));
-            output.put("minute", CalendarTools.fixOneDigit(customDateTime.getMinute().toString()));
-            output.put("second", CalendarTools.fixOneDigit(customDateTime.getSecond().toString()));
+            System.out.println("sssssssss");
+            if(CustomDateTime.isEmpty(customDateTime)){
+                output.put("year", "");
+                output.put("month", "");
+                output.put("day", "");
+                output.put("hour", "");
+                output.put("minute", "");
+                output.put("second", "");
+            }else{
+                Locale currentLocale = LocaleContextHolder.getLocale();
+                if (currentLocale.getLanguage().equals("fa")) {
+                    Date date= CalendarTools.getDateFromCustomDateTime(customDateTime);
+                    customDateTime = CalendarTools.gregorianToJalaliDateTime(date);
+                }
+                output.put("year", customDateTime.getYear().toString());
+                output.put("month", CalendarTools.fixOneDigit(customDateTime.getMonth().toString()));
+                output.put("day", CalendarTools.fixOneDigit(customDateTime.getDay().toString()));
+                output.put("hour", CalendarTools.fixOneDigit(customDateTime.getHour().toString()));
+                output.put("minute", CalendarTools.fixOneDigit(customDateTime.getMinute().toString()));
+                output.put("second", CalendarTools.fixOneDigit(customDateTime.getSecond().toString()));
+            }
             jg.writeObject(output);
         } catch (Exception ex) {
             Logger.getLogger(JsonSerializerCustomDateTime.class.getName()).log(Level.SEVERE, null, ex);

@@ -3,6 +3,7 @@ package com.motaharinia.msutility.json;
 import com.motaharinia.msutility.calendar.CalendarTools;
 import com.motaharinia.msutility.customfield.CustomDate;
 import com.motaharinia.msutility.json.sample.JsonModel;
+import com.motaharinia.msutility.json.sample.MembershipRequestFrontModelUpdate;
 import org.junit.jupiter.api.*;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
@@ -90,5 +91,17 @@ public class JsonTests {
         }
     }
 
+
+    @Order(2)
+    @Test
+    void serializeEmptyModelTest() {
+        try {
+            MembershipRequestFrontModelUpdate membershipRequestFrontModelUpdate = new MembershipRequestFrontModelUpdate();
+            String jsonString= this.mapper.writeValueAsString(membershipRequestFrontModelUpdate);
+            assertThat(jsonString).isNotEqualTo(null);
+        } catch (Exception ex) {
+            fail(ex.toString());
+        }
+    }
 
 }

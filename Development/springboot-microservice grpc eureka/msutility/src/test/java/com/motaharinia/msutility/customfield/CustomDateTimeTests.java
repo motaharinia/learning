@@ -74,14 +74,15 @@ public class CustomDateTimeTests {
     void comparatorTest() {
         try {
             List<CustomDateTime> customDateTimeList = new ArrayList<>();
-            customDateTimeList.add(new CustomDateTime(2015, 12, 13, 0, 0, 0));
-            customDateTimeList.add(new CustomDateTime(2016, 10, 1, 0, 0, 0));
-            customDateTimeList.add(new CustomDateTime(2014, 8, 2, 0, 0, 0));
-            customDateTimeList.add(new CustomDateTime(2015, 11, 2, 0, 0, 0));
-            customDateTimeList.add(new CustomDateTime(2014, 4, 14, 10, 10, 10));
-            customDateTimeList.add(new CustomDateTime(2016, 1, 16, 0, 0, 0));
+            customDateTimeList.add(new CustomDateTime(1395, 12, 13, 0, 0, 0));
+            customDateTimeList.add(new CustomDateTime(1396, 10, 1, 0, 0, 0));
+            customDateTimeList.add(new CustomDateTime(1394, 8, 2, 0, 0, 0));
+            customDateTimeList.add(new CustomDateTime(1395, 11, 2, 0, 0, 0));
+            customDateTimeList.add(new CustomDateTime(1394, 4, 14, 10, 10, 10));
+            customDateTimeList.add(new CustomDateTime(1396, 1, 16, 0, 0, 0));
             Collections.sort(customDateTimeList);
-            assertThat(customDateTimeList.get(0).toString()).isEqualTo("CustomDateTime{2014-04-14 10:10:10}");
+            //1394-04-14 -> 2015-07-05
+            assertThat(customDateTimeList.get(0).toString()).isEqualTo("CustomDateTime{2015-07-05 10:10:10}");
         } catch (Exception ex) {
             fail(ex.toString());
         }

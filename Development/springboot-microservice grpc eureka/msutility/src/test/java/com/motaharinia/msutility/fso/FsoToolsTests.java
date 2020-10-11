@@ -318,8 +318,7 @@ public class FsoToolsTests {
     @Test
     void downloadUrlAndReadTest() {
         try {
-            File file;
-            byte[] data = FsoTools.downloadUrlAndRead("https://file-examples-com.github.io/uploads/2017/02/file_example_JSON_1kb.json");
+            byte[] data = FsoTools.downloadUrlAndRead("https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js");
             assertThat(data.length).isGreaterThan(0);
         } catch (Exception ex) {
             fail(ex.toString());
@@ -330,7 +329,6 @@ public class FsoToolsTests {
     @Test
     void downloadPathAndReadTest() {
         try {
-            File file;
             byte[] data = FsoTools.downloadPathAndRead(dir1File1Path);
             assertThat(data.length).isGreaterThan(0);
         } catch (Exception ex) {

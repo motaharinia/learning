@@ -4,16 +4,20 @@ import com.motaharinia.msutility.json.CustomObjectMapper;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * User: https://github.com/motaharinia<br>
@@ -51,16 +55,25 @@ public class MvcConfiguration  implements WebMvcConfigurer {
 
     /**
      * تنظیمات جکسون برای سریالایز و دیسریالایز سامانه
-     * @param converters مبدل جکسون با تنظیمات سفارشی شده
+     * @param converters مبدل کاستوم مپر جکسون با تنظیمات سفارشی شده
      */
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder = new Jackson2ObjectMapperBuilder();
-        jackson2ObjectMapperBuilder.failOnEmptyBeans(false);
-        jackson2ObjectMapperBuilder.failOnUnknownProperties(false);
-        MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter(jackson2ObjectMapperBuilder.build());
+        MappingJackson2HttpMessageConverter mappingJackson2HttpMessageConverter = new MappingJackson2HttpMessageConverter();
         CustomObjectMapper customObjectMapper = new CustomObjectMapper(configureMessageSource());
         mappingJackson2HttpMessageConverter.setObjectMapper(customObjectMapper);
         converters.add(mappingJackson2HttpMessageConverter);
+    }
+
+    /**
+     * تنظیم لوکیل پیش فرض سامانه
+     * @return خروجی: ریزالور لوکال با لوکیل پیش فرض فارسی که بعد از اجرای نرم افزار به صورت پیش فرض روی فارسی تنظیم هست
+     */
+    @Bean
+    @DependsOn("messageSource")
+    public CookieLocaleResolver localeResolver() {
+        CookieLocaleResolver localeResolver = new CookieLocaleResolver();
+        localeResolver.setDefaultLocale(new Locale("fa", "IR"));
+        return localeResolver;
     }
 }

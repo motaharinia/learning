@@ -75,14 +75,15 @@ public class CustomDateTests {
     void comparatorTest() {
         try {
             List<CustomDate> customDateList = new ArrayList<>();
-            customDateList.add(new CustomDate(2015, 12, 13));
-            customDateList.add(new CustomDate(2016, 10, 1));
-            customDateList.add(new CustomDate(2014, 8, 2));
-            customDateList.add(new CustomDate(2015, 11, 2));
-            customDateList.add(new CustomDate(2014, 4, 14));
-            customDateList.add(new CustomDate(2016, 1, 16));
+            customDateList.add(new CustomDate(1395, 12, 13));
+            customDateList.add(new CustomDate(1396, 10, 1));
+            customDateList.add(new CustomDate(1394, 8, 2));
+            customDateList.add(new CustomDate(1395, 11, 2));
+            customDateList.add(new CustomDate(1394, 4, 14));
+            customDateList.add(new CustomDate(1396, 1, 16));
             Collections.sort(customDateList);
-            assertThat(customDateList.get(0).toString()).isEqualTo("CustomDate{2014-04-14}");
+            //1394-04-14 -> 2015-07-05
+            assertThat(customDateList.get(0).toString()).isEqualTo("CustomDate{2015-07-05}");
         } catch (Exception ex) {
             fail(ex.toString());
         }
