@@ -29,7 +29,6 @@ public class JsonSerializerCustomDateTime extends JsonSerializer<CustomDateTime>
         try {
             //برای حفظ ترتیب درج بجای هشمپ از لینکدهشمپ استفاده میکنیم
             LinkedHashMap<String, String> output = new LinkedHashMap<>();
-            System.out.println("sssssssss");
             if(CustomDateTime.isEmpty(customDateTime)){
                 output.put("year", "");
                 output.put("month", "");
