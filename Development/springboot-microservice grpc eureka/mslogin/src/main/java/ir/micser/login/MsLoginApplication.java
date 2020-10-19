@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import th.co.geniustree.springdata.jpa.repository.support.JpaSpecificationExecutorWithProjectionImpl;
 
 
@@ -16,8 +17,8 @@ import th.co.geniustree.springdata.jpa.repository.support.JpaSpecificationExecut
 @EnableJpaRepositories(repositoryBaseClass = JpaSpecificationExecutorWithProjectionImpl.class)
 @EnableTransactionManagement
 @EnableEurekaClient
-@EnableScheduling
-@EnableAsync
+//@EnableScheduling
+//@EnableAsync
 public class MsLoginApplication {
 //
 //    @Value("${custom.default.timezone}")

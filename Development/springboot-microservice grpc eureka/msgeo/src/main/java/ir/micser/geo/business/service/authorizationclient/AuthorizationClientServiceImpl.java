@@ -1,12 +1,15 @@
 package ir.micser.geo.business.service.authorizationclient;
 
 
+import com.google.protobuf.StringValue;
 import com.motaharinia.msutility.customexception.CustomException;
 import io.grpc.StatusRuntimeException;
 import ir.micser.login.business.service.authorization.stub.AuthorizationGrpc.*;
 import ir.micser.login.business.service.authorization.stub.AuthorizationMicro.*;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * User: https://github.com/motaharinia<br>
@@ -22,8 +25,15 @@ public class AuthorizationClientServiceImpl {
 
     public String checkAccess(final String url) {
         try {
-            CheckAccessRequestModel loginRequest = CheckAccessRequestModel.newBuilder().setUrl(url).setAccessToken("token1").build();
-            final CheckAccessResponseModel apiResponse = this.authorizationStub.checkAccess(loginRequest);
+            String token=null;
+//            CheckAccessRequestModel loginRequest = CheckAccessRequestModel.newBuilder().setUrl(url).setAccessToken(token).build();
+//            CheckAccessRequestModel loginRequest = CheckAccessRequestModel.newBuilder().setUrl(url).setAccessToken(StringValue.of(token)).build();
+
+            CheckAccessRequestModel.Builder builder = CheckAccessRequestModel.newBuilder();
+            Optional.ofNullable(url).ifPresent(builder::setUrl);
+            Optional.ofNullable(token).ifPresent(builder::setAccessToken);
+
+            final CheckAccessResponseModel apiResponse = this.authorizationStub.checkAccess(builder.build());
             return apiResponse.getResult() + "";
         } catch (final StatusRuntimeException ex) {
             CustomException customException = new CustomException(ex);
