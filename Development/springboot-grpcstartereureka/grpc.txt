@@ -60,3 +60,5 @@ https://www.youtube.com/watch?v=XRXTsQwyZSU&list=PLt1SIbA8guusAJIBS8JgbSFKfQdVkW
 //samples by google: https://github.com/protocolbuffers/protobuf/releases/tag/v3.12.3
 //variable types in proto: https://developers.google.com/protocol-buffers/docs/proto3#scalar
 //exception handling in gRPC: https://grpc.io/docs/guides/error/
+//wrapper google types setting in pom: https://github.com/DKE-Data/agrirouter-api-protobuf-definitions/pull/16/files
+//null value in proto: https://itnext.io/protobuf-and-null-support-1908a15311b6

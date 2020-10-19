@@ -1,5 +1,6 @@
 package com.motaharinia;
 
+import com.google.protobuf.StringValue;
 import com.motaharinia.server.user.stub.UserGrpc;
 import com.motaharinia.server.user.stub.UserMicro;
 import io.grpc.StatusRuntimeException;
@@ -21,6 +22,7 @@ public class GrpcClientService {
     public String sendMessage(final String name) {
         try {
             UserMicro.LoginRequest loginRequest = UserMicro.LoginRequest.newBuilder().setUsername("user1").setPassword("pass1").build();
+//            UserMicro.LoginRequest loginRequest = UserMicro.LoginRequest.newBuilder().setUsername(StringValue.of("user1")).setPassword(StringValue.of("pass1")).build();
             final UserMicro.APIResponse apiResponse= this.simpleStub.login(loginRequest);
             return apiResponse.getResponseMessage();
         } catch (final StatusRuntimeException e) {

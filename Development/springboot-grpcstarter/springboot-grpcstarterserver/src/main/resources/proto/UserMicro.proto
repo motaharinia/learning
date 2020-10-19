@@ -3,6 +3,7 @@
 //samples by google: https://github.com/protocolbuffers/protobuf/releases/tag/v3.12.3
 //variable types in proto: https://developers.google.com/protocol-buffers/docs/proto3#scalar
 syntax = "proto3";
+//import "google/protobuf/wrappers.proto";
 option java_package = "com.motaharinia.server.user.stub";
 
 service User{
@@ -17,7 +18,9 @@ message LoginRequest{
 
 message APIResponse{
     string response_message = 1;
+    //    .google.protobuf.StringValue  response_message = 1;
     int32  response_code  = 2;
+    //  .google.protobuf.Int32Value  response_code = 2;
 }
 
 message Empty{

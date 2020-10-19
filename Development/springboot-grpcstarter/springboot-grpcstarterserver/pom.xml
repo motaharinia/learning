@@ -70,11 +70,13 @@
                         </goals>
                         <configuration>
                             <includeMavenTypes>direct</includeMavenTypes>
-
+                            <!-- add google standard package to use in proto file like wrappers-->
+                            <includeStdTypes>true</includeStdTypes>
+                            <!-- directory where is proto file placed to be generated to stub files on maven compile-->
                             <inputDirectories>
                                 <include>src/main/resources/proto</include>
                             </inputDirectories>
-
+                            <!-- directory where is output for generated stub files from proto on maven compile-->
                             <outputTargets>
                                 <outputTarget>
                                     <type>java</type>
