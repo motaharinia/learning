@@ -21,7 +21,7 @@ public class AuthorizationClientController {
 
     @GetMapping("/authorizationClient")
     public String test() {
-        return "authorizationClientServiceImpl.checkAccess():" + authorizationClientServiceImpl.checkAccess("");
+        return "authorizationClientServiceImpl.checkAccess():" + authorizationClientServiceImpl.checkAccess("/test");
     }
 
 
